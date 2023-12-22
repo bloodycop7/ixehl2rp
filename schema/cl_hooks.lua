@@ -1,7 +1,11 @@
+function Schema:ShouldHideBars()
+	return true
+end
 
--- Here is where all of your clientside hooks should go.
+function Schema:BuildBusinessMenu()
+	return false
+end
 
--- Disables the crosshair permanently.
-function Schema:CharacterLoaded(character)
-	self:ExampleFunction("@serverWelcome", character:GetName())
+function Schema:CanPlayerJoinClass(client, class, info)
+	return false
 end
