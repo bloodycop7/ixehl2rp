@@ -16,6 +16,6 @@ ix.char.RegisterVar("thirst", {
     field = "thirst",
     fieldType = ix.type.number,
     default = 100,
-    isLocal = isLocal,
+    isLocal = false,
     bNoDisplay = true,
 })
