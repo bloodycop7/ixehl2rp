@@ -1,0 +1,7 @@
+"ixhl2rp"
+{
+	"base" 			"helix"
+	"title" 		"ix: Enhanced Half-Life 2 Roleplay"
+	"author" 		"eon"
+	"menusystem"	"1"
+}
