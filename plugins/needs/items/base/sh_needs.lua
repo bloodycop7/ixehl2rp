@@ -21,6 +21,10 @@ function ITEM:Consume(ply)
         return
     end
 
+    if not ( ply:Alive() ) then
+        return
+    end
+
     local char = ply:GetCharacter()
 
     if not ( char ) then
@@ -38,7 +42,7 @@ function ITEM:Consume(ply)
         char:SetThirst(math.Clamp(char:GetThirst() + self.thirstAmount, 0, 100))
     end
 
-    ply.isConsuming = false
+    char:SetData("isConsuming", false)
 end
 
 ITEM.functions.Consume = {
@@ -52,10 +56,20 @@ ITEM.functions.Consume = {
             return false
         end
 
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return false
+        end
+
+        if ( char:GetData("isConsuming", false) ) then
+            return
+        end
+
+        item.consumeTime = item:GetConsumeTime(ply) or ( item.consumeTime or 0 )
+
         if ( item.consumeTime > 0 ) then
-            ply.isConsuming = true
-            
-            item.consumeTime = item:GetConsumeTime(ply) or ( item.consumeTime or 1 )
+            char:SetData("isConsuming", true)
 
             ply:SetAction("Consuming...", item.consumeTime, function()
                 if not ( IsValid(ply) ) then
@@ -65,7 +79,7 @@ ITEM.functions.Consume = {
                 item:Consume(ply)
 
                 if ( item.OnConsumed ) then
-                    item:OnConsumed(ply)
+                    item:OnConsumed(ply) // Can be used for emitting sounds, particles, etc.
                 end
             end)
 
@@ -74,7 +88,7 @@ ITEM.functions.Consume = {
             item:Consume(ply)
 
             if ( item.OnConsumed ) then
-                item:OnConsumed(ply)
+                item:OnConsumed(ply) // Can be used for emitting sounds, particles, etc.
             end
             
             return true
@@ -93,8 +107,20 @@ ITEM.functions.Consume = {
             return false
         end
 
-        if ( ( ply.isConsuming or false ) ) then
+        local char = ply:GetCharacter()
+        
+        if not ( char ) then
+            return
+        end
+
+        if ( char:GetData("isConsuming", false) ) then
             return false
+        end
+
+        if ( item.CanConsume ) then
+            if not ( item:CanConsume(ply) ) then
+                return false
+            end
         end
 
         return true
