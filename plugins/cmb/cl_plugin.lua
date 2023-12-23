@@ -1,9 +1,17 @@
 local PLUGIN = PLUGIN
 
 surface.CreateFont("ixCombineHUDFont", {
-    font = "Purista-Bold",
-    size = ScreenScale(9),
-    weight = 900,
+    font = "Frak",
+    size = ScreenScale(10),
+    weight = 200,
+    antialias = true,
+    shadows = true,
+})
+
+surface.CreateFont("ixCombineTerminalFont", {
+    font = "Frak",
+    size = ScreenScale(15),
+    weight = 200,
     antialias = true,
     shadows = true,
 })

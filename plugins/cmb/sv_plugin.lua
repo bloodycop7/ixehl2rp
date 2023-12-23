@@ -1,4 +1,20 @@
 local PLUGIN = PLUGIN
+util.AddNetworkString("ix.Combine.SetCityCode")
+
+net.Receive("ix.Combine.SetCityCode", function(len, ply)
+    local id = net.ReadUInt(8)
+    local codeData = ix.cmbSystems.cityCodes[id]
+
+    if not ( codeData ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    ix.cmbSystems:SetCityCode(id)
+end)
 
 function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
     if not ( IsValid(ply) ) then

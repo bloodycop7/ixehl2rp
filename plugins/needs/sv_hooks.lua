@@ -30,8 +30,8 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
             end)
         end
 
-        if not ( timer.Exists("ix.Characters.Needs.Thirst." .. oldChar:GetID()) ) then
-            timer.Create("ix.Characters.Needs.Thirst." .. oldChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
+        if not ( timer.Exists("ix.Characters.Needs.Thirst." .. newChar:GetID()) ) then
+            timer.Create("ix.Characters.Needs.Thirst." .. newChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
                 if ( ply:GetCharacter() ) then
                     local char = ply:GetCharacter()
                     local thirst = char:GetThirst()
@@ -43,7 +43,7 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
             end)
         end
 
-        if ( oldChar ) then
+        if ( oldChar ) then        
             if ( timer.Exists("ix.Characters.Needs.Hunger" .. oldChar:GetID()) ) then
                 timer.Remove("ix.Characters.Needs.Hunger" .. oldChar:GetID())
             end

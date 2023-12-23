@@ -4,3 +4,10 @@ function Schema:SlapPlayer(client)
 		client:TakeDamage(math.random(5, 10))
 	end
 end
+
+util.AddNetworkString("ix.Schema.OpenUI")
+function Schema:OpenUI(ply, panel)
+	net.Start("ix.Schema.OpenUI")
+		net.WriteString(panel)
+	net.Send(ply)
+end
