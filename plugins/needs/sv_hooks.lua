@@ -40,12 +40,14 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
             end)
         end
 
-        if ( timer.Exists("ix.Characters.Needs.Hunger" .. oldChar:GetID()) ) then
-            timer.Remove("ix.Characters.Needs.Hunger" .. oldChar:GetID())
-        end
+        if ( oldChar ) then
+            if ( timer.Exists("ix.Characters.Needs.Hunger" .. oldChar:GetID()) ) then
+                timer.Remove("ix.Characters.Needs.Hunger" .. oldChar:GetID())
+            end
 
-        if ( timer.Exists("ix.Characters.Needs.Thirst" .. oldChar:GetID()) ) then
-            timer.Remove("ix.Characters.Needs.Thirst" .. oldChar:GetID())
+            if ( timer.Exists("ix.Characters.Needs.Thirst" .. oldChar:GetID()) ) then
+                timer.Remove("ix.Characters.Needs.Thirst" .. oldChar:GetID())
+            end
         end
     end
 end
