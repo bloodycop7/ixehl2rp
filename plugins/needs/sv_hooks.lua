@@ -7,6 +7,9 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         return
     end
 
+    timer.Adjust("ix.Characters.Needs.Hunger." .. char:GetID(), ix.config.Get("hungerRate", 60))
+    timer.Adjust("ix.Characters.Needs.Thirst." .. char:GetID(), ix.config.Get("thirstRate", 60))
+
     char:SetData("isConsuming", false)
 end
 
