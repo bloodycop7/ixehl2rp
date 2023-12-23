@@ -19,7 +19,7 @@ ix.util.Include("cl_plugin.lua")
 ix.util.Include("sv_hooks.lua")
 ix.util.Include("cl_hooks.lua")
 
-ix.cmbSystems.CityCodes = {
+ix.cmbSystems.cityCodes = {
     {
         name = "Preserved",
         color = Color(0, 255, 0),
@@ -50,6 +50,6 @@ ix.cmbSystems.CityCodes = {
     }
 }
 
-function ix.cmbSystems.GetCityCode()
+function ix.cmbSystems:GetCityCode()
     return GetGlobalInt("ixCityCode", 1)
 end
