@@ -22,13 +22,13 @@ function HUD:Init()
     text:Dock(TOP)
     text:SetWrap(true)
     text.health = 100
-    text:SetText("Vitals: " .. text.health)
+    text:SetText("<:: Vitals: " .. text.health)
     text:SetFont("ixCombineHUDFont")
     text:SetTall(text:GetTall() * 1)
     text.Think = function(s)
         if ( localPlayer:Health() != s.health ) then
             s.health = localPlayer:Health()
-            s:SetText("Vitals: " .. s.health)
+            s:SetText("<:: Vitals: " .. s.health)
         end
     end
 
@@ -36,13 +36,13 @@ function HUD:Init()
     text:Dock(TOP)
     text:SetWrap(true)
     text.dir = localPlayer:GetPos()
-    text:SetText("Vector: " .. math.Round(text.dir.x, 1) .. ", " .. math.Round(text.dir.y, 1) .. ", " .. math.Round(text.dir.z, 1))
+    text:SetText("<:: Vector: " .. math.Round(text.dir.x, 1) .. ", " .. math.Round(text.dir.y, 1) .. ", " .. math.Round(text.dir.z, 1))
     text:SetFont("ixCombineHUDFont")
     text:SetTall(text:GetTall() * 1.3)
     text.Think = function(s)
         if ( s.dir.x != localPlayer:GetPos().x or s.dir.y != localPlayer:GetPos().y or s.dir.z != localPlayer:GetPos().z ) then
             s.dir = localPlayer:GetPos()
-            s:SetText("Vector: " .. math.Round(s.dir.x, 1) .. ", " .. math.Round(s.dir.y, 1) .. ", " .. math.Round(s.dir.z, 1))
+            s:SetText("<:: Vector: " .. math.Round(s.dir.x, 1) .. ", " .. math.Round(s.dir.y, 1) .. ", " .. math.Round(s.dir.z, 1))
         end
     end
 
