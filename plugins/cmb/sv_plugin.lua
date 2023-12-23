@@ -17,3 +17,17 @@ function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
         callback(ply, bolStatus)
     end
 end
+
+function ix.cmbSystems:SetCityCode(id)
+    local codeData = ix.cmbSystems.cityCodes[id]
+
+    if not ( codeData ) then
+        return
+    end
+
+    if ( codeData.onStart ) then
+        codeData:onStart()
+    end
+
+    SetGlobalInt("ixCityCode", id)
+end

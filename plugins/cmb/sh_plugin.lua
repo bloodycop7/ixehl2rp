@@ -18,3 +18,38 @@ ix.util.Include("sv_plugin.lua")
 ix.util.Include("cl_plugin.lua")
 ix.util.Include("sv_hooks.lua")
 ix.util.Include("cl_hooks.lua")
+
+ix.cmbSystems.CityCodes = {
+    {
+        name = "Preserved",
+        color = Color(0, 255, 0),
+        onStart = function()
+            print("PReserved")
+        end
+    },
+    {
+        name = "Marginal",
+        color = Color(255, 255, 0),
+        onStart = function()
+            print("PReserved")
+        end
+    },
+    {
+        name = "Judgment Waiver",
+        color = Color(255, 0, 0),
+        onStart = function()
+            print("PReserved")
+        end
+    },
+    {
+        name = "Autonomous Judgment",
+        color = Color(255, 0, 0),
+        onStart = function()
+            print("PReserved")
+        end
+    }
+}
+
+function ix.cmbSystems.GetCityCode()
+    return GetGlobalInt("ixCityCode", 1)
+end
