@@ -1,7 +1,7 @@
 function Schema:GetPlayerDeathSound(client)
 	local character = client:GetCharacter()
 
-	if (character and character:IsPolice()) then
+	if ( Schema:IsCP(client) ) then
 		return "NPC_MetroPolice.Die"
 	end
 end
