@@ -1,12 +1,10 @@
-FACTION.name = "Civil Protection"
-FACTION.description = "The Civil Protection Force of the Universal Union."
+FACTION.name = "Combine Overwatch"
+FACTION.description = "The Combine Overwatch, also referred to simply as Overwatch, is the primary military force of The Combine."
 FACTION.color = Color(20, 120, 185)
 
 FACTION.models = {
-	"models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl"
+	"models/combine_soldier.mdl"
 }
-
-ix.anim.SetModelClass("models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl", "metrocop")
 
 function FACTION:ModifyPlayerStep(client, data)
 	if ( data.ladder or data.submerged ) then
@@ -26,8 +24,8 @@ function FACTION:ModifyPlayerStep(client, data)
 		EmitSound(v, client:GetPos(), client:EntIndex(), CHAN_AUTO, data.volume * (data.running and 0.5 or 0.4))
 	end
 
-	data.snd = "npc/metropolice/gear" .. math.random(1, 4) .. ".wav"
+	data.snd = "npc/combine_soldier/gear" .. math.random(1, 4) .. ".wav"
 	data.volume = data.volume * (data.running and 0.5 or 0.4)
 end
 
-FACTION_CP = FACTION.index
+FACTION_OTA = FACTION.index

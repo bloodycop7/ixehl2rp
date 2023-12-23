@@ -37,4 +37,32 @@ function Schema:IsCP(ply)
     return character:GetFaction() == FACTION_CP
 end
 
+function Schema:IsOTA(ply)
+    if not ( IsValid(ply) ) then
+        return false
+    end
+
+    local character = ply:GetCharacter()
+
+    if not ( character ) then
+        return false
+    end
+
+    return character:GetFaction() == FACTION_OTA
+end
+
+function Schema:IsCombine(ply)
+    if not ( IsValid(ply) ) then
+        return false
+    end
+
+    local character = ply:GetCharacter()
+
+    if not ( character ) then
+        return false
+    end
+
+    return self:IsOTA(ply) or self:IsCP(ply)
+end
+
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")

@@ -49,6 +49,22 @@ function HUD:Init()
     self.rightPanel = self:Add("Panel")
     self.rightPanel:Dock(RIGHT)
     self.rightPanel:SetWide(ScrW() * 0.20)
+    self.rightPanel:DockPadding(padding * 10, 0, 0, 0)
+
+    text = self.rightPanel:Add("DLabel")
+    text:SetContentAlignment(6)
+    text:Dock(TOP)
+    text:SetWrap(true)
+    text:SetText(ix.cmbSystems.cityCodes[ix.cmbSystems.GetCityCode()].name .. " ::>")
+    text:SetTextColor(ix.cmbSystems.cityCodes[ix.cmbSystems.GetCityCode()].color or color_white)
+    text:SetFont("ixCombineHUDFont")
+    text:SetTall(text:GetTall() * 1.3)
+    text.Think = function(s)
+        if ( ix.cmbSystems.cityCodes[ix.cmbSystems.GetCityCode()].name != s:GetText() ) then
+            s:SetText(ix.cmbSystems.cityCodes[ix.cmbSystems.GetCityCode()].name .. " ::>")
+            s:SetTextColor(ix.cmbSystems.cityCodes[ix.cmbSystems.GetCityCode()].color or color_white)
+        end
+    end
 end
 
 vgui.Register("ix.CMB.HUD", HUD, "Panel")

@@ -15,7 +15,7 @@ function PLUGIN:CanDrawCombineHUD()
         return false
     end
 
-    if not ( Schema:IsCP(localPlayer) ) then
+    if not ( Schema:IsCombine(localPlayer) ) then
         return false
     end
 
