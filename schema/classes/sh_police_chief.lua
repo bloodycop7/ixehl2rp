@@ -1,6 +1,6 @@
 
 CLASS.name = "Police Chief"
-CLASS.faction = FACTION_POLICE
+CLASS.faction = FACTION_CP
 
 -- This function will be called whenever the client wishes to become part of this class. If you'd rather have it so this class
 -- has to be set manually by an administrator, you can simply return false to disallow regular users switching to this class.

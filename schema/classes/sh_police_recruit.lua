@@ -3,7 +3,7 @@
 -- that still belong to the same class. Much of the same concepts from factions apply to classes.
 
 CLASS.name = "Police Recruit"
-CLASS.faction = FACTION_POLICE
+CLASS.faction = FACTION_CP
 CLASS.isDefault = true
 
 CLASS_POLICERECRUIT = CLASS.index

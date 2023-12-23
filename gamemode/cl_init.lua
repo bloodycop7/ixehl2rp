@@ -7,11 +7,11 @@ scrW = ScrW()
 scrH = ScrH()
 
 hook.Add("InitPostEntity", "InitPostEntity.ixLoadCharacter", function()
-    localPlayer = localPlayer or LocalPlayer()
+    localPlayer = LocalPlayer()
 end)
 
 hook.Add("OnReloaded", "OnReloaded.ixLoadCharacter", function()
-    localPlayer = localPlayer or LocalPlayer()
+    localPlayer = LocalPlayer()
 end)
 
 hook.Add("OnScreenSizeChanged", "OnScreenSizeChanged.ixChangeScreenSize", function()
