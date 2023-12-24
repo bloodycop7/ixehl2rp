@@ -50,4 +50,39 @@ function PLUGIN:HUDPaint()
 
         draw.SimpleText("<:: City Code: " .. code.name, "ixCombineHUDFont", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
+
+    for k, v in pairs(ix.cmbSystems.waypoints) do
+        local wayPos = v.pos:ToScreen()
+        local dist = math.Round(v.pos:Distance(localPlayer:GetPos()) / 16, 1)
+
+        local diff = v.pos - localPlayer:GetShootPos()
+        
+        if not ( v.drawAlpha ) then
+            v.drawAlpha = 255
+        end
+
+        if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.995 ) then
+            v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 25)
+        elseif ( dist <= 40 ) then
+            v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 100)
+        else
+            v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 255)
+        end
+
+        surface.SetFont("ixCombineHUDWaypointText")
+        local textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
+
+        surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
+        surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 30)
+
+        surface.SetDrawColor(v.backColor or Color(0, 100, 255))
+        surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
+
+        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineHUDWaypointText", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        
+        surface.SetFont("ixCombineHUDWaypointText")
+        textWidth, textHeight = surface.GetTextSize(v.sentBy)
+
+        draw.SimpleText(v.sentBy, "ixCombineHUDWaypointText", wayPos.x, wayPos.y - ScreenScale(9), ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+    end
 end
