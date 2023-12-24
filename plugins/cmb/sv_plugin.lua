@@ -1,5 +1,6 @@
 local PLUGIN = PLUGIN
 util.AddNetworkString("ix.Combine.SetCityCode")
+util.AddNetworkString("ix.Combine.ToggleBOL")
 
 net.Receive("ix.Combine.SetCityCode", function(len, ply)
     local id = net.ReadUInt(8)
@@ -14,6 +15,20 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
     end
 
     ix.cmbSystems:SetCityCode(id)
+end)
+
+net.Receive("ix.Combine.ToggleBOL", function(len, ply)
+    local target = net.ReadEntity()
+
+    if not ( IsValid(target) ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    ix.cmbSystems:SetBOLStatus(target, !target:GetCharacter():GetBOLStatus())
 end)
 
 function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)

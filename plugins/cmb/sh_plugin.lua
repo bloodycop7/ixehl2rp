@@ -53,3 +53,59 @@ ix.cmbSystems.cityCodes = {
 function ix.cmbSystems:GetCityCode()
     return GetGlobalInt("ixCityCode", 1)
 end
+
+function PLUGIN:InitializedChatClasses()
+    ix.chat.Register("cmb_global", {
+        CanHear = function(self, speaker, listener)
+            if not ( IsValid(listener) ) then
+                return false
+            end
+
+            local char = listener:GetCharacter()
+
+            if not ( char ) then
+                return false
+            end
+
+            if not ( listener:Alive() ) then
+                return false
+            end
+
+            if not ( Schema:IsCombine(listener) ) then
+                return false
+            end
+
+            return true
+        end,
+        CanSay = function(self, speaker, text)
+            if not ( IsValid(speaker) ) then
+                return false
+            end
+
+            local char = speaker:GetCharacter()
+
+            if not ( char ) then
+                return false
+            end
+
+            if not ( speaker:Alive() ) then
+                return false
+            end
+
+            if not ( Schema:IsCombine(speaker) ) then
+                return false
+            end
+            
+            return true
+        end,
+        OnChatAdd = function(self, speaker, text)
+            local color = ix.chat.classes.ic:GetColor(speaker)
+            local name = ix.chat.classes.ic:GetName(speaker)
+            local icon = ix.chat.classes.ic:GetIcon(speaker)
+
+            chat.AddText(color, icon, name, Color(255, 255, 255), ": "..text)
+        end,
+        prefix = {"/cmbradio", "/cmbr"},
+        font = ""
+    })
+end

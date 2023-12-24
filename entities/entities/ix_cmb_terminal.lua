@@ -149,6 +149,80 @@ else
 		end
 		self.cityCodesButton:SizeToContents()
 
+		self.citizenIndexButton = self.leftPanel:Add("ixMenuButton")
+		self.citizenIndexButton:Dock(TOP)
+		self.citizenIndexButton:SetText("Citizen Index")
+		self.citizenIndexButton:SetFont("ixCombineHUDFont")
+		self.citizenIndexButton:SetTextColor(color_white)
+		self.citizenIndexButton.DoClick = function(this)
+			self.rightPanel:Clear()
+
+			for k, v in ipairs(player.GetAll()) do
+				if not ( IsValid(v) ) then
+					continue
+				end
+
+				local char = v:GetCharacter()
+
+				if not ( char ) then
+					continue
+				end
+
+				if ( Schema:IsCombine(v) ) then
+					continue
+				end
+
+				if ( v == localPlayer ) then
+					continue
+				end
+
+				local button = self.rightPanel:Add("Panel")
+				button:Dock(TOP)
+				button:SetContentAlignment(5)
+				button:SetTall(40)
+				button:DockMargin(0, 10, 0, 0)
+				button.paintW = 0
+				button.Paint = function(pnl, w, h)
+					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 100))
+					surface.DrawOutlinedRect(0, 0, w, h, 2)
+
+					if ( pnl:IsHovered() ) then
+						pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, w)
+					else
+						pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, 0)
+					end
+
+					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 50))
+					surface.SetMaterial(gradient)
+					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
+				end
+
+				local name = button:Add("DLabel")
+				name:Dock(LEFT)
+				name:DockMargin(10, 0, 0, 0)
+				name:SetFont("ixCombineHUDFont")
+				name:SetText(char:GetName())
+				name:SetContentAlignment(5)
+				name:SizeToContents()
+
+				local button = button:Add("ixMenuButton")
+				button:Dock(RIGHT)
+				button:SetWide(50)
+				button:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
+				button:SetFont("ixCombineHUDFont")
+				button:SetContentAlignment(5)
+				button.DoClick = function(this)
+					net.Start("ix.Combine.ToggleBOL")
+						net.WriteEntity(v)
+					net.SendToServer()
+
+					this:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
+				end
+				button:SizeToContents()
+			end
+		end
+		self.citizenIndexButton:SizeToContents()
+
 		local closeButton = self.topPanel:Add("ixMenuButton")
 		closeButton:SetWide(50)
 		closeButton:Dock(RIGHT)
