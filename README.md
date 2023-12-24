@@ -3,4 +3,5 @@
 <h5>The code is also open-source with a license included therefore you may scrap code, but please include proper credit.</h5>
 
 <h2>Recommened Addons for Usage</h2>
-<https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404>
+https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404
+https://steamcommunity.com/sharedfiles/filedetails/?id=2856740279
