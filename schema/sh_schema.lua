@@ -65,4 +65,11 @@ function Schema:IsCombine(ply)
     return self:IsOTA(ply) or self:IsCP(ply)
 end
 
+// Credit: https://github.com/NebulousCloud/helix-hl2rp/blob/master/schema/sh_schema.lua#L32-L35
+function Schema:ZeroNumber(number, length)
+	local amount = math.max(0, length - string.len(number))
+
+	return string.rep("0", amount) .. tostring(number)
+end
+
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")

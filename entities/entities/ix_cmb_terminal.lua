@@ -77,10 +77,9 @@ else
 
 		local title = self.topPanel:Add("DLabel")
 		title:Dock(LEFT)
-		title:SetFont("ixCombineTerminalFont")
+		title:SetFont("ixCombineHUDFont14")
 		title:SetText("Combine Terminal")
-		title:SetContentAlignment(5)
-		title:SetTextColor(color_white)
+		title:SetContentAlignment(4)
 		title:SizeToContents()
 
 		self.leftPanel = self:Add("Panel")
@@ -108,8 +107,9 @@ else
 		self.cityCodesButton = self.leftPanel:Add("ixMenuButton")
 		self.cityCodesButton:Dock(TOP)
 		self.cityCodesButton:SetText("City Codes")
-		self.cityCodesButton:SetFont("ixCombineHUDFont")
+		self.cityCodesButton:SetFont("ixCombineHUDFont10")
 		self.cityCodesButton:SetTextColor(color_white)
+		self.cityCodesButton:SetContentAlignment(5)
 		self.cityCodesButton.DoClick = function(this)
 			self.rightPanel:Clear()
 
@@ -117,7 +117,7 @@ else
 				local button = self.rightPanel:Add("ixMenuButton")
 				button:Dock(TOP)
 				button:SetText(v.name)
-				button:SetFont("ixCombineHUDFont")
+				button:SetFont("ixCombineHUDFont10")
 				button:SetContentAlignment(5)
 				button:SetTall(40)
 				button:DockMargin(0, 10, 0, 0)
@@ -154,6 +154,7 @@ else
 		self.citizenIndexButton:SetText("Citizen Index")
 		self.citizenIndexButton:SetFont("ixCombineHUDFont")
 		self.citizenIndexButton:SetTextColor(color_white)
+		self.citizenIndexButton:SetContentAlignment(5)
 		self.citizenIndexButton.DoClick = function(this)
 			self.rightPanel:Clear()
 
@@ -200,7 +201,7 @@ else
 				local name = button:Add("DLabel")
 				name:Dock(LEFT)
 				name:DockMargin(10, 0, 0, 0)
-				name:SetFont("ixCombineHUDFont")
+				name:SetFont("ixCombineHUDFont10")
 				name:SetText(char:GetName())
 				name:SetContentAlignment(5)
 				name:SizeToContents()
@@ -209,7 +210,7 @@ else
 				button:Dock(RIGHT)
 				button:SetWide(50)
 				button:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
-				button:SetFont("ixCombineHUDFont")
+				button:SetFont("ixCombineHUDFont10")
 				button:SetContentAlignment(5)
 				button.DoClick = function(this)
 					net.Start("ix.Combine.ToggleBOL")
@@ -224,15 +225,16 @@ else
 		self.citizenIndexButton:SizeToContents()
 
 		local closeButton = self.topPanel:Add("ixMenuButton")
-		closeButton:SetWide(50)
 		closeButton:Dock(RIGHT)
-		closeButton:SetText("X")
+		closeButton:SetText("Log out")
 		closeButton:SetFont("ixCombineHUDFont")
 		closeButton.DoClick = function(this)
 			self:MoveTo(0 - scrW * 0.50, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2, function()
 				self:Remove()
 			end)
 		end
+		closeButton:SetContentAlignment(5)
+		closeButton:SizeToContents()
 	end
 
 	function UI:Paint(w, h)

@@ -99,11 +99,7 @@ function PLUGIN:InitializedChatClasses()
             return true
         end,
         OnChatAdd = function(self, speaker, text)
-            local color = ix.chat.classes.ic:GetColor(speaker)
-            local name = ix.chat.classes.ic:GetName(speaker)
-            local icon = ix.chat.classes.ic:GetIcon(speaker)
-
-            chat.AddText(color, icon, name, Color(255, 255, 255), ": "..text)
+            chat.AddText("Radio Transmission: " .. text)
         end,
         prefix = {"/cmbradio", "/cmbr"},
         font = ""

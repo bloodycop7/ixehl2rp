@@ -24,9 +24,7 @@ function ix.cmbSystems:MakeWaypoint(data)
         data.pos = localPlayer:GetPos()
     end
 
-    data.id = data.id or "ix_cmb_waypoint." .. (table.Count(ix.cmbSystems.waypoints) + 1)
-
-    ix.cmbSystems.waypoints[data.id] = data
+    ix.cmbSystems.waypoints[#ix.cmbSystems.waypoints + 1] = data
 end
 
 timer.Create("ix.cmbSystems.waypointTimer", 1, 0, function()
@@ -37,26 +35,14 @@ timer.Create("ix.cmbSystems.waypointTimer", 1, 0, function()
     end
 end)
 
-surface.CreateFont("ixCombineHUDFont", {
-    font = "Frak",
-    size = ScreenScale(10),
-    weight = 200,
-    antialias = true,
-    shadows = true,
-})
+for i = 6, 40, 2 do
+    local value = Schema:ZeroNumber(i, 2)
 
-surface.CreateFont("ixCombineTerminalFont", {
-    font = "Frak",
-    size = ScreenScale(15),
-    weight = 200,
-    antialias = true,
-    shadows = true,
-})
-
-surface.CreateFont("ixCombineHUDWaypointText", {
-    font = "Frak",
-    size = ScreenScale(8),
-    weight = 200,
-    antialias = true,
-    shadows = true,
-})
+    surface.CreateFont("ixCombineHUDFont"..value, {
+        font = "Frak",
+        size = ScreenScale(i),
+        weight = 200,
+        antialias = true,
+        shadows = true,
+    })
+end

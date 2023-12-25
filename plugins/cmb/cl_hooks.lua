@@ -30,25 +30,13 @@ function PLUGIN:HUDPaint()
     local padding = ScreenScale(10)
     local x, y = padding, padding
 
-    surface.SetDrawColor(Color(0, 0, 0, 255))
-    surface.DrawRect(x, y, padding * 12, padding * 3)
-
-    local hp = localPlayer:Health()
-    draw.SimpleText("<:: Vitals: " .. hp, "ixCombineHUDFont", x, y, color_white, TEXT_ALIGN_LEFT)
-
-    y = y + ScreenScale(10)
-
-    local vec = localPlayer:GetPos()
-
-    draw.SimpleText("<:: Vector: " .. math.Round(vec.x, 1) .. ", " .. math.Round(vec.y, 1) .. ", " .. math.Round(vec.z, 1), "ixCombineHUDFont", x, y, color_white, TEXT_ALIGN_LEFT)
+    surface.SetDrawColor(Color(10, 10, 10, 200))
+    surface.DrawRect(x, y, padding * 9.2, padding * 0.9)
 
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
-        local lastCityCode = code.name
-        y = y + ScreenScale(10)
-
-        draw.SimpleText("<:: City Code: " .. code.name, "ixCombineHUDFont", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineHUDFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
@@ -69,7 +57,7 @@ function PLUGIN:HUDPaint()
             v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 255)
         end
 
-        surface.SetFont("ixCombineHUDWaypointText")
+        surface.SetFont("ixCombineHUDFont10")
         local textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
         surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
@@ -78,11 +66,14 @@ function PLUGIN:HUDPaint()
         surface.SetDrawColor(v.backColor or Color(0, 100, 255))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
 
-        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineHUDWaypointText", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineHUDFont10", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         
+        // Uncomment this if you want to use sentBy value on the waypoint
+        --[[
         surface.SetFont("ixCombineHUDWaypointText")
         textWidth, textHeight = surface.GetTextSize(v.sentBy)
 
         draw.SimpleText(v.sentBy, "ixCombineHUDWaypointText", wayPos.x, wayPos.y - ScreenScale(9), ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        ]]
     end
 end
