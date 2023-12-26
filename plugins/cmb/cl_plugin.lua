@@ -45,4 +45,24 @@ for i = 6, 40, 2 do
         antialias = true,
         shadows = true,
     })
+
+    // Registers fonts:
+        // "ixCombineHUDFont06"
+        // "ixCombineHUDFont08"
+        // "ixCombineHUDFont10"
+        // "ixCombineHUDFont12"
+        // "ixCombineHUDFont14"
+        // "ixCombineHUDFont16"
+        // "ixCombineHUDFont18"
+        // "ixCombineHUDFont20"
+        // "ixCombineHUDFont22"
+        // "ixCombineHUDFont24"
+        // "ixCombineHUDFont26"
+        // "ixCombineHUDFont28"
+        // "ixCombineHUDFont30"
+        // "ixCombineHUDFont32"
+        // "ixCombineHUDFont34"
+        // "ixCombineHUDFont36"
+        // "ixCombineHUDFont38"
+        // "ixCombineHUDFont40"
 end
