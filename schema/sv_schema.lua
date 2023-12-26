@@ -11,3 +11,21 @@ function Schema:OpenUI(ply, panel)
 		net.WriteString(panel)
 	net.Send(ply)
 end
+
+util.AddNetworkString("ix.PlaySound")
+function Schema:PlaySound(players, sound, level, pitch, volume, channel, dsp)
+	if ( isentity(players) ) then
+		players = {players}
+	end
+
+	net.Start("ix.PlaySound")
+		net.WriteString(sound)
+		net.WriteFloat(level or 75)
+		net.WriteFloat(pitch or 100)
+		net.WriteFloat(volume or 1)
+		net.WriteFloat(channel or CHAN_AUTO)
+		net.WriteFloat(dsp or 0)
+	for k, v in ipairs(players) do
+		net.Send(v)
+	end
+end

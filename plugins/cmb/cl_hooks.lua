@@ -36,7 +36,7 @@ function PLUGIN:HUDPaint()
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineHUDFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
@@ -57,7 +57,7 @@ function PLUGIN:HUDPaint()
             v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 255)
         end
 
-        surface.SetFont("ixCombineHUDFont10")
+        surface.SetFont("ixCombineFont10")
         local textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
         surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
@@ -66,7 +66,7 @@ function PLUGIN:HUDPaint()
         surface.SetDrawColor(v.backColor or Color(0, 100, 255))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
 
-        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineHUDFont10", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineFont10", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         
         // Uncomment this if you want to use sentBy value on the waypoint
         --[[

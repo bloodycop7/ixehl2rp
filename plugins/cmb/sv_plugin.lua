@@ -62,3 +62,34 @@ function ix.cmbSystems:SetCityCode(id)
 
     SetGlobalInt("ixCityCode", id)
 end
+
+local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
+
+ix.cmbSystems.dispatchPassive = {
+    {
+        soundDir = baseRadioVoiceDir .. "f_innactionisconspiracy_spkr.wav",
+        text = "Citizen reminder: inaction is conspiracy. Report counter-behavior to a Civil Protection team immediately.",
+    },
+    {
+        soundDir = baseRadioVoiceDir .. "f_trainstation_offworldrelocation_spkr.wav",
+        text = "Citizen notice: Failure to cooperate will result in permanent off-world relocation.",
+    }
+}
+
+timer.Remove("ix.DispatchPassive")
+timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
+    local cityCode = ix.cmbSystems.cityCodes[GetGlobalInt("ixCityCode", 1)]
+
+    if ( cityCode ) then
+        if ( cityCode.dispatchPassive ) then
+            cityCode:dispatchPassive()
+
+            return
+        end
+    end
+
+    local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
+
+    ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
+    Schema:PlaySound(player.GetAll(), dispatchData.soundDir)
+end)
