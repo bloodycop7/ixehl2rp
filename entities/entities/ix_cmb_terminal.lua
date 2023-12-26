@@ -238,7 +238,7 @@ else
 	end
 
 	function UI:Paint(w, h)
-		surface.SetDrawColor(Color(0, 255, 255, 200))
+		surface.SetDrawColor(Color(0, 205, 205, 200))
 		surface.SetMaterial(gradient)
 		surface.DrawTexturedRect(0, 0, w, h)
 	end
