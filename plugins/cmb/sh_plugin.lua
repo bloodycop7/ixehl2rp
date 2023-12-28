@@ -13,6 +13,11 @@ end, {
     data = {min = 1, max = 3600},
 })
 
+ix.config.Add("maxCombineDropItems", 3, "The maximum amount of items that can be dropped by a combine.", nil, {
+    data = {min = 1, max = 10},
+    category = "Combine Systems"
+})
+
 ix.char.RegisterVar("bOLStatus", {
     field = "bol_status",
     fieldType = ix.type.bool,
