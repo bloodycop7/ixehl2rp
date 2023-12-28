@@ -10,7 +10,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
     ix.cmbSystems:SetBOLStatus(ply, false)
 
     if ( Schema:IsCombine(ply) ) then
-        local maxDeathItems = ix.config.Get("maxCombineDropItems", 3)
+        local maxDeathItems = ix.config.Get("maxItemDrops", 3)
 
         if ( maxDeathItems > 0 ) then
             local inventory = char:GetInventory()
@@ -19,7 +19,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
                 local items = {}
 
                 for _, v in pairs(inventory:GetItems()) do
-                    if ( hook.Run("CanCombineDropItem", ply, v) == false ) then
+                    if ( hook.Run("CanPlayerDropItemOnDeath", ply, v) == false ) then
                         continue
                     end
 

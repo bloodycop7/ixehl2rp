@@ -83,3 +83,8 @@ function Schema:IsOutside(ply)
 end
 
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
+
+ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be dropped by a combine.", nil, {
+    data = {min = 1, max = 10},
+    category = "misc"
+})
