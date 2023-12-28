@@ -11,4 +11,4 @@ You may fork this project and submit pull requests ***if you wish***, it will be
 
 You may find various Credits everywhere through out the code, make sure to check them out!
 # Useful Navigation
-[Combine Fonts](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_plugin.lua#L38-L77)
+[Combine Fonts](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_plugin.lua#L38-L77) - [Download](https://dl.dafont.com/dl/?f=frak)
