@@ -4,7 +4,7 @@
 
 <h2>Recommened Addons for Usage</h2>
 <img src="https://steamuserimages-a.akamaihd.net/ugc/1861681104201864138/AB5274CEE817EFE4B9FFCBC10CC4BCC987B3434A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" width = "300px"/>
-https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404
+[TFA: HL2 Project MMod Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404)
 
 <img src="https://steamuserimages-a.akamaihd.net/ugc/1842551758698807122/6B89F20CDDCF283D9EE5EA09FBB188815993544F/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true" width = "300px"/>
-https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148
+[TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)
