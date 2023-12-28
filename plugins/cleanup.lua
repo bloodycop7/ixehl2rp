@@ -15,7 +15,8 @@ ix.config.Add("shouldCleanupItems", true, "Whether or not items should be cleane
 ix.config.Add("cleanupRate", 60, "How often the cleanup should run in seconds.", function(oldV, newV)
     timer.Adjust("ix.Cleanup", newV)
 end, {
-    category = "Cleanup"
+    category = "Cleanup",
+    data = {min = 1, max = 3600},
 })
 
 timer.Create("ix.Cleanup", 60, 0, function()
