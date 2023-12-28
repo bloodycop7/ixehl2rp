@@ -105,11 +105,37 @@ if ( SERVER ) then
                     ix.relationships.Update(ent)
                 end)
             end
-
-            ent:CallOnRemove("ix.NPCRelationships.RemoveTimer." .. ent:EntIndex(), function()
-                timer.Remove(timerID)
-            end)
         end)
+    end)
+
+    hook.Add("OnNPCKilled", "ix.NPCRelationships.OnNPCKilled", function(ent, attacker, inflictor)
+        if not ( IsValid(ent) ) then
+            return
+        end
+
+        local timerID = "ix.NPCRelationships.Update." .. ent:EntIndex()
+
+        if ( timer.Exists(timerID) ) then
+            timer.Remove(timerID)
+        end
+    end)
+
+    hook.Add("EntityRemoved", "ix.NPCRelationships.EntityRemoved", function(ent)
+        if not ( IsValid(ent) ) then
+            return
+        end
+
+        if not ( ent:IsNPC() ) then
+            return
+        end
+
+        local timerID = "ix.NPCRelationships.Update." .. ent:EntIndex()
+
+        if ( timer.Exists(timerID) ) then
+            timer.Remove(timerID)
+        end
+
+        print(ent)
     end)
 
     hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
