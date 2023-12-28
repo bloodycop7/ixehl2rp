@@ -80,7 +80,7 @@ if ( SERVER ) then
         end
     end
 
-    hook.Add("OnEntityCreated", "ix.NPCRelationships", function(ent)
+    hook.Add("OnEntityCreated", "ix.NPCRelationships.OnEntityCreated", function(ent)
         if not ( IsValid(ent) ) then
             return
         end
@@ -98,12 +98,32 @@ if ( SERVER ) then
                 timer.Create(timerID, 1, 0, function()
                     if not ( IsValid(ent) ) then
                         timer.Remove(timerID)
-                        
+
                         return
                     end
 
                     ix.relationships.Update(ent)
                 end)
+            end
+
+            ent:CallOnRemove("ix.NPCRelationships.RemoveTimer." .. ent:EntIndex(), function()
+                timer.Remove(timerID)
+            end)
+        end)
+    end)
+
+    hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
+        timer.Simple(0.1, function()
+            for k, v in ipairs(ents.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                if not ( v:IsNPC() ) then
+                    continue
+                end
+
+                ix.relationships.Update(v)
             end
         end)
     end)
