@@ -83,7 +83,7 @@ function Schema:IsOutside(ply)
 end
 
 function Schema:GetGameDescription()
-	return "IX: "..(Schema and Schema.name or "Unknown")
+	return "IX: "..(Schema.name or "Unknown")
 end
 
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
