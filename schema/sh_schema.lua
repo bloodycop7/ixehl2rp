@@ -1,6 +1,6 @@
 Schema.name = "Half-Life 2 Roleplay"
 Schema.author = "eon"
-Schema.description = "Welcome to Half-Life 2."
+Schema.description = "Immerse yourself in the world of the Half-Life 2 Universe."
 
 ix.util.Include("cl_schema.lua")
 ix.util.Include("sv_schema.lua")
@@ -82,9 +82,14 @@ function Schema:IsOutside(ply)
     return trace.HitSky
 end
 
+function Schema:GetGameDescription()
+	return "IX: "..(Schema and Schema.name or "Unknown")
+end
+
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 
-ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be dropped by a combine.", nil, {
+ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be dropped by a player on death.", nil, {
     data = {min = 1, max = 10},
     category = "misc"
 })
+
