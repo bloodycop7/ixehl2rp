@@ -72,6 +72,10 @@ if ( SERVER ) then
                 end
             end
 
+            if ( hook.Run("GetNPCRelationshipStatus", v, ent) != nil ) then
+                relationshipStatus = hook.Run("GetNPCRelationshipStatus", v, ent)
+            end
+
             if ( ent:Disposition(v) == relationshipStatus ) then
                 continue
             end
