@@ -9,4 +9,4 @@ The code is also open-source with a license.
 # Contributions
 You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!
 
-You may find various Credits every where through out the code, make sure to check them out!
+You may find various Credits everywhere through out the code, make sure to check them out!
