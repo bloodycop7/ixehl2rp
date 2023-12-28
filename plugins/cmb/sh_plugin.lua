@@ -6,8 +6,11 @@ PLUGIN.description = "Self-Explanatory, adds main Combine Functions."
 
 ix.cmbSystems = ix.cmbSystems or {}
 
-ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", nil, {
-    category = "Combine Systems"
+ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
+    timer.Adjust("ix.DispatchPassive", newV)
+end, {
+    category = "Combine Systems",
+    data = {min = 1, max = 3600},
 })
 
 ix.char.RegisterVar("bOLStatus", {
@@ -106,7 +109,7 @@ function PLUGIN:InitializedChatClasses()
             chat.AddText(Color(0, 100, 170), "*[CMB] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
         end,
         prefix = {"/cmbradio", "/cmbr"},
-        font = "ixCombineFont10",
+        font = "ixGenericFont",
     })
 
     ix.chat.Register("cmb_dispatch", {
@@ -127,7 +130,7 @@ function PLUGIN:InitializedChatClasses()
         OnChatAdd = function(self, speaker, text)
             chat.AddText(Color(185, 40, 0), "*Dispatch: " .. text .. "*")
         end,
-        font = "ixCombineFont30",
+        font = "ixGenericFont",
     })
 end
 

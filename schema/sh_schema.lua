@@ -72,4 +72,14 @@ function Schema:ZeroNumber(number, length)
 	return string.rep("0", amount) .. tostring(number)
 end
 
+function Schema:IsOutside(ply)
+    local trace = util.TraceLine({
+        start = ply:GetPos(),
+        endpos = ply:GetPos() + ply:GetUp() * 9999999999,
+        filter = ply
+    })
+
+    return trace.HitSky
+end
+
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")

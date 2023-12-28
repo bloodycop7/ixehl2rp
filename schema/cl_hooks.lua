@@ -41,7 +41,6 @@ net.Receive("ix.PlaySound", function()
 	local pitch = net.ReadFloat()
 	local volume = net.ReadFloat()
 	local channel = net.ReadFloat()
-	local dsp = net.ReadFloat()
 
-	localPlayer:EmitSound(sound, level, pitch, volume, channel, dsp)
+	localPlayer:EmitSound(sound, level, pitch, volume, channel)
 end)

@@ -36,7 +36,7 @@ function PLUGIN:HUDPaint()
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08-Italic", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do

@@ -60,7 +60,11 @@ function ix.cmbSystems:SetCityCode(id)
         codeData:onStart()
     end
 
+    local oldCode = GetGlobalInt("ixCityCode", 1)
+
     SetGlobalInt("ixCityCode", id)
+
+    hook.Run("OnCityCodeChanged", id, oldCode)
 end
 
 local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
@@ -91,5 +95,12 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
 
     ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
-    Schema:PlaySound(player.GetAll(), dispatchData.soundDir)
+
+    for k, v in ipairs(player.GetAll()) do
+        if ( Schema:IsOutside(v) ) then
+            Schema:PlaySound(player.GetAll(), dispatchData.soundDir, 75, 100, 0.8)
+        else
+            Schema:PlaySound(player.GetAll(), dispatchData.soundDir, 75, 100, 0.5)
+        end
+    end
 end)
