@@ -134,8 +134,6 @@ if ( SERVER ) then
         if ( timer.Exists(timerID) ) then
             timer.Remove(timerID)
         end
-
-        print(ent)
     end)
 
     hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
