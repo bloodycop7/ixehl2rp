@@ -10,6 +10,10 @@ function Schema:CanPlayerJoinClass(client, class, info)
 	return false
 end
 
+function Schema:ShouldDrawCrosshair()
+	return false
+end
+
 local supress = {}
 
 function Schema:CreateCharacterInfo(charInfo)
