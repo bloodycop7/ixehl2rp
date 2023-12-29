@@ -42,10 +42,6 @@ function PLUGIN:HUDPaint()
         surface.SetDrawColor(Color(10, 10, 10, 200))
         surface.DrawRect(x - 2, y, textWidth + 6, padding * 0.9)
 
-        if ( ix.option.Get("combineHUDTextGlow", true) ) then
-            draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08-Blurred", x, y, ColorAlpha(code.color or color_white, 170), TEXT_ALIGN_LEFT)
-        end
-
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
 
@@ -88,12 +84,34 @@ function PLUGIN:HUDPaint()
     end
 end
 
+local combineOverlayMat = ix.util.GetMaterial("effects/combine_binocoverlay")
+
 function PLUGIN:RenderScreenspaceEffects()
+    if not ( IsValid(localPlayer) ) then
+        return
+    end
+
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(localPlayer) ) then
+        return
+    end
+
     if not ( ix.option.Get("combineOverlay", true) ) then
         return
     end
 
+    render.UpdateScreenEffectTexture()
 
+    combineOverlayMat:SetFloat("$alpha", 0.4)
+    combineOverlayMat:SetInt("$ignorez", 1)
+
+    render.SetMaterial(combineOverlayMat)
+    render.DrawScreenQuad()
 end
 
 net.Receive("ix.MakeWaypoint", function()

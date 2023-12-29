@@ -43,7 +43,6 @@ end, {
 })
 
 ix.lang.AddTable("english", {
-	optCombineHUDTextGlow = "Combine Text Glow",
 	optCombineOverlay = "Combine Overlay"
 })
 
