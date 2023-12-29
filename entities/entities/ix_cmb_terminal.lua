@@ -9,12 +9,18 @@ ENT.AdminOnly = true
 ENT.PhysgunDisable = true
 ENT.bNoPersist = true
 
+function ENT:SetupDataTables()
+	self:NetworkVar("Bool", 0, "Broken")
+end
+
 if (SERVER) then
 	function ENT:Initialize()
 		self:SetModel("models/props_combine/combine_interface001.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
+		self:SetBroken(false)
+		self:SetHealth(50)
 
 		local physics = self:GetPhysicsObject()
 		physics:EnableMotion(false)
@@ -34,11 +40,31 @@ if (SERVER) then
 
 		self.nextUse = CurTime() + 1
 
+		if not ( Schema:IsCombine(ply) ) then
+			self:EmitSound("buttons/combine_button_locked.wav")
+
+			return
+		end
+
 		Schema:OpenUI(ply, "ixCombineTerminal")
 	end
 
 	function ENT:OnRemove()
-		if (!ix.shuttingDown) then
+		if not ( ix.shuttingDown ) then
+			Schema:SaveData()
+		end
+	end
+
+	function ENT:OnTakeDamage(dmgInfo)
+		if ( self:GetBroken() ) then
+			return
+		end
+
+		self:SetHealth(self:Health() - dmgInfo:GetDamage())
+
+		if ( self:Health() <= 0 ) then
+			self:SetBroken(true)
+			self:EmitSound("ambient/energy/spark"..math.random(1, 6)..".wav")
 		end
 	end
 else

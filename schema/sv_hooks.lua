@@ -67,3 +67,25 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 		end
 	end
 end
+
+function Schema:SaveData()
+	local data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_cmb_terminal")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles()}
+	end
+
+	ix.data.Set("cmbTerminals", data)
+end
+
+function Schema:LoadData()
+	local data = ix.data.Get("cmbTerminals", {})
+
+	for _, v in ipairs(data) do
+		local terminal = ents.Create("ix_cmb_terminal")
+		terminal:SetPos(v[1])
+		terminal:SetAngles(v[2])
+		terminal:Spawn()
+		terminal:Activate()
+	end
+end
