@@ -98,9 +98,9 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
 
     for k, v in ipairs(player.GetAll()) do
         if ( Schema:IsOutside(v) ) then
-            Schema:PlaySound(player.GetAll(), dispatchData.soundDir, 75, 100, 0.8)
+            Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.8)
         else
-            Schema:PlaySound(player.GetAll(), dispatchData.soundDir, 75, 100, 0.5)
+            Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
         end
     end
 end)
