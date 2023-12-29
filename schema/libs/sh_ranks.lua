@@ -11,15 +11,9 @@ ix.char.RegisterVar("rank", {
 
 local charMeta = ix.meta.character
 
---- Loads classes from a directory.
--- @realm shared
--- @internal
--- @string directory The path to the class files.
 function ix.rank.LoadFromDir(directory)
 	for _, v in ipairs(file.Find(directory.."/*.lua", "LUA")) do
-		-- Get the name without the "sh_" prefix and ".lua" suffix.
 		local niceName = v:sub(4, -5)
-		-- Determine a numeric identifier for this class.
 		local index = #ix.rank.list + 1
 		local halt
 
@@ -33,20 +27,17 @@ function ix.rank.LoadFromDir(directory)
 			continue
 		end
 
-		-- Set up a global table so the file has access to the class table.
 		RANK = {index = index, uniqueID = niceName}
 			RANK.name = "Unknown"
 			RANK.description = "No description available."
 			RANK.limit = 0
 
-			-- For future use with plugins.
 			if (PLUGIN) then
 				RANK.plugin = PLUGIN.uniqueID
 			end
 
 			ix.util.Include(directory.."/"..v, "shared")
 
-			-- Why have a class without a faction?
 			if (!RANK.faction or !team.Valid(RANK.faction)) then
 				ErrorNoHalt("Rank '"..niceName.."' does not have a valid faction!\n")
 				RANK = nil
@@ -54,7 +45,6 @@ function ix.rank.LoadFromDir(directory)
 				continue
 			end
 
-			-- Allow classes to be joinable by default.
 			if (!RANK.CanSwitchTo) then
 				RANK.CanSwitchTo = function(client)
 					return true
@@ -66,21 +56,13 @@ function ix.rank.LoadFromDir(directory)
 	end
 end
 
---- Determines if a player is allowed to join a specific class.
--- @realm shared
--- @player client Player to check
--- @number class Index of the class
--- @treturn bool Whether or not the player can switch to the class
 function ix.rank.CanSwitchTo(client, rank)
-	-- Get the class table by its numeric identifier.
 	local info = ix.rank.list[rank]
 
-	-- See if the class exists.
 	if (!info) then
 		return false, "no info"
 	end
 
-	-- If the player's faction matches the class's faction.
 	if (client:Team() != info.faction) then
 		return false, "not correct team"
 	end
@@ -99,22 +81,13 @@ function ix.rank.CanSwitchTo(client, rank)
 		return false
 	end
 
-	-- See if the class allows the player to join it.
 	return info:CanSwitchTo(client)
 end
 
---- Retrieves a class table.
--- @realm shared
--- @number identifier Index of the class
--- @treturn table Class table
 function ix.rank.Get(identifier)
 	return ix.rank.list[identifier]
 end
 
---- Retrieves the players in a class
--- @realm shared
--- @number class Index of the class
--- @treturn table Table of players in the class
 function ix.rank.GetPlayers(rank)
 	local players = {}
 
@@ -130,13 +103,6 @@ function ix.rank.GetPlayers(rank)
 end
 
 if (SERVER) then
-	--- Character class methods
-	-- @classmod Character
-
-	--- Makes this character join a class. This automatically calls `KickClass` for you.
-	-- @realm server
-	-- @number class Index of the class to join
-	-- @treturn bool Whether or not the character has successfully joined the class
 	function charMeta:JoinRank(rank)
 		if (!class) then
 			self:KickRank()
@@ -156,8 +122,6 @@ if (SERVER) then
 		return false
 	end
 
-	--- Kicks this character out of the class they are currently in.
-	-- @realm server
 	function charMeta:KickRank()
 		local client = self:GetPlayer()
 		if (!client) then return end
