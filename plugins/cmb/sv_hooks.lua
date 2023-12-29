@@ -39,3 +39,27 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         end
     end
 end
+
+function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
+    if ( oldChar ) then
+        timer.Remove("ix.PassiveChatter." .. oldChar:GetID())
+    end
+
+    if ( Schema:IsCombine(ply) ) then
+        local uID = "ix.PassiveChatter." .. newChar:GetID()
+        timer.Create("ix.PassiveChatter." .. newChar:GetID(), ix.config.Get("passiveChatterCooldown", 120), 0, function()
+            if not ( IsValid(ply) ) then
+                timer.Remove(uID)
+            
+                return
+            end
+
+            if not ( ply:GetCharacter():GetData("passiveChatter", false) ) then
+                print("Wha?")
+                return
+            end
+
+            ix.cmbSystems:PassiveChatter(ply)
+        end)
+    end
+end

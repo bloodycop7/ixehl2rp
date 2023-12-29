@@ -7,7 +7,34 @@ PLUGIN.description = "Self-Explanatory, adds main Combine Functions."
 ix.cmbSystems = ix.cmbSystems or {}
 
 ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
-    timer.Adjust("ix.DispatchPassive", newV)
+    if ( SERVER ) then
+        timer.Adjust("ix.DispatchPassive", newV)
+    end
+end, {
+    category = "Combine Systems",
+    data = {min = 1, max = 3600},
+})
+
+ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
+    if ( SERVER ) then
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then 
+                continue
+            end
+
+            local char = v:GetCharacter()
+
+            if not ( char ) then
+                continue
+            end
+
+            if not ( Schema:IsCombine(v) ) then
+                continue
+            end
+            
+            timer.Adjust("ix.PassiveChatter." .. char:GetID(), newV)
+        end
+    end
 end, {
     category = "Combine Systems",
     data = {min = 1, max = 3600},
