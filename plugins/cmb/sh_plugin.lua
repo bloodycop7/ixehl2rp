@@ -42,6 +42,11 @@ end, {
     data = {min = 1, max = 3600},
 })
 
+ix.lang.AddTable("english", {
+	optCombineHUDTextGlow = "Combine Text Glow",
+	optCombineOverlay = "Combine Overlay"
+})
+
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
     if ( SERVER ) then
         for k, v in ipairs(player.GetAll()) do

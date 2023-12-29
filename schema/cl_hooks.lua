@@ -39,6 +39,14 @@ function Schema:UpdateCharacterInfo(charInfo, char)
 	end
 end
 
+function Schema:CanPlayerJoinClass(ply, class, info)
+	return false
+end
+
+function Schema:CanPlayerJoinRank(ply, rank, info)
+	return false
+end
+
 net.Receive("ix.Schema.OpenUI", function()
 	local panel = net.ReadString()
 

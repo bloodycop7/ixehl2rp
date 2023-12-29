@@ -1,6 +1,14 @@
 local PLUGIN = PLUGIN
 ix.cmbSystems.waypoints = {}
 
+ix.option.Add("combineOverlay", ix.type.bool, true, {
+    category = "Combine Systems"
+})
+
+ix.option.Add("combineHUDTextGlow", ix.type.bool, true, {
+    category = "Combine Systems"
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
@@ -46,13 +54,13 @@ for i = 6, 40, 2 do
         shadows = true,
     })
 
-    surface.CreateFont("ixCombineFont" .. value .. "-Italic", {
+    surface.CreateFont("ixCombineFont" .. value .. "-Blurred", {
         font = "Frak",
         size = ScreenScale(i),
         weight = 200,
         antialias = true,
         shadows = true,
-        italic = true
+        blursize = 2
     })
 
     // Registers fonts:

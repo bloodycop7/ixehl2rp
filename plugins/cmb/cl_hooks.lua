@@ -19,6 +19,10 @@ function PLUGIN:ShouldDrawCombineHUD()
         return false
     end
 
+    if ( localPlayer:CanOverrideView() ) then
+        return false
+    end
+
     return true
 end
 
@@ -29,13 +33,19 @@ function PLUGIN:HUDPaint()
 
     local padding = ScreenScale(10)
     local x, y = padding, padding
-
-    surface.SetDrawColor(Color(10, 10, 10, 200))
-    surface.DrawRect(x, y, padding * 9.2, padding * 0.9)
-
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
+        surface.SetFont("ixCombineFont08")
+        local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
+
+        surface.SetDrawColor(Color(10, 10, 10, 200))
+        surface.DrawRect(x - 2, y, textWidth + 6, padding * 0.9)
+
+        if ( ix.option.Get("combineHUDTextGlow", true) ) then
+            draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08-Blurred", x, y, ColorAlpha(code.color or color_white, 170), TEXT_ALIGN_LEFT)
+        end
+
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
 
@@ -58,7 +68,7 @@ function PLUGIN:HUDPaint()
         end
 
         surface.SetFont("ixCombineFont08")
-        local textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
+        textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
         surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 30)
@@ -76,6 +86,14 @@ function PLUGIN:HUDPaint()
         draw.SimpleText(v.sentBy, "ixCombineHUDWaypointText", wayPos.x, wayPos.y - ScreenScale(9), ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         ]]
     end
+end
+
+function PLUGIN:RenderScreenspaceEffects()
+    if not ( ix.option.Get("combineOverlay", true) ) then
+        return
+    end
+
+
 end
 
 net.Receive("ix.MakeWaypoint", function()
