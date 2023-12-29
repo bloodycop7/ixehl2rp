@@ -50,19 +50,15 @@ function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
 end
 
 function ix.cmbSystems:SetCityCode(id)
-    local codeData = ix.cmbSystems.cityCodes[id]
+    local codeData = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
-    if not ( codeData ) then
-        return
+    if ( codeData.onEnd ) then
+        codeData:onEnd()
     end
-
-    if ( codeData.onStart ) then
-        codeData:onStart()
-    end
-
-    local oldCode = GetGlobalInt("ixCityCode", 1)
 
     SetGlobalInt("ixCityCode", id)
+
+    codeData = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     hook.Run("OnCityCodeChanged", id, oldCode)
 end
@@ -147,6 +143,10 @@ function ix.cmbSystems:PassiveChatter(ply)
         return
     end
 
+    if ( ply:IsAdmin() and ply:GetNoDraw() and ply:GetMoveType() == MOVETYPE_NOCLIP ) then
+        return
+    end
+
     local chatterLines = ix.cmbSystems.passiveChatterLines[char:GetFaction()]
 
     if not ( chatterLines ) then
@@ -164,7 +164,7 @@ function ix.cmbSystems:PassiveChatter(ply)
     if ( Schema:IsCP(ply) ) then
         sounds = {"npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav"}
     elseif ( Schema:IsOTA(ply) ) then
-        sounds = {"npc/combine_soldier/vo/on2.wav"}
+        sounds = {"ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"}
     end
 
     sounds[#sounds + 1] = line
@@ -172,7 +172,7 @@ function ix.cmbSystems:PassiveChatter(ply)
     if ( Schema:IsCP(ply) ) then
         sounds[#sounds + 1] = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
     elseif ( Schema:IsOTA(ply) ) then
-        sounds[#sounds + 1] = "npc/combine_soldier/vo/off1.wav"
+        sounds[#sounds + 1] = "ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"
     end
 
     local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))

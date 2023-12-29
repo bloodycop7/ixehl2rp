@@ -103,7 +103,50 @@ ix.cmbSystems.cityCodes = {
         name = "Judgment Waiver",
         color = Color(255, 0, 0),
         onStart = function()
-            print("PReserved")
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
+
+            timer.Simple(SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, function()
+                Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
+            end)
+
+            timer.Simple(SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, function()
+                Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.8)
+                Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 1)
+
+                timer.Create("ix.JudgmentWaiver.StreetWar1", SoundDuration("ambient/explosions/battle_loop1.wav") + math.random(30, 80), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(30, 80), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
+                end)
+
+                timer.Create("ix.Judgment.APCDistant", SoundDuration("ambient/levels/streetwar/apc_distant1.wav"), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/apc_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.5)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.CityBattle", math.random(30, 90), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_battle" .. math.random(1, 19) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.StriderDistant", math.random(30, 130), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/strider_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.CityScream", math.random(40, 200), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_scream3.wav", 75, 100, 0.7)
+                end)
+            end)
+        end,
+        onEnd = function()
+            timer.Remove("ix.JudgmentWaiver.StreetWar1")
+            timer.Remove("ix.JudgmentWaiver.StreetWar2")
+            timer.Remove("ix.Judgment.APCDistant")
+            timer.Remove("ix.JudgmentWaiver.CityBattle")
+            timer.Remove("ix.JudgmentWaiver.StriderDistant")
+            timer.Remove("ix.JudgmentWaiver.CityScream")
         end
     },
     {
@@ -278,7 +321,7 @@ function PLUGIN:CalcMainActivity(ply, vel)
 	if not ( ply:IsRunning() ) then
 		local playAnim = "idle_unarmed"
 
-		if ( vel:Length2D() > 0.5 ) then
+		if ( vel:Length2D() > 0.1 ) then
 			playAnim = "walkunarmed_all"
 		end
 		
