@@ -60,6 +60,10 @@ function ix.cmbSystems:SetCityCode(id)
 
     codeData = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
+    if ( codeData.onStart ) then
+        codeData:onStart()
+    end
+
     hook.Run("OnCityCodeChanged", id, oldCode)
 end
 
