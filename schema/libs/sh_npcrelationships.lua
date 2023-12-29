@@ -151,7 +151,7 @@ if ( SERVER ) then
                     continue
                 end
 
-                if ( v:Health() <= 0 ) then
+                if not ( v:Alive() or v:Health() > 0 ) then
                     continue
                 end
 
