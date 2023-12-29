@@ -1,6 +1,6 @@
 Schema.name = "Half-Life 2 Roleplay"
 Schema.author = "eon"
-Schema.description = "Immerse yourself in the world of the Half-Life 2 Universe."
+Schema.description = "Immerse yourself in the world of The Half-Life 2 Universe."
 
 ix.util.Include("cl_schema.lua")
 ix.util.Include("sv_schema.lua")
