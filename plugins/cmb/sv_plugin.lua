@@ -184,3 +184,34 @@ function ix.cmbSystems:PassiveChatter(ply)
         end
     end)
 end
+
+util.AddNetworkString("ix.MakeWaypoint")
+function ix.cmbSystems:MakeWaypoint(data)
+    if not ( istable(data) ) then
+        ErrorNoHalt("Attempted to create a waypoint with invalid data!")
+        return
+    end
+
+    if not ( data.text ) then
+        ErrorNoHalt("Attempted to create a waypoint without text!")
+        return
+    end
+
+    data.sentBy = data.sentBy or "Dispatch"
+
+    if not ( data.duration ) then
+        data.duration = 5
+    end
+
+    data.duration = CurTime() + data.duration
+
+    if not ( data.pos ) then
+        ErrorNoHalt("Attempted to create a waypoint with no Pos (Vector)!")
+
+        return
+    end
+
+    net.Start("ix.MakeWaypoint")
+        net.WriteTable(data or {})
+    net.Broadcast()
+end

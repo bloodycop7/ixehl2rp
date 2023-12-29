@@ -77,3 +77,9 @@ function PLUGIN:HUDPaint()
         ]]
     end
 end
+
+net.Receive("ix.MakeWaypoint", function()
+    local data = net.ReadTable() or {}
+
+    ix.cmbSystems:MakeWaypoint(data)
+end)
