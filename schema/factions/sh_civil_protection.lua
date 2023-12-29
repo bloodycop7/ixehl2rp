@@ -8,6 +8,25 @@ FACTION.models = {
 
 ix.anim.SetModelClass("models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl", "metrocop")
 
+FACTION.taglines = {
+	"union",
+    "defender",
+    "hero",
+    "jury",
+    "king",
+    "line",
+    "quick",
+    "roller",
+    "stick",
+    "tap",
+    "victor",
+	"xray"
+}
+
+function FACTION:GetDefaultName(ply)
+	return "CP:RCT:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(100, 999), 3), true
+end
+
 function FACTION:ModifyPlayerStep(client, data)
 	if ( data.ladder or data.submerged ) then
 		return

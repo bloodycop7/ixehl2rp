@@ -5,6 +5,33 @@ PLUGIN.author = "eon"
 PLUGIN.description = "Self-Explanatory, adds main Combine Functions."
 
 ix.cmbSystems = ix.cmbSystems or {}
+ix.cmbSystems.dispatchNumbers = {
+    [1] = "npc/overwatch/radiovoice/one.wav",
+    [2] = "npc/overwatch/radiovoice/two.wav",
+    [3] = "npc/overwatch/radiovoice/three.wav",
+    [4] = "npc/overwatch/radiovoice/four.wav",
+    [5] = "npc/overwatch/radiovoice/five.wav",
+    [6] = "npc/overwatch/radiovoice/six.wav",
+    [7] = "npc/overwatch/radiovoice/seven.wav",
+    [8] = "npc/overwatch/radiovoice/eight.wav",
+    [9] = "npc/overwatch/radiovoice/nine.wav",
+    [10] = "npc/overwatch/radiovoice/ten.wav",
+}
+
+ix.cmbSystems.dispatchTaglines = {
+    ["union"] = "npc/overwatch/radiovoice/union.wav",
+    ["defender"] = "npc/overwatch/radiovoice/defender.wav",
+    ["hero"] = "npc/overwatch/radiovoice/hero.wav",
+    ["jury"] = "npc/overwatch/radiovoice/jury.wav",
+    ["king"] = "npc/overwatch/radiovoice/king.wav",
+    ["line"] = "npc/overwatch/radiovoice/line.wav",
+    ["quick"] = "npc/overwatch/radiovoice/quick.wav",
+    ["roller"] = "npc/overwatch/radiovoice/roller.wav",
+    ["stick"] = "npc/overwatch/radiovoice/stick.wav",
+    ["tap"] = "npc/overwatch/radiovoice/tap.wav",
+    ["victor"] = "npc/overwatch/radiovoice/victor.wav",
+    ["xray"] = "npc/overwatch/radiovoice/xray.wav"
+}
 
 ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
     if ( SERVER ) then

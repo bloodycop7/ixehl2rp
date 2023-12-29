@@ -115,7 +115,10 @@ ix.cmbSystems.passiveChatterLines = {
         "npc/metropolice/vo/loyaltycheckfailure.wav",
         "npc/metropolice/vo/pickingupnoncorplexindy.wav",
         "npc/metropolice/vo/unitisonduty10-8.wav",
-        "npc/metropolice/vo/ihave10-30my10-20responding.wav"
+        "npc/metropolice/vo/ihave10-30my10-20responding.wav",
+        "npc/overwatch/radiovoice/politistablizationmarginal.wav",
+        "npc/overwatch/radiovoice/remindermemoryreplacement.wav",
+        "npc/overwatch/radiovoice/rewardnotice.wav"
     },
     [FACTION_OTA] = {
         "npc/combine_soldier/vo/prison_soldier_activatecentral.wav",
@@ -172,7 +175,7 @@ function ix.cmbSystems:PassiveChatter(ply)
         sounds[#sounds + 1] = "npc/combine_soldier/vo/off1.wav"
     end
 
-    local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 110))
+    local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))
     ply.isReadyForChatter = false
 
     timer.Simple(length, function()

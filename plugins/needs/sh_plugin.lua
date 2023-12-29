@@ -35,7 +35,7 @@ ix.config.Add("hungerRate", 120, "How fast the player gets hungry.", function(ne
         end
     end
 end, {
-    data = {min = 0, max = 100},
+    data = {min = 0, max = 500},
     category = "Needs"
 })
 
@@ -54,7 +54,7 @@ ix.config.Add("thirstRate", 120, "How fast the player gets thirsty.", function(n
         end
     end
 end, {
-    data = {min = 0, max = 100},
+    data = {min = 0, max = 500},
     category = "Needs"
 })
 
