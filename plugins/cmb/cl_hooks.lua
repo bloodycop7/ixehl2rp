@@ -19,8 +19,10 @@ function PLUGIN:ShouldDrawCombineHUD()
         return false
     end
 
-    if ( localPlayer:CanOverrideView() ) then
-        return false
+    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( localPlayer:CanOverrideView() ) then
+            return false
+        end
     end
 
     return true
@@ -103,6 +105,12 @@ function PLUGIN:RenderScreenspaceEffects()
 
     if not ( ix.option.Get("combineOverlay", true) ) then
         return
+    end
+
+    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( localPlayer:CanOverrideView() ) then
+            return
+        end
     end
 
     render.UpdateScreenEffectTexture()
