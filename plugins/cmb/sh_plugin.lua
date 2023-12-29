@@ -137,3 +137,32 @@ end
 function PLUGIN:OnReloaded()
     self:InitializedChatClasses()
 end
+
+ix.command.Add("TogglePassiveChatter", {
+    description = "Toggles passive chatter.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("You are not a combine.")
+
+            return
+        end
+
+        char:SetData("passiveChatter", (!char:GetData("passiveChatter", false)))
+
+        if ( char:GetData("passiveChatter", false) ) then
+            ply:Notify("You have enabled passive chatter.")
+        else
+            ply:Notify("You have disabled passive chatter.")
+        end
+    end
+})
