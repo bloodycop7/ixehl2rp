@@ -93,3 +93,36 @@ ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be droppe
     category = "misc"
 })
 
+ix.command.Add("CharSetRank", {
+	description = "Sets the rank of a character.",
+	adminOnly = true,
+	arguments = {
+		ix.type.character,
+		ix.type.text
+	},
+	OnRun = function(self, client, target, rank)
+		local rankTable
+
+		for _, v in ipairs(ix.rank.list) do
+			if ( ix.util.StringMatches(v.uniqueID, rank) or ix.util.StringMatches(v.name, rank) ) then
+				rankTable = v
+			end
+		end
+
+		if ( rankTable ) then
+			local oldRank = target:GetRank()
+			local targetPlayer = target:GetPlayer()
+
+			if ( targetPlayer:Team() == rankTable.faction ) then
+				target:SetRank(rankTable.index)
+				hook.Run("PlayerJoinedRank", targetPlayer, rankTable.index, oldRank)
+
+				targetPlayer:Notify("Your rank has been set to " .. rankTable.name .. ".")
+			else
+				return "Invalid Rank Faction"
+			end
+		else
+			return "Invalid Rank"
+		end
+	end
+})
