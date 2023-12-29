@@ -6,6 +6,15 @@ FACTION.models = {
 	"models/combine_soldier.mdl"
 }
 
+FACTION.taglines = {
+	"sword",
+    "swift",
+}
+
+function FACTION:GetDefaultName(ply)
+	return "OTA:OWS:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(1000, 9999), 4), true
+end
+
 function FACTION:ModifyPlayerStep(ply, data)
 	if ( data.ladder or data.submerged ) then
 		return

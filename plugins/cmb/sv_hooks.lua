@@ -82,6 +82,12 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
                 return
             end
 
+            if not ( ply:GetCharacter() ) then
+                timer.Remove(uID)
+            
+                return
+            end
+
             if not ( ply:GetCharacter():GetData("passiveChatter", false) ) then
                 return
             end
