@@ -116,11 +116,11 @@ ix.cmbSystems.cityCodes = {
             timer.Create("ix.JudgmentWaiver.SecondSequence", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, 0, function()
                 Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 1)
 
-                timer.Create("ix.JudgmentWaiver.StreetWar1", SoundDuration("ambient/explosions/battle_loop1.wav") + math.random(30, 80), 0, function()
+                timer.Create("ix.JudgmentWaiver.StreetWar1", SoundDuration("ambient/explosions/battle_loop1.wav") + math.random(20, 40), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 0.7)
                 end)
 
-                timer.Create("ix.JudgmentWaiver.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(30, 80), 0, function()
+                timer.Create("ix.JudgmentWaiver.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(20, 40), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
                 end)
 
@@ -128,24 +128,32 @@ ix.cmbSystems.cityCodes = {
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/apc_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.5)
                 end)
 
-                timer.Create("ix.JudgmentWaiver.CityBattle", math.random(30, 90), 0, function()
+                timer.Create("ix.JudgmentWaiver.CityBattle", math.random(10, 30), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_battle" .. math.random(1, 19) .. ".wav", 75, 100, 0.7)
                 end)
 
-                timer.Create("ix.JudgmentWaiver.StriderDistant", math.random(30, 130), 0, function()
+                timer.Create("ix.JudgmentWaiver.StriderDistant", math.random(10, 25), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/strider_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.7)
                 end)
 
-                timer.Create("ix.JudgmentWaiver.CityScream", math.random(40, 200), 0, function()
+                timer.Create("ix.JudgmentWaiver.CityScream", math.random(20, 30), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_scream3.wav", 75, 100, 0.7)
                 end)
 
-                timer.Create("ix.JudgmentWaiver.GunshipDistant", math.random(30, 130), 0, function()
+                timer.Create("ix.JudgmentWaiver.GunshipDistant", math.random(10, 30), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/gunship_distant" .. math.random(1, 2) .. ".wav", 75, 100, 0.7)
                 end)
                 
-                timer.Create("ix.JudgmentWaiver.BuildingRubble", math.random(30, 130), 0, function()
+                timer.Create("ix.JudgmentWaiver.BuildingRubble", math.random(10, 20), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/building_rubble" .. math.random(1, 5) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.CitadelScreams", math.random(100, 200), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_ambient_scream_loop1.wav", 75, 100, 0.3)
+                end)
+
+                timer.Create("ix.JudgmentWaiver.HeliDistant", math.random(10, 25), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/heli_distant1.wav", 75, 100, 0.7)
                 end)
             end)
         end,
@@ -158,6 +166,10 @@ ix.cmbSystems.cityCodes = {
             timer.Remove("ix.JudgmentWaiver.CityBattle")
             timer.Remove("ix.JudgmentWaiver.StriderDistant")
             timer.Remove("ix.JudgmentWaiver.CityScream")
+            timer.Remove("ix.JudgmentWaiver.GunshipDistant")
+            timer.Remove("ix.JudgmentWaiver.BuildingRubble")
+            timer.Remove("ix.JudgmentWaiver.CitadelScreams")
+            timer.Remove("ix.JudgmentWaiver.HeliDistant")
 
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
@@ -188,6 +200,17 @@ ix.cmbSystems.cityCodes = {
                     end
 
                     v:StopSound("ambient/levels/streetwar/city_scream3.wav")
+
+                    for i = 1, 2 do
+                        v:StopSound("ambient/levels/streetwar/gunship_distant" .. i .. ".wav")
+                    end
+
+                    for i = 1, 5 do
+                        v:StopSound("ambient/levels/streetwar/building_rubble" .. i .. ".wav")
+                    end
+
+                    v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
+                    v:StopSound("ambient/levels/streetwar/heli_distant1.wav")
                 end
             end
         end
