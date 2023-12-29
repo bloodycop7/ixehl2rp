@@ -57,7 +57,7 @@ function PLUGIN:HUDPaint()
             v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 255)
         end
 
-        surface.SetFont("ixCombineFont10")
+        surface.SetFont("ixCombineFont08")
         local textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
         surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
@@ -66,7 +66,7 @@ function PLUGIN:HUDPaint()
         surface.SetDrawColor(v.backColor or Color(0, 100, 255))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
 
-        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineFont10", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         
         // Uncomment this if you want to use sentBy value on the waypoint
         --[[

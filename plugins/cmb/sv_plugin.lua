@@ -189,6 +189,7 @@ util.AddNetworkString("ix.MakeWaypoint")
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
+        
         return
     end
 
