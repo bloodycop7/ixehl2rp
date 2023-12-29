@@ -6,7 +6,7 @@ FACTION.models = {
 	"models/combine_soldier.mdl"
 }
 
-function FACTION:ModifyPlayerStep(client, data)
+function FACTION:ModifyPlayerStep(ply, data)
 	if ( data.ladder or data.submerged ) then
 		return
 	end
@@ -21,7 +21,7 @@ function FACTION:ModifyPlayerStep(client, data)
 	end
 
 	for _, v in ipairs(extraSounds) do
-		EmitSound(v, client:GetPos(), client:EntIndex(), CHAN_AUTO, data.volume * (data.running and 0.5 or 0.4))
+		EmitSound(v, ply:GetPos(), ply:EntIndex(), CHAN_AUTO, data.volume * (data.running and 0.5 or 0.4))
 	end
 
 	data.snd = "npc/combine_soldier/gear" .. math.random(1, 4) .. ".wav"
