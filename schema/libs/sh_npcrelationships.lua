@@ -56,7 +56,7 @@ if ( SERVER ) then
                 continue
             end
 
-            if not ( v:Alive() ) then
+            if not ( v:Alive() or v:Health() > 0 ) then
                 continue
             end
 
@@ -148,6 +148,10 @@ if ( SERVER ) then
                 end
 
                 if not ( v:IsNPC() ) then
+                    continue
+                end
+
+                if ( v:Health() <= 0 ) then
                     continue
                 end
 
