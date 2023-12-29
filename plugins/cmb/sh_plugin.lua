@@ -147,6 +147,38 @@ ix.cmbSystems.cityCodes = {
             timer.Remove("ix.JudgmentWaiver.CityBattle")
             timer.Remove("ix.JudgmentWaiver.StriderDistant")
             timer.Remove("ix.JudgmentWaiver.CityScream")
+
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                for i = 1, 3 do
+                    v:StopSound("ambient/alarms/citadel_alert_loop2.wav")
+                    v:StopSound("ambient/alarms/manhack_alert_pass1.wav")
+                    v:StopSound("ambient/alarms/apc_alarm_pass1.wav")
+                    v:StopSound("ambient/levels/citadel/citadel_hit1_adpcm.wav")
+
+                    for i = 1, 2 do
+                        v:StopSound("ambient/explosions/battle_loop1.wav")
+                        v:StopSound("ambient/explosions/battle_loop2.wav")
+                    end
+
+                    for i = 1, 3 do
+                        v:StopSound("ambient/levels/streetwar/apc_distant" .. i .. ".wav")
+                    end
+
+                    for i = 1, 19 do
+                        v:StopSound("ambient/levels/streetwar/city_battle" .. i .. ".wav")
+                    end
+
+                    for i = 1, 3 do
+                        v:StopSound("ambient/levels/streetwar/strider_distant" .. i .. ".wav")
+                    end
+
+                    v:StopSound("ambient/levels/streetwar/city_scream3.wav")
+                end
+            end
         end
     },
     {
