@@ -109,6 +109,8 @@ ix.cmbSystems.cityCodes = {
 
             timer.Create("ix.JudgmentWaiver.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
                 Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
+
+                timer.Adjust("ix.JudgmentWaiver.hit1", math.random(120, 400))
             end)
 
             timer.Create("ix.JudgmentWaiver.SecondSequence", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, 0, function()
