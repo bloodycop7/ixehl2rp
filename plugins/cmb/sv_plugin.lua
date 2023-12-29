@@ -179,6 +179,10 @@ function ix.cmbSystems:PassiveChatter(ply)
         sounds[#sounds + 1] = "ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"
     end
 
+    if ( hook.Run("GetPlayerChatterSounds", ply, sounds) != false or hook.Run("GetPlayerChatterSounds", ply, sounds) != nil ) then
+        sounds = hook.Run("GetPlayerChatterSounds", ply, sounds) or sounds
+    end
+
     local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))
     ply.isReadyForChatter = false
 
