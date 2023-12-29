@@ -82,7 +82,7 @@ ix.cmbSystems.dispatchPassive = {
 
 timer.Remove("ix.DispatchPassive")
 timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
-    local cityCode = ix.cmbSystems.cityCodes[GetGlobalInt("ixCityCode", 1)]
+    local cityCode = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( cityCode ) then
         if ( cityCode.dispatchPassive ) then
