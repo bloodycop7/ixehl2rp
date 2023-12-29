@@ -11,6 +11,12 @@ function Schema:CanPlayerJoinClass(client, class, info)
 end
 
 function Schema:ShouldDrawCrosshair()
+	if ( IsValid(localPlayer:GetActiveWeapon()) ) then
+		if ( localPlayer:GetActiveWeapon():GetClass():find("tfa*") ) then
+			return
+		end
+	end
+
 	return false
 end
 
@@ -18,18 +24,18 @@ local supress = {}
 
 function Schema:CreateCharacterInfo(charInfo)
 	if not ( supress.health ) then
-		supress.money = charInfo:Add("ixListRow")
-		supress.money:SetList(charInfo.list)
-		supress.money:Dock(TOP)
-		supress.money:SizeToContents()
+		supress.health = charInfo:Add("ixListRow")
+		supress.health:SetList(charInfo.list)
+		supress.health:Dock(TOP)
+		supress.health:SizeToContents()
 	end
 end
 
 function Schema:UpdateCharacterInfo(charInfo, char)
-	if (supress.money) then
-		supress.money:SetLabelText("Health")
-		supress.money:SetText(localPlayer:Health())
-		supress.money:SizeToContents()
+	if ( supress.health ) then
+		supress.health:SetLabelText("Health")
+		supress.health:SetText(localPlayer:Health())
+		supress.health:SizeToContents()
 	end
 end
 

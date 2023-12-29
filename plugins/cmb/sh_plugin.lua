@@ -193,3 +193,64 @@ ix.command.Add("TogglePassiveChatter", {
         end
     end
 })
+
+ix.cmbSystems.otaWepWhitelist = {
+    ["ix_hands"] = true,
+    ["ix_keys"] = true,
+}
+
+function PLUGIN:CalcMainActivity(ply, vel)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	if not ( ply:IsOnGround() ) then
+		return
+	end
+
+	if not ( Schema:IsOTA(ply) ) then
+		return
+	end
+
+	if ( ply:IsWepRaised() ) then
+		return
+	end
+
+	if ( ply:Crouching() ) then
+		return
+	end
+
+    if ( ply:InVehicle() ) then
+        return
+    end
+
+    if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) then
+        return
+    end
+
+    if ( ply:GetMoveType() == MOVETYPE_LADDER ) then
+        return
+    end
+
+    if ( IsValid(ply:GetActiveWeapon()) ) then
+        if not ( ix.cmbSystems.otaWepWhitelist[ply:GetActiveWeapon():GetClass()] ) then
+            return
+        end
+    end
+
+	if not ( ply:IsRunning() ) then
+		local playAnim = "idle_unarmed"
+
+		if ( vel:Length2D() > 0.5 ) then
+			playAnim = "walkunarmed_all"
+		end
+		
+		ply.CalcSeqOverride = ply:LookupSequence(playAnim) or ply.CalcSeqOverride
+	end
+end
