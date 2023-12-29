@@ -20,23 +20,17 @@ function Schema:ShouldDrawCrosshair()
 	return false
 end
 
-local supress = {}
-
-function Schema:CreateCharacterInfo(charInfo)
-	if not ( supress.health ) then
-		supress.health = charInfo:Add("ixListRow")
-		supress.health:SetList(charInfo.list)
-		supress.health:Dock(TOP)
-		supress.health:SizeToContents()
-	end
+function Schema:CreateCharacterInfo(panel)
+	panel.health = panel:Add("ixListRow")
+	panel.health:SetList(panel.list)
+	panel.health:Dock(TOP)
 end
 
-function Schema:UpdateCharacterInfo(charInfo, char)
-	if ( supress.health ) then
-		supress.health:SetLabelText("Health")
-		supress.health:SetText(localPlayer:Health())
-		supress.health:SizeToContents()
-	end
+-- populates labels in the status screen
+function Schema:UpdateCharacterInfo(panel)
+	panel.health:SetLabelText("Health")
+	panel.health:SetText(localPlayer:Health())
+	panel.health:SizeToContents()
 end
 
 function Schema:CanPlayerJoinClass(ply, class, info)

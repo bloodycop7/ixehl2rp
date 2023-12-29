@@ -9,46 +9,68 @@ ix.util.Include("cl_hooks.lua")
 ix.util.Include("sh_hooks.lua")
 ix.util.Include("sv_hooks.lua")
 
-function Schema:IsCitizen(ply)
-    if not ( IsValid(ply) ) then
-        return false
+for k, v in pairs(ix.faction.indices) do
+    Schema["Is" .. (v.abbreviation or v.name)] = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return false
+        end
+
+        local character = ply:GetCharacter()
+
+        if not ( character ) then
+            return false
+        end
+
+        return character:GetFaction() == k
     end
-
-    local character = ply:GetCharacter()
-
-    if not ( character ) then
-        return false
-    end
-
-    return character:GetFaction() == FACTION_CITIZEN
 end
 
-function Schema:IsCP(ply)
-    if not ( IsValid(ply) ) then
-        return false
+for k, v in pairs(ix.class.list) do
+    Schema["Is" .. ix.faction.Get(v.faction).abbreviation .. (v.abbreviation or v.name)] = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return false
+        end
+
+        local character = ply:GetCharacter()
+
+        if not ( character ) then
+            return false
+        end
+
+        if not ( v.faction ) then
+            return false
+        end
+
+        if not ( v.faction == character:GetFaction() ) then
+            return false
+        end
+
+        return character:GetClass() == k
     end
-
-    local character = ply:GetCharacter()
-
-    if not ( character ) then
-        return false
-    end
-
-    return character:GetFaction() == FACTION_CP
 end
 
-function Schema:IsOTA(ply)
-    if not ( IsValid(ply) ) then
-        return false
+for k, v in pairs(ix.rank.list) do
+    Schema["Is" .. ix.faction.Get(v.faction).abbreviation .. (v.abbreviation or v.name)] = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return false
+        end
+
+        local character = ply:GetCharacter()
+
+        if not ( character ) then
+            return false
+        end
+
+        if not ( v.faction ) then
+            return false
+        end
+
+        if not ( v.faction == character:GetFaction() ) then
+            return false
+        end
+
+        return character:GetRank() == k
     end
-
-    local character = ply:GetCharacter()
-
-    if not ( character ) then
-        return false
-    end
-
-    return character:GetFaction() == FACTION_OTA
 end
 
 function Schema:IsCombine(ply)

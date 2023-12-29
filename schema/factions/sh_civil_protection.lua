@@ -1,6 +1,7 @@
 FACTION.name = "Civil Protection"
 FACTION.description = "The Civil Protection Force of the Universal Union."
 FACTION.color = Color(20, 120, 185)
+FACTION.abbreviation = "CP"
 
 FACTION.models = {
 	"models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl"

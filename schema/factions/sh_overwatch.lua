@@ -1,6 +1,7 @@
 FACTION.name = "Combine Overwatch"
 FACTION.description = "The Combine Overwatch, also referred to simply as Overwatch, is the primary military force of The Combine."
 FACTION.color = Color(150, 20, 0)
+FACTION.abbreviation = "OTA"
 
 FACTION.models = {
 	"models/combine_soldier.mdl"
