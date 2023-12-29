@@ -107,11 +107,11 @@ ix.cmbSystems.cityCodes = {
             Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
 
-            timer.Simple(SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, function()
+            timer.Create("ix.JudgmentWaiver.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
                 Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
             end)
 
-            timer.Simple(SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, function()
+            timer.Create("ix.JudgmentWaiver.SecondSequence", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, 0, function()
                 Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.8)
                 Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 1)
 
@@ -141,6 +141,8 @@ ix.cmbSystems.cityCodes = {
             end)
         end,
         onEnd = function()
+            timer.Remove("ix.JudgmentWaiver.hit1")
+            timer.Remove("ix.JudgmentWaiver.SecondSequence")
             timer.Remove("ix.JudgmentWaiver.StreetWar1")
             timer.Remove("ix.JudgmentWaiver.StreetWar2")
             timer.Remove("ix.Judgment.APCDistant")
