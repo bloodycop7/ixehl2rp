@@ -105,7 +105,7 @@ function PLUGIN:HUDPaint()
                 continue
             end
 
-            if ( v:GetPos():Distance(localPlayer:GetPos()) > 500 ) then
+            if ( v:GetPos():Distance(localPlayer:GetPos()) > 300 ) then
                 continue
             end
 
@@ -127,8 +127,8 @@ function PLUGIN:HUDPaint()
             vPos = vPos:ToScreen()
 
 
-            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.995 ) then
-                v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 210)
+            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.97 ) then
+                v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 125)
             else
                 v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 255)
             end
