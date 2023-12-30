@@ -19,6 +19,13 @@ Hello, as some of you may tested/noticed. The UI in the Schema is Janky (Sucks),
 You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!\
 You may find various Credits everywhere through out the code, make sure to check them out!
 
+**IMPORTANT**
+- Schema does NOT use netstream, use the net. library.
+- localPlayer is cached Clientside, do not use LocalPlayer()
+- scrW is cached Clientside, do not use ScrW()
+- scrH is cached Clientside, do not use ScrH()
+- The schema does not use client:IsCombine(), use Schema:IsCombine(client) instead. (Look at sh_schema to look at more code.)
+
 **Thanks to all contributors who have submitted pull requests to improve this project!**
 # Useful Navigation
 [Combine Fonts](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_plugin.lua#L38-L77) - [Download](https://dl.dafont.com/dl/?f=frak)\
