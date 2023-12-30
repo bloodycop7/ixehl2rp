@@ -35,7 +35,7 @@ ix.cmbSystems.dispatchTaglines = {
 
 ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
     if ( SERVER ) then
-        timer.Adjust("ixPreserved.DispatchPassive", newV)
+        timer.Adjust("ix.DispatchPassive", newV)
     end
 end, {
     category = "Combine Systems",

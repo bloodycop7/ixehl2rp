@@ -84,7 +84,7 @@ ix.cmbSystems.dispatchPassive = {
         soundDir = baseRadioVoiceDir .. "fprison_missionfailurereminder.wav",
         text = "Attention ground units. Mission failure will result in permanent offworld assignment. Code reminder: sacrifice, coagulate, clamp.",
         customCheck = function()
-            return ( ix.cmbSystems:GetCityCode() == 3 )
+            return ( ix.cmbSystems:GetCityCode() >= 2 )
         end
     }
 }
@@ -105,6 +105,12 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
 
     for k, v in pairs(ix.cmbSystems.dispatchPassive) do
         if ( v.customCheck and not v:customCheck() ) then
+            print(v.text)
+            continue
+        end
+
+        if ( v.lastUsed ) then
+            v.lastUsed = false
             continue
         end
 
@@ -114,6 +120,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     local dispatchData = tableExtra[math.random(1, #tableExtra)]
 
     ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
+    dispatchData.lastUsed = true
 
     for k, v in ipairs(player.GetAll()) do
         if ( Schema:IsOutside(v) ) then
