@@ -196,6 +196,7 @@ ix.cmbSystems.cityCodes = {
             timer.Remove("ix.JudgmentWaiver.BuildingRubble")
             timer.Remove("ix.JudgmentWaiver.CitadelScreams")
             timer.Remove("ix.JudgmentWaiver.HeliDistant")
+            timer.Remove("ix.JudgmentWaiver.Earthquakes")
 
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
