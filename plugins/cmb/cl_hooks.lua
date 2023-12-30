@@ -144,7 +144,7 @@ function PLUGIN:HUDPaint()
 
             draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
 
-            if not ( Schema:IsCP() ) then
+            if not ( Schema:IsCP(v) ) then // Remove this line and the end at line 162 if you want to use classes for CPs
                 if ( char:GetClass() ) then
                     surface.SetFont("ixCombineFont08")
                     textWidth, textHeight = surface.GetTextSize("<:: " .. ix.class.list[char:GetClass()].name .. " ::>")
