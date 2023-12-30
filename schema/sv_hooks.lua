@@ -202,7 +202,7 @@ function Schema:PlayerSetHandsModel(ply, ent)
 				ent:SetBodyGroups("000000")
 			end
 		elseif ( self:IsCP(ply) ) then
-			ent:SetModel("models/cfe_pm/cfe_hands/cfe_hands.mdl")
+			ent:SetModel("models/weapons/c_metrocop_hands.mdl")
 			ent:SetSkin(1)
 			ent:SetBodyGroups("000000")
 		end

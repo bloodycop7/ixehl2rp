@@ -4,10 +4,10 @@ FACTION.color = Color(20, 120, 185)
 FACTION.abbreviation = "CP"
 
 FACTION.models = {
-	"models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl"
+	"models/ez2npc/police.mdl"
 }
 
-ix.anim.SetModelClass("models/cfe_ragdoll/cfe_male_ragdoll/cfe_male_01_ragdoll.mdl", "metrocop")
+ix.anim.SetModelClass("models/ez2npc/police.mdl", "metrocop")
 
 FACTION.taglines = {
 	"union",
@@ -24,8 +24,8 @@ FACTION.taglines = {
 	"xray"
 }
 
-player_manager.AddValidModel("ixCPF", "models/cfe_pm/cfe_hands/cfe_hands.mdl")
-player_manager.AddValidHands("ixCPF", "models/cfe_pm/cfe_hands/cfe_hands.mdl", 0, "00000000")
+player_manager.AddValidModel("ixCPF", "models/ez2npc/police.mdl")
+player_manager.AddValidHands("ixCPF", "models/weapons/c_metrocop_hands.mdl", 0, "00000000")
 
 function FACTION:GetDefaultName(ply)
 	return "CP:RCT:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(100, 999), 3), true
