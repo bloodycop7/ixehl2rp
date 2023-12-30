@@ -215,13 +215,26 @@ ix.cmbSystems.cityCodes = {
                 end
 
                 if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.7)
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_unrestprocedure1_spkr.wav", 75, 100, 0.7)
                 else
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.5)
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_unrestprocedure1_spkr.wav", 75, 100, 0.5)
                 end
 
-                ix.chat.Send(nil, "cmb_dispatch", "Protection team alert: evidence of anti-civil activity in this community. Code: ASSEMBLE, CLAMP, CONTAIN.")
+                ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
+            
+                if not ( timer.Exists("ixMarginal.HeliFlyBy") ) then
+                    timer.Create("ixMarginal.HeliFlyBy", math.random(10, 80), 0, function()
+                        if ( Schema:IsOutside(v) ) then
+                            Schema:PlaySound(v, heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
+                        else
+                            Schema:PlaySound(v, heliSounds[math.random(1, #heliSounds)], 75, 100, 0.4)
+                        end
+                    end)
+                end
             end
+        end,
+        onEnd = function()
+            timer.Remove("ixMarginal.HeliFlyBy")
         end
     },
     {
