@@ -89,3 +89,15 @@ function Schema:LoadData()
 		terminal:Activate()
 	end
 end
+
+// models/cfe_pm/cfe_hands/cfe_hands.mdl
+
+function Schema:PlayerSetHandsModel(ply, ent)
+	timer.Simple(0.1, function()
+		if ( self:IsCP(ply) ) then
+			ent:SetModel("models/cfe_pm/cfe_hands/cfe_hands.mdl")
+			ent:SetSkin(1)
+			ent:SetBodyGroups("00000")
+		end
+	end)
+end
