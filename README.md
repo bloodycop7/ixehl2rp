@@ -10,10 +10,16 @@ The code is also open-source with a license.
 [True Combine Hands](https://steamcommunity.com/sharedfiles/filedetails/?id=2860571852)\
 [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)
 
-# Contributions
-You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!
+# Help Needed!
+Hello, as some of you may tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
+- Combine HUD
+- User Interface
 
+# Contributions
+You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!\
 You may find various Credits everywhere through out the code, make sure to check them out!
+
+**Thanks to all contributors who have submitted pull requests to improve this project!**
 # Useful Navigation
 [Combine Fonts](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_plugin.lua#L38-L77) - [Download](https://dl.dafont.com/dl/?f=frak)\
 [NPC Relationships](https://github.com/bloodycop7/ixehl2rp/blob/main/schema/libs/sh_npcrelationships.lua)\
