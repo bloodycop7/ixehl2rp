@@ -81,8 +81,8 @@ function SWEP:DrawWorldModel()
 	self:DrawModel()
 
 	if (self:GetActivated()) then
-		local size = math.Rand(4.0, 6.0)
-		local glow = math.Rand(0.6, 0.8) * 255
+		local size = math.Rand(6.0, 10.0)
+		local glow = math.Rand(0.8, 2.0) * 255
 		local color = Color(glow, glow, glow)
 		local attachment = self:GetAttachment(1)
 
@@ -113,7 +113,7 @@ function SWEP:PostDrawViewModel()
 	end
 
 	cam.Start3D(EyePos(), EyeAngles())
-		local size = math.Rand(3.0, 4.0)
+		local size = math.Rand(5.0, 7.0)
 		local color = Color(255, 255, 255, 50 + math.sin(RealTime() * 2)*20)
 
 		STUNSTICK_GLOW_MATERIAL_NOZ:SetFloat("$alpha", color.a / 255)
@@ -128,14 +128,14 @@ function SWEP:PostDrawViewModel()
 
 		for i = 1, NUM_BEAM_ATTACHEMENTS do
 			attachment = viewModel:GetAttachment(viewModel:LookupAttachment("spark"..i.."a"))
-			size = math.Rand(2.5, 5.0)
+			size = math.Rand(4.5, 7.0)
 
 			if (attachment and attachment.Pos) then
 				render.DrawSprite(attachment.Pos, size, size, color)
 			end
 
 			attachment = viewModel:GetAttachment(viewModel:LookupAttachment("spark"..i.."b"))
-			size = math.Rand(2.5, 5.0)
+			size = math.Rand(3.5, 6.0)
 
 			if (attachment and attachment.Pos) then
 				render.DrawSprite(attachment.Pos, size, size, color)
@@ -151,7 +151,7 @@ function SWEP:PrimaryAttack()
 		return
 	end
 
-	if (self.Owner:KeyDown(IN_WALK)) then
+	if (self.Owner:KeyDown(IN_SPEED)) then
 		if (SERVER) then
 			self:SetActivated(!self:GetActivated())
 
@@ -166,7 +166,9 @@ function SWEP:PrimaryAttack()
 			local model = string.lower(self.Owner:GetModel())
 
 			if (ix.anim.GetModelClass(model) == "metrocop") then
-				self.Owner:ForceSequence(state and "activatebaton" or "deactivatebaton", nil, nil, true)
+                if not ( self.Owner:IsRunning() ) then
+				    self.Owner:ForceSequence(state and "activatebaton" or "deactivatebaton", nil, nil, true)
+                end
 			end
 		end
 
@@ -183,8 +185,7 @@ function SWEP:PrimaryAttack()
 	end
 
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
-	self.Owner:ViewPunch(Angle(1, 0, 0.125))
-
+    
 	self.Owner:LagCompensation(true)
 		local data = {}
 			data.start = self.Owner:GetShootPos()
