@@ -69,6 +69,61 @@ function ix.cmbSystems:SetCityCode(id)
     hook.Run("OnCityCodeChanged", id, oldCode)
 end
 
+local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
+
+ix.cmbSystems.dispatchPassive = {
+    {
+        soundDir = baseRadioVoiceDir .. "f_innactionisconspiracy_spkr.wav",
+        text = "Citizen reminder: inaction is conspiracy. Report counter-behavior to a Civil Protection team immediately.",
+    },
+    {
+        soundDir = baseRadioVoiceDir .. "f_trainstation_offworldrelocation_spkr.wav",
+        text = "Citizen notice: Failure to cooperate will result in permanent off-world relocation.",
+    },
+    {
+        soundDir = baseRadioVoiceDir .. "fprison_missionfailurereminder.wav",
+        text = "Attention ground units. Mission failure will result in permanent offworld assignment. Code reminder: sacrifice, coagulate, clamp.",
+        customCheck = function()
+            return ( ix.cmbSystems:GetCityCode() == 3 )
+        end
+    }
+}
+
+timer.Remove("ix.DispatchPassive")
+timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
+    local cityCode = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
+
+    if ( cityCode ) then
+        if ( cityCode.dispatchPassive ) then
+            cityCode:dispatchPassive()
+
+            return
+        end
+    end
+
+    local tableExtra = {}
+
+    for k, v in pairs(ix.cmbSystems.dispatchPassive) do
+        if ( v.customCheck and not v:customCheck() ) then
+            continue
+        end
+
+        tableExtra[#tableExtra + 1] = v
+    end
+
+    local dispatchData = tableExtra[math.random(1, #tableExtra)]
+
+    ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
+
+    for k, v in ipairs(player.GetAll()) do
+        if ( Schema:IsOutside(v) ) then
+            Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.8)
+        else
+            Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
+        end
+    end
+end)
+
 ix.cmbSystems.passiveChatterLines = {
     [FACTION_CP] = {
         "npc/metropolice/vo/blockisholdingcohesive.wav",

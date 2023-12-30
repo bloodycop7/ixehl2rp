@@ -104,26 +104,6 @@ local extraExplosions = {
     "ambient/explosions/explode_8.wav"
 }
 
-local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
-
-ix.cmbSystems.dispatchPassive = {
-    {
-        soundDir = baseRadioVoiceDir .. "f_innactionisconspiracy_spkr.wav",
-        text = "Citizen reminder: inaction is conspiracy. Report counter-behavior to a Civil Protection team immediately.",
-    },
-    {
-        soundDir = baseRadioVoiceDir .. "f_trainstation_offworldrelocation_spkr.wav",
-        text = "Citizen notice: Failure to cooperate will result in permanent off-world relocation.",
-    },
-    {
-        soundDir = baseRadioVoiceDir .. "fprison_missionfailurereminder.wav",
-        text = "Attention ground units. Mission failure will result in permanent offworld assignment. Code reminder: sacrifice, coagulate, clamp.",
-        customCheck = function()
-            return ( ix.cmbSystems:GetCityCode() == 3 )
-        end
-    }
-}
-
 ix.cmbSystems.cityCodes = {
     {
         name = "Preserved",
