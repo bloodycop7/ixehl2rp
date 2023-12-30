@@ -173,8 +173,8 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 
 		hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 
-		if ( ix.faction.Get(ply:Team()).skin ) then
-			ply:SetSkin(ix.faction.Get(ply:Team()).skin)
+		if ( ix.faction.Get(newChar:GetFaction()).skin ) then
+			ply:SetSkin(ix.faction.Get(newChar:GetFaction()).skin)
 		end
 	end)
 end
