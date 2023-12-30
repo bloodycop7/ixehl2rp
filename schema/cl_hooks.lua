@@ -6,7 +6,11 @@ function Schema:BuildBusinessMenu()
 	return false
 end
 
-function Schema:CanPlayerJoinClass(client, class, info)
+function Schema:CanPlayerJoinClass(ply, class, info)
+	return false
+end
+
+function Schema:CanPlayerJoinRank(ply, rank, info)
 	return false
 end
 
