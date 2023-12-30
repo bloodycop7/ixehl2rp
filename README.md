@@ -11,7 +11,7 @@ The code is also open-source with a license.
 [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)
 
 # Help Needed!
-Hello, as some of you may tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
+Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
 - Combine HUD
 - User Interface
 
