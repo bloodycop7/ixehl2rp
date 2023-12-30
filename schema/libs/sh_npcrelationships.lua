@@ -43,6 +43,10 @@ ix.relationships.RebelNPCs = {
 
 if ( SERVER ) then
     function ix.relationships.Update(ent)
+        if not ( IsValid(ent) ) then
+            return
+        end
+        
         if not ( ent:IsNPC() ) then
             ErrorNoHalt("Attempted to update relationships on a non-NPC entity!\n")
         end
