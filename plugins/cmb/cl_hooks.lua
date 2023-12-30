@@ -127,7 +127,7 @@ function PLUGIN:HUDPaint()
             vPos = vPos:ToScreen()
 
 
-            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.97 ) then
+            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.985 ) then
                 v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 125)
             else
                 v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 255)
