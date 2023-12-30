@@ -161,7 +161,7 @@ function PLUGIN:HUDPaint()
 
             if ( char:GetRank() ) then
                 surface.SetFont("ixCombineFont08")
-                textWidth, textHeight = surface.GetTextSize("<:: " .. ix.rank.list[char:GetRank()] .. " ::>")
+                textWidth, textHeight = surface.GetTextSize("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>")
 
                 vPos.y = vPos.y + padding
 
@@ -171,7 +171,7 @@ function PLUGIN:HUDPaint()
                 surface.SetDrawColor(ColorAlpha(team.GetColor(v:Team()), v.displayAlpha))
                 surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, 2)
 
-                draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()] .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+                draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
             end
         end
     end
