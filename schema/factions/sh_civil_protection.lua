@@ -24,6 +24,9 @@ FACTION.taglines = {
 	"xray"
 }
 
+player_manager.AddValidModel("ixCPF", "models/cfe_pm/cfe_hands/cfe_hands.mdl")
+player_manager.AddValidHands("ixCPF", "models/cfe_pm/cfe_hands/cfe_hands.mdl", 0, "00000000")
+
 function FACTION:GetDefaultName(ply)
 	return "CP:RCT:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(100, 999), 3), true
 end

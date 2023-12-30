@@ -90,8 +90,6 @@ function Schema:LoadData()
 	end
 end
 
-// models/cfe_pm/cfe_hands/cfe_hands.mdl
-
 function Schema:PlayerSetHandsModel(ply, ent)
 	timer.Simple(0.1, function()
 		if ( self:IsCP(ply) ) then
