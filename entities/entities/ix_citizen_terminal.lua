@@ -179,6 +179,13 @@ else
         label:SetContentAlignment(4)
         label:SizeToContents()
 
+        local modelPanel = self:Add("ixModelPanel")
+        modelPanel:Dock(FILL)
+        modelPanel:SetModel(localPlayer:GetModel())
+        modelPanel:SetFOV(100)
+        modelPanel.LayoutEntity = function(this, ent)
+            ent:SetAngles(Angle(0, RealTime() * 50, 0))
+        end
     end
 
 	function UI:Paint(w, h)
