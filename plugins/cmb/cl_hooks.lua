@@ -181,7 +181,7 @@ function PLUGIN:HUDPaint()
     local wep = localPlayer:GetActiveWeapon()
 
     if ( IsValid(wep) ) then
-        if ( wep:Clip1() != nil or wep:Clip1() != -1 ) then
+        if ( wep:Clip1() != -1 ) then
             draw.SimpleText(wep:Clip1(), "ixCombineFont18", scrW - padding * 5, scrH - padding, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
 
             surface.SetDrawColor(Color(255, 255, 255))
