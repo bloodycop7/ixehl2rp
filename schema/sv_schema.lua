@@ -28,3 +28,13 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel)
 		net.Send(v)
 	end
 end
+
+if ( TFA ) then
+	if ( GetConVar("sv_tfa_attachments_enabled"):GetInt() != 0 ) then
+		RunConsoleCommand("sv_tfa_attachments_enabled", 0)
+	end
+
+	if ( GetConVar("sv_tfa_cmenu"):GetInt() != 0 ) then
+		RunConsoleCommand("sv_tfa_cmenu", 0)
+	end
+end
