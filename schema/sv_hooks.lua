@@ -124,8 +124,12 @@ function Schema:LoadData()
 end
 
 function Schema:PlayerSetHandsModel(ply, ent)
-	timer.Simple(0.1, function()
+	timer.Simple(0.5, function()
 		if ( self:IsCP(ply) ) then
+			if not ( IsValid(ent) ) then
+				return
+			end
+			
 			ent:SetModel("models/cfe_pm/cfe_hands/cfe_hands.mdl")
 			ent:SetSkin(1)
 			ent:SetBodyGroups("00000")
