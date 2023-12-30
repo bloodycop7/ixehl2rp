@@ -57,7 +57,7 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 
 			if ( #items > 0 ) then
 				for i = 1, math.random(1, #items) do
-					local item = table.Random(items)
+					local item = items[math.random(1, #items)]
 
 					if ( item ) then
 						item:Transfer(nil, nil, nil, ply:GetPos() + Vector(0, 0, 16))
