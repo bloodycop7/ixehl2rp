@@ -9,6 +9,7 @@ function CLASS:OnSet(ply)
         return
     end
 
+    ply:SetModel("models/combine_soldier.mdl")
     ply:SetSkin(1)
 end
 

@@ -131,6 +131,7 @@ function Schema:PlayerJoinedClass(ply, class, oldClass)
 	end
 
 	char:SetData("permaClass", class)
+	hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 end
 
 function Schema:PlayerJoinedRank(ply, rank, oldRank)
@@ -141,6 +142,7 @@ function Schema:PlayerJoinedRank(ply, rank, oldRank)
 	end
 
 	char:SetData("permaRank", rank)
+	hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 end
 
 function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
@@ -154,32 +156,40 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	local permaRank = newChar:GetData("permaRank")
 	local permaRankData = ix.rank.list[permaRank]
 
-	if ( permaClass and permaClassData ) then
-		local oldClass = newChar:GetClass()
-		newChar:SetClass(permaClass)
-		
-		hook.Run("PlayerJoinedClass", ply, permaClass, oldClass)
-	end
+	timer.Simple(0.1, function()
+		if ( permaClass and permaClassData ) then
+			local oldClass = newChar:GetClass()
+			newChar:SetClass(permaClass)
+			
+			hook.Run("PlayerJoinedClass", ply, permaClass, oldClass)
+		end
 
-	if ( permaRank and permaRankData ) then
-		local oldRank = newChar:GetRank()
-		newChar:SetRank(permaRank)
-		
-		hook.Run("PlayerJoinedRank", ply, permaRank, oldRank)
-	end
+		if ( permaRank and permaRankData ) then
+			local oldRank = newChar:GetRank()
+			newChar:SetRank(permaRank)
+			
+			hook.Run("PlayerJoinedRank", ply, permaRank, oldRank)
+		end
+
+		hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
+	end)
 end
 
 function Schema:PlayerSetHandsModel(ply, ent)
-	timer.Simple(0.5, function()
+	timer.Simple(0.1, function()
 		if not ( IsValid(ent) ) then
 			return
 		end
 
-		if ( self:IsCP(ply) ) then
-			ent:SetModel("models/cfe_pm/cfe_hands/cfe_hands.mdl")
-			ent:SetSkin(1)
-			ent:SetBodyGroups("000000")
-		elseif ( self:IsOTA(ply) ) then
+		if ( self:IsOTA(ply) ) then
+			if ( self:IsOTAElite(ply) ) then
+				ply:SetPlayerColor(Vector(1, 0, 0))
+				
+				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
+				ent:SetSkin(0)
+				ent:SetBodyGroups("000000")
+			end
+			
 			if ( self:IsOTASoldier(ply) or self:IsOTAShotgunner(ply) ) then
 				local skin = 0
 
@@ -190,11 +200,11 @@ function Schema:PlayerSetHandsModel(ply, ent)
 				ent:SetModel("models/weapons/c_arms_combine_default/c_arms_combine_regular.mdl")
 				ent:SetSkin(skin)
 				ent:SetBodyGroups("000000")
-			elseif ( self:IsOTAElite(ply) ) then
-				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
-				ent:SetSkin(0)
-				ent:SetBodyGroups("000000")
 			end
+		elseif ( self:IsCP(ply) ) then
+			ent:SetModel("models/cfe_pm/cfe_hands/cfe_hands.mdl")
+			ent:SetSkin(1)
+			ent:SetBodyGroups("000000")
 		end
 	end)
 end
