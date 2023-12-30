@@ -37,7 +37,7 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
         return
     end
 
-    ix.cmbSystems:SetBOLStatus(ply, false)
+    // ix.cmbSystems:SetBOLStatus(ply, false) -- It works, enable if you want.
 	
 	local maxDeathItems = ix.config.Get("maxItemDrops", 3)
 

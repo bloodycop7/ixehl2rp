@@ -15,7 +15,7 @@ end
 
 if (SERVER) then
 	function ENT:Initialize()
-		self:SetModel("models/props_combine/combine_interface001.mdl")
+		self:SetModel("models/props_combine/breenconsole.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
@@ -75,7 +75,6 @@ else
 	local UI = {}
 
 	local gradient = Material("vgui/gradient-l")
-	local padding = 8
 
 	function UI:Init()
 		if ( IsValid(ix.gui.citizenTerminal) ) then
@@ -92,11 +91,101 @@ else
 
 		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
 
-        
+        local progressBar = self:Add("DProgress")
+        progressBar:Dock(FILL)
+        progressBar:SetFraction(0)
+        progressBar:DockMargin(0, ScreenScale(20), 0, ScreenScale(125))
+        progressBar.Think = function(this)
+            this:SetFraction(this:GetFraction() + FrameTime() * 550)
+
+            if ( this:GetFraction() >= 1000 ) then
+                for k, v in pairs(self:GetChildren()) do
+                    v:Remove()
+                end
+
+                self:Populate()
+            end
+        end
+        progressBar.Paint = function(this, w, h)
+            surface.SetDrawColor(Color(0, 255, 0))
+            surface.DrawRect(0, 0, this:GetFraction(), 1)
+
+            surface.SetDrawColor(Color(0, 255, 0, 30))
+            surface.SetMaterial(gradient)
+            surface.DrawTexturedRect(0, 2, this:GetFraction() * 1.4, h - 1)
+        end
+
+        local label = self:Add("DLabel")
+        label:Dock(TOP)
+        label:SetText("Citizen Terminal")
+        label:SetFont("ixMenuButtonFont")
+        label:SetContentAlignment(5)
+        label:SizeToContents()
+
+        label = self:Add("DLabel")
+        label:Dock(TOP)
+        label:SetText("Loading...")
+        label:SetFont("ixMenuButtonFont")
+        label:SetTextColor(color_white)
+        label:SetContentAlignment(5)
+        label:SizeToContents()
 	end
 
+    function UI:Populate()
+        self.close = self:Add("ixMenuButton")
+        self.close:Dock(BOTTOM)
+        self.close:SetText("<:: Exit ::>")
+        self.close:SetFont("ixMenuButtonFont")
+        self.close:SetContentAlignment(5)
+        self.close:SizeToContents()
+        self.close.DoClick = function()
+            self:Remove()
+        end
+        self.close.paintW = 0
+        self.close.Paint = function(this, w, h)
+            if ( this:IsHovered() ) then
+                this.paintW = Lerp(FrameTime() * 10, this.paintW, w)
+            else
+                this.paintW = Lerp(FrameTime() * 10, this.paintW, 0)
+            end
+
+            surface.SetDrawColor(Color(255, 0, 0))
+            surface.DrawRect(0, 0, this.paintW, 2)
+
+            surface.SetDrawColor(Color(255, 0, 0, 30))
+            surface.SetMaterial(gradient)
+            surface.DrawTexturedRect(0, 0, this.paintW, h)
+        end
+
+        local label = self:Add("DLabel")
+        label:Dock(TOP)
+        label:SetText("<:: Civillian DataBase: " .. localPlayer:SteamID64() .. " ::>")
+        label:SetFont("ixSubTitleFont")
+        label:SetContentAlignment(5)
+        label:DockMargin(0, 0, 0, ScreenScale(10))
+        label:SizeToContents()
+
+        label = self:Add("DLabel")
+        label:Dock(TOP)
+        label:SetText("Name: " .. localPlayer:Name())
+        label:SetFont("ixMediumFont")
+        label:SetContentAlignment(4)
+        label:SizeToContents()
+
+        label = self:Add("DLabel")
+        label:Dock(TOP)
+        label:SetText("Loyalty Points: " .. localPlayer:GetCharacter():GetLoyaltyPoints())
+        label:SetFont("ixMediumFont")
+        label:SetContentAlignment(4)
+        label:SizeToContents()
+
+    end
+
 	function UI:Paint(w, h)
-		surface.SetDrawColor(Color(0, 205, 205, 200))
+        surface.SetDrawColor(Color(0, 0, 0, 255))
+        surface.DrawRect(0, 0, w, h)
+
+		surface.SetDrawColor(Color(0, 100, 0, 50))
 		surface.SetMaterial(gradient)
 		surface.DrawTexturedRect(0, 0, w, h)
 	end

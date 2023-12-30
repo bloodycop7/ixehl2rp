@@ -79,6 +79,14 @@ ix.char.RegisterVar("bOLStatus", {
     bNoDisplay = true,
 })
 
+ix.char.RegisterVar("loyaltyPoints", {
+    field = "loyalty_points",
+    fieldType = ix.type.number,
+    default = 0,
+    isLocal = false,
+    bNoDisplay = true,
+})
+
 ix.util.Include("sv_plugin.lua")
 ix.util.Include("cl_plugin.lua")
 ix.util.Include("sv_hooks.lua")
