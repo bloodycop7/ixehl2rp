@@ -81,6 +81,11 @@ if (SERVER) then
 			return
 		end
 
+		if ( Schema:IsOTA(ply) ) then
+			ply:SetLocalVelocity(Vector(0, 0, 0))
+			ply:ForceSequence("console_type")
+		end
+
 		Schema:OpenUI(ply, "ixCombineTerminal")
 	end
 
@@ -108,6 +113,27 @@ if (SERVER) then
 		self:SetHealth(self:Health() - dmgInfo:GetDamage())
 
 		if ( self:Health() <= 0 ) then
+			for k, v in ipairs(player.GetAll()) do
+				if not ( IsValid(v) ) then
+					continue
+				end
+
+				if not ( v:GetCharacter() ) then
+					continue
+				end
+
+				if not ( v:Alive() ) then
+					continue
+				end
+
+				v:SendLua([[
+					if ( IsValid(ix.gui.combineTerminal) ) then
+						ix.gui.combineTerminal:Remove()
+						ix.gui.combineTerminal = nil
+					end
+				]])
+			end
+
 			self:SetBroken(true)
 			self:EmitSound("ambient/energy/spark"..math.random(1, 6)..".wav")
 

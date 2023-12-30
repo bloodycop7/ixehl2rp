@@ -99,6 +99,11 @@ local heliSounds = {
     "ambient/levels/streetwar/heli_distant1.wav"
 }
 
+local extraExplosions = {
+    "ambient/explosions/explode_5.wav",
+    "ambient/explosions/explode_8.wav"
+}
+
 local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
 
 ix.cmbSystems.dispatchPassive = {
@@ -164,18 +169,59 @@ ix.cmbSystems.cityCodes = {
                     else
                         Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
                     end
+
+                    ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
                 end
             end)
         end,
         onEnd = function()
             timer.Remove("ixPreserved.HeliFlyBy")
+            timer.Remove("ixPreserved.DispatchPassive")
         end
     },
     {
         name = "Marginal",
         color = Color(255, 255, 0),
         onStart = function()
-            print("PReserved")
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                if not ( v:GetCharacter() ) then
+                    continue
+                end
+
+                if not ( v:Alive() ) then
+                    continue
+                end
+
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
+                else
+                    Schema:PlaySound(v, "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.3)
+                end
+
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.7)
+                else
+                    Schema:PlaySound(v, "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.4)
+                end
+
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.7)
+                else
+                    Schema:PlaySound(v, "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.4)
+                end
+
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.6)
+                else
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.4)
+                end
+
+                ix.chat.Send(nil, "cmb_dispatch", "Protection team alert: evidence of anti-civil activity in this community. Code: ASSEMBLE, CLAMP, CONTAIN.")
+            end
         end
     },
     {
@@ -185,6 +231,7 @@ ix.cmbSystems.cityCodes = {
             Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.6)            
 
             timer.Create("ix.JudgmentWaiver.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
                 Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
@@ -201,6 +248,8 @@ ix.cmbSystems.cityCodes = {
 
                 timer.Create("ix.JudgmentWaiver.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(20, 40), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
+
+                    Schema:PlaySound(player.GetAll(), extraExplosions[math.random(1, #extraExplosions)], 75, 100, 0.5)
                 end)
 
                 timer.Create("ix.JudgmentWaiver.APCDistant", SoundDuration("ambient/levels/streetwar/apc_distant1.wav"), 0, function()
@@ -336,6 +385,8 @@ ix.cmbSystems.cityCodes = {
 
                 timer.Create("ix.AutonomousJudgment.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(20, 40), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
+
+                    Schema:PlaySound(player.GetAll(), extraExplosions[math.random(1, #extraExplosions)], 75, 100, 0.5)
                 end)
 
                 timer.Create("ix.AutonomousJudgment.APCDistant", SoundDuration("ambient/levels/streetwar/apc_distant1.wav"), 0, function()
