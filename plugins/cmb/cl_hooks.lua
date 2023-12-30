@@ -84,6 +84,88 @@ function PLUGIN:HUDPaint()
         draw.SimpleText(v.sentBy, "ixCombineHUDWaypointText", wayPos.x, wayPos.y - ScreenScale(9), ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         ]]
     end
+
+    if ( ix.option.Get("combineOverlayAssets", true) ) then
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
+
+            local char = v:GetCharacter()
+
+            if not ( char ) then
+                continue
+            end
+
+            if not ( v:Alive() ) then
+                continue
+            end
+
+            if not ( Schema:IsCombine(v) ) then
+                continue
+            end
+
+            if ( v:GetPos():Distance(localPlayer:GetPos()) > 500 ) then
+                continue
+            end
+
+            if ( v == localPlayer ) then
+                continue
+            end
+
+            local vPos = v:GetPos()
+            vPos = vPos - v:GetUp() * -50
+
+            if not ( v.displayAlpha ) then
+                v.displayAlpha = 255
+            end
+
+            local dist = math.Round(vPos:Distance(localPlayer:GetPos()) / 16, 1)
+
+            local diff = vPos - localPlayer:GetShootPos()
+
+            vPos = vPos:ToScreen()
+
+
+            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.995 ) then
+                v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 210)
+            else
+                v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 255)
+            end
+
+            surface.SetFont("ixCombineFont08")
+            local textWidth, textHeight = surface.GetTextSize(string.upper("<:: " .. v:Name() .. " ::>"))
+
+            surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
+            surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
+
+            draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+
+            if ( char:GetClass() ) then
+                surface.SetFont("ixCombineFont08")
+                textWidth, textHeight = surface.GetTextSize("<:: " .. ix.class.list[char:GetClass()].name .. " ::>")
+
+                vPos.y = vPos.y + padding
+
+                surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
+                surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
+
+                draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+            end
+
+            if ( char:GetRank() ) then
+                surface.SetFont("ixCombineFont08")
+                textWidth, textHeight = surface.GetTextSize("<:: " .. ix.rank.list[char:GetRank()] .. " ::>")
+
+                vPos.y = vPos.y + padding
+
+                surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
+                surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
+
+                draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()] .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+            end
+        end
+    end
 end
 
 local combineOverlayMat = ix.util.GetMaterial("effects/combine_binocoverlay")

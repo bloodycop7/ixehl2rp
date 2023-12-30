@@ -43,7 +43,8 @@ end, {
 })
 
 ix.lang.AddTable("english", {
-	optCombineOverlay = "Combine Overlay"
+	optCombineOverlay = "Combine Overlay",
+    optCombineOverlayAssets = "Combine Overlay - Assets",
 })
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
