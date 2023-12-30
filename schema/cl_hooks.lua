@@ -46,10 +46,6 @@ function Schema:CanPlayerJoinRank(ply, rank, info)
 end
 
 function Schema:PlayerStartVoice(ply)
-	if ( localPlayer:IsAdmin() ) then
-		return false
-	end
-
 	return true
 end
 
