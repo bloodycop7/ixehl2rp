@@ -2,7 +2,7 @@ local PLUGIN = PLUGIN
 
 PLUGIN.name = "Cleanup"
 PLUGIN.author = "eon"
-PLUGIN.desc = "Adds a /cleanup command to remove all items."
+PLUGIN.description = "Adds a few configurations regarding cleanups."
 
 ix.config.Add("shouldCleanupRagdolls", true, "Whether or not ragdolls should be cleaned up.", nil, {
     category = "Cleanup"
