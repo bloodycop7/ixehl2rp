@@ -76,6 +76,20 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("cmbTerminals", data)
+
+	data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_citizen_terminal")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles()}
+	end
+
+	ix.data.Set("citizenTerminals", data)
+
+	data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_vendingmachine")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetAllStock()}
+	end
 end
 
 function Schema:LoadData()
@@ -87,6 +101,25 @@ function Schema:LoadData()
 		terminal:SetAngles(v[2])
 		terminal:Spawn()
 		terminal:Activate()
+	end
+
+	data = ix.data.Get("citizenTerminals", {})
+	for _, v in ipairs(data) do
+		local CitTerminal = ents.Create("ix_citizen_terminal")
+		CitTerminal:SetPos(v[1])
+		CitTerminal:SetAngles(v[2])
+		CitTerminal:Spawn()
+		CitTerminal:Activate()
+	end
+
+	data = ix.data.Get("vendingMachines", {})
+	for _, v in ipairs(data) do
+		local vm = ents.Create("ix_vendingmachine")
+		vm:SetPos(v[1])
+		vm:SetAngles(v[2])
+		vm:SetStock(v[3])
+		vm:Spawn()
+		vm:Activate()
 	end
 end
 

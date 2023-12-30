@@ -48,6 +48,8 @@ if (SERVER) then
 				self:EmitSound("ambient/machines/combine_terminal_idle" .. math.random(1, 4) .. ".wav", 75, 100, 0.25)
 			end)
 		end
+
+		Schema:SaveData()
 	end
 
 	function ENT:Use(ply)

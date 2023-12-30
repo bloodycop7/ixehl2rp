@@ -48,7 +48,7 @@ if (SERVER) then
 		vendor:Spawn()
 		vendor:Activate()
 
-		Schema:SaveVendingMachines()
+		Schema:SaveData()
 		return vendor
 	end
 
@@ -153,7 +153,7 @@ if (SERVER) then
 
 	function ENT:OnRemove()
 		if (!ix.shuttingDown) then
-			Schema:SaveVendingMachines()
+			Schema:SaveData()
 		end
 	end
 else

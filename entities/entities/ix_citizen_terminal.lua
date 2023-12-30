@@ -28,6 +28,8 @@ if (SERVER) then
 		physics:Sleep()
 
 		self.nextUse = 0
+
+        Schema:SaveData()
 	end
 
 	function ENT:Use(ply)
