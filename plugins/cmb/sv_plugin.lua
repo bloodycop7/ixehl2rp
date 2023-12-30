@@ -105,7 +105,6 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
 
     for k, v in pairs(ix.cmbSystems.dispatchPassive) do
         if ( v.customCheck and not v:customCheck() ) then
-            print(v.text)
             continue
         end
 
