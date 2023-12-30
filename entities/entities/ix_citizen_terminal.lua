@@ -21,6 +21,7 @@ if (SERVER) then
 		self:SetUseType(SIMPLE_USE)
 		self:SetBroken(false)
 		self:SetHealth(50)
+        self.ixHealth = 50
 
 		local physics = self:GetPhysicsObject()
 		physics:EnableMotion(false)
@@ -78,6 +79,80 @@ if (SERVER) then
 		if ( self:Health() <= 0 ) then
 			self:SetBroken(true)
 			self:EmitSound("ambient/energy/spark"..math.random(1, 6)..".wav")
+
+			local uID = "ixSparks." .. self:GetClass() .. "." .. self:EntIndex()
+
+			if not ( timer.Exists(uID) ) then
+				timer.Create(uID, math.random(2, 10), 0, function()
+					if not ( IsValid(self) ) then
+						timer.Remove(uID)
+
+						return
+					end
+
+                    if not ( self:GetBroken() ) then
+                        timer.Remove(uID)
+
+                        return
+                    end
+
+					local sparks = EffectData()
+					sparks:SetOrigin(self:GetPos() + self:GetUp() * 41 + self:GetRight() * 5)
+					sparks:SetNormal(self:GetAngles():Right())
+					sparks:SetMagnitude(2)
+					sparks:SetEntity(self)
+					
+					util.Effect("ElectricSpark", sparks, true, true)
+				end)
+			end
+
+			local electricianCount = 0
+
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                if not ( v:GetCharacter() ) then
+                    continue
+                end
+
+                if not ( v:Alive() ) then
+                    continue
+                end
+
+                if not ( Schema:IsCitizenElectrician() ) then
+                    continue
+                end
+
+                if ( v == dmgInfo:GetAttacker() ) then
+                    continue
+                end
+
+                electricianCount = electricianCount + 1
+            end
+
+            if ( electricianCount == 0 ) then
+                uID = "ix.Repair." .. self:GetClass() .. "." .. self:EntIndex()
+                if not ( timer.Exists(uID) ) then
+                    timer.Create(uID, 300, 1, function()
+                        if not ( IsValid(self) ) then
+                            timer.Remove(uID)
+
+                            return
+                        end
+
+                        if not ( self:GetBroken() ) then
+                            timer.Remove(uID)
+
+                            return
+                        end
+
+                        self:SetBroken(false)
+                        self:SetHealth(self.ixHealth or 50)
+                    end)
+                end
+            end
 		end
 	end
 else
