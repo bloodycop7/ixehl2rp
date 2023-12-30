@@ -179,27 +179,65 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	end)
 end
 
+util.AddNetworkString("ix.PlayerChatTextChanged")
+net.Receive("ix.PlayerChatTextChanged", function(len, ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
 
-netstream.Hook("PlayerChatTextChanged", function(client, key)
-    if (client:IsCombine() and client:Team() == FACTION_OTA and !client.bTypingBeep and (key == "y" or key == "w" or key == "r" or key == "t")) then
-        client:EmitSound("npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
-        client.bTypingBeep = true
-    elseif (client:IsCombine() and !client.bTypingBeep and (key == "y" or key == "w" or key == "r" or key == "t")) then
-        client:EmitSound("NPC_MetroPolice.Radio.On")
-        client.bTypingBeep = true
-    end
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	if ( ( ply.bTypingBeep or false ) ) then
+		return
+	end
+
+	local key = net.ReadString()
+
+	if ( Schema:IsCombine(ply) ) then
+		if not ( key == "y" or key == "w" or key == "r" or key == "t" ) then
+			return
+		end
+
+		if ( Schema:IsOTA(ply) ) then
+			ply:EmitSound("npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
+		elseif ( Schema:IsCP(ply) ) then
+			ply:EmitSound("NPC_MetroPolice.Radio.On")
+		end
+	end
+
+	ply.bTypingBeep = true
 end)
 
-netstream.Hook("PlayerFinishChat", function(client)
-    if (client:IsCombine() and client:Team() == FACTION_OTA and client.bTypingBeep) then
-        client:EmitSound("npc/combine_soldier/vo/off"..math.random(1, 3)..".wav")
-        client.bTypingBeep = nil
-    elseif (client:IsCombine() and client.bTypingBeep) then
-        client:EmitSound("NPC_MetroPolice.Radio.Off")
-        client.bTypingBeep = nil
-    end
-end)
+util.AddNetworkString("ix.PlayerFinishChat")
+net.Receive("ix.PlayerFinishChat", function(len, ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
 
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	if not ( ( ply.bTypingBeep or false ) ) then
+		return
+	end
+
+	if ( Schema:IsCombine(ply) ) then
+		if ( Schema:IsOTA(ply) ) then
+			ply:EmitSound("npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav")
+		elseif ( Schema:IsCP(ply) ) then
+			ply:EmitSound("NPC_MetroPolice.Radio.Off")
+		end
+	end
+
+	ply.bTypingBeep = nil
+end)
 
 function Schema:PlayerSetHandsModel(ply, ent)
 	timer.Simple(0.1, function()

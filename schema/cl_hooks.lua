@@ -49,6 +49,35 @@ function Schema:PlayerStartVoice(ply)
 	return true
 end
 
+local COMMAND_PREFIX = "/"
+
+function Schema:ChatTextChanged(text)
+	if ( self:IsCombine(localPlayer) ) then
+		local key = nil
+
+		if ( text == COMMAND_PREFIX .. "radio " ) then
+			key = "r"
+		elseif ( text == COMMAND_PREFIX .. "w ") then
+			key = "w"
+		elseif ( text == COMMAND_PREFIX .. "y " ) then
+			key = "y"
+		elseif ( text:sub(1, 1):match("%w") ) then
+			key = "t"
+		end
+
+		if ( key ) then
+			net.Start("ix.PlayerChatTextChanged")
+				net.WriteString(key)
+			net.SendToServer()
+		end
+	end
+end
+
+function Schema:FinishChat()
+	net.Start("ix.PlayerFinishChat")
+	net.SendToServer()
+end
+
 net.Receive("ix.Schema.OpenUI", function()
 	local panel = net.ReadString()
 
