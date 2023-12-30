@@ -163,6 +163,24 @@ ix.cmbSystems.cityCodes = {
                 timer.Create("ix.JudgmentWaiver.HeliDistant", math.random(10, 25), 0, function()
                     Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/heli_distant1.wav", 75, 100, 0.7)
                 end)
+
+                timer.Create("ix.JudgmentWaiver.Earthquakes", math.random(10, 20), 0, function()
+                    for k, v in ipairs(player.GetAll()) do
+                        if not ( IsValid(v) ) then
+                            continue
+                        end
+
+                        if not ( v:GetCharacter() ) then
+                            continue
+                        end
+
+                        if not ( v:Alive() ) then
+                            continue
+                        end
+
+                        util.ScreenShake(v:GetPos(), math.random(1, 10), math.random(1, 10), math.random(1, 7), 1000)
+                    end
+                end)
             end)
         end,
         onEnd = function()
