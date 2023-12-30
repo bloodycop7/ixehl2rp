@@ -175,6 +175,28 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	end)
 end
 
+
+netstream.Hook("PlayerChatTextChanged", function(client, key)
+    if (client:IsCombine() and client:Team() == FACTION_OTA and !client.bTypingBeep and (key == "y" or key == "w" or key == "r" or key == "t")) then
+        client:EmitSound("npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
+        client.bTypingBeep = true
+    elseif (client:IsCombine() and !client.bTypingBeep and (key == "y" or key == "w" or key == "r" or key == "t")) then
+        client:EmitSound("NPC_MetroPolice.Radio.On")
+        client.bTypingBeep = true
+    end
+end)
+
+netstream.Hook("PlayerFinishChat", function(client)
+    if (client:IsCombine() and client:Team() == FACTION_OTA and client.bTypingBeep) then
+        client:EmitSound("npc/combine_soldier/vo/off"..math.random(1, 3)..".wav")
+        client.bTypingBeep = nil
+    elseif (client:IsCombine() and client.bTypingBeep) then
+        client:EmitSound("NPC_MetroPolice.Radio.Off")
+        client.bTypingBeep = nil
+    end
+end)
+
+
 function Schema:PlayerSetHandsModel(ply, ent)
 	timer.Simple(0.1, function()
 		if not ( IsValid(ent) ) then
