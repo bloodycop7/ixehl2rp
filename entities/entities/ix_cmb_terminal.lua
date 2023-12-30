@@ -46,6 +46,20 @@ if (SERVER) then
 			return
 		end
 
+		if ( self:GetBroken() ) then
+			self:EmitSound("buttons/combine_button_locked.wav")
+
+			local sparks = EffectData()
+            sparks:SetOrigin(self:GetPos() + self:GetUp() * 41 + self:GetRight() * 5)
+            sparks:SetNormal(self:GetAngles():Right())
+            sparks:SetMagnitude(2)
+            sparks:SetEntity(self)
+            
+            util.Effect("ElectricSpark", sparks, true, true)
+			
+			return
+		end
+
 		Schema:OpenUI(ply, "ixCombineTerminal")
 	end
 

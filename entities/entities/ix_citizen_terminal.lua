@@ -46,6 +46,19 @@ if (SERVER) then
 			return
 		end
 
+        if ( self:GetBroken() ) then
+            self:EmitSound("buttons/combine_button_locked.wav")
+
+            local sparks = EffectData()
+            sparks:SetOrigin(self:GetPos() + self:GetUp() * 41 + self:GetRight() * 5)
+            sparks:SetNormal(self:GetAngles():Right())
+            sparks:SetMagnitude(2)
+            sparks:SetEntity(self)
+            
+            util.Effect("ElectricSpark", sparks, true, true)
+            return
+        end
+
 		Schema:OpenUI(ply, "ixCitizenTerminal")
 	end
 
@@ -179,10 +192,18 @@ else
         label:SetContentAlignment(4)
         label:SizeToContents()
 
-        local modelPanel = self:Add("ixModelPanel")
+        self.rightPanel = self:Add("DPanel")
+        self.rightPanel:Dock(RIGHT)
+        self.rightPanel:SetWide(self:GetWide() * 0.5)
+        self.rightPanel.Paint = function(this, w, h)
+        end
+
+
+        local modelPanel = self.rightPanel:Add("ixModelPanel")
         modelPanel:Dock(FILL)
         modelPanel:SetModel(localPlayer:GetModel())
-        modelPanel:SetFOV(100)
+        modelPanel:SetFOV(30)
+        modelPanel:SetLookAt(Vector(0, 0, 60))
         modelPanel.LayoutEntity = function(this, ent)
             ent:SetAngles(Angle(0, RealTime() * 50, 0))
         end
