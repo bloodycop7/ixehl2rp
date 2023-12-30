@@ -223,7 +223,7 @@ ix.cmbSystems.cityCodes = {
                 ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
             
                 if not ( timer.Exists("ixMarginal.HeliFlyBy") ) then
-                    timer.Create("ixMarginal.HeliFlyBy", math.random(10, 80), 0, function()
+                    timer.Create("ixMarginal.HeliFlyBy", math.random(40, 80), 0, function()
                         if ( Schema:IsOutside(v) ) then
                             Schema:PlaySound(v, heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
                         else
