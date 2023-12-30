@@ -26,7 +26,7 @@ for k, v in pairs(ix.faction.indices) do
 end
 
 for k, v in pairs(ix.class.list) do
-    Schema["Is" .. ix.faction.Get(v.faction).abbreviation .. (v.abbreviation or v.name)] = function(self, ply)
+    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or ix.faction.Get(v.faction).name) .. (v.abbreviation or v.name)] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
@@ -50,7 +50,7 @@ for k, v in pairs(ix.class.list) do
 end
 
 for k, v in pairs(ix.rank.list) do
-    Schema["Is" .. ix.faction.Get(v.faction).abbreviation .. (v.abbreviation or v.name)] = function(self, ply)
+    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or ix.faction.Get(v.faction).name) .. (v.abbreviation or v.name)] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
