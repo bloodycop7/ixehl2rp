@@ -8,7 +8,7 @@ The code is also open-source with a license.
 [TFA: Project HL2 MMod Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404)\
 [TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)\
 [True Combine Hands](https://steamcommunity.com/sharedfiles/filedetails/?id=2860571852)\
-[Entropy: Zero - Uprising Playermodels & NPC Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2960787371)
+[Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)
 
 # Contributions
 You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!
