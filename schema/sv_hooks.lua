@@ -156,7 +156,6 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 
 	if ( permaClass and permaClassData ) then
 		local oldClass = newChar:GetClass()
-
 		newChar:SetClass(permaClass)
 		
 		hook.Run("PlayerJoinedClass", ply, permaClass, oldClass)
