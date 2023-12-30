@@ -177,6 +177,19 @@ function PLUGIN:HUDPaint()
             end
         end
     end
+
+    local wep = localPlayer:GetActiveWeapon()
+
+    if ( IsValid(wep) ) then
+        if ( wep:Clip1() != nil or wep:Clip1() != -1 ) then
+            draw.SimpleText(wep:Clip1(), "ixCombineFont18", scrW - padding * 5, scrH - padding, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+
+            surface.SetDrawColor(Color(255, 255, 255))
+            surface.DrawRect(scrW - padding * 4.5, scrH - padding - 50, 3, padding * 1.6)
+
+            draw.SimpleText(localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 4, scrH - padding, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+        end
+    end
 end
 
 local combineOverlayMat = ix.util.GetMaterial("effects/combine_binocoverlay")

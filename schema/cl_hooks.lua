@@ -2,6 +2,10 @@ function Schema:ShouldHideBars()
 	return true
 end
 
+function Schema:CanDrawAmmoHUD()
+	return false
+end
+
 function Schema:BuildBusinessMenu()
 	return false
 end
