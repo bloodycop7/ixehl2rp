@@ -41,6 +41,14 @@ function Schema:CanPlayerJoinRank(ply, rank, info)
 	return false
 end
 
+function Schema:PlayerStartVoice(ply)
+	if ( localPlayer:IsAdmin() ) then
+		return false
+	end
+
+	return true
+end
+
 net.Receive("ix.Schema.OpenUI", function()
 	local panel = net.ReadString()
 

@@ -35,7 +35,7 @@ ix.cmbSystems.dispatchTaglines = {
 
 ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
     if ( SERVER ) then
-        timer.Adjust("ix.DispatchPassive", newV)
+        timer.Adjust("ixPreserved.DispatchPassive", newV)
     end
 end, {
     category = "Combine Systems",
@@ -92,12 +92,83 @@ ix.util.Include("cl_plugin.lua")
 ix.util.Include("sv_hooks.lua")
 ix.util.Include("cl_hooks.lua")
 
+local heliSounds = {
+    "ambient/machines/heli_pass_distant1.wav",
+    "ambient/machines/heli_pass1.wav",
+    "ambient/machines/heli_pass2.wav",
+    "ambient/levels/streetwar/heli_distant1.wav"
+}
+
+local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
+
+ix.cmbSystems.dispatchPassive = {
+    {
+        soundDir = baseRadioVoiceDir .. "f_innactionisconspiracy_spkr.wav",
+        text = "Citizen reminder: inaction is conspiracy. Report counter-behavior to a Civil Protection team immediately.",
+    },
+    {
+        soundDir = baseRadioVoiceDir .. "f_trainstation_offworldrelocation_spkr.wav",
+        text = "Citizen notice: Failure to cooperate will result in permanent off-world relocation.",
+    }
+}
+
 ix.cmbSystems.cityCodes = {
     {
         name = "Preserved",
         color = Color(0, 255, 0),
         onStart = function()
-            print("PReserved")
+            timer.Create("ixPreserved.HeliFlyBy", math.random(10, 80), 0, function()
+                for k, v in ipairs(player.GetAll()) do
+                    if not ( IsValid(v) ) then
+                        continue
+                    end
+
+                    if not ( v:GetCharacter() ) then
+                        continue
+                    end
+
+                    if not ( v:Alive() ) then
+                        continue
+                    end
+
+                    if ( Schema:IsOutside(v) ) then
+                        Schema:PlaySound(v, heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
+                    else
+                        Schema:PlaySound(v, heliSounds[math.random(1, #heliSounds)], 75, 100, 0.4)
+                    end
+                end
+            end)
+
+            timer.Create("ixPreserved.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
+                local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
+
+                if not ( dispatchData ) then
+                    return
+                end
+
+                for k, v in ipairs(player.GetAll()) do
+                    if not ( IsValid(v) ) then
+                        continue
+                    end
+
+                    if not ( v:GetCharacter() ) then
+                        continue
+                    end
+
+                    if not ( v:Alive() ) then
+                        continue
+                    end
+
+                    if ( Schema:IsOutside(v) ) then
+                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.7)
+                    else
+                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
+                    end
+                end
+            end)
+        end,
+        onEnd = function()
+            timer.Remove("ixPreserved.HeliFlyBy")
         end
     },
     {
@@ -161,7 +232,7 @@ ix.cmbSystems.cityCodes = {
                 end)
 
                 timer.Create("ix.JudgmentWaiver.HeliDistant", math.random(10, 25), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/heli_distant1.wav", 75, 100, 0.7)
+                    Schema:PlaySound(player.GetAll(), heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
                 end)
 
                 timer.Create("ix.JudgmentWaiver.Earthquakes", math.random(10, 20), 0, function()
@@ -237,7 +308,7 @@ ix.cmbSystems.cityCodes = {
                     end
 
                     v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
-                    v:StopSound("ambient/levels/streetwar/heli_distant1.wav")
+                    v:StopSound(heliSounds[math.random(1, #heliSounds)])
                 end
             end
         end
@@ -296,7 +367,7 @@ ix.cmbSystems.cityCodes = {
                 end)
 
                 timer.Create("ix.AutonomousJudgment.HeliDistant", math.random(10, 25), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/heli_distant1.wav", 75, 100, 0.7)
+                    Schema:PlaySound(player.GetAll(), heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
                 end)
             end)
         end,
@@ -353,7 +424,7 @@ ix.cmbSystems.cityCodes = {
                     end
 
                     v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
-                    v:StopSound("ambient/levels/streetwar/heli_distant1.wav")
+                    v:StopSound(heliSounds[math.random(1, #heliSounds)])
                 end
             end
         end
