@@ -93,7 +93,7 @@ if ( SERVER ) then
             return
         end
 
-        timer.Simple(0.25, function()
+        timer.Simple(0.5, function()
             ix.relationships.Update(ent)
 
             local timerID = "ix.NPCRelationships.Update." .. ent:EntIndex()
