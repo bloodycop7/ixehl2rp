@@ -199,25 +199,25 @@ ix.cmbSystems.cityCodes = {
                 if ( Schema:IsOutside(v) ) then
                     Schema:PlaySound(v, "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
                 else
-                    Schema:PlaySound(v, "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.3)
+                    Schema:PlaySound(v, "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.4)
                 end
 
                 if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.7)
+                    Schema:PlaySound(v, "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.5)
                 else
                     Schema:PlaySound(v, "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.4)
                 end
 
                 if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.7)
+                    Schema:PlaySound(v, "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.5)
                 else
                     Schema:PlaySound(v, "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.4)
                 end
 
                 if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.6)
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.7)
                 else
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.4)
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_anticivilevidence_3_spkr.wav", 75, 100, 0.5)
                 end
 
                 ix.chat.Send(nil, "cmb_dispatch", "Protection team alert: evidence of anti-civil activity in this community. Code: ASSEMBLE, CLAMP, CONTAIN.")
