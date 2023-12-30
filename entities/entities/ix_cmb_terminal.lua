@@ -28,6 +28,26 @@ if (SERVER) then
 		physics:Sleep()
 
 		self.nextUse = 0
+
+		local uID = "ixAmbient." .. self:GetClass() .. "." .. self:EntIndex()
+
+		if not ( timer.Exists(uID) ) then
+			timer.Create(uID, math.random(2, 10), 0, function()
+				if not ( IsValid(self) ) then
+					timer.Remove(uID)
+
+					return
+				end
+
+				if ( self:GetBroken() ) then
+					timer.Remove(uID)
+
+					return
+				end
+
+				self:EmitSound("ambient/machines/combine_terminal_idle" .. math.random(1, 4) .. ".wav", 75, 100, 0.25)
+			end)
+		end
 	end
 
 	function ENT:Use(ply)
@@ -67,6 +87,16 @@ if (SERVER) then
 	function ENT:OnRemove()
 		if not ( ix.shuttingDown ) then
 			Schema:SaveData()
+		end
+
+		if ( timer.Exists("ixAmbient." .. self:GetClass() .. "." .. self:EntIndex()) ) then
+			for i = 1, 3 do
+				for i = 1, 4 do
+					self:StopSound("ambient/machines/combine_terminal_idle" .. i .. ".wav")
+				end
+			end
+			
+			timer.Remove("ixAmbient." .. self:GetClass() .. "." .. self:EntIndex())
 		end
 	end
 
