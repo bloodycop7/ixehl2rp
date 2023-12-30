@@ -7,6 +7,8 @@ FACTION.models = {
 	"models/ez2npc/police.mdl"
 }
 
+FACTION.skin = 1
+
 ix.anim.SetModelClass("models/ez2npc/police.mdl", "metrocop")
 
 FACTION.taglines = {

@@ -172,6 +172,10 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 		end
 
 		hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
+
+		if ( ix.faction.Get(ply:Team()).skin ) then
+			ply:SetSkin(ix.faction.Get(ply:Team()).skin)
+		end
 	end)
 end
 
