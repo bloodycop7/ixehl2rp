@@ -155,11 +155,18 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	local permaRankData = ix.rank.list[permaRank]
 
 	if ( permaClass and permaClassData ) then
+		local oldClass = newChar:GetClass()
+
 		newChar:SetClass(permaClass)
+		
+		hook.Run("PlayerJoinedClass", ply, permaClass, oldClass)
 	end
 
 	if ( permaRank and permaRankData ) then
+		local oldRank = newChar:GetRank()
 		newChar:SetRank(permaRank)
+		
+		hook.Run("PlayerJoinedRank", ply, permaRank, oldRank)
 	end
 end
 
