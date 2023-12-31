@@ -90,6 +90,16 @@ function Schema:SaveData()
 	for _, v in ipairs(ents.FindByClass("ix_vendingmachine")) do
 		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetAllStock()}
 	end
+
+	ix.data.Set("vendingMachines", data)
+
+	data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_rationdistribution")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles()}
+	end
+
+	ix.data.Set("rationDistributions", data)
 end
 
 function Schema:LoadData()
@@ -120,6 +130,15 @@ function Schema:LoadData()
 		vm:SetStock(v[3])
 		vm:Spawn()
 		vm:Activate()
+	end
+
+	data = ix.data.Get("rationDistributions", {})
+	for _, v in ipairs(data) do
+		local ration = ents.Create("ix_rationdistribution")
+		ration:SetPos(v[1])
+		ration:SetAngles(v[2])
+		ration:Spawn()
+		ration:Activate()
 	end
 end
 
