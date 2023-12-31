@@ -11,6 +11,7 @@ ENT.bNoPersist = true
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Dispenser")
 	self:NetworkVar("Bool", 0, "Using")
+	self:NetworkVar("Bool", 1, "Enabled")
 end
 
 if (SERVER) then
@@ -27,6 +28,7 @@ if (SERVER) then
 
 		self.nextUse = 0
 		self:SetUsing(false)
+		self:SetEnabled(true)
 
         self.dispenser = ents.Create("prop_dynamic")
         self.dispenser:SetModel("models/props_combine/combine_dispenser.mdl")
@@ -45,7 +47,13 @@ if (SERVER) then
 		if not ( ply:GetEyeTrace().Entity == self or ply:GetEyeTrace().Entity == self:GetDispenser() ) then
 			return
 		end
-	
+
+		if not ( self:GetEnabled() ) then
+			self:GetDispenser():EmitSound("buttons/combine_button_locked.wav")
+
+			return
+		end
+
 		if ( self:GetUsing() ) then
 			return
 		end
@@ -126,8 +134,14 @@ if (SERVER) then
 
     function ENT:OnRemove()
         if ( IsValid(self:GetDispenser()) ) then
+			for i = 1, 3 do
+				for i2 = 1, 3 do
+					self:GetDispenser():StopSound("ambient/machines/combine_terminal_idle" .. i2 .. ".wav")
+				end
+			end
+
             self:GetDispenser():Remove()
-        end
+		end
 
 		if not ( ix.shuttingDown ) then
 			Schema:SaveData()
