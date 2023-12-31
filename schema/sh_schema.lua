@@ -132,6 +132,11 @@ ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be droppe
     category = "misc"
 })
 
+ix.config.Add("rationInterval", (60 * 30), "How often a player can receive a ration.", nil, {
+    data = {min = 1, max = 3600},
+    category = "rations"
+})
+
 ix.command.Add("CharSetRank", {
 	description = "Sets the rank of a character.",
 	adminOnly = true,

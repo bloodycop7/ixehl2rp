@@ -54,6 +54,12 @@ if (SERVER) then
 			return
 		end
 
+		local char = ply:GetCharacter()
+
+		if not ( char ) then
+			return
+		end
+
 		self.nextUse = CurTime() + 1
 
 		Schema:PlayGesture(ply, "g_scan_id")		
@@ -65,7 +71,7 @@ if (SERVER) then
 		if not ( timer.Exists(uID) ) then
 			self:GetDispenser():EmitSound("ambient/machines/combine_terminal_idle2.wav")
 			timer.Create(uID, 1, 1, function()
-				if not ( IsValid(self) or IsValid(ply) ) then
+				if not ( IsValid(self) or IsValid(ply) or char ) then
 					timer.Remove(uID)
 
 					return
@@ -78,13 +84,20 @@ if (SERVER) then
 					return
 				end
 
+				if ( timer.Exists("ixRationDispenser." .. self:EntIndex() .. ".Reset." .. ply:SteamID64() .. "." .. char:GetID()) ) then
+					self:GetDispenser():EmitSound("buttons/combine_button_locked.wav")
+					self:SetUsing(false)
+
+					return
+				end
+
 				self:GetDispenser():EmitSound("ambient/machines/combine_terminal_idle3.wav")
 
 				uID = "ixRationDispenser." .. self:EntIndex() .. ".Dispense." .. ply:SteamID64()
 				
 				if not ( timer.Exists(uID) ) then
 					timer.Create(uID, SoundDuration("ambient/machines/combine_terminal_idle3.wav") + 1, 1, function()
-						if not ( IsValid(self) or IsValid(ply) ) then
+						if not ( IsValid(self) or IsValid(ply) or char ) then
 							timer.Remove(uID)
 
 							return
@@ -98,6 +111,9 @@ if (SERVER) then
 						pos = pos + self:GetForward() * 20
 
 						ix.item.Spawn("ration_package", pos)
+
+						timer.Create("ixRationDispenser." .. self:EntIndex() .. ".Reset." .. ply:SteamID64() .. "." .. char:GetID(), ix.config.Get("rationInterval", 1800), 1, function()
+						end)
 
 						self:SetUsing(false)
 					end)
