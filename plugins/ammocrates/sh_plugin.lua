@@ -77,6 +77,8 @@ function PLUGIN:CreateCrates()
                         self:SetRemainingAmmo(v[2])
                     end)
                 end
+
+                Schema:SaveData()
             end
 
             function ENT:Use(ply)
@@ -122,6 +124,12 @@ function PLUGIN:CreateCrates()
                 end, 1, function()
                     ply:SetAction()
                 end)
+            end
+
+            function ENT:OnRemove()
+                if not ( ix.shuttingDown ) then
+                    Schema:SaveData()
+                end
             end
         else
             ENT.PopulateEntityInfo = true
