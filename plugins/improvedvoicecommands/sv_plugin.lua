@@ -2,8 +2,6 @@
 local PLUGIN = PLUGIN
 PLUGIN.TempStored = PLUGIN.TempStored or {}
 
-util.AddNetworkString("ix.Voice.PlayQueuedSound")
-
 -- if no separator then just seperate at spaces
 local function GetVoiceCommands(text, class, separator)
     local strings = string.Explode(separator or " ", text)
