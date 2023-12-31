@@ -10,6 +10,7 @@ ENT.bNoPersist = true
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Entity", 0, "Dispenser")
+	self:NetworkVar("Bool", 0, "Using")
 end
 
 if (SERVER) then
@@ -24,6 +25,7 @@ if (SERVER) then
 		physics:Sleep()
 
 		self.nextUse = 0
+		self:SetUsing(false)
 
         self.dispenser = ents.Create("prop_dynamic")
         self.dispenser:SetModel("models/props_combine/combine_dispenser.mdl")
@@ -42,6 +44,10 @@ if (SERVER) then
 		if not ( ply:GetEyeTrace().Entity == self or ply:GetEyeTrace().Entity == self:GetDispenser() ) then
 			return
 		end
+	
+		if ( self:GetUsing() ) then
+			return
+		end
 
 		if ( self.nextUse > CurTime() ) then
 			return
@@ -49,7 +55,29 @@ if (SERVER) then
 
 		self.nextUse = CurTime() + 1
 
-		Schema:PlayGesture(ply, "g_scan_id")
+		Schema:PlayGesture(ply, "g_scan_id")		
+
+		self:SetUsing(true)
+
+		local uID = "ixRationDispenser." .. self:EntIndex() .. ".Scan." .. ply:SteamID64()
+
+		if not ( timer.Exists(uID) ) then
+			self:EmitSound("ambient/machines/combine_terminal_idle2.wav")
+			timer.Create(uID, 1, 1, function()
+				if not ( IsValid(self) or IsValid(ply) ) then
+					timer.Remove(uID)
+
+					return
+				end
+
+				if ( ply:GetCharacter():GetBOLStatus() ) then
+					self:EmitSound("buttons/combine_button_locked.wav")
+					self:SetUsing(false)
+
+					return
+				end
+			end)
+		end
     end
 
     function ENT:OnRemove()
