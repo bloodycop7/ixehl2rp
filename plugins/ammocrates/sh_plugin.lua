@@ -56,7 +56,7 @@ function PLUGIN:CreateCrates()
                 self:SetAmmoType(k)
                 self:SetRemainingAmmo(v[2])
 
-                local uID = "ix_ammo_crate_" .. k .. "_" .. self:EntIndex() .. "_refill_timer"
+                local uID = "ix_ammo_crate_" .. string.lower(k) .. "_" .. self:EntIndex() .. "_refill_timer"
 
                 if not ( timer.Exists(uID) ) then
                     timer.Create(uID, ix.config.Get("ammoCrateCooldown", (60 * 10)), 1, function()
