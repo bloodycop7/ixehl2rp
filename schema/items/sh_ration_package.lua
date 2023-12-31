@@ -22,7 +22,7 @@ ITEM.functions.OpenPackage = {
         end
 
         local suppliedItems = {
-            ["soda"] = 1,
+            ["water"] = 1,
         }
 
         suppliedItems = hook.Run("PlayerGetRationSupplyment", ply, item, suppliedItems) or suppliedItems
