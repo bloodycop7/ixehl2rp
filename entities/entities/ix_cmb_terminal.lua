@@ -32,7 +32,7 @@ if (SERVER) then
 		local uID = "ixAmbient." .. self:GetClass() .. "." .. self:EntIndex()
 
 		if not ( timer.Exists(uID) ) then
-			timer.Create(uID, math.random(2, 10), 0, function()
+			timer.Create(uID, math.random(6, 14), 0, function()
 				if not ( IsValid(self) ) then
 					timer.Remove(uID)
 
