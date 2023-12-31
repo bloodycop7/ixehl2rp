@@ -120,7 +120,7 @@ function PLUGIN:CreateCrates()
                             ply:GiveAmmo(v[3], k, true)
                         end
 
-                        self:SetRemainingAmmo(self:GetRemainingAmmo() - v[3])
+                        self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
                     end
                 end, 1, function()
                     ply:SetAction()
@@ -147,7 +147,7 @@ function PLUGIN:CreateCrates()
 
                 if not ( ix.config.Get("ammoCrateInfinite", false) ) then
                     local ammo = container:AddRow("ammo")
-                    ammo:SetText("Remaining Ammo: " .. self:GetRemainingAmmo())
+                    ammo:SetText("Remaining Ammo: " .. math.Clamp(self:GetRemainingAmmo(), 0, 99999) .. " (" .. math.Round(self:GetRemainingAmmo() / v[3], 0) .. " uses)")
                     ammo:SetBackgroundColor(Color(175, 130, 0))
                     ammo:SizeToContents()
                 end

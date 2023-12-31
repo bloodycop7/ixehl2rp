@@ -1,6 +1,108 @@
 local PLUGIN = PLUGIN
 util.AddNetworkString("ix.Combine.SetCityCode")
 util.AddNetworkString("ix.Combine.ToggleBOL")
+util.AddNetworkString("ix.Combine.GiveLP")
+util.AddNetworkString("ix.Combine.TakeLP")
+
+net.Receive("ix.Combine.GiveLP", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    local target = net.ReadEntity()
+
+    if not ( IsValid(target) ) then
+        return
+    end
+
+    local char = target:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local amount = net.ReadString()
+
+    if not ( amount ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    amount = tonumber(amount)
+
+    if not ( isnumber(amount) ) then
+        return
+    end
+
+    if ( amount < 1 ) then
+        return
+    end
+
+    if not ( Schema:IsCitizen(target) ) then
+        return
+    end
+
+    char:SetLoyaltyPoints(char:GetLoyaltyPoints() + amount)
+end)
+
+net.Receive("ix.Combine.TakeLP", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    local target = net.ReadEntity()
+
+    if not ( IsValid(target) ) then
+        return
+    end
+
+    local char = target:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local amount = net.ReadString()
+
+    if not ( amount ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    amount = tonumber(amount)
+
+    if not ( isnumber(amount) ) then
+        return
+    end
+
+    if ( amount < 1 ) then
+        return
+    end
+
+    if not ( Schema:IsCitizen(target) ) then
+        return
+    end
+
+    char:SetLoyaltyPoints(char:GetLoyaltyPoints() - amount)
+end)
 
 net.Receive("ix.Combine.SetCityCode", function(len, ply)
     local id = net.ReadUInt(8)
@@ -8,7 +110,7 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
 
     if ( ( ix.nextCityCodeChange or 0 ) > CurTime() ) then
         ply:Notify("You must wait " .. math.Round(ix.nextCityCodeChange - CurTime()) .. " more second(s) before changing the city code again.")
-        
+
         return
     end
 
@@ -31,7 +133,19 @@ net.Receive("ix.Combine.ToggleBOL", function(len, ply)
         return
     end
 
+    local char = target:GetChar()
+
+    if not ( char ) then
+        return
+    end
+
     if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetChar()
+
+    if not ( plyChar ) then
         return
     end
 
