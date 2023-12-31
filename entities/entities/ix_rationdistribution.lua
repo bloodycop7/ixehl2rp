@@ -19,6 +19,7 @@ if (SERVER) then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
+		self:SetNoDraw(true)
 
 		local physics = self:GetPhysicsObject()
 		physics:EnableMotion(false)
@@ -62,7 +63,7 @@ if (SERVER) then
 		local uID = "ixRationDispenser." .. self:EntIndex() .. ".Scan." .. ply:SteamID64()
 
 		if not ( timer.Exists(uID) ) then
-			self:EmitSound("ambient/machines/combine_terminal_idle2.wav")
+			self:GetDispenser():EmitSound("ambient/machines/combine_terminal_idle2.wav")
 			timer.Create(uID, 1, 1, function()
 				if not ( IsValid(self) or IsValid(ply) ) then
 					timer.Remove(uID)
@@ -71,13 +72,13 @@ if (SERVER) then
 				end
 
 				if ( ply:GetCharacter():GetBOLStatus() ) then
-					self:EmitSound("buttons/combine_button_locked.wav")
+					self:GetDispenser():EmitSound("buttons/combine_button_locked.wav")
 					self:SetUsing(false)
 
 					return
 				end
 
-				self:EmitSound("ambient/machines/combine_terminal_idle3.wav")
+				self:GetDispenser():EmitSound("ambient/machines/combine_terminal_idle3.wav")
 
 				uID = "ixRationDispenser." .. self:EntIndex() .. ".Dispense." .. ply:SteamID64()
 				
@@ -89,7 +90,8 @@ if (SERVER) then
 							return
 						end
 
-						self:EmitSound("buttons/combine_button1.wav")
+						self:GetDispenser():EmitSound("buttons/combine_button1.wav")
+						self:GetDispenser():Fire("SetAnimation", "dispense_package", 0)
 
 						self:SetUsing(false)
 					end)
