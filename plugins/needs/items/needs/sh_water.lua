@@ -5,3 +5,4 @@ ITEM.category = "Consumables"
 ITEM.category = "Consumables"
 ITEM.thirstAmount = 20
 ITEM.hungerAmount = 5
+ITEM.consumeTime = 3
