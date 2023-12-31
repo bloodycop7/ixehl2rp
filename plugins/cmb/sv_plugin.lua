@@ -30,6 +30,7 @@ net.Receive("ix.Combine.GiveLP", function(len, ply)
     local amount = net.ReadString()
 
     if not ( amount ) then
+        ply:Notify("Invalid amount!")
         return
     end
 

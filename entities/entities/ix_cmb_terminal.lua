@@ -368,13 +368,13 @@ else
 					continue
 				end
 
-				local button = self.rightPanel:Add("Panel")
-				button:Dock(TOP)
-				button:SetContentAlignment(5)
-				button:SetTall(40)
-				button:DockMargin(0, 10, 0, 0)
-				button.paintW = 0
-				button.Paint = function(pnl, w, h)
+				local buttonMain = self.rightPanel:Add("Panel")
+				buttonMain:Dock(TOP)
+				buttonMain:SetContentAlignment(5)
+				buttonMain:SetTall(40)
+				buttonMain:DockMargin(0, 10, 0, 0)
+				buttonMain.paintW = 0
+				buttonMain.Paint = function(pnl, w, h)
 					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 100))
 					surface.DrawOutlinedRect(0, 0, w, h, 2)
 
@@ -389,7 +389,7 @@ else
 					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
 				end
 
-				local name = button:Add("DLabel")
+				local name = buttonMain:Add("DLabel")
 				name:Dock(LEFT)
 				name:DockMargin(10, 0, 0, 0)
 				name:SetFont("ixCombineFont10")
@@ -397,11 +397,11 @@ else
 				name:SetContentAlignment(5)
 				name:SizeToContents()
 
-				local button = button:Add("ixMenuButton")
+				local button = buttonMain:Add("ixMenuButton")
 				button:Dock(RIGHT)
 				button:SetWide(50)
 				button:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
-				button:SetFont("ixCombineFont10")
+				button:SetFont("ixCombineFont08")
 				button:SetContentAlignment(5)
 				button.DoClick = function(this)
 					net.Start("ix.Combine.ToggleBOL")
@@ -410,6 +410,50 @@ else
 
 					this:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
 				end
+				button:SizeToContents()
+
+				button = buttonMain:Add("ixMenuButton")
+				button:Dock(RIGHT)
+				button:SetText("Give LP")
+				button:SetFont("ixCombineFont08")
+				button:SetContentAlignment(5)
+				button.DoClick = function(this)
+					Derma_StringRequest("Give LP", "How much LP would you like to give?", "", function(text)
+						if not ( text ) then
+							return
+						end
+
+						net.Start("ix.Combine.GiveLP")
+							net.WriteEntity(v)
+							net.WriteString(text)
+						net.SendToServer()
+					end)
+				end
+
+				button:SizeToContents()
+
+				button = buttonMain:Add("ixMenuButton")
+				button:Dock(RIGHT)
+				button:SetText("Take LP")
+				button:SetFont("ixCombineFont08")
+				button:SetContentAlignment(5)
+				button.DoClick = function(this)
+					Derma_StringRequest("Take LP", "How much LP would you like to take?", "", function(text)
+						if not ( text ) then
+							return
+						end
+
+						if not ( isnumber(tonumber(text)) ) then
+							return
+						end
+
+						net.Start("ix.Combine.TakeLP")
+							net.WriteEntity(v)
+							net.WriteString(text)
+						net.SendToServer()
+					end)
+				end
+
 				button:SizeToContents()
 			end
 		end
