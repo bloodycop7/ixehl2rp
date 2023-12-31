@@ -65,7 +65,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             pos = ply:GetPos(),
             text = "Lost Biosignal for Unit " .. char:GetName() .. ".",
             color = Color(255, 0, 0),
-            duration = 40
+            duration = 5
         })
     end
 end

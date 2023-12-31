@@ -26,22 +26,16 @@ function ix.cmbSystems:MakeWaypoint(data)
         data.duration = 5
     end
 
-    data.duration = CurTime() + data.duration
-
     if not ( data.pos ) then
         data.pos = localPlayer:GetPos()
     end
 
+    timer.Simple(data.duration, function()
+        table.RemoveByValue(ix.cmbSystems.waypoints, data)  
+    end)
+
     ix.cmbSystems.waypoints[#ix.cmbSystems.waypoints + 1] = data
 end
-
-timer.Create("ix.cmbSystems.waypointTimer", 1, 0, function()
-    for k, v in pairs(ix.cmbSystems.waypoints) do
-        if ( v.duration <= CurTime() ) then
-            ix.cmbSystems.waypoints[k] = nil
-        end
-    end
-end)
 
 for i = 6, 40, 2 do
     local value = Schema:ZeroNumber(i, 2)
