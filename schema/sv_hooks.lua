@@ -100,6 +100,14 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("rationDistributions", data)
+
+	for k, v in ipairs(ents.FindByClass("ix_ammo_crate_*")) do
+		data = {}
+
+		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetAmmoType(), v:GetRemainingAmmo(), v:GetClass()}
+	end
+
+	ix.data.Set("ammoCrates", data)
 end
 
 function Schema:LoadData()
@@ -139,6 +147,18 @@ function Schema:LoadData()
 		ration:SetAngles(v[2])
 		ration:Spawn()
 		ration:Activate()
+	end
+
+	data = ix.data.Get("ammoCrates", {})
+
+	for _, v in ipairs(data) do
+		local crate = ents.Create(v[5])
+		crate:SetPos(v[1])
+		crate:SetAngles(v[2])
+		crate:SetAmmoType(v[3])
+		crate:SetRemainingAmmo(v[4])
+		crate:Spawn()
+		crate:Activate()
 	end
 end
 
