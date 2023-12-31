@@ -104,6 +104,23 @@ function Schema:IsOutside(ply)
     return trace.HitSky
 end
 
+function Schema:PlayGesture(ply, gesture)
+    if ( SERVER ) then
+        net.Start("ix.PlayGesture")
+            net.WriteEntity(ply)
+            net.WriteString(gesture)
+        net.Broadcast()
+    end
+
+	local index, length = ply:LookupSequence(gesture)
+
+	if not ( ply:LookupSequence(gesture) ) then
+		return
+	end
+
+	ply:DoAnimationEvent(index)
+end
+
 function Schema:GetGameDescription()
 	return "IX: "..(Schema.name or "Unknown")
 end

@@ -103,13 +103,23 @@ net.Receive("ix.PlayGesture", function(len)
 		return
 	end
 
-	local sequence = net.ReadString()
+	local playerT = net.ReadEntity()
 
-	if not ( localPlayer:LookupSequence(sequence) ) then
+	if not ( IsValid(playerT) ) then
 		return
 	end
 
-	local index, length = localPlayer:LookupSequence(sequence)
+	if not ( playerT:GetCharacter() ) then
+		return
+	end
 
-	localPlayer:DoAnimationEvent(index)
+	local sequence = net.ReadString()
+
+	if not ( playerT:LookupSequence(sequence) ) then
+		return
+	end
+
+	local index, length = playerT:LookupSequence(sequence)
+
+	playerT:DoAnimationEvent(index)
 end)

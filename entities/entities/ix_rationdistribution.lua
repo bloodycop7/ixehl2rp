@@ -48,6 +48,8 @@ if (SERVER) then
 		end
 
 		self.nextUse = CurTime() + 1
+
+		Schema:PlayGesture(ply, "g_scan_id")
     end
 
     function ENT:OnRemove()

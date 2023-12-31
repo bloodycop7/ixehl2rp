@@ -30,20 +30,6 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel)
 end
 
 util.AddNetworkString("ix.PlayGesture")
-function Schema:PlayGesture(ply, gesture)
-	net.Start("ix.PlayGesture")
-		net.WriteEntity(ply)
-		net.WriteString(gesture)
-	net.Broadcast()
-
-	local index, length = ply:LookupSequence(gesture)
-
-	if not ( ply:LookupSequence(gesture) ) then
-		return
-	end
-
-	ply:DoAnimationEvent(index)
-end
 
 if ( TFA ) then
 	if ( GetConVar("sv_tfa_attachments_enabled"):GetInt() != 0 ) then
