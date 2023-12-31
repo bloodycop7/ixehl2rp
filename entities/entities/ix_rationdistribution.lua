@@ -76,6 +76,24 @@ if (SERVER) then
 
 					return
 				end
+
+				self:EmitSound("ambient/machines/combine_terminal_idle3.wav")
+
+				uID = "ixRationDispenser." .. self:EntIndex() .. ".Dispense." .. ply:SteamID64()
+				
+				if not ( timer.Exists(uID) ) then
+					timer.Create(uID, SoundDuration("ambient/machines/combine_terminal_idle3.wav") + 1, 1, function()
+						if not ( IsValid(self) or IsValid(ply) ) then
+							timer.Remove(uID)
+
+							return
+						end
+
+						self:EmitSound("buttons/combine_button1.wav")
+
+						self:SetUsing(false)
+					end)
+				end
 			end)
 		end
     end
