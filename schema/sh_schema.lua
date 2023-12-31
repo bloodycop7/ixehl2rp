@@ -9,6 +9,8 @@ ix.util.Include("cl_hooks.lua")
 ix.util.Include("sh_hooks.lua")
 ix.util.Include("sv_hooks.lua")
 
+ix.util.IncludeDir("voicelines")
+
 for k, v in pairs(ix.faction.indices) do
     Schema["Is" .. (v.abbreviation or v.name)] = function(self, ply)
         if not ( IsValid(ply) ) then
