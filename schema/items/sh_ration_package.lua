@@ -37,6 +37,12 @@ ITEM.functions.OpenPackage = {
             char:GetInventory():Add(k, v)
         end
 
+        local money = hook.Run("PlayerGetRationMoney", ply, item) or 5
+
+        if ( money > 0 ) then
+            char:GiveMoney(money)
+        end
+
         return true
     end,
 }
