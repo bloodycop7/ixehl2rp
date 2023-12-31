@@ -66,7 +66,7 @@ ITEM.functions.Consume = {
             return
         end
 
-        item.consumeTime = item:GetConsumeTime(ply) or ( item.consumeTime or 0 )
+        item.consumeTime = ( item.GetConsumeTime and item:GetConsumeTime(ply) ) or ( item.consumeTime or 0 )
 
         if ( item.consumeTime > 0 ) then
             char:SetData("isConsuming", true)
