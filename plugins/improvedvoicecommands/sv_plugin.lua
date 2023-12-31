@@ -102,7 +102,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
     local separator = ix.config.Get("separatorVC", nil) != "" and ix.config.Get("separatorVC", nil) or nil
 
 	if chatType == "ic" or chatType == "w" or chatType == "y" or chatType == "dispatch" or (ix.config.Get("radioVCAllow", true) and chatType == "radio") then
-		local class = self.voices.GetClass(speaker)
+		local class = Schema.voices.GetClass(speaker)
 
 		for k, v in pairs(class) do
             local texts = GetVoiceCommands(rawText, v, separator)
@@ -132,7 +132,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
                 if k2 == #texts then
                     if table.IsEmpty(sounds) then break end
 
-                    if speaker:IsCombine() and !isGlobal then
+                    if Schema:IsCombine(speaker) and !isGlobal then
                         speaker.bTypingBeep = nil
                         table.insert(sounds, "NPC_MetroPolice.Radio.Off")
                     end
@@ -162,7 +162,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
 
         PLUGIN.TempStored[CurTime()] = text
 
-        if speaker:IsCombine() then
+        if Schema:IsCombine(speaker) then
             if chatType != "radio" then
                 return string.format("<:: %s ::>", text)
             end
