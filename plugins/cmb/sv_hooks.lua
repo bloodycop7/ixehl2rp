@@ -60,12 +60,14 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, 90)
     end
 
-    ix.cmbSystems:MakeWaypoint({
-        pos = ply:GetPos(),
-        text = "Lost Biosignal for Unit " .. char:GetName() .. ".",
-        color = Color(255, 0, 0),
-        duration = 40
-    })
+    if ( Schema:IsCombine(ply) ) then
+        ix.cmbSystems:MakeWaypoint({
+            pos = ply:GetPos(),
+            text = "Lost Biosignal for Unit " .. char:GetName() .. ".",
+            color = Color(255, 0, 0),
+            duration = 40
+        })
+    end
 end
 
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
