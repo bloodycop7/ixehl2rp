@@ -85,8 +85,10 @@ function PLUGIN:CreateCrates()
                 ply:SetAction("Refilling...", 1)
                 ply:DoStaredAction(self, function()
                     if ( ix.config.Get("ammoCrateInfinite", false) ) then
-                        if ( v[4] ) then
-                            char:GetInventory():Add(v[4])
+                        if ( v[4] and ix.item.Get(v[4]) ) then
+                            if not ( char:GetInventory():Add(v[4]) ) then
+                                ply:Notify("You don't have enough space in your inventory!")
+                            end                            
                         else
                             ply:GiveAmmo(v[3], k, true)
                         end
@@ -96,7 +98,14 @@ function PLUGIN:CreateCrates()
                             return
                         end
 
-                        char:GetInventory():Add(v[4])
+                        if ( v[4] and ix.item.Get(v[4]) ) then
+                            if not ( char:GetInventory():Add(v[4]) ) then
+                                ply:Notify("You don't have enough space in your inventory!")
+                            end
+                        else
+                            ply:GiveAmmo(v[3], k, true)
+                        end
+
                         self:SetRemainingAmmo(self:GetRemainingAmmo() - v[3])
                     end
                 end, 1, function()
