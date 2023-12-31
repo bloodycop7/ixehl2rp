@@ -37,6 +37,6 @@ ITEM.functions.OpenPackage = {
             char:GetInventory():Add(k, v)
         end
 
-        return false
+        return true
     end,
 }
