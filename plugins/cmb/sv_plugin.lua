@@ -6,6 +6,12 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
     local id = net.ReadUInt(8)
     local codeData = ix.cmbSystems.cityCodes[id]
 
+    if ( ( ix.nextCityCodeChange or 0 ) > CurTime() ) then
+        ply:Notify("You must wait " .. math.Round(ix.nextCityCodeChange - CurTime()) .. " more second(s) before changing the city code again.")
+        
+        return
+    end
+
     if not ( codeData ) then
         return
     end
@@ -15,6 +21,7 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
     end
 
     ix.cmbSystems:SetCityCode(id)
+    ix.nextCityCodeChange = CurTime() + (ply:IsAdmin() and 2 or 10)
 end)
 
 net.Receive("ix.Combine.ToggleBOL", function(len, ply)
