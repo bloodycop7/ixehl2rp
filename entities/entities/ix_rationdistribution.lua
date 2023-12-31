@@ -93,6 +93,12 @@ if (SERVER) then
 						self:GetDispenser():EmitSound("buttons/combine_button1.wav")
 						self:GetDispenser():Fire("SetAnimation", "dispense_package", 0)
 
+						local pos = self:GetDispenser():GetPos()
+
+						pos = pos + self:GetForward() * 20
+
+						ix.item.Spawn("ration_package", pos)
+
 						self:SetUsing(false)
 					end)
 				end
