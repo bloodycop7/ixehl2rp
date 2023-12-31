@@ -242,18 +242,24 @@ else
 		self.topPanel = self:Add("Panel")
 		self.topPanel:Dock(TOP)
 		self.topPanel:SetTall(30)
-		self.topPanel:DockPadding(0, padding * 0.25, 0, 0)
+		self.topPanel:DockPadding(padding * 2, padding * 0.25, 0, 0)
 		self.topPanel.Paint = function(s, w, h)
 			surface.SetDrawColor(Color(0, 0, 0, 190))
 			surface.DrawRect(0, 0, w, h)
+
+			surface.SetDrawColor(Color(0, 255, 255))
+			surface.DrawRect(0, 0, 10, h)
 		end
 
 		local title = self.topPanel:Add("DLabel")
 		title:Dock(LEFT)
 		title:SetFont("ixCombineFont14")
 		title:SetText("Combine Terminal")
+		title:SetTextColor(Color(0, 255, 255))
 		title:SetContentAlignment(4)
 		title:SizeToContents()
+
+		self.topPanel:SizeToContents()
 
 		self.leftPanel = self:Add("Panel")
 		self.leftPanel:Dock(LEFT)
@@ -264,6 +270,9 @@ else
 
 			surface.SetDrawColor(Color(0, 0, 0, 190))
 			surface.DrawRect(0, 0, w, h)
+
+			surface.SetDrawColor(Color(0, 255, 255))
+			surface.DrawRect(0, 0, 10, h)
 		end
 
 		self.rightPanel = self:Add("DScrollPanel")
@@ -282,6 +291,7 @@ else
 		self.cityCodesButton:SetText("City Codes")
 		self.cityCodesButton:SetFont("ixCombineFont10")
 		self.cityCodesButton:SetTextColor(color_white)
+		self.cityCodesButton:DockMargin(11, 10, 3, 0)
 		self.cityCodesButton:SetContentAlignment(5)
 		self.cityCodesButton.DoClick = function(this)
 			self.rightPanel:Clear()
@@ -320,6 +330,13 @@ else
 				end
 			end
 		end
+		self.cityCodesButton.Paint = function(s, w, h)
+			surface.SetDrawColor(Color(0, 65, 65))
+			surface.DrawRect(0, 0, w, h)
+
+			surface.SetDrawColor(Color(0, 255, 255))
+			surface.DrawOutlinedRect(0, 0, w, h, 2)
+		end
 		self.cityCodesButton:SizeToContents()
 
 		self.citizenIndexButton = self.leftPanel:Add("ixMenuButton")
@@ -327,6 +344,7 @@ else
 		self.citizenIndexButton:SetText("Citizen Index")
 		self.citizenIndexButton:SetFont("ixCombineFont10")
 		self.citizenIndexButton:SetTextColor(color_white)
+		self.citizenIndexButton:DockMargin(11, 5, 3, 0)
 		self.citizenIndexButton:SetContentAlignment(5)
 		self.citizenIndexButton.DoClick = function(this)
 			self.rightPanel:Clear()
@@ -395,11 +413,19 @@ else
 				button:SizeToContents()
 			end
 		end
+		self.citizenIndexButton.Paint = function(s, w, h)
+			surface.SetDrawColor(Color(0, 65, 65))
+			surface.DrawRect(0, 0, w, h)
+
+			surface.SetDrawColor(Color(0, 255, 255))
+			surface.DrawOutlinedRect(0, 0, w, h, 2)
+		end
 		self.citizenIndexButton:SizeToContents()
 
 		local closeButton = self.topPanel:Add("ixMenuButton")
 		closeButton:Dock(RIGHT)
 		closeButton:SetText("Log out")
+		closeButton:SetTextColor(Color(0, 255, 255))
 		closeButton:SetFont("ixCombineFont10")
 		closeButton.DoClick = function(this)
 			self:MoveTo(0 - scrW * 0.50, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2, function()
@@ -411,9 +437,12 @@ else
 	end
 
 	function UI:Paint(w, h)
-		surface.SetDrawColor(Color(0, 205, 205, 200))
+		surface.SetDrawColor(Color(0, 255, 255))
+		surface.DrawRect(0, 0, 10, h)
+
+		surface.SetDrawColor(Color(39, 143, 143, 200))
 		surface.SetMaterial(gradient)
-		surface.DrawTexturedRect(0, 0, w, h)
+		surface.DrawTexturedRect(10, 0, w, h)
 	end
 
 	vgui.Register("ixCombineTerminal", UI, "Panel")
