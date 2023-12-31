@@ -88,7 +88,7 @@ if (SERVER) then
 					self:GetDispenser():EmitSound("buttons/combine_button_locked.wav")
 					self:SetUsing(false)
 
-					ply:Notify("You can take your next ration in " .. string.ToMinutesSeconds(timer.TimeLeft("ixRationDispenser." .. self:EntIndex() .. ".Reset." .. ply:SteamID64() .. "." .. char:GetID())) .. ".")
+					ply:Notify("You can take your next ration in " .. string.NiceTime(timer.TimeLeft("ixRationDispenser." .. self:EntIndex() .. ".Reset." .. ply:SteamID64() .. "." .. char:GetID())) .. ".")
 
 					return
 				end
