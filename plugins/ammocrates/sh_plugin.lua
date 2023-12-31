@@ -16,11 +16,11 @@ ix.config.Add("ammoCrateCooldown", (60 * 10), "On how much time should the ammo 
 PLUGIN.ammoTypes = {
     // AMMO TYPE = {"CRATE MODEL", "MAX AMMO FROM CRATE", "AMOUNT OF AMMO TO GIVE TO THE PLAYER PER USE", "ITEM AMMO (OPTIONAL)"}
 
-    ["AR2"] = {"models/items/ammocrate_ar2.mdl", 1000, 30, "ammo_ar2"},
+    ["AR2"] = {"models/items/ammocrate_ar2.mdl", 1500, 30, "ammo_ar2"},
     ["SMG1"] = {"models/items/ammocrate_smg1.mdl", 1000, 90, "ammo_smg1"},
     ["Buckshot"] = {"models/items/ammocrate_buckshot.mdl", 90, 8, "ammo_buckshot"},
-    ["Pistol"] = {"models/items/ammocrate_pistol.mdl", 400, 80, "ammo_pistol"},
-    ["357"] = {"models/items/ammocrate_pistol.mdl", 400, 6, "ammo_357"},
+    ["Pistol"] = {"models/items/ammocrate_pistol.mdl", 400, 60, "ammo_pistol"},
+    ["357"] = {"models/items/ammocrate_pistol.mdl", 400, 12, "ammo_357"},
 }
 
 function PLUGIN:CreateCrates()
@@ -86,7 +86,7 @@ function PLUGIN:CreateCrates()
                 ply:DoStaredAction(self, function()
                     if ( ix.config.Get("ammoCrateInfinite", false) ) then
                         if ( v[4] and ix.item.Get(v[4]) ) then
-                            if not ( char:GetInventory():Add(v[4]) ) then
+                            if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
                                 ply:Notify("You don't have enough space in your inventory!")
                             end                            
                         else
@@ -95,12 +95,12 @@ function PLUGIN:CreateCrates()
                     else
                         if ( self:GetRemainingAmmo() <= 0 ) then
                             ply:Notify("This ammo crate doesn't have any remaining ammo!")
-                            
+
                             return
                         end
 
                         if ( v[4] and ix.item.Get(v[4]) ) then
-                            if not ( char:GetInventory():Add(v[4]) ) then
+                            if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
                                 ply:Notify("You don't have enough space in your inventory!")
 
                                 return
