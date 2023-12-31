@@ -19,20 +19,22 @@ end, {
     data = {min = 1, max = 3600},
 })
 
-timer.Create("ix.Cleanup", 60, 0, function()
-    if ( ix.config.Get("shouldCleanupRagdolls", true) ) then
-        for _, v in ipairs(ents.FindByClass("prop_ragdoll")) do
-            v:Remove()
+if ( SERVER ) then
+    timer.Create("ix.Cleanup", 60, 0, function()
+        if ( ix.config.Get("shouldCleanupRagdolls", true) ) then
+            for _, v in ipairs(ents.FindByClass("prop_ragdoll")) do
+                v:Remove()
+            end
+
+            for _, v in ipairs(ents.FindByClass("class C_ClientRagdoll")) do
+                v:Remove()
+            end
         end
 
-        for _, v in ipairs(ents.FindByClass("class C_ClientRagdoll")) do
-            v:Remove()
+        if ( ix.config.Get("shouldCleanupItems", true) ) then
+            for _, v in ipairs(ents.FindByClass("ix_item")) do
+                v:Remove()
+            end
         end
-    end
-
-    if ( ix.config.Get("shouldCleanupItems", true) ) then
-        for _, v in ipairs(ents.FindByClass("ix_item")) do
-            v:Remove()
-        end
-    end
-end)
+    end)
+end
