@@ -33,7 +33,7 @@ function PLUGIN:HUDPaint()
         return
     end
 
-    local padding = ScreenScale(10)
+    local padding = ScreenScale(14)
     local x, y = padding, padding
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
