@@ -1,3 +1,5 @@
+local PLUGIN = PLUGIN
+
 -- I apologise for the amount of loops in all of this lol, also for the lack of comments, i tend to change my code a lot.
 local PLUGIN = PLUGIN
 PLUGIN.TempStored = PLUGIN.TempStored or {}
@@ -96,7 +98,7 @@ local function ExperimentalFormatting(stringtabl)
     return stringtabl
 end
 
-function Schema:PlayerMessageSend(speaker, chatType, text, anonymous, receivers, rawText)
+function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers, rawText)
     local separator = ix.config.Get("separatorVC", nil) != "" and ix.config.Get("separatorVC", nil) or nil
 
 	if chatType == "ic" or chatType == "w" or chatType == "y" or chatType == "dispatch" or (ix.config.Get("radioVCAllow", true) and chatType == "radio") then

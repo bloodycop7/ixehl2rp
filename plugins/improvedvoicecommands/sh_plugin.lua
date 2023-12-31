@@ -1,3 +1,7 @@
+local PLUGIN = PLUGIN
+
+// Credits: https://github.com/DoopieWop/helix-plugins/tree/master/improvedvoicecommands
+
 PLUGIN.name = "Improved Voice Commands"
 PLUGIN.description = "Let's users string multiple voice commands together."
 PLUGIN.author = "DoopieWop"
