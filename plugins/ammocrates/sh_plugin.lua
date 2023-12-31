@@ -8,7 +8,15 @@ ix.config.Add("ammoCrateInfinite", false, "Whether or not ammo crates should be 
     category = "Ammo Crates"
 })
 
-ix.config.Add("ammoCrateCooldown", (60 * 10), "On how much time should the ammo crates be refilled.", nil, {
+ix.config.Add("ammoCrateCooldown", (60 * 10), "On how much time should the ammo crates be refilled.", function(oldV, newV)
+    for k, v in pairs(ents.FindByClass("ix_ammo_crate_*")) do
+        local uID = "ix_ammo_crate_" .. string.lower(v:GetAmmoType()) .. "_" .. v:EntIndex() .. "_refill_timer"
+
+        if ( timer.Exists(uID) ) then
+            timer.Adjust(uID, newV)
+        end
+    end
+end, {
     data = {min = 1, max = 3600},
     category = "Ammo Crates"
 })
@@ -81,6 +89,8 @@ function PLUGIN:CreateCrates()
                 if not ( char ) then
                     return
                 end
+
+                print(timer.TimeLeft("ix_ammo_crate_" .. string.lower(k) .. "_" .. self:EntIndex() .. "_refill_timer"))
 
                 ply:SetAction("Refilling...", 1)
                 ply:DoStaredAction(self, function()
