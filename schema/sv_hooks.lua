@@ -179,6 +179,40 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	end)
 end
 
+function Schema:PlayerSetHandsModel(ply, ent)
+	timer.Simple(0.1, function()
+		if not ( IsValid(ent) ) then
+			return
+		end
+
+		if ( self:IsOTA(ply) ) then
+			if ( self:IsOTAElite(ply) ) then
+				ply:SetPlayerColor(Vector(1, 0, 0))
+				
+				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
+				ent:SetSkin(0)
+				ent:SetBodyGroups("000000")
+			end
+			
+			if ( self:IsOTASoldier(ply) or self:IsOTAShotgunner(ply) ) then
+				local skin = 0
+
+				if ( self:IsOTAShotgunner(ply) ) then
+					skin = 1
+				end
+
+				ent:SetModel("models/weapons/c_arms_combine_default/c_arms_combine_regular.mdl")
+				ent:SetSkin(skin)
+				ent:SetBodyGroups("000000")
+			end
+		elseif ( self:IsCP(ply) ) then
+			ent:SetModel("models/weapons/c_metrocop_hands.mdl")
+			ent:SetSkin(1)
+			ent:SetBodyGroups("000000")
+		end
+	end)
+end
+
 util.AddNetworkString("ix.PlayerChatTextChanged")
 net.Receive("ix.PlayerChatTextChanged", function(len, ply)
 	if not ( IsValid(ply) ) then
@@ -238,37 +272,3 @@ net.Receive("ix.PlayerFinishChat", function(len, ply)
 
 	ply.bTypingBeep = nil
 end)
-
-function Schema:PlayerSetHandsModel(ply, ent)
-	timer.Simple(0.1, function()
-		if not ( IsValid(ent) ) then
-			return
-		end
-
-		if ( self:IsOTA(ply) ) then
-			if ( self:IsOTAElite(ply) ) then
-				ply:SetPlayerColor(Vector(1, 0, 0))
-				
-				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
-				ent:SetSkin(0)
-				ent:SetBodyGroups("000000")
-			end
-			
-			if ( self:IsOTASoldier(ply) or self:IsOTAShotgunner(ply) ) then
-				local skin = 0
-
-				if ( self:IsOTAShotgunner(ply) ) then
-					skin = 1
-				end
-
-				ent:SetModel("models/weapons/c_arms_combine_default/c_arms_combine_regular.mdl")
-				ent:SetSkin(skin)
-				ent:SetBodyGroups("000000")
-			end
-		elseif ( self:IsCP(ply) ) then
-			ent:SetModel("models/weapons/c_metrocop_hands.mdl")
-			ent:SetSkin(1)
-			ent:SetBodyGroups("000000")
-		end
-	end)
-end

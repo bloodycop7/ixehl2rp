@@ -97,3 +97,19 @@ net.Receive("ix.PlaySound", function()
 
 	localPlayer:EmitSound(sound, level, pitch, volume, channel)
 end)
+
+net.Receive("ix.PlayGesture", function(len)
+	if not ( IsValid(localPlayer) ) then
+		return
+	end
+
+	local sequence = net.ReadString()
+
+	if not ( localPlayer:LookupSequence(sequence) ) then
+		return
+	end
+
+	local index, length = localPlayer:LookupSequence(sequence)
+
+	localPlayer:DoAnimationEvent(index)
+end)
