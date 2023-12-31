@@ -17,7 +17,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 ix.config.Add("experimentalModeVC", false, "This won't always work as expected!!! Adjusts voice command texts to \"fit\" to the rest of the text. If the text continues after a voice command it will remove the end symbol etc.", nil, {category = PLUGIN.name})
-ix.config.Add("separatorVC", "|", "Separator symbol between voice commands and text. Leave empty for using spaces as separator. (Using spaces might cause unforseen consequences, 10-8 Standing By will not be recognized, instead it will use the 10-8 voice command and then play the Standing By voice command.", nil, {category = PLUGIN.name})
+ix.config.Add("separatorVC", ";", "Separator symbol between voice commands and text. Leave empty for using spaces as separator. (Using spaces might cause unforseen consequences, 10-8 Standing By will not be recognized, instead it will use the 10-8 voice command and then play the Standing By voice command.", nil, {category = PLUGIN.name})
 ix.config.Add("radioVCAllow", true, "Allow voice commands to be used on the radio. This will playback the voice commands on all the recevers.", nil, {category = PLUGIN.name})
 ix.config.Add("radioVCVolume", 60, "Sets the volume, radio voice commands are played back for receivers. This is lower than normal as it's coming through a radio.", nil, {category = PLUGIN.name, data = {min = 0, max = 200}})
 ix.config.Add("radioVCClientOnly", false, "If set to true, radio voice commands receivers will hear the voice commands only clientside, so nobody around them can hear it.", nil, {category = PLUGIN.name})
