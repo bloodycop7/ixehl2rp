@@ -95,12 +95,15 @@ function PLUGIN:CreateCrates()
                     else
                         if ( self:GetRemainingAmmo() <= 0 ) then
                             ply:Notify("This ammo crate doesn't have any remaining ammo!")
+                            
                             return
                         end
 
                         if ( v[4] and ix.item.Get(v[4]) ) then
                             if not ( char:GetInventory():Add(v[4]) ) then
                                 ply:Notify("You don't have enough space in your inventory!")
+
+                                return
                             end
                         else
                             ply:GiveAmmo(v[3], k, true)
