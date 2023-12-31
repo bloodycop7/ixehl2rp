@@ -1,8 +1,7 @@
 # ix: Enhanced Half-Life 2 Roleplay
 ix: Enhanced Half-Life 2 Roleplay is a project started by [eon](https://github.com/bloodycop7), it was made to provide more core functions that you see in Half-Life 2.
 
-The code is also open-source with a license.
-
+The code is also open-source with a license.\
 **Keep in mind you do require a bit of programming experience to understand what you're reading/modifying!**
 # Recommended Addons for Usage
 [TFA: Project HL2 MMod Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404)\
