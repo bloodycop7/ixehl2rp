@@ -11,6 +11,10 @@ ix.util.Include("sv_hooks.lua")
 
 ix.util.IncludeDir("voicelines")
 
+ix.currency.symbol = "C"
+ix.currency.singular = "credit"
+ix.currency.plural = "credits"
+
 for k, v in pairs(ix.faction.indices) do
     Schema["Is" .. (v.abbreviation or v.name)] = function(self, ply)
         if not ( IsValid(ply) ) then
