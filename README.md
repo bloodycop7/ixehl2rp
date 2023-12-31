@@ -19,7 +19,6 @@ You may fork this project and submit pull requests ***if you wish***, it will be
 You may find various Credits everywhere through out the code, make sure to check them out!
 
 **IMPORTANT**
-- Schema does NOT use netstream, use the net. library.
 - localPlayer is cached Clientside, do not use LocalPlayer()
 - scrW is cached Clientside, do not use ScrW()
 - scrH is cached Clientside, do not use ScrH()
