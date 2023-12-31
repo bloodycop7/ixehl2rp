@@ -100,7 +100,7 @@ function PLUGIN:CreateCrates()
                         self:SetRemainingAmmo(self:GetRemainingAmmo() - v[3])
                     end
                 end, 1, function()
-                    ply:SetAction("")
+                    ply:SetAction()
                 end)
             end
         else
