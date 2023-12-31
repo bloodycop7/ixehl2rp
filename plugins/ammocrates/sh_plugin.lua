@@ -14,7 +14,7 @@ ix.config.Add("ammoCrateCooldown", (60 * 10), "On how much time should the ammo 
 })
 
 PLUGIN.ammoTypes = {
-    // AMMO TYPE = {"CRATE MODEL", "MAX AMMO FROM CRATE", "AMOUNT OF AMMO TO GIVE TO THE PLAYER PER USE"}
+    // AMMO TYPE = {"CRATE MODEL", "MAX AMMO FROM CRATE", "AMOUNT OF AMMO TO GIVE TO THE PLAYER PER USE", "ITEM AMMO (OPTIONAL)"}
 
     ["AR2"] = {"models/items/ammocrate_ar2.mdl", 1000, 30, "ammo_ar2"},
     ["SMG1"] = {"models/items/ammocrate_smg1.mdl", 1000, 90, "ammo_smg1"},
