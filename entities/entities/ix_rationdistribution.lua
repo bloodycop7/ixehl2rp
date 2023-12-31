@@ -128,5 +128,9 @@ if (SERVER) then
         if ( IsValid(self:GetDispenser()) ) then
             self:GetDispenser():Remove()
         end
+
+		if not ( ix.shuttingDown ) then
+			Schema:SaveData()
+		end
     end
 end
