@@ -116,10 +116,12 @@ function PLUGIN:CreateCrates()
                 desc:SetText("An ammunition crate containing " .. k .. " ammo.")
                 desc:SizeToContents()
 
-                local ammo = container:AddRow("ammo")
-                ammo:SetText("Remaining Ammo: " .. self:GetRemainingAmmo())
-                ammo:SetBackgroundColor(Color(175, 130, 0))
-                ammo:SizeToContents()
+                if not ( ix.config.Get("ammoCrateInfinite", false) ) then
+                    local ammo = container:AddRow("ammo")
+                    ammo:SetText("Remaining Ammo: " .. self:GetRemainingAmmo())
+                    ammo:SetBackgroundColor(Color(175, 130, 0))
+                    ammo:SizeToContents()
+                end
             end
         end
 
