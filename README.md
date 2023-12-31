@@ -29,7 +29,8 @@ You may find various Credits everywhere through out the code, make sure to check
 [Combine Fonts](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_plugin.lua#L38-L77) - [Download](https://dl.dafont.com/dl/?f=frak)\
 [NPC Relationships](https://github.com/bloodycop7/ixehl2rp/blob/main/schema/libs/sh_npcrelationships.lua)\
 [Combine HUD](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/cl_hooks.lua#L31)\
-[City Codes Configuration](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/sh_plugin.lua#L108)
+[City Codes Configuration](https://github.com/bloodycop7/ixehl2rp/blob/main/plugins/cmb/sh_plugin.lua#L108)\
+[Item Drop Death](https://github.com/bloodycop7/ixehl2rp/blob/main/schema/sv_hooks.lua) - Look for DoPlayerDeath Hook
 # Plugins
 This schema includes custom and open-source plugins.
 If you want to add any to fit your roleplay server, you can find some [here](https://plugins.gethelix.co/all/)
