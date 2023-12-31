@@ -90,8 +90,6 @@ function PLUGIN:CreateCrates()
                     return
                 end
 
-                print(timer.TimeLeft("ix_ammo_crate_" .. string.lower(k) .. "_" .. self:EntIndex() .. "_refill_timer"))
-
                 ply:SetAction("Refilling...", 1)
                 ply:DoStaredAction(self, function()
                     if ( ix.config.Get("ammoCrateInfinite", false) ) then
