@@ -138,6 +138,10 @@ function Schema:LerpColor(time, from, to)
         return
     end
 
+    if not ( time ) then
+        time = FrameTime() * 2
+    end
+
     to.r = Lerp(time, from.r, to.r)
     to.g = Lerp(time, from.g, to.g)
     to.b = Lerp(time, from.b, to.b)
