@@ -263,6 +263,8 @@ AddVoice("MALCOMPLIANCEVERDICT", "You want a malcompliance verdict?", "npc/metro
 AddVoice("0", "0", "npc/metropolice/vo/zero.wav")
 AddVoice("ZONE", "Zone.", "npc/metropolice/vo/zone.wav")
 
+AddVoice("TAKEHIMDOWN", "Take him down!", "npc/metropolice/takedown.wav")
+
 Schema.voices.AddClass("CivilProtection", function(ply)
 	return Schema:IsCP(ply)
 end)
