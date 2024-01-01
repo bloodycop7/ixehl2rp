@@ -228,6 +228,36 @@ function PLUGIN:RenderScreenspaceEffects()
     render.DrawScreenQuad()
 end
 
+function PLUGIN:SetupOutlines()
+    if not ( IsValid(localPlayer) ) then
+        return
+    end
+    
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(localPlayer) ) then
+        return
+    end
+
+    if not ( localPlayer:Alive() ) then
+        return
+    end
+
+    if ( table.IsEmpty(char:GetData("deployedEntities", {})) ) then
+        return
+    end
+
+    for k, v in pairs(char:GetData("deployedEntities", {})) do
+        if ( IsValid(v) ) then
+            ix.outline.Add(char:GetData("deployedEntities", {}), ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200), mode, customCheck)
+        end
+    end
+end
+
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 

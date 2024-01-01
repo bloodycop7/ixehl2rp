@@ -212,8 +212,11 @@ end
 function SWEP:CanHoldObject(entity)
 	local physics = entity:GetPhysicsObject()
 
-	if ( not self:IsHoldingObject() and hook.Run("CanOverridePlayerHoldObject", self:GetOwner(), entity) == true ) then
-		return true
+	print(hook.Run("CanOverridePlayerHoldObject", self:GetOwner(), entity))
+	if ( hook.Run("CanOverridePlayerHoldObject", self:GetOwner(), entity) == true ) then
+		if not ( self:IsHoldingObject() ) then
+			return true
+		end
 	end
 
 	return IsValid(physics) and
@@ -490,7 +493,19 @@ function SWEP:SecondaryAttack()
 			self:GetOwner():EmitSound("Weapon_Crossbow.BoltHitBody")
 			self:SetNextSecondaryFire(CurTime() + 1.5)
 			self:SetNextPrimaryFire(CurTime() + 1.5)
-		elseif ( hook.Run("CanOverridePlayerHoldObject", ply, entity) == true or ( !entity:IsNPC() and self:CanHoldObject(entity) ) ) then
+		elseif ( self:CanHoldObject(entity) ) then
+			if ( self:IsHoldingObject() ) then
+				print("Is holding")
+				return
+			end
+
+			print(hook.Run("CanOverridePlayerHoldObject", self:GetOwner(), entity))
+			if ( hook.Run("CanOverridePlayerHoldObject", self:GetOwner(), entity) != true ) then
+				if ( entity:IsNPC() ) then
+					return
+				end
+			end
+
 			self:GetOwner():SetLocalVar("bIsHoldingObject", true)
 			self:PickupObject(entity)
 			self:PlayPickupSound(trace.SurfaceProps)

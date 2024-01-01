@@ -68,6 +68,22 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 	end
 end
 
+function Schema:CanOverridePlayerHoldObject(ply, ent)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	if ( ent:GetModel() == "models/combine_turrets/floor_turret.mdl" ) then
+		return true
+	end
+end
+
 function Schema:SaveData()
 	local data = {}
 
