@@ -142,10 +142,20 @@ function Schema:LerpColor(time, from, to)
         time = FrameTime() * 2
     end
 
+    from.r = from.r or 255
+    from.g = from.g or 255
+    from.b = from.b or 255
+    from.a = from.a or 255
+
+    to.r = to.r or 255
+    to.g = to.g or 255
+    to.b = to.b or 255
+    to.a = to.a or 255
+
     to.r = Lerp(time, from.r, to.r)
     to.g = Lerp(time, from.g, to.g)
     to.b = Lerp(time, from.b, to.b)
-    to.a = Lerp(time, (from.a or 255), (to.a or 255))
+    to.a = Lerp(time, from.a, to.a)
 
     return to
 end
