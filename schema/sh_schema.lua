@@ -127,6 +127,25 @@ function Schema:PlayGesture(ply, gesture)
 	ply:DoAnimationEvent(index)
 end
 
+function Schema:LerpColor(time, from, to)
+    if not ( IsColor(from) ) then
+        ErrorNoHalt("Schema:LerpColor: 'from' is not a color!\n")
+        return
+    end
+
+    if not ( IsColor(to) ) then
+        ErrorNoHalt("Schema:LerpColor: 'to' is not a color!\n")
+        return
+    end
+
+    to.r = Lerp(time, from.r, to.r)
+    to.g = Lerp(time, from.g, to.g)
+    to.b = Lerp(time, from.b, to.b)
+    to.a = Lerp(time, (from.a or 255), (to.a or 255))
+
+    return to
+end
+
 function Schema:GetGameDescription()
 	return "IX: "..(Schema.name or "Unknown")
 end
