@@ -748,14 +748,25 @@ ix.command.Add("KickDoor", {
                         oldDoorSpeed = 100
                     end
 
+                    local tempEnt = ents.Create("info_point")
+                    tempEnt:SetPos(ply:GetPos())
+                    tempEnt:Spawn()
+                    tempEnt:Activate()
+                    tempEnt:SetName("ix.OpenAwayFromDoor." .. ply:SteamID64())
+
                     door:Fire("unlock")
                     door:Fire("SetSpeed", 250)
-                    door:Fire("OpenAwayFrom", ply:GetName())
+                    door:Fire("OpenAwayFrom", "ix.OpenAwayFromDoor." .. ply:SteamID64())
 
                     if not ( timer.Exists("ix.DoorClose." .. self:EntIndex()) ) then
                         timer.Create("ix.DoorClose." .. self:EntIndex(), 0.2, 1, function()
                             if not ( IsValid(door) ) then
                                 return
+                            end
+
+                            if ( IsValid(tempEnt) ) then
+                                tempEnt:Remove()
+                                tempEnt = nil
                             end
                         
                             door:Fire("SetSpeed", oldDoorSpeed)
@@ -764,6 +775,11 @@ ix.command.Add("KickDoor", {
                                 timer.Create("ix.DoorSetKickedBy." .. self:EntIndex(), 0.5, 1, function()
                                     if not ( IsValid(door) ) then
                                         return
+                                    end
+
+                                    if ( IsValid(tempEnt) ) then
+                                        tempEnt:Remove()
+                                        tempEnt = nil
                                     end
 
                                     door.kickedBy = nil
