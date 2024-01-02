@@ -734,8 +734,8 @@ ix.command.Add("KickDoor", {
             door:Fire("SetSpeed", 250)
             door.kickedBy = ply
 
-            if not ( timer.Exists("ix.DoorOpen." .. self:EntIndex()) ) then
-                timer.Create("ix.DoorOpen." .. self:EntIndex(), 0.8, 1, function()
+            if not ( timer.Exists("ix.DoorOpen." .. door:EntIndex()) ) then
+                timer.Create("ix.DoorOpen." .. door:EntIndex(), 0.8, 1, function()
                     if not ( IsValid(door) ) then
                         return
                     end
@@ -758,8 +758,8 @@ ix.command.Add("KickDoor", {
                     door:Fire("SetSpeed", 250)
                     door:Fire("OpenAwayFrom", "ix.OpenAwayFromDoor." .. ply:SteamID64())
 
-                    if not ( timer.Exists("ix.DoorClose." .. self:EntIndex()) ) then
-                        timer.Create("ix.DoorClose." .. self:EntIndex(), 0.2, 1, function()
+                    if not ( timer.Exists("ix.DoorClose." .. door:EntIndex()) ) then
+                        timer.Create("ix.DoorClose." .. door:EntIndex(), 0.2, 1, function()
                             if not ( IsValid(door) ) then
                                 return
                             end
@@ -771,8 +771,8 @@ ix.command.Add("KickDoor", {
                         
                             door:Fire("SetSpeed", oldDoorSpeed)
 
-                            if not ( timer.Exists("ix.DoorSetKickedBy." .. self:EntIndex()) ) then
-                                timer.Create("ix.DoorSetKickedBy." .. self:EntIndex(), 0.5, 1, function()
+                            if not ( timer.Exists("ix.DoorSetKickedBy." .. door:EntIndex()) ) then
+                                timer.Create("ix.DoorSetKickedBy." .. door:EntIndex(), 0.5, 1, function()
                                     if not ( IsValid(door) ) then
                                         return
                                     end
