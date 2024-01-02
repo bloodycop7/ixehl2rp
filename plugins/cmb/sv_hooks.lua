@@ -86,6 +86,26 @@ function PLUGIN:PlayerUse(ply, ent)
     end
 end
 
+function PLUGIN:PlayerUseDoor(ply, door)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( IsValid(door) ) then
+        return
+    end
+
+    if ( door.kickedBy ) then
+        return false
+    end
+end
+
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
     if ( oldChar ) then
         timer.Remove("ix.PassiveChatter." .. oldChar:GetID())
