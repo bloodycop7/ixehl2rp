@@ -646,8 +646,7 @@ ix.command.Add("Grenade", {
             grenade:SetAngles(ply:GetForward():Angle())
             grenade:Spawn()
             grenade:Activate()
-            grenade:SetNotSolid()
-            grenade:Fire("SetTimer", 2.85)
+            grenade:Fire("SetTimer", 2.90)
             grenade:GetPhysicsObject():AddVelocity(ply:GetAimVector() * 950)
             grenade.deployedBy = ply
             grenade:CallOnRemove("GrenadeRemove", function(this)
