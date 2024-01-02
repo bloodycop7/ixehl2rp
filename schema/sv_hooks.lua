@@ -259,6 +259,16 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 		if ( ix.faction.Get(newChar:GetFaction()).skin ) then
 			ply:SetSkin(ix.faction.Get(newChar:GetFaction()).skin)
 		end
+
+		if ( ix.faction.Get(newChar:GetFaction()).bodygroups ) then
+			for k, v in pairs(ix.faction.Get(newChar:GetFaction()).bodygroups) do
+				if ( isstring(k) ) then
+					ply:SetBodygroup(ply:FindBodygroupByName(k), v)
+				else
+					ply:SetBodygroup(k, v)
+				end
+			end
+		end
 	end)
 end
 
