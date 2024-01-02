@@ -253,6 +253,46 @@ function PLUGIN:SetupOutlines()
         end
     end
 
+    if ( ix.option.Get("combineOutlineAssets", true) ) then
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
+
+            local char = v:GetCharacter()
+
+            if not ( char ) then
+                continue
+            end
+
+            if not ( v:Alive() ) then
+                continue
+            end
+
+            if ( ix.option.Get("combineOutlineAssetsTeamOnly", false) ) then
+                if not ( v:Team() == localPlayer:Team() ) then
+                    continue
+                end
+            else
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+            end
+
+            if ( v == localPlayer ) then
+                continue
+            end
+
+            local outlineColor = hook.Run("GetPlayerOutlineColor", v)
+
+            if ( outlineColor == nil ) then
+                outlineColor = team.GetColor(v:Team())
+            end
+
+            ix.outline.Add(v, outlineColor)
+        end
+    end
+
     if ( ix.option.Get("combineOutlineDeployables", true) ) then
         if ( #char:GetData("deployedEntities", {}) > 0 ) then
             for k, v in pairs(char:GetData("deployedEntities", {})) do
