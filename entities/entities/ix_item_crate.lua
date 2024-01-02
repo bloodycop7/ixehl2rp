@@ -40,7 +40,7 @@ if (SERVER) then
             local dropCount = hook.Run("GetItemCacheDropCount", self) or ix.config.Get("maxItemCrateDrops", 3)
 
             for i = 1, ix.config.Get("maxItemCrateDrops", 3) do
-                local item, uniqueID = table.Random(ix.item.list)
+                local tableBase = {}
 
                 local itemData = ix.item.Get(uniqueID)
 
@@ -52,7 +52,9 @@ if (SERVER) then
                     continue
                 end
 
-                ix.item.Spawn(uniqueID, self:GetPos() + self:GetUp() * math.random(1, 30) + self:GetRight() * math.random(-30, 30))
+                table.insert(tableBase, itemData.uniqueID)
+
+                ix.item.Spawn(table.Random(tableBase), self:GetPos() + self:GetUp() * math.random(1, 30) + self:GetRight() * math.random(-30, 30))
             end
 
             self:Remove()
