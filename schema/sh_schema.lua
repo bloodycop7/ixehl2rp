@@ -152,10 +152,6 @@ function Schema:LerpColor(time, from, to)
     to.b = to.b or 255
     to.a = to.a or 255
 
-    if ( from == to ) then
-        return from
-    end
-
     to.r = Lerp(time, from.r, to.r)
     to.g = Lerp(time, from.g, to.g)
     to.b = Lerp(time, from.b, to.b)
