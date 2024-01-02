@@ -127,6 +127,28 @@ function Schema:PlayGesture(ply, gesture)
 	ply:DoAnimationEvent(index)
 end
 
+function Schema:CanSeeEntity(entA, entB) // Entity A must be an NPC or Player
+    if not ( IsValid(entA) and IsValid(entB) ) then
+        return false
+    end
+
+    if not ( entA:IsPlayer() or entA:IsNPC() ) then
+        return false
+    end
+
+    if not ( entA:IsLineOfSightClear(entB) ) then
+        return false
+    end
+
+    local diff = entB:GetPos() - entA:GetShootPos()
+
+    if ( entA:GetAimVector():Dot(diff) / diff:Length() < 0.455 ) then
+        return false
+    end
+
+    return true
+end
+
 function Schema:LerpColor(time, from, to)
     if not ( IsColor(from) ) then
         ErrorNoHalt("Schema:LerpColor: 'from' is not a color!\n")
