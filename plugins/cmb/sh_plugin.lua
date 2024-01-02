@@ -730,8 +730,6 @@ ix.command.Add("KickDoor", {
             ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("kickdoorbaton")
 
-
-            door:Fire("SetSpeed", 250)
             door.kickedBy = ply
 
             if not ( timer.Exists("ix.DoorOpen." .. door:EntIndex()) ) then
