@@ -31,6 +31,12 @@ if (SERVER) then
 
         if (self:Health() <= 0) then
 
+            if ( hook.Run("CanItemCacheDrop", self) == false ) then
+                self:Remove()
+                
+                return
+            end
+
             for i = 1, ix.config.Get("maxItemCrateDrops", 3) do
                 local item, uniqueID = table.Random(ix.item.list)
 
