@@ -142,6 +142,10 @@ function Schema:LerpColor(time, from, to)
         time = FrameTime() * 2
     end
 
+    if ( from == to ) then
+        return
+    end
+
     from.r = from.r or 255
     from.g = from.g or 255
     from.b = from.b or 255
