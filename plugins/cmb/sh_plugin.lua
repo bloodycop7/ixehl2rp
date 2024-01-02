@@ -602,10 +602,137 @@ ix.command.Add("TogglePassiveChatter", {
     end
 })
 
+ix.command.Add("Grenade", {
+    description = "Throw a grenade.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsOTA(ply) ) then
+            ply:Notify("Only transhuman arm units can use this command.")
+
+            return
+        end
+
+        if ( char:GetData("nextGrenadeThrow", 0) > 0 ) then
+            ply:Notify("You cannot throw another grenade for another " .. math.ceil(char:GetData("nextGrenadeThrow") - CurTime()) .. " second(s).")
+
+            --return
+        end
+
+        if ( ply:GetSequenceInfo(ply:LookupSequence("grenthrow")) ) then
+            ply:SetLocalVelocity(Vector(0, 0, 0))
+            ply:ForceSequence("grenthrow")
+        end
+
+        timer.Simple(0.7, function()
+            if not ( IsValid(ply) ) then // AKA Run the command and leave :skull:
+                return
+            end
+
+            if not ( ply:GetCharacter() ) then
+                return
+            end
+
+            local grenade = ents.Create("npc_grenade_frag")
+            grenade:SetPos(ply:EyePos() + ply:GetRight() * -8 + ply:GetForward() * 20 + ply:GetUp() * 4)
+            grenade:SetAngles(ply:GetForward():Angle())
+            grenade:Spawn()
+            grenade:Activate()
+            grenade:SetNotSolid()
+            grenade:Fire("SetTimer", 2.85)
+            grenade:GetPhysicsObject():AddVelocity(ply:GetAimVector() * 950)
+            grenade.deployedBy = ply
+            grenade:CallOnRemove("GrenadeRemove", function(this)
+                if ( IsValid(ply) ) then
+                    if not ( ply:GetCharacter() ) then
+                        return
+                    end
+
+                    if ( ply.ixDeployedEntities ) then
+                        if ( table.HasValue(ply.ixDeployedEntities, this:EntIndex()) ) then
+                            table.RemoveByValue(ply.ixDeployedEntities, this:EntIndex())
+                        end
+                    end
+
+                    this.deployedBy = nil
+                end
+            end)
+
+            if not ( ply.ixDeployedEntities ) then
+                ply.ixDeployedEntities = {}
+            end
+
+            ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = grenade:EntIndex()
+
+            char:SetData("deployedEntities", ply.ixDeployedEntities)
+        end)
+
+        char:SetData("nextGrenadeThrow", CurTime() + 40)
+    end
+})
+
 ix.cmbSystems.otaWepWhitelist = {
     ["ix_hands"] = true,
     ["ix_keys"] = true,
 }
+
+timer.Create("ix.DeployedEnts.Update", 1, 0, function()
+    for k, v in ipairs(player.GetAll()) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        local char = v:GetCharacter()
+
+        if not ( char ) then
+            continue
+        end
+
+        if not ( v:Alive() ) then
+            continue
+        end
+
+        if not ( v.ixDeployedEntities ) then
+            v.ixDeployedEntities = {}
+        end
+
+        if not ( v.ixDeployedEntities or char:GetData("deployedEntities", {}) ) then
+            continue
+        end
+
+        if ( #v.ixDeployedEntities < 1 or #char:GetData("deployedEntities", {}) < 1 ) then
+            continue
+        end
+
+        if ( #v.ixDeployedEntities > 0 ) then
+            for i = 1, #v.ixDeployedEntities do
+                if not ( IsValid(Entity(v.ixDeployedEntities[i])) ) then
+                    if ( table.HasValue(v.ixDeployedEntities, v.ixDeployedEntities[i]) ) then
+                        table.RemoveByValue(v.ixDeployedEntities, v.ixDeployedEntities[i])
+                    end
+                end
+            end
+        end
+
+        if ( #char:GetData("deployedEntities", {}) > 0 ) then
+            for i = 1, #char:GetData("deployedEntities", {}) do
+                if not ( IsValid(Entity(char:GetData("deployedEntities", {})[i])) ) then
+                    if ( table.HasValue(char:GetData("deployedEntities", {}), char:GetData("deployedEntities", {})[i]) ) then
+                        table.RemoveByValue(char:GetData("deployedEntities", {}), char:GetData("deployedEntities", {})[i])
+                    end
+                end
+            end
+        end
+    end
+end)
 
 function PLUGIN:CalcMainActivity(ply, vel)
 	if not ( IsValid(ply) ) then

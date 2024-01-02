@@ -64,7 +64,6 @@ ITEM.functions.Plant = {
             explosion:Spawn()
             explosion:SetKeyValue("iMagnitude", "50")
             explosion:Fire("Explode", 0, 0)
-            explosion:EmitSound("BaseExplosionEffect.Sound", 400, 400)
             local dir = -chargeFake:GetUp() * 200
 
             if ( IsValid(entity) ) then

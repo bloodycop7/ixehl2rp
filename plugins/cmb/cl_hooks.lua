@@ -247,26 +247,38 @@ function PLUGIN:SetupOutlines()
         return
     end
 
-    if ( #char:GetData("deployedEntities", {}) <= 0 ) then
-        return
+    if ( #char:GetData("deployedEntities", {}) > 0 ) then
+        for k, v in pairs(char:GetData("deployedEntities", {})) do
+            local ent = Entity(v)
+
+            if not ( IsValid(ent) ) then
+                continue
+            end
+
+            if not ( ent:IsNPC() or ent:GetClass() == "npc_grenade_frag" ) then
+                continue
+            end
+
+            if not ( ent:Health() > 0 or ent:GetClass() == "npc_grenade_frag" ) then
+                continue
+            end
+
+            local outlineColor = hook.Run("GetEntityOutlineColor", ent)
+
+            if ( outlineColor == nil ) then
+                outlineColor = ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200)
+            end
+
+            if ( ent:GetClass() == "npc_grenade_frag" ) then
+                outlineColor = Color(255, 0, 0)
+            end
+
+            ix.outline.Add(ent, outlineColor, mode, customCheck)
+        end
     end
 
-    for k, v in pairs(char:GetData("deployedEntities", {})) do
-        local ent = Entity(v)
+    if ( char:GetData("activeGrenade") ) then
 
-        if not ( IsValid(ent) ) then
-            continue
-        end
-
-        if not ( ent:IsNPC() ) then
-            continue
-        end
-
-        if not ( ent:Health() > 0 ) then
-            continue
-        end
-
-        ix.outline.Add(ent, ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200), mode, customCheck)
     end
 end
 

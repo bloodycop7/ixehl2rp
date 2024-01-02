@@ -53,7 +53,9 @@ ITEM.functions.Deploy = {
                         return
                     end
 
-                    table.RemoveByValue(this.deployedBy.ixDeployedEntities, this)
+                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    end
 
                     this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
 
@@ -112,7 +114,9 @@ ITEM.functions.Deploy = {
                         return
                     end
 
-                    table.RemoveByValue(this.deployedBy.ixDeployedEntities, this)
+                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    end
 
                     this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
 
@@ -169,7 +173,9 @@ ITEM.functions.Deploy = {
                         return
                     end
 
-                    table.RemoveByValue(this.deployedBy.ixDeployedEntities, this)
+                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    end
 
                     this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
 
