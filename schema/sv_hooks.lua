@@ -37,6 +37,14 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
         return
     end
 
+	if ( ply.ixDeployedEntities ) then
+		for i = 1, #ply.ixDeployedEntities do
+			ply.ixDeployedEntities[i] = nil
+		end
+
+		char:SetData("deployedEntities", ply.ixDeployedEntities)
+	end
+
     // ix.cmbSystems:SetBOLStatus(ply, false) -- It works, enable if you want.
 	
 	local maxDeathItems = ix.config.Get("maxItemDrops", 3)
@@ -95,7 +103,11 @@ function Schema:EntityRemoved(ent)
 		end
 
 		if ( deployer.ixDeployedEntities ) then
-			table.RemoveByValue(deployer.ixDeployedEntities, ent:EntIndex())
+			if ( table.HasValue(deployer.ixDeployedEntities, ent:EntIndex()) ) then
+				table.RemoveByValue(deployer.ixDeployedEntities, ent:EntIndex())
+
+				char:SetData("deployedEntities", deployer.ixDeployedEntities)
+			end
 		end
 	end
 end
