@@ -247,14 +247,26 @@ function PLUGIN:SetupOutlines()
         return
     end
 
-    if ( table.IsEmpty(char:GetData("deployedEntities", {})) ) then
+    if ( #char:GetData("deployedEntities", {}) <= 0 ) then
         return
     end
 
     for k, v in pairs(char:GetData("deployedEntities", {})) do
-        if ( IsValid(v) ) then
-            ix.outline.Add(char:GetData("deployedEntities", {}), ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200), mode, customCheck)
+        local ent = Entity(v)
+
+        if not ( IsValid(ent) ) then
+            continue
         end
+
+        if not ( ent:IsNPC() ) then
+            continue
+        end
+
+        if not ( ent:Health() > 0 ) then
+            continue
+        end
+
+        ix.outline.Add(ent, ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200), mode, customCheck)
     end
 end
 

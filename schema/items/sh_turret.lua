@@ -6,11 +6,16 @@ ITEM.category = "Combine"
 ITEM.functions.Deploy = {
     OnRun = function(itemTable)
         local ply = itemTable.player
-        local data = {}
-            data.start = ply:GetShootPos()
-            data.endpos = data.start + ply:GetAimVector()*96
-            data.filter = ply
-        local trace = util.TraceLine(data)
+
+        if not ( IsValid(ply) ) then
+            return true
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return true
+        end
 
         if ( ply:GetSequenceInfo(ply:LookupSequence("turret_drop")) ) then
             ply:SetAction("Deploying...", 1.6)
@@ -24,6 +29,12 @@ ITEM.functions.Deploy = {
                 if not ( ply:Alive() ) then
                     return
                 end
+
+                local data = {}
+                    data.start = ply:GetShootPos()
+                    data.endpos = data.start + ply:GetAimVector()*96
+                    data.filter = ply
+                local trace = util.TraceLine(data)
 
                 local ent = ents.Create("npc_turret_floor")
                 ent:SetPos(trace.HitPos + trace.HitNormal * 16)
@@ -59,7 +70,7 @@ ITEM.functions.Deploy = {
                     ply.ixDeployedEntities = {}
                 end
 
-                table.insert(ply.ixDeployedEntities, ent)
+                ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = ent:EntIndex()
 
                 char:SetData("deployedEntities", ply.ixDeployedEntities)
 
@@ -77,6 +88,12 @@ ITEM.functions.Deploy = {
                     return
                 end
 
+                local data = {}
+                    data.start = ply:GetShootPos()
+                    data.endpos = data.start + ply:GetAimVector()*96
+                    data.filter = ply
+                local trace = util.TraceLine(data)
+
                 local ent = ents.Create("npc_turret_floor")
                 ent:SetPos(trace.HitPos + trace.HitNormal * 16)
                 ent:SetAngles(ply:GetForward():Angle())
@@ -111,7 +128,7 @@ ITEM.functions.Deploy = {
                     ply.ixDeployedEntities = {}
                 end
 
-                table.insert(ply.ixDeployedEntities, ent)
+                ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = ent:EntIndex()
 
                 char:SetData("deployedEntities", ply.ixDeployedEntities)
 

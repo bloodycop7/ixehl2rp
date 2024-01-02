@@ -60,7 +60,7 @@ function ix.outline.Add(ents, color, mode, customCheck)
         data[4] = customCheck
     end
 
-	ix.outline.List[#ix.outline.List + 1] = data	
+	ix.outline.List[#ix.outline.List + 1] = data
 end
 
 function ix.outline.RenderedEntity()
