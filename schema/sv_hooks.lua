@@ -84,6 +84,22 @@ function Schema:CanOverridePlayerHoldObject(ply, ent)
 	end
 end
 
+function Schema:EntityRemoved(ent)
+	local deployer = ent.deployedBy
+
+	if ( IsValid(deployer) ) then
+		local char = deployer:GetCharacter()
+
+		if not ( char ) then
+			return
+		end
+
+		if ( deployer.ixDeployedEntities ) then
+			table.RemoveByValue(deployer.ixDeployedEntities, ent:EntIndex())
+		end
+	end
+end
+
 function Schema:SaveData()
 	local data = {}
 
