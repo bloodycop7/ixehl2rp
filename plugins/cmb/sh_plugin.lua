@@ -726,7 +726,6 @@ ix.command.Add("KickDoor", {
             return
         end
 
-
         if ( ply:GetSequenceInfo(ply:LookupSequence("kickdoorbaton")) ) then
             ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("kickdoorbaton")
