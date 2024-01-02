@@ -97,7 +97,14 @@ if ( SERVER ) then
             return
         end
 
-        timer.Simple(0.5, function()
+        print("E")
+
+        timer.Simple(0.1, function()
+            if not ( IsValid(ent) ) then
+                print("Not valid")
+                return
+            end
+
             ix.relationships.Update(ent)
 
             local timerID = "ix.NPCRelationships.Update." .. ent:EntIndex()
@@ -113,6 +120,8 @@ if ( SERVER ) then
                     ix.relationships.Update(ent)
                 end)
             end
+
+            print("WHAT?")
         end)
     end)
 
