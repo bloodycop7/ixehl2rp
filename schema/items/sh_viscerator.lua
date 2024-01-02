@@ -15,6 +15,7 @@ ITEM.functions.Deploy = {
 
         if ( ply:GetSequenceInfo(ply:LookupSequence("deploy")) ) then
             ply:SetAction("Deploying...", 1.6)
+            ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("deploy")
 
             timer.Simple(1.6, function()
@@ -76,6 +77,7 @@ ITEM.functions.Deploy = {
             end)
         elseif ( ply:GetSequenceInfo(ply:LookupSequence("grenplace")) ) then
             ply:SetAction("Deploying...", 1.6)
+            ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("grenplace")
 
             timer.Simple(1.6, function()

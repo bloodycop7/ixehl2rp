@@ -19,6 +19,7 @@ ITEM.functions.Deploy = {
 
         if ( ply:GetSequenceInfo(ply:LookupSequence("turret_drop")) ) then
             ply:SetAction("Deploying...", 1.6)
+            ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("turret_drop")
 
             timer.Simple(1.6, function()
