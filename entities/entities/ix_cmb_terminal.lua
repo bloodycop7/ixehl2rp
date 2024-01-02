@@ -13,7 +13,7 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Broken")
 end
 
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/props_combine/combine_interface001.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)

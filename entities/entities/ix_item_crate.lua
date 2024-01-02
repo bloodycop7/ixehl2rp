@@ -8,10 +8,7 @@ ENT.AdminOnly = true
 ENT.PhysgunDisable = true
 ENT.bNoPersist = true
 
-function ENT:SetupDataTables()
-end
-
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/items/item_item_crate.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)

@@ -14,7 +14,7 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 1, "Enabled")
 end
 
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/props_junk/watermelon01.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)

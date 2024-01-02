@@ -25,7 +25,7 @@ function ENT:GetAllStock()
 	return self:GetNetVar("stock", {})
 end
 
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/props_interiors/vendingmachinesoda01a.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
