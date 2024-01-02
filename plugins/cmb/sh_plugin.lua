@@ -766,6 +766,8 @@ ix.command.Add("KickDoor", {
                     end)
                 end)
             end)
+        else
+            ply:Notify("WARNING! KICK DOOR ANIMATION MISSING, ALERT OWNER!")
         end
     end
 })
