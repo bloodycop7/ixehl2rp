@@ -748,7 +748,7 @@ ix.command.Add("KickDoor", {
                         oldDoorSpeed = 100
                     end
 
-                    local tempEnt = ents.Create("info_point")
+                    local tempEnt = ents.Create("info_target")
                     tempEnt:SetPos(ply:GetPos())
                     tempEnt:Spawn()
                     tempEnt:Activate()
