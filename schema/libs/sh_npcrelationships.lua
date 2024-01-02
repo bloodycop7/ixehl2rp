@@ -97,11 +97,8 @@ if ( SERVER ) then
             return
         end
 
-        print("E")
-
         timer.Simple(0.1, function()
             if not ( IsValid(ent) ) then
-                print("Not valid")
                 return
             end
 
@@ -120,8 +117,6 @@ if ( SERVER ) then
                     ix.relationships.Update(ent)
                 end)
             end
-
-            print("WHAT?")
         end)
     end)
 
