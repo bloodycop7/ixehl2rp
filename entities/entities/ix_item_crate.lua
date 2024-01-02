@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 ENT.Type = "anim"
-ENT.PrintName = "Item Cache"
+ENT.PrintName = "Item Crate"
 ENT.Category = "ix: HL2RP"
 ENT.Spawnable = true
 ENT.AdminOnly = true
@@ -31,7 +31,7 @@ if (SERVER) then
 
         if (self:Health() <= 0) then
 
-            for i = 1, ix.config.Get("maxItemCacheDrops", 3) do
+            for i = 1, ix.config.Get("maxItemCrateDrops", 3) do
                 local item, uniqueID = table.Random(ix.item.list)
 
                 local itemData = ix.item.Get(uniqueID)

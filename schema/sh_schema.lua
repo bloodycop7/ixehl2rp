@@ -187,7 +187,7 @@ ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be droppe
     category = "misc"
 })
 
-ix.config.Add("maxItemCacheDrops", 4, "The maximum amount of items an item cache can drop", nil, {
+ix.config.Add("maxItemCrateDrops", 4, "The maximum amount of items an item cache can drop", nil, {
     data = {min = 1, max = 128},
     category = "misc"
 })
