@@ -1,181 +1,181 @@
-// Schema.voices.Add("Class", "Text", "Real Text.", "sound")
+local otaVoicelines = {
+    {"0", "Zero", "npc/combine_soldier/vo/zero.wav"},
+    {"1", "One", "npc/combine_soldier/vo/one.wav"},
+    {"10", "Ten", "npc/combine_soldier/vo/ten.wav"},
+    {"100", "One hundred", "npc/combine_soldier/vo/onehundred.wav"},
+    {"11", "Eleven", "npc/combine_soldier/vo/eleven.wav"},
+    {"12", "Twelve", "npc/combine_soldier/vo/twelve.wav"},
+    {"13", "Thirteen", "npc/combine_soldier/vo/thirteen.wav"},
+    {"14", "Fourteen", "npc/combine_soldier/vo/fourteen.wav"},
+    {"15", "Fifteen", "npc/combine_soldier/vo/fifteen.wav"},
+    {"16", "Sixteen", "npc/combine_soldier/vo/sixteen.wav"},
+    {"17", "Seventeen", "npc/combine_soldier/vo/seventeen.wav"},
+    {"18", "Eighteen", "npc/combine_soldier/vo/eighteen.wav"},
+    {"19", "Nineteen", "npc/combine_soldier/vo/nineteen.wav"},
+    {"2", "Two", "npc/combine_soldier/vo/two.wav"},
+    {"20", "Twenty", "npc/combine_soldier/vo/twenty.wav"},
+    {"200", "Two hundred", "npc/combine_soldier/vo/twohundred.wav"},
+    {"3", "Three", "npc/combine_soldier/vo/three.wav"},
+    {"30", "Thirty", "npc/combine_soldier/vo/thirty.wav"},
+    {"300", "Three hundred", "npc/combine_soldier/vo/threehundred.wav"},
+    {"4", "Four", "npc/combine_soldier/vo/four.wav"},
+    {"40", "Fourty", "npc/combine_soldier/vo/fourty.wav"},
+    {"5", "Five", "npc/combine_soldier/vo/five.wav"},
+    {"50", "Fifty", "npc/combine_soldier/vo/fifty.wav"},
+    {"6", "Six", "npc/combine_soldier/vo/six.wav"},
+    {"60", "Sixty", "npc/combine_soldier/vo/sixty.wav"},
+    {"7", "Seven", "npc/combine_soldier/vo/seven.wav"},
+    {"70", "Seventy", "npc/combine_soldier/vo/seventy.wav"},
+    {"8", "Eight", "npc/combine_soldier/vo/eight.wav"},
+    {"80", "Eighty", "npc/combine_soldier/vo/eighty.wav"},
+    {"9", "Niner", "npc/combine_soldier/vo/niner.wav"},
+    {"90", "Ninety", "npc/combine_soldier/vo/ninety.wav"},
+    {"ADMINISTER", "Administer", "npc/combine_soldier/vo/administer.wav"},
+    {"AFFIRMATIVE", "Affirmative", "npc/combine_soldier/vo/affirmative.wav"},
+    {"AFFIRMATIVE2", "Affirmative", "npc/combine_soldier/vo/affirmative2.wav"},
+    {"AFFIRMATIVEGOTHIM", "Affirmative, we got him now", "npc/combine_soldier/vo/affirmativewegothimnow.wav"},
+    {"ANTISEPTIC", "Anti-septic", "npc/combine_soldier/vo/antiseptic.wav"},
+    {"APEX", "Apex", "npc/combine_soldier/vo/apex.wav"},
+    {"BEARING", "Bearing", "npc/combine_soldier/vo/bearing.wav"},
+    {"BLADE", "Blade", "npc/combine_soldier/vo/blade.wav"},
+    {"BODYPACKHOLDING", "Bodypack holding", "npc/combine_soldier/vo/bodypackholding.wav"},
+    {"BOOMER", "Boomer", "npc/combine_soldier/vo/boomer.wav"},
+    {"BOUNCERBOUNCER", "Bouncer bouncer", "npc/combine_soldier/vo/bouncerbouncer.wav"},
+    {"CLEANED", "Cleaned", "npc/combine_soldier/vo/cleaned.wav"},
+    {"CLOSING", "Closing", "npc/combine_soldier/vo/closing.wav"},
+    {"CONTACT", "Contact", "npc/combine_soldier/vo/contact.wav"},
+    {"CONTACTCONFIRMED", "Contact confirmed", "npc/combine_soldier/vo/contactconfim.wav"},
+    {"CONTACTCONFIRMEDPROSECUTING", "Contact confirmed prosecuting", "npc/combine_soldier/vo/contactconfirmprosecuting.wav"},
+    {"CONTAINMENTPROCEEDING", "Containment proceeding", "npc/combine_soldier/vo/containmentproceeding.wav"},
+    {"COPY", "Copy", "npc/combine_soldier/vo/copy.wav"},
+    {"COPYTHAT", "Copy that", "npc/combine_soldier/vo/copythat.wav"},
+    {"COVER", "Cover", "npc/combine_soldier/vo/cover.wav"},
+    {"COVER2", "Cover", "npc/combine_soldier/vo/coverhurt.wav"},
+    {"COVERME", "Cover me", "npc/combine_soldier/vo/coverme.wav"},
+    {"DAGGER", "Dagger", "npc/combine_soldier/vo/dagger.wav"},
+    {"DASH", "Dash", "npc/combine_soldier/vo/dash.wav"},
+    {"DEGREES", "Degrees", "npc/combine_soldier/vo/degrees.wav"},
+    {"DELIVERED", "Delivered", "npc/combine_soldier/vo/delivered.wav"},
+    {"DESIGNATETARGET", "Designate target as", "npc/combine_soldier/vo/designatetargetas.wav"},
+    {"DISPLACE", "Displace", "npc/combine_soldier/vo/displace.wav"},
+    {"DISPLACE2", "Displace", "npc/combine_soldier/vo/displace2.wav"},
+    {"ECHO", "Echo", "npc/combine_soldier/vo/echo.wav"},
+    {"ENGAGEDCLEANUP", "Engaged in cleanup", "npc/combine_soldier/vo/engagedincleanup.wav"},
+    {"ENGAGING", "Engaging", "npc/combine_soldier/vo/engaging.wav"},
+    {"EXECUTINGRESPONSE", "Executing full response", "npc/combine_soldier/vo/executingfullresponse.wav"},
+    {"EXTRACTORAWAY", "Extractor away", "npc/combine_soldier/vo/extractoraway.wav"},
+    {"EXTRACTORLIVE", "Extractor is live", "npc/combine_soldier/vo/extractorislive.wav"},
+    {"FIST", "Fist", "npc/combine_soldier/vo/fist.wav"},
+    {"FLAREDOWN", "Flare down", "npc/combine_soldier/vo/flaredown.wav"},
+    {"FLASH", "Flash", "npc/combine_soldier/vo/flash.wav"},
+    {"FLATLINE", "Flatline", "npc/combine_soldier/vo/flatline.wav"},
+    {"FLUSH", "Flush", "npc/combine_soldier/vo/flush.wav"},
+    {"FULLACTIVE", "Full active", "npc/combine_soldier/vo/fullactive.wav"},
+    {"GHOST", "Ghost", "npc/combine_soldier/vo/ghost.wav"},
+    {"GOINTERCEPT", "Go active intercept", "npc/combine_soldier/vo/goactiveintercept.wav"},
+    {"GOSHARP", "Go sharp", "npc/combine_soldier/vo/gosharp.wav"},
+    {"GOSHARP2", "Go sharp, go sharp", "npc/combine_soldier/vo/gosharpgosharp.wav"},
+    {"GRID", "Grid", "npc/combine_soldier/vo/grid.wav"},
+    {"HAMMER", "Hammer", "npc/combine_soldier/vo/hammer.wav"},
+    {"HARDENPOSITION", "Harden that position", "npc/combine_soldier/vo/hardenthatposition.wav"},
+    {"HEAVYRESISTANCE", "Overwatch advise, we have heavy resistance", "npc/combine_soldier/vo/heavyresistance.wav"},
+    {"HELIX", "Helix", "npc/combine_soldier/vo/helix.wav"},
+    {"HOLDINGATCODE", "is holding at code", "npc/combine_soldier/vo/isholdingatcode.wav"},
+    {"HUNTER", "Hunter", "npc/combine_soldier/vo/hunter.wav"},
+    {"ICE", "Ice", "npc/combine_soldier/vo/ice.wav"},
+    {"INBOUND", "Inbound", "npc/combine_soldier/vo/inbound.wav"},
+    {"INFECTED", "Infected", "npc/combine_soldier/vo/infected.wav"},
+    {"ISATCODE", "is at code", "npc/combine_soldier/vo/isatcode.wav"},
+    {"ISFINALTEAMUNIT", "is final team unit, request backup", "npc/combine_soldier/vo/isfinalteamunitbackup.wav"},
+    {"JET", "Jet", "npc/combine_soldier/vo/jet.wav"},
+    {"JUDGE", "Judge", "npc/combine_soldier/vo/judge.wav"},
+    {"KILO", "Kilo", "npc/combine_soldier/vo/kilo.wav"},
+    {"LEADER", "Leader", "npc/combine_soldier/vo/leader.wav"},
+    {"LOSTCONTACT", "Lost contact", "npc/combine_soldier/vo/lostcontact.wav"},
+    {"MACE", "Mace", "npc/combine_soldier/vo/mace.wav"},
+    {"METERS", "Meters", "npc/combine_soldier/vo/meters.wav"},
+    {"MOTIONCHECK", "Motion check all radials", "npc/combine_soldier/vo/motioncheckallradials.wav"},
+    {"MOVEIN", "Move in", "npc/combine_soldier/vo/movein.wav"},
+    {"NECROTICS", "Necrotics", "npc/combine_soldier/vo/necrotics.wav"},
+    {"NECROTICSINBOUND", "Necrotics inbound", "npc/combine_soldier/vo/necroticsinbound.wav"},
+    {"NEGATIVEMOVEMENT", "Has negative movement", "npc/combine_soldier/vo/hasnegativemovement.wav"},
+    {"NOMAD", "Nomad", "npc/combine_soldier/vo/nomad.wav"},
+    {"NOVA", "Nova", "npc/combine_soldier/vo/nova.wav"},
+    {"NOVISCON", "No viscon", "npc/combine_soldier/vo/noviscon.wav"},
+    {"ONECONTAINED", "One contained", "npc/combine_soldier/vo/onecontained.wav"},
+    {"ONEDOWN", "One down", "npc/combine_soldier/vo/onedown.wav"},
+    {"OUTBREAK", "Outbreak", "npc/combine_soldier/vo/outbreak.wav"},
+    {"OVERWATCH", "Overwatch", "npc/combine_soldier/vo/overwatch.wav"},
+    {"OVERWATCHCONTAINED", "Overwatch, target contained", "npc/combine_soldier/vo/overwatchtargetcontained.wav"},
+    {"OVERWATCHOVERRUN", "Overwatch, sector overrun, repeat sector overrun", "npc/combine_soldier/vo/overwatchsectoroverrun.wav"},
+    {"OVERWATCHPOSSIBLEHOSTILES", "Overwatch reports possible hostiles inbound", "npc/combine_soldier/vo/overwatchreportspossiblehostiles.wav"},
+    {"OVERWATCHREINFORCEMENT", "Overwatch, request reinforcement", "npc/combine_soldier/vo/overwatchrequestreinforcement.wav"},
+    {"OVERWATCHRESERVEACTIVATION", "Overwatch, request reserve activation", "npc/combine_soldier/vo/overwatchrequestreserveactivation.wav"},
+    {"OVERWATCHSKYSHIELD", "Overwatch, request sky shield."},
+    {"OVERWATCHTEAMDOWN", "Overwatch, team is down. Sector is not controlled", "npc/combine_soldier/vo/overwatchteamisdown.wav"},
+    {"PAYBACK", "Payback", "npc/combine_soldier/vo/payback.wav"},
+    {"PHANTOM", "Phantom", "npc/combine_soldier/vo/phantom.wav"},
+    {"PREPFORCONTACT", "Prep for contact, report in", "npc/combine_soldier/vo/prepforcontact.wav"},
+    {"PROSECUTING", "Prosecuting", "npc/combine_soldier/vo/contained.wav"},
+    {"PROSECUTING", "Prosecuting", "npc/combine_soldier/vo/prosecuting.wav"},
+    {"QUICKSAND", "Quicksand", "npc/combine_soldier/vo/quicksand.wav"},
+    {"RANGE", "Range", "npc/combine_soldier/vo/range.wav"},
+    {"RANGER", "Ranger", "npc/combine_soldier/vo/ranger.wav"},
+    {"RAZOR", "Razor", "npc/combine_soldier/vo/razor.wav"},
+    {"READYEXTRACTORS", "Ready extractors", "npc/combine_soldier/vo/readyextractors.wav"},
+    {"READYWEAPONS", "Ready weapons", "npc/combine_soldier/vo/readyweapons.wav"},
+    {"READYWEAPONSHOSTILES", "Ready weapons, possible hostiles inbound", "npc/combine_soldier/vo/readyweaponshostilesinbound.wav"},
+    {"REAPER", "Reaper", "npc/combine_soldier/vo/reaper.wav"},
+    {"REPORTINGCLEAR", "Reporting clear", "npc/combine_soldier/vo/reportingclear.wav"},
+    {"REPORTPOSITIONSCLEAR", "Report all positions clear", "npc/combine_soldier/vo/reportallpositionsclear.wav"},
+    {"REPORTRADIALSFREE", "Report all radials free", "npc/combine_soldier/vo/reportallradialsfree.wav"},
+    {"REQUESTMEDICAL", "Request medical", "npc/combine_soldier/vo/requestmedical.wav"},
+    {"RIPCORD", "Ripcord", "npc/combine_soldier/vo/ripcord.wav"},
+    {"RIPCORD2", "Ripcord, ripcord", "npc/combine_soldier/vo/ripcordripcord.wav"},
+    {"SAVAGE", "Savage", "npc/combine_soldier/vo/savage.wav"},
+    {"SCAR", "Scar", "npc/combine_soldier/vo/scar.wav"},
+    {"SECTOR", "Sector", "npc/combine_soldier/vo/sector.wav"},
+    {"SECTORNOTSECURE", "Sector is not secure", "npc/combine_soldier/vo/sectorisnotsecure.wav"},
+    {"SECTORNOTSTERILE", "Confirm sector not sterile.", "npc/combine_soldier/vo/confirmsectornotsterile.wav"},
+    {"SECTORSECURE", "Sector is secure, no viscon", "npc/combine_soldier/vo/sectorissecurenovison.wav"},
+    {"SECURE", "Secure", "npc/combine_soldier/vo/secure.wav"},
+    {"SHADOW", "Shadow", "npc/combine_soldier/vo/shadow.wav"},
+    {"SIGHTLINECLEAR", "Sightline is clear", "npc/combine_soldier/vo/sightlineisclear.wav"},
+    {"SIGHTLINESMOVEIN", "Fix sightlines, move in", "npc/combine_soldier/vo/fixsightlinesmovein.wav"},
+    {"SLAM", "Slam", "npc/combine_soldier/vo/slam.wav"},
+    {"SLASH", "Slash", "npc/combine_soldier/vo/slash.wav"},
+    {"SPEAR", "Spear", "npc/combine_soldier/vo/spear.wav"},
+    {"STAB", "Stab", "npc/combine_soldier/vo/stab.wav"},
+    {"STABILIZATIONHASSECTOR", "Stabilization team has sector control", "npc/combine_soldier/vo/stabilizationteamhassector.wav"},
+    {"STABILIZATIONTEAMHOLDING", "Stabilization team holding in position", "npc/combine_soldier/vo/stabilizationteamholding.wav"},
+    {"STANDINGBY", "Standing by", "npc/combine_soldier/vo/standingby].wav"},
+    {"STAYALERT", "Stay alert", "npc/combine_soldier/vo/stayalert.wav"},
+    {"STAYALERT2", "Stay alert, report sightlines", "npc/combine_soldier/vo/stayalertreportsightlines.wav"},
+    {"STORM", "Storm", "npc/combine_soldier/vo/storm.wav"},
+    {"STRIKER", "Striker", "npc/combine_soldier/vo/striker.wav"},
+    {"SUNDOWN", "Sundown", "npc/combine_soldier/vo/sundown.wav"},
+    {"SUPPRESSING", "Suppressing", "npc/combine_soldier/vo/suppressing.wav"},
+    {"SWARMOUTBREAK", "Swarm outbreak in sector", "npc/combine_soldier/vo/swarmoutbreakinsector.wav"},
+    {"SWEEPINGIN", "Sweeping in", "npc/combine_soldier/vo/sweepingin.wav"},
+    {"SWIFT", "Swift", "npc/combine_soldier/vo/swift.wav"},
+    {"SWORD", "Sword", "npc/combine_soldier/vo/sword.wav"},
+    {"TARGET", "Target", "npc/combine_soldier/vo/target.wav"},
+    {"TARGETCOMPROMISED", "Target compromised, move in, move in", "npc/combine_soldier/vo/targetcompromisedmovein.wav"},
+    {"TARGETINEFFECTIVE", "Target in-effective", "npc/combine_soldier/vo/targetineffective.wav"},
+    {"TARGETISAT", "Target is at", "npc/combine_soldier/vo/targetisat.wav"},
+    {"TEAMDEPLOYED", "Team is deployed and scanning", "npc/combine_soldier/vo/teamdeployedandscanning.wav"},
+    {"TRACKER", "Tracker", "npc/combine_soldier/vo/tracker.wav"},
+    {"UNITINBOUND", "Unit is inbound", "npc/combine_soldier/vo/unitisinbound.wav"},
+    {"UNITMOVINGIN", "Unit is moving in", "npc/combine_soldier/vo/unitismovingin.wav"},
+    {"VISCON", "Viscon", "npc/combine_soldier/vo/viscon.wav"},
+    {"WEAPONSOFFSAFE", "Weapons off-safe, prep for contact", "npc/combine_soldier/vo/weaponsoffsafeprepforcontact.wav"},
+    {"WRAPITUP", "That's it, wrap it up", "npc/combine_soldier/vo/thatsitwrapitup.wav"}
+}
 
-local function AddVoice(text, realtext, sound)
-    Schema.voices.Add("OverwatchTranshumanArm", text, realtext, sound)
+for k, v in ipairs(otaVoicelines) do
+    Schema.voices.Add("OverwatchTranshumanArm", v[1], v[2], v[3])
 end
 
-AddVoice("ADMINISTER", "Administer", "npc/combine_soldier/vo/administer.wav")
-AddVoice("AFFIRMATIVE", "Affirmative", "npc/combine_soldier/vo/affirmative.wav")
-AddVoice("AFFIRMATIVE2", "Affirmative", "npc/combine_soldier/vo/affirmative2.wav")
-AddVoice("AFFIRMATIVEGOTHIM", "Affirmative, we got him now", "npc/combine_soldier/vo/affirmativewegothimnow.wav")
-AddVoice("ANTISEPTIC", "Anti-septic", "npc/combine_soldier/vo/antiseptic.wav")
-AddVoice("APEX", "Apex", "npc/combine_soldier/vo/apex.wav")
-AddVoice("BEARING", "Bearing", "npc/combine_soldier/vo/bearing.wav")
-AddVoice("BLADE", "Blade", "npc/combine_soldier/vo/blade.wav")
-AddVoice("BODYPACKHOLDING", "Bodypack holding", "npc/combine_soldier/vo/bodypackholding.wav")
-AddVoice("BOOMER", "Boomer", "npc/combine_soldier/vo/boomer.wav")
-AddVoice("BOUNCERBOUNCER", "Bouncer bouncer", "npc/combine_soldier/vo/bouncerbouncer.wav")
-AddVoice("CLEANED", "Cleaned", "npc/combine_soldier/vo/cleaned.wav")
-AddVoice("CLOSING", "Closing", "npc/combine_soldier/vo/closing.wav")
-AddVoice("SECTORNOTSTERILE", "Confirm sector not sterile.", "npc/combine_soldier/vo/confirmsectornotsterile.wav")
-AddVoice("CONTACT", "Contact", "npc/combine_soldier/vo/contact.wav")
-AddVoice("CONTACTCONFIRMED", "Contact confirmed", "npc/combine_soldier/vo/contactconfim.wav")
-AddVoice("CONTACTCONFIRMEDPROSECUTING", "Contact confirmed prosecuting", "npc/combine_soldier/vo/contactconfirmprosecuting.wav")
-AddVoice("PROSECUTING", "Prosecuting", "npc/combine_soldier/vo/contained.wav")
-AddVoice("CONTAINMENTPROCEEDING", "Containment proceeding", "npc/combine_soldier/vo/containmentproceeding.wav")
-AddVoice("COPY", "Copy", "npc/combine_soldier/vo/copy.wav")
-AddVoice("COPYTHAT", "Copy that", "npc/combine_soldier/vo/copythat.wav")
-AddVoice("COVER", "Cover", "npc/combine_soldier/vo/cover.wav")
-AddVoice("COVER2", "Cover", "npc/combine_soldier/vo/coverhurt.wav")
-AddVoice("COVERME", "Cover me", "npc/combine_soldier/vo/coverme.wav")
-AddVoice("DAGGER", "Dagger", "npc/combine_soldier/vo/dagger.wav")
-AddVoice("DASH", "Dash", "npc/combine_soldier/vo/dash.wav")
-AddVoice("DEGREES", "Degrees", "npc/combine_soldier/vo/degrees.wav")
-AddVoice("DELIVERED", "Delivered", "npc/combine_soldier/vo/delivered.wav")
-AddVoice("DESIGNATETARGET", "Designate target as", "npc/combine_soldier/vo/designatetargetas.wav")
-AddVoice("DISPLACE", "Displace", "npc/combine_soldier/vo/displace.wav")
-AddVoice("DISPLACE2", "Displace", "npc/combine_soldier/vo/displace2.wav")
-AddVoice("ECHO", "Echo", "npc/combine_soldier/vo/echo.wav")
-AddVoice("8", "8", "npc/combine_soldier/vo/eight.wav")
-AddVoice("18", "18", "npc/combine_soldier/vo/eighteen.wav")
-AddVoice("80", "80", "npc/combine_soldier/vo/eighty.wav")
-AddVoice("11", "11", "npc/combine_soldier/vo/eleven.wav")
-AddVoice("ENGAGEDCLEANUP", "Engaged in cleanup", "npc/combine_soldier/vo/engagedincleanup.wav")
-AddVoice("ENGAGING", "Engaging", "npc/combine_soldier/vo/engaging.wav")
-AddVoice("EXECUTINGRESPONSE", "Executing full response", "npc/combine_soldier/vo/executingfullresponse.wav")
-AddVoice("EXTRACTORAWAY", "Extractor away", "npc/combine_soldier/vo/extractoraway.wav")
-AddVoice("EXTRACTORLIVE", "Extractor is live", "npc/combine_soldier/vo/extractorislive.wav")
-AddVoice("15", "15", "npc/combine_soldier/vo/fifteen.wav")
-AddVoice("50", "50", "npc/combine_soldier/vo/fifty.wav")
-AddVoice("FIST", "Fist", "npc/combine_soldier/vo/fist.wav")
-AddVoice("5", "5", "npc/combine_soldier/vo/five.wav")
-AddVoice("SIGHTLINESMOVEIN", "Fix sightlines, move in", "npc/combine_soldier/vo/fixsightlinesmovein.wav")
-AddVoice("FLAREDOWN", "Flare down", "npc/combine_soldier/vo/flaredown.wav")
-AddVoice("FLASH", "Flash", "npc/combine_soldier/vo/flash.wav")
-AddVoice("FLATLINE", "Flatline", "npc/combine_soldier/vo/flatline.wav")
-AddVoice("FLUSH", "Flush", "npc/combine_soldier/vo/flush.wav")
-AddVoice("4", "4", "npc/combine_soldier/vo/four.wav")
-AddVoice("14", "14", "npc/combine_soldier/vo/fourteen.wav")
-AddVoice("40", "40", "npc/combine_soldier/vo/fourty.wav")
-AddVoice("FULLACTIVE", "Full active", "npc/combine_soldier/vo/fullactive.wav")
-AddVoice("GHOST", "Ghost", "npc/combine_soldier/vo/ghost.wav")
-AddVoice("GOINTERCEPT", "Go active intercept", "npc/combine_soldier/vo/goactiveintercept.wav")
-AddVoice("GOSHARP", "Go sharp", "npc/combine_soldier/vo/gosharp.wav")
-AddVoice("GOSHARP2", "Go sharp, go sharp", "npc/combine_soldier/vo/gosharpgosharp.wav")
-AddVoice("GRID", "Grid", "npc/combine_soldier/vo/grid.wav")
-AddVoice("HAMMER", "Hammer", "npc/combine_soldier/vo/hammer.wav")
-AddVoice("HARDENPOSITION", "Harden that position", "npc/combine_soldier/vo/hardenthatposition.wav")
-AddVoice("NEGATIVEMOVEMENT", "Has negative movement", "npc/combine_soldier/vo/hasnegativemovement.wav")
-AddVoice("HEAVYRESISTANCE", "Overwatch advise, we have heavy resistance", "npc/combine_soldier/vo/heavyresistance.wav")
-AddVoice("HELIX", "Helix", "npc/combine_soldier/vo/helix.wav")
-AddVoice("HUNTER", "Hunter", "npc/combine_soldier/vo/hunter.wav")
-AddVoice("ICE", "Ice", "npc/combine_soldier/vo/ice.wav")
-AddVoice("INBOUND", "Inbound", "npc/combine_soldier/vo/inbound.wav")
-AddVoice("INFECTED", "Infected", "npc/combine_soldier/vo/infected.wav")
-AddVoice("ISATCODE", "is at code", "npc/combine_soldier/vo/isatcode.wav")
-AddVoice("ISFINALTEAMUNIT", "is final team unit, request backup", "npc/combine_soldier/vo/isfinalteamunitbackup.wav")
-AddVoice("HOLDINGATCODE", "is holding at code", "npc/combine_soldier/vo/isholdingatcode.wav")
-AddVoice("JET", "Jet", "npc/combine_soldier/vo/jet.wav")
-AddVoice("JUDGE", "Judge", "npc/combine_soldier/vo/judge.wav")
-AddVoice("KILO", "Kilo", "npc/combine_soldier/vo/kilo.wav")
-AddVoice("LEADER", "Leader", "npc/combine_soldier/vo/leader.wav")
-AddVoice("LOSTCONTACT", "Lost contact", "npc/combine_soldier/vo/lostcontact.wav")
-AddVoice("MACE", "Mace", "npc/combine_soldier/vo/mace.wav")
-AddVoice("METERS", "Meters", "npc/combine_soldier/vo/meters.wav")
-AddVoice("MOTIONCHECK", "Motion check all radials", "npc/combine_soldier/vo/motioncheckallradials.wav")
-AddVoice("MOVEIN", "Move in", "npc/combine_soldier/vo/movein.wav")
-AddVoice("NECROTICS", "Necrotics", "npc/combine_soldier/vo/necrotics.wav")
-AddVoice("NECROTICSINBOUND", "Necrotics inbound", "npc/combine_soldier/vo/necroticsinbound.wav")
-AddVoice("9", "9", "npc/combine_soldier/vo/niner.wav")
-AddVoice("19", "19", "npc/combine_soldier/vo/nineteen.wav")
-AddVoice("90", "90", "npc/combine_soldier/vo/ninety.wav")
-AddVoice("NOMAD", "Nomad", "npc/combine_soldier/vo/nomad.wav")
-AddVoice("NOVA", "Nova", "npc/combine_soldier/vo/nova.wav")
-AddVoice("NOVISCON", "No viscon", "npc/combine_soldier/vo/noviscon.wav")
-AddVoice("1", "1", "npc/combine_soldier/vo/one.wav")
-AddVoice("ONECONTAINED", "One contained", "npc/combine_soldier/vo/onecontained.wav")
-AddVoice("ONEDOWN", "One down", "npc/combine_soldier/vo/onedown.wav")
-AddVoice("100", "100", "npc/combine_soldier/vo/onehundred.wav")
-AddVoice("OUTBREAK", "Outbreak", "npc/combine_soldier/vo/outbreak.wav")
-AddVoice("OVERWATCH", "Overwatch", "npc/combine_soldier/vo/overwatch.wav")
-AddVoice("OVERWATCHPOSSIBLEHOSTILES", "Overwatch reports possible hostiles inbound", "npc/combine_soldier/vo/overwatchreportspossiblehostiles.wav")
-AddVoice("OVERWATCHREINFORCEMENT", "Overwatch, request reinforcement", "npc/combine_soldier/vo/overwatchrequestreinforcement.wav")
-AddVoice("OVERWATCHRESERVEACTIVATION", "Overwatch, request reserve activation", "npc/combine_soldier/vo/overwatchrequestreserveactivation.wav")
-AddVoice("OVERWATCHSKYSHIELD", "Overwatch, request sky shield.")
-AddVoice("OVERWATCHOVERRUN", "Overwatch, sector overrun, repeat sector overrun", "npc/combine_soldier/vo/overwatchsectoroverrun.wav")
-AddVoice("OVERWATCHCONTAINED", "Overwatch, target contained", "npc/combine_soldier/vo/overwatchtargetcontained.wav")
-AddVoice("OVERWATCHTEAMDOWN", "Overwatch, team is down. Sector is not controlled", "npc/combine_soldier/vo/overwatchteamisdown.wav")
-AddVoice("PAYBACK", "Payback", "npc/combine_soldier/vo/payback.wav")
-AddVoice("PHANTOM", "Phantom", "npc/combine_soldier/vo/phantom.wav")
-AddVoice("PREPFORCONTACT", "Prep for contact, report in", "npc/combine_soldier/vo/prepforcontact.wav")
-AddVoice("PROSECUTING", "Prosecuting", "npc/combine_soldier/vo/prosecuting.wav")
-AddVoice("QUICKSAND", "Quicksand", "npc/combine_soldier/vo/quicksand.wav")
-AddVoice("RANGE", "Range", "npc/combine_soldier/vo/range.wav")
-AddVoice("RANGER", "Ranger", "npc/combine_soldier/vo/ranger.wav")
-AddVoice("RAZOR", "Razor", "npc/combine_soldier/vo/razor.wav")
-AddVoice("READYEXTRACTORS", "Ready extractors", "npc/combine_soldier/vo/readyextractors.wav")
-AddVoice("READYWEAPONS", "Ready weapons", "npc/combine_soldier/vo/readyweapons.wav")
-AddVoice("READYWEAPONSHOSTILES", "Ready weapons, possible hostiles inbound", "npc/combine_soldier/vo/readyweaponshostilesinbound.wav")
-AddVoice("REAPER", "Reaper", "npc/combine_soldier/vo/reaper.wav")
-AddVoice("REPORTPOSITIONSCLEAR", "Report all positions clear", "npc/combine_soldier/vo/reportallpositionsclear.wav")
-AddVoice("REPORTRADIALSFREE", "Report all radials free", "npc/combine_soldier/vo/reportallradialsfree.wav")
-AddVoice("REPORTINGCLEAR", "Reporting clear", "npc/combine_soldier/vo/reportingclear.wav")
-AddVoice("REQUESTMEDICAL", "Request medical", "npc/combine_soldier/vo/requestmedical.wav")
-AddVoice("RIPCORD", "Ripcord", "npc/combine_soldier/vo/ripcord.wav")
-AddVoice("RIPCORD2", "Ripcord, ripcord", "npc/combine_soldier/vo/ripcordripcord.wav")
-AddVoice("SAVAGE", "Savage", "npc/combine_soldier/vo/savage.wav")
-AddVoice("SCAR", "Scar", "npc/combine_soldier/vo/scar.wav")
-AddVoice("SECTOR", "Sector", "npc/combine_soldier/vo/sector.wav")
-AddVoice("SECTORNOTSECURE", "Sector is not secure", "npc/combine_soldier/vo/sectorisnotsecure.wav")
-AddVoice("SECTORSECURE", "Sector is secure, no viscon", "npc/combine_soldier/vo/sectorissecurenovison.wav")
-AddVoice("SECURE", "Secure", "npc/combine_soldier/vo/secure.wav")
-AddVoice("7", "7", "npc/combine_soldier/vo/seven.wav")
-AddVoice("17", "17", "npc/combine_soldier/vo/seventeen.wav")
-AddVoice("70", "70", "70", "npc/combine_soldier/vo/seventy.wav")
-AddVoice("SHADOW", "Shadow", "npc/combine_soldier/vo/shadow.wav")
-AddVoice("SIGHTLINECLEAR", "Sightline is clear", "npc/combine_soldier/vo/sightlineisclear.wav")
-AddVoice("6", "6", "npc/combine_soldier/vo/six.wav")
-AddVoice("16", "16", "npc/combine_soldier/vo/sixteen.wav")
-AddVoice("60", "60", "npc/combine_soldier/vo/sixty.wav")
-AddVoice("SLAM", "Slam", "npc/combine_soldier/vo/slam.wav")
-AddVoice("SLASH", "Slash", "npc/combine_soldier/vo/slash.wav")
-AddVoice("SPEAR", "Spear", "npc/combine_soldier/vo/spear.wav")
-AddVoice("STAB", "Stab", "npc/combine_soldier/vo/stab.wav")
-AddVoice("STABILIZATIONHASSECTOR", "Stabilization team has sector control", "npc/combine_soldier/vo/stabilizationteamhassector.wav")
-AddVoice("STABILIZATIONTEAMHOLDING", "Stabilization team holding in position", "npc/combine_soldier/vo/stabilizationteamholding.wav")
-AddVoice("STANDINGBY", "Standing by", "npc/combine_soldier/vo/standingby].wav")
-AddVoice("STAYALERT", "Stay alert", "npc/combine_soldier/vo/stayalert.wav")
-AddVoice("STAYALERT2", "Stay alert, report sightlines", "npc/combine_soldier/vo/stayalertreportsightlines.wav")
-AddVoice("STORM", "Storm", "npc/combine_soldier/vo/storm.wav")
-AddVoice("STRIKER", "Striker", "npc/combine_soldier/vo/striker.wav")
-AddVoice("SUNDOWN", "Sundown", "npc/combine_soldier/vo/sundown.wav")
-AddVoice("SUPPRESSING", "Suppressing", "npc/combine_soldier/vo/suppressing.wav")
-AddVoice("SWARMOUTBREAK", "Swarm outbreak in sector", "npc/combine_soldier/vo/swarmoutbreakinsector.wav")
-AddVoice("SWEEPINGIN", "Sweeping in", "npc/combine_soldier/vo/sweepingin.wav")
-AddVoice("SWIFT", "Swift", "npc/combine_soldier/vo/swift.wav")
-AddVoice("SWORD", "Sword", "npc/combine_soldier/vo/sword.wav")
-AddVoice("TARGET", "Target", "npc/combine_soldier/vo/target.wav")
-AddVoice("TARGETCOMPROMISED", "Target compromised, move in, move in", "npc/combine_soldier/vo/targetcompromisedmovein.wav")
-AddVoice("TARGETINEFFECTIVE", "Target in-effective", "npc/combine_soldier/vo/targetineffective.wav")
-AddVoice("TARGETISAT", "Target is at", "npc/combine_soldier/vo/targetisat.wav")
-AddVoice("TEAMDEPLOYED", "Team is deployed and scanning", "npc/combine_soldier/vo/teamdeployedandscanning.wav")
-AddVoice("10", "10", "npc/combine_soldier/vo/ten.wav")
-AddVoice("WRAPITUP", "That's it, wrap it up", "npc/combine_soldier/vo/thatsitwrapitup.wav")
-AddVoice("13", "13", "npc/combine_soldier/vo/thirteen.wav")
-AddVoice("30", "30", "npc/combine_soldier/vo/thirty.wav")
-AddVoice("3", "3", "npc/combine_soldier/vo/three.wav")
-AddVoice("300", "300", "npc/combine_soldier/vo/threehundred.wav")
-AddVoice("TRACKER", "Tracker", "npc/combine_soldier/vo/tracker.wav")
-AddVoice("12", "12", "npc/combine_soldier/vo/twelve.wav")
-AddVoice("20", "20", "npc/combine_soldier/vo/twenty.wav")
-AddVoice("2", "2", "npc/combine_soldier/vo/two.wav")
-AddVoice("200", "200", "npc/combine_soldier/vo/twohundred.wav")
-AddVoice("UNITINBOUND", "Unit is inbound", "npc/combine_soldier/vo/unitisinbound.wav")
-AddVoice("UNITMOVINGIN", "Unit is moving in", "npc/combine_soldier/vo/unitismovingin.wav")
-AddVoice("VISCON", "Viscon", "npc/combine_soldier/vo/viscon.wav")
-AddVoice("WEAPONSOFFSAFE", "Weapons off-safe, prep for contact", "npc/combine_soldier/vo/weaponsoffsafeprepforcontact.wav")
-AddVoice("0", "0", "npc/combine_soldier/vo/zero.wav")
-
 Schema.voices.AddClass("OverwatchTranshumanArm", function(ply)
-	return Schema:IsOTA(ply)
+    return Schema:IsOTA(ply)
 end)
