@@ -142,24 +142,18 @@ function Schema:LerpColor(time, from, to)
         time = FrameTime() * 2
     end
 
-    from.r = from.r or 255
-    from.g = from.g or 255
-    from.b = from.b or 255
-    from.a = from.a or 255
+    from = Color(from.r, from.g, from.b, from.a)
+    
+    to.r = Lerp(time, from.r, to.r)
+    to.g = Lerp(time, from.g, to.g)
+    to.b = Lerp(time, from.b, to.b)
+    to.a = Lerp(time, from.a, to.a)
 
-    local returnColor = Color(from.r, from.g, from.b, from.a)
+    to = Color(to.r, to.g, to.b, to.a)
 
-    to.r = to.r or 255
-    to.g = to.g or 255
-    to.b = to.b or 255
-    to.a = to.a or 255
+    print(to)
 
-    returnColor.r = Lerp(time, returnColor.r, to.r)
-    returnColor.g = Lerp(time, returnColor.g, to.g)
-    returnColor.b = Lerp(time, returnColor.b, to.b)
-    returnColor.a = Lerp(time, returnColor.a, to.a)
-
-    return returnColor
+    return to
 end
 
 function Schema:GetGameDescription()
