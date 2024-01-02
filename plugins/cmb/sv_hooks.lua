@@ -104,6 +104,39 @@ function PLUGIN:PlayerUseDoor(ply, door)
     if ( door.kickedBy ) then
         return false
     end
+
+    if ( Schema:IsCombine(ply) ) then
+        if ( door:GetClass("func_door") or door:GetClass() == "prop_dynamic" ) then
+            if ( door.ixIsCombineDoor ) then
+                door:Fire("unlock")
+                door:Fire("open")
+
+                if ( door:GetClass() == "prop_dynamic" ) then
+                    door:Fire("setanimation", "open")
+                end
+
+                return false
+            end
+        end
+    end
+end
+
+function PLUGIN:InitializedPlugins()
+    local data = ix.data.Get("combineDoors", {})
+
+    for k, v in pairs(data) do
+        for k2, v2 in pairs(ents.FindInSphere(v[1], 64)) do
+            if not ( IsValid(v2) ) then
+                continue
+            end
+            
+            if not ( v2:GetClass() == "func_door" or v2:GetClass() == "prop_dynamic" ) then
+                continue
+            end
+
+            v2.ixIsCombineDoor = true
+        end
+    end
 end
 
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)

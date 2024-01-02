@@ -730,42 +730,49 @@ ix.command.Add("KickDoor", {
             ply:SetLocalVelocity(Vector(0, 0, 0))
             ply:ForceSequence("kickdoorbaton")
 
-            local oldDoorSpeed = door:GetKeyValues()["speed"]
 
-            if not ( oldDoorSpeed ) then
-                oldDoorSpeed = 100
-            end
-
-            door:Fire("unlock")
-            door:Fire("SetSpeed", 400)
+            door:Fire("SetSpeed", 250)
             door.kickedBy = ply
 
-            timer.Simple(0.8, function()
-                if not ( IsValid(door) ) then
-                    return
-                end
-
-                door:EmitSound("physics/wood/wood_furniture_break2.wav")
-
-                door:Fire("unlock")
-                door:Fire("OpenAwayFrom", ply:GetName())
-
-                timer.Simple(0.2, function()
+            if not ( timer.Exists("ix.DoorOpen." .. self:EntIndex()) ) then
+                timer.Create("ix.DoorOpen." .. self:EntIndex(), 0.8, 1, function()
                     if not ( IsValid(door) ) then
                         return
                     end
-                    
-                    door:Fire("SetSpeed", oldDoorSpeed)
 
-                    timer.Simple(0.5, function()
-                        if not ( IsValid(door) ) then
-                            return
-                        end
+                    door:EmitSound("physics/wood/wood_furniture_break2.wav")
 
-                        door.kickedBy = nil
-                    end)
+                    local oldDoorSpeed = door:GetKeyValues()["speed"]
+
+                    if not ( oldDoorSpeed ) then
+                        oldDoorSpeed = 100
+                    end
+
+                    door:Fire("unlock")
+                    door:Fire("SetSpeed", 250)
+                    door:Fire("OpenAwayFrom", ply:GetName())
+
+                    if not ( timer.Exists("ix.DoorClose." .. self:EntIndex()) ) then
+                        timer.Create("ix.DoorClose." .. self:EntIndex(), 0.2, 1, function()
+                            if not ( IsValid(door) ) then
+                                return
+                            end
+                        
+                            door:Fire("SetSpeed", oldDoorSpeed)
+
+                            if not ( timer.Exists("ix.DoorSetKickedBy." .. self:EntIndex()) ) then
+                                timer.Create("ix.DoorSetKickedBy." .. self:EntIndex(), 0.5, 1, function()
+                                    if not ( IsValid(door) ) then
+                                        return
+                                    end
+
+                                    door.kickedBy = nil
+                                end)
+                            end
+                        end)
+                    end
                 end)
-            end)
+            end
         else
             ply:Notify("WARNING! KICK DOOR ANIMATION MISSING, ALERT OWNER!")
         end
