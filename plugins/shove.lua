@@ -4,7 +4,7 @@ local PLUGIN = PLUGIN
 
 PLUGIN.name = "Overwatch Shove"
 PLUGIN.description = "A Command which gives the Overwatch the ability to knock players out with the /shove command."
-PLUGIN.author = "Riggs Mackay"
+PLUGIN.author = "Riggs"
 PLUGIN.schema = "HL2 RP"
 PLUGIN.license = [[
 Copyright 2023 Riggs Mackay
