@@ -187,6 +187,11 @@ ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be droppe
     category = "misc"
 })
 
+ix.config.Add("maxItemCacheDrops", 4, "The maximum amount of items an item cache can drop", nil, {
+    data = {min = 1, max = 128},
+    category = "misc"
+})
+
 ix.config.Add("rationInterval", (60 * 30), "How often a player can receive a ration.", nil, {
     data = {min = 1, max = 3600},
     category = "rations"
