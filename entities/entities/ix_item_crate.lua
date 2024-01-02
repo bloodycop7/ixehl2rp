@@ -54,7 +54,7 @@ if (SERVER) then
                 table.insert(tableBase, v.uniqueID)
             end
 
-            for i = 1, ix.config.Get("maxItemCrateDrops", 3) do
+            for i = 1, math.random(1, ix.config.Get("maxItemCrateDrops", 3)) do
                 ix.item.Spawn(table.Random(tableBase), self:GetPos() + self:GetUp() * math.random(1, 30) + self:GetRight() * math.random(-30, 30))
             end
 
