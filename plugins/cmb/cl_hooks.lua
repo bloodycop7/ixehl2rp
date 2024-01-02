@@ -247,6 +247,12 @@ function PLUGIN:SetupOutlines()
         return
     end
 
+    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( localPlayer:CanOverrideView() ) then
+            return
+        end
+    end
+
     if ( ix.option.Get("combineOutlineDeployables", true) ) then
         if ( #char:GetData("deployedEntities", {}) > 0 ) then
             for k, v in pairs(char:GetData("deployedEntities", {})) do
