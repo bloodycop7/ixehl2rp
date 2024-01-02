@@ -151,8 +151,6 @@ function Schema:LerpColor(time, from, to)
 
     to = Color(to.r, to.g, to.b, to.a)
 
-    print(to)
-
     return to
 end
 
