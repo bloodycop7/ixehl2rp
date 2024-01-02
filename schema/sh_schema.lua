@@ -153,7 +153,7 @@ function Schema:LerpColor(time, from, to)
     to.a = to.a or 255
 
     if ( from == to ) then
-        return
+        return from
     end
 
     to.r = Lerp(time, from.r, to.r)
