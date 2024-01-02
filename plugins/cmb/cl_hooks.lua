@@ -247,38 +247,36 @@ function PLUGIN:SetupOutlines()
         return
     end
 
-    if ( #char:GetData("deployedEntities", {}) > 0 ) then
-        for k, v in pairs(char:GetData("deployedEntities", {})) do
-            local ent = Entity(v)
+    if ( ix.option.Get("combineOutlineDeployables", true) ) then
+        if ( #char:GetData("deployedEntities", {}) > 0 ) then
+            for k, v in pairs(char:GetData("deployedEntities", {})) do
+                local ent = Entity(v)
 
-            if not ( IsValid(ent) ) then
-                continue
+                if not ( IsValid(ent) ) then
+                    continue
+                end
+
+                if not ( ent:IsNPC() or ent:GetClass() == "npc_grenade_frag" ) then
+                    continue
+                end
+
+                if not ( ent:Health() > 0 or ent:GetClass() == "npc_grenade_frag" ) then
+                    continue
+                end
+
+                local outlineColor = hook.Run("GetEntityOutlineColor", ent)
+
+                if ( outlineColor == nil ) then
+                    outlineColor = ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200)
+                end
+
+                if ( ent:GetClass() == "npc_grenade_frag" ) then
+                    outlineColor = Color(255, 0, 0)
+                end
+
+                ix.outline.Add(ent, outlineColor, mode, customCheck)
             end
-
-            if not ( ent:IsNPC() or ent:GetClass() == "npc_grenade_frag" ) then
-                continue
-            end
-
-            if not ( ent:Health() > 0 or ent:GetClass() == "npc_grenade_frag" ) then
-                continue
-            end
-
-            local outlineColor = hook.Run("GetEntityOutlineColor", ent)
-
-            if ( outlineColor == nil ) then
-                outlineColor = ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200)
-            end
-
-            if ( ent:GetClass() == "npc_grenade_frag" ) then
-                outlineColor = Color(255, 0, 0)
-            end
-
-            ix.outline.Add(ent, outlineColor, mode, customCheck)
         end
-    end
-
-    if ( char:GetData("activeGrenade") ) then
-
     end
 end
 

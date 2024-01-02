@@ -54,6 +54,15 @@ end, {
 ix.lang.AddTable("english", {
 	optCombineOverlay = "Combine Overlay",
     optCombineOverlayAssets = "Combine Overlay - Assets",
+    optCombineOutlineDeployables = "Combine Outline - Deployables",
+    optCombineOutlineAssets = "Combine Outline - Assets",
+    optCombineOutlineAssetsTeamOnly = "Combine Outline Assets - Team Only",
+
+    optdCombineOverlay = "Should the combine overlay be enabled",
+    optdCombineOverlayAssets = "Should there be an overlay on close assets",
+    optdCombineOutlineDeployables = "Should your deployed entities be outlined",
+    optdCombineOutlineAssets = "Should your teammates be outlined",
+    optdCombineOutlineAssetsTeamOnly = "Should Outline Assets only apply to teammates.",
 })
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
@@ -616,7 +625,7 @@ ix.command.Add("Grenade", {
         end
 
         if not ( Schema:IsOTA(ply) ) then
-            ply:Notify("Only transhuman arm units can use this command.")
+            ply:Notify("Only Transhuman Arm units can use this command.")
 
             return
         end
@@ -675,6 +684,90 @@ ix.command.Add("Grenade", {
         end)
 
         char:SetData("nextGrenadeThrow", CurTime() + 40)
+    end
+})
+
+ix.command.Add("KickDoor", {
+    description = "Kick a door.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCP(ply) ) then
+            ply:Notify("Only Civil Protection Units can use this command.")
+
+            return
+        end
+
+        local door = ply:GetEyeTrace().Entity
+
+        if not ( IsValid(door) ) then
+            ply:Notify("You must be looking at a door to kick it.")
+
+            return
+        end
+
+        if not ( door:GetClass() == "prop_door_rotating" or door:GetClass() == "func_door_rotating" ) then
+            ply:Notify("You must be looking at a door to kick it.")
+
+            return
+        end
+
+        if ( door:GetPos():Distance(ply:GetPos()) > 100 ) then
+            ply:Notify("You must be closer to the door to kick it.")
+
+            return
+        end
+
+
+        if ( ply:GetSequenceInfo(ply:LookupSequence("kickdoorbaton")) ) then
+            ply:SetLocalVelocity(Vector(0, 0, 0))
+            ply:ForceSequence("kickdoorbaton")
+
+            local oldDoorSpeed = door:GetKeyValues()["speed"]
+
+            if not ( oldDoorSpeed ) then
+                oldDoorSpeed = 100
+            end
+
+            door:Fire("unlock")
+            door:Fire("SetSpeed", 400)
+            door.kickedBy = ply
+
+            timer.Simple(0.8, function()
+                if not ( IsValid(door) ) then
+                    return
+                end
+
+                door:EmitSound("physics/wood/wood_furniture_break2.wav")
+
+                door:Fire("unlock")
+                door:Fire("OpenAwayFrom", ply:GetName())
+
+                timer.Simple(0.2, function()
+                    if not ( IsValid(door) ) then
+                        return
+                    end
+                    
+                    door:Fire("SetSpeed", oldDoorSpeed)
+
+                    timer.Simple(0.5, function()
+                        if not ( IsValid(door) ) then
+                            return
+                        end
+
+                        door.kickedBy = nil
+                    end)
+                end)
+            end)
+        end
     end
 })
 

@@ -47,6 +47,14 @@ ITEM.functions.Plant = {
         
         chargeFake:EmitSound("weapons/c4/c4_plant.wav")
 
+        if not ( ply.ixDeployedEntities ) then
+            ply.ixDeployedEntities = {}
+        end
+
+        ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = grenade:EntIndex()
+
+        char:SetData("deployedEntities", ply.ixDeployedEntities)
+        
         timer.Create("ixBreachingChargeBeep." .. entity:EntIndex(), 1, 3, function()
             if ( IsValid(chargeFake) ) then
                 chargeFake:EmitSound("weapons/c4/c4_beep1.wav")

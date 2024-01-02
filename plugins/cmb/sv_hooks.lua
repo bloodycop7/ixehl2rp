@@ -70,6 +70,22 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
     end
 end
 
+function PLUGIN:PlayerUse(ply, ent)
+    if not ( IsValid(ent) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( ent.kickedBy ) then
+        return false
+    end
+end
+
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
     if ( oldChar ) then
         timer.Remove("ix.PassiveChatter." .. oldChar:GetID())

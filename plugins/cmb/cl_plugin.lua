@@ -9,6 +9,18 @@ ix.option.Add("combineOverlayAssets", ix.type.bool, true, {
     category = "Combine Systems",
 })
 
+ix.option.Add("combineOutlineDeployables", ix.type.bool, true, {
+    category = "Combine Systems",
+})
+
+ix.option.Add("combineOutlineAssets", ix.type.bool, true, {
+    category = "Combine Systems",
+})
+
+ix.option.Add("combineOutlineAssetsTeamOnly", ix.type.bool, false, {
+    category = "Combine Systems",
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
