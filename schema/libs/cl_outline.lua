@@ -133,7 +133,7 @@ local function Render()
             
             if ( mode == 0 or mode == 2 ) then
                 if ( customCheck ) then
-                    if not ( customCheck(LocalPlayer()) ) then
+                    if not ( customCheck(localPlayer) ) then
                         continue
                     end
                 end
@@ -151,7 +151,7 @@ local function Render()
                 end
             elseif ( mode == 1 ) then
                 if ( customCheck ) then
-                    if not ( customCheck(LocalPlayer()) ) then
+                    if not ( customCheck(localPlayer) ) then
                         continue
                     end
                 end

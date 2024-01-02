@@ -253,6 +253,36 @@ function PLUGIN:SetupOutlines()
         end
     end
 
+    for k, v in ipairs(ents.GetAll()) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        if not ( v:IsNPC() ) then
+            continue
+        end
+
+        if not ( v:Health() > 0 ) then
+            continue
+        end
+
+        if not ( Schema:CanSeeEntity(localPlayer, v) ) then
+            continue
+        end
+
+        if ( ix.relationships.CombineNPCs[v:GetClass()] ) then
+            continue
+        end
+
+        local outlineColor = hook.Run("GetEntityOutlineColor", v)
+
+        if ( outlineColor == nil ) then
+            outlineColor = Color(255, 0, 0)
+        end
+
+        ix.outline.Add(v, outlineColor)
+    end
+
     if ( ix.option.Get("combineOutlineAssets", true) ) then
         for k, v in ipairs(player.GetAll()) do
             if not ( IsValid(v) ) then
