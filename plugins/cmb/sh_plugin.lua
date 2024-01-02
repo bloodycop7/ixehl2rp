@@ -753,7 +753,7 @@ ix.command.Add("KickDoor", {
                     tempEnt:SetName("ix.OpenAwayFromDoor." .. ply:SteamID64())
 
                     door:Fire("unlock")
-                    door:Fire("SetSpeed", 250)
+                    door:Fire("SetSpeed", 400)
                     door:Fire("OpenAwayFrom", "ix.OpenAwayFromDoor." .. ply:SteamID64())
 
                     if not ( timer.Exists("ix.DoorClose." .. door:EntIndex()) ) then
