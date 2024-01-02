@@ -33,9 +33,11 @@ if (SERVER) then
 
             if ( hook.Run("CanItemCacheDrop", self) == false ) then
                 self:Remove()
-                
+
                 return
             end
+
+            local dropCount = hook.Run("GetItemCacheDropCount", self) or ix.config.Get("maxItemCrateDrops", 3)
 
             for i = 1, ix.config.Get("maxItemCrateDrops", 3) do
                 local item, uniqueID = table.Random(ix.item.list)
