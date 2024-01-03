@@ -14,7 +14,6 @@ function ix.crafting:RegisterRecipe(recipeTable)
 
         return
     end
-
     if not ( recipeTable.name ) then
         ErrorNoHalt("recipeTable.name is not defined!\n")
 
@@ -29,12 +28,6 @@ function ix.crafting:RegisterRecipe(recipeTable)
 
     if not ( recipeTable.result ) then
         ErrorNoHalt("recipeTable.result is not defined!\n")
-
-        return
-    end
-
-    if not ( ix.item.list[recipeTable.uniqueID] ) then
-        ErrorNoHalt( recipeTable.name .. "'s recipe uniqueID is not equal to any valid item!\n")
 
         return
     end
