@@ -1,4 +1,23 @@
 local PLUGIN = PLUGIN
+util.AddNetworkString("ix.Crafting.DoCraft")
+
+net.Receive("ix.Crafting.DoCraft", function(len, ply)
+    local uniqueID = net.ReadString()
+
+    if not ( uniqueID ) then
+        return
+    end
+
+    local canCraft, failMessage = PLUGIN:CanCraftRecipe(ply, uniqueID)
+
+    if not ( canCraft ) then
+        ply:Notify(failMessage)
+
+        return
+    end
+
+    PLUGIN:CraftRecipe(ply, uniqueID)
+end)
 
 function PLUGIN:CanCraftRecipe(ply, uniqueID)
     if not ( IsValid(ply) ) then
@@ -50,6 +69,11 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
             canCraft = false
             failMessage = "You don't have the required items or correct amount of items to craft this."
         end
+    end
+
+    if ( ply.ixCraftingStation:GetPos():Distance(ply:GetPos()) > 200 ) then
+        canCraft = false
+        failMessage = "You must be closer to your crafting station."
     end
 
     for k, v in pairs(char:GetInventory():GetItems()) do
