@@ -21,6 +21,18 @@ function ix.crafting:RegisterRecipe(recipeTable)
         return
     end
 
+    if not ( recipeTable.requirements ) then
+        ErrorNoHalt("recipeTable.requirements is not defined!")
+
+        return
+    end
+
+    if not ( recipeTable.result ) then
+        ErrorNoHalt("recipeTable.result is not defined!")
+
+        return
+    end
+
     recipeTable.model = recipeTable.model or "models/props_junk/cardboard_box004a.mdl"
     recipeTable.category = recipeTable.category or "Miscellaneous"
 
