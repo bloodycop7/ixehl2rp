@@ -71,7 +71,7 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         end
     end
 
-    if ( ply.ixCraftingStation:GetPos():Distance(ply:GetPos()) > 200 ) then
+    if ( ply:GetPos():Distance(ply.ixCraftingStation) > 200 ) then
         canCraft = false
         failMessage = "You must be closer to your crafting station."
     end
