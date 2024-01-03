@@ -1,6 +1,6 @@
 ITEM.name = "Turret"
-ITEM.description = "A deployable entity that attacks enemies."
-ITEM.model = "models/props_junk/cardboard_box004a.mdl"
+ITEM.description = "A deployable turret that attacks anti-citizens and necrotics."
+ITEM.model = "models/combine_turrets/floor_turret.mdl"
 ITEM.category = "Combine"
 
 ITEM.functions.Deploy = {

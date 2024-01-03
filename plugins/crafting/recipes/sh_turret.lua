@@ -1,10 +1,12 @@
 local RECIPE = {}
 
+local itemData = ix.item.Get("turret")
+
 RECIPE.uniqueID = "turret"
-RECIPE.name = ix.item.Get("turret").name
-RECIPE.category = "Deployables"
-RECIPE.model = ix.item.Get("turret").model
-RECIPE.description = "A turret that can be deployed on the ground and commit funny suicide."
+RECIPE.name = itemData.name
+RECIPE.category = itemData.category
+RECIPE.model = itemData.model
+RECIPE.description = itemData.description
 RECIPE.requirements = {
     ["water"] = 2,
     ["viscerator"] = 2
