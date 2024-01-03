@@ -19,15 +19,21 @@ end
 function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
     local steamID64 = util.SteamIDTo64(steamid)
 
+    if not ( ix.config.Get("familyShare", true) ) then
+        return
+    end
+    
     if not ( ply:OwnerSteamID64() == steamID64 ) then
         ply:Kick("Family share accounts are not allowed on this server.")
 
-        for k, v in ipairs(player.GetAll()) do
-            if not ( IsValid(v) ) then
-                continue
-            end
+        if ( ix.config.Get("notifyAdmins", true) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
 
-            v:ChatNotify("Family share account " .. ply:Name() .. " (" .. steamID64 .. ") attempted to join the server.")
+                v:ChatNotify("Family share account " .. ply:Name() .. " (" .. steamID64 .. ") attempted to join the server.")
+            end
         end
     end
 end
