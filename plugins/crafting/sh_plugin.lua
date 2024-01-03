@@ -65,18 +65,40 @@ function ix.crafting:RegisterStation(stationTable)
     STATION.PhysgunDisable = true
     STATION.bNoPersist = true
 
+    function STATION:SetupDataTables()
+        self:NetworkVar("String", 0, "StationID")
+    end
+
     if ( SERVER ) then
         function STATION:Initialize()
             self:SetModel(stationTable.model)
             self:PhysicsInit(SOLID_VPHYSICS)
             self:SetSolid(SOLID_VPHYSICS)
             self:SetUseType(SIMPLE_USE)
+            self:SetStationID(stationTable.uniqueID)
 
             local physics = self:GetPhysicsObject()
             physics:EnableMotion(false)
             physics:Sleep()
 
             self.nextUse = 0
+        end
+
+        function ENT:Use(ply)
+            if not ( ply:GetEyeTrace().Entity == self ) then
+                return
+            end
+
+            self.ixUsedBy = ply
+            ply.ixCraftingStation = self
+        end
+
+        function ENT:OnRemove()
+            if ( IsValid(self.ixUsedBy) ) then
+                if ( self.ixUsedBy.ixCraftingStation == self ) then
+                    self.ixUsedBy.ixCraftingStation = nil
+                end
+            end
         end
     end
 

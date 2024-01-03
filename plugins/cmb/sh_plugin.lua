@@ -244,6 +244,124 @@ ix.cmbSystems.cityCodes = {
         end
     },
     {
+        name = "Autonomous Judgment",
+        color = Color(255, 0, 0),
+        onStart = function()
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
+            Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
+
+            timer.Create("ix.AutonomousJudgment.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
+                Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
+
+                timer.Adjust("ix.AutonomousJudgment.hit1", math.random(120, 400))
+            end)
+
+            timer.Create("ix.AutonomousJudgment.SecondSequence", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, 0, function()
+                Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 1)
+
+                timer.Create("ix.AutonomousJudgment.StreetWar1", SoundDuration("ambient/explosions/battle_loop1.wav") + math.random(20, 40), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(20, 40), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
+
+                    Schema:PlaySound(player.GetAll(), extraExplosions[math.random(1, #extraExplosions)], 75, 100, 0.5)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.APCDistant", SoundDuration("ambient/levels/streetwar/apc_distant1.wav"), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/apc_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.5)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.CityBattle", math.random(10, 30), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_battle" .. math.random(1, 19) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.StriderDistant", math.random(10, 25), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/strider_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.CityScream", math.random(20, 30), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_scream3.wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.GunshipDistant", math.random(10, 30), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/gunship_distant" .. math.random(1, 2) .. ".wav", 75, 100, 0.7)
+                end)
+                
+                timer.Create("ix.AutonomousJudgment.BuildingRubble", math.random(10, 20), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/building_rubble" .. math.random(1, 5) .. ".wav", 75, 100, 0.7)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.CitadelScreams", math.random(100, 200), 0, function()
+                    Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_ambient_scream_loop1.wav", 75, 100, 0.3)
+                end)
+
+                timer.Create("ix.AutonomousJudgment.HeliDistant", math.random(10, 25), 0, function()
+                    Schema:PlaySound(player.GetAll(), heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
+                end)
+            end)
+        end,
+        onEnd = function()
+            timer.Remove("ix.AutonomousJudgment.hit1")
+            timer.Remove("ix.AutonomousJudgment.SecondSequence")
+            timer.Remove("ix.AutonomousJudgment.StreetWar1")
+            timer.Remove("ix.AutonomousJudgment.StreetWar2")
+            timer.Remove("ix.AutonomousJudgment.APCDistant")
+            timer.Remove("ix.AutonomousJudgment.CityBattle")
+            timer.Remove("ix.AutonomousJudgment.StriderDistant")
+            timer.Remove("ix.AutonomousJudgment.CityScream")
+            timer.Remove("ix.AutonomousJudgment.GunshipDistant")
+            timer.Remove("ix.AutonomousJudgment.BuildingRubble")
+            timer.Remove("ix.AutonomousJudgment.CitadelScreams")
+            timer.Remove("ix.AutonomousJudgment.HeliDistant")
+
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                for i = 1, 3 do
+                    v:StopSound("ambient/alarms/citadel_alert_loop2.wav")
+                    v:StopSound("ambient/alarms/manhack_alert_pass1.wav")
+                    v:StopSound("ambient/alarms/apc_alarm_pass1.wav")
+                    v:StopSound("ambient/levels/citadel/citadel_hit1_adpcm.wav")
+
+                    for i = 1, 2 do
+                        v:StopSound("ambient/explosions/battle_loop1.wav")
+                        v:StopSound("ambient/explosions/battle_loop2.wav")
+                    end
+
+                    for i = 1, 3 do
+                        v:StopSound("ambient/levels/streetwar/apc_distant" .. i .. ".wav")
+                    end
+
+                    for i = 1, 19 do
+                        v:StopSound("ambient/levels/streetwar/city_battle" .. i .. ".wav")
+                    end
+
+                    for i = 1, 3 do
+                        v:StopSound("ambient/levels/streetwar/strider_distant" .. i .. ".wav")
+                    end
+
+                    v:StopSound("ambient/levels/streetwar/city_scream3.wav")
+
+                    for i = 1, 2 do
+                        v:StopSound("ambient/levels/streetwar/gunship_distant" .. i .. ".wav")
+                    end
+
+                    for i = 1, 5 do
+                        v:StopSound("ambient/levels/streetwar/building_rubble" .. i .. ".wav")
+                    end
+
+                    v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
+                    v:StopSound(heliSounds[math.random(1, #heliSounds)])
+                end
+            end
+        end
+    },
+    {
         name = "Judgment Waiver",
         color = Color(255, 0, 0),
         onStart = function()
@@ -336,124 +454,6 @@ ix.cmbSystems.cityCodes = {
             timer.Remove("ix.JudgmentWaiver.CitadelScreams")
             timer.Remove("ix.JudgmentWaiver.HeliDistant")
             timer.Remove("ix.JudgmentWaiver.Earthquakes")
-
-            for k, v in ipairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
-
-                for i = 1, 3 do
-                    v:StopSound("ambient/alarms/citadel_alert_loop2.wav")
-                    v:StopSound("ambient/alarms/manhack_alert_pass1.wav")
-                    v:StopSound("ambient/alarms/apc_alarm_pass1.wav")
-                    v:StopSound("ambient/levels/citadel/citadel_hit1_adpcm.wav")
-
-                    for i = 1, 2 do
-                        v:StopSound("ambient/explosions/battle_loop1.wav")
-                        v:StopSound("ambient/explosions/battle_loop2.wav")
-                    end
-
-                    for i = 1, 3 do
-                        v:StopSound("ambient/levels/streetwar/apc_distant" .. i .. ".wav")
-                    end
-
-                    for i = 1, 19 do
-                        v:StopSound("ambient/levels/streetwar/city_battle" .. i .. ".wav")
-                    end
-
-                    for i = 1, 3 do
-                        v:StopSound("ambient/levels/streetwar/strider_distant" .. i .. ".wav")
-                    end
-
-                    v:StopSound("ambient/levels/streetwar/city_scream3.wav")
-
-                    for i = 1, 2 do
-                        v:StopSound("ambient/levels/streetwar/gunship_distant" .. i .. ".wav")
-                    end
-
-                    for i = 1, 5 do
-                        v:StopSound("ambient/levels/streetwar/building_rubble" .. i .. ".wav")
-                    end
-
-                    v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
-                    v:StopSound(heliSounds[math.random(1, #heliSounds)])
-                end
-            end
-        end
-    },
-    {
-        name = "Autonomous Judgment",
-        color = Color(255, 0, 0),
-        onStart = function()
-            Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
-            Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
-            Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
-
-            timer.Create("ix.AutonomousJudgment.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
-                Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
-
-                timer.Adjust("ix.AutonomousJudgment.hit1", math.random(120, 400))
-            end)
-
-            timer.Create("ix.AutonomousJudgment.SecondSequence", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 5, 0, function()
-                Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 1)
-
-                timer.Create("ix.AutonomousJudgment.StreetWar1", SoundDuration("ambient/explosions/battle_loop1.wav") + math.random(20, 40), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop1.wav", 75, 100, 0.7)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.StreetWar2", SoundDuration("ambient/explosions/battle_loop2.wav") + math.random(20, 40), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/explosions/battle_loop2.wav", 75, 100, 0.5)
-
-                    Schema:PlaySound(player.GetAll(), extraExplosions[math.random(1, #extraExplosions)], 75, 100, 0.5)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.APCDistant", SoundDuration("ambient/levels/streetwar/apc_distant1.wav"), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/apc_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.5)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.CityBattle", math.random(10, 30), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_battle" .. math.random(1, 19) .. ".wav", 75, 100, 0.7)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.StriderDistant", math.random(10, 25), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/strider_distant" .. math.random(1, 3) .. ".wav", 75, 100, 0.7)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.CityScream", math.random(20, 30), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/city_scream3.wav", 75, 100, 0.7)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.GunshipDistant", math.random(10, 30), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/gunship_distant" .. math.random(1, 2) .. ".wav", 75, 100, 0.7)
-                end)
-                
-                timer.Create("ix.AutonomousJudgment.BuildingRubble", math.random(10, 20), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/streetwar/building_rubble" .. math.random(1, 5) .. ".wav", 75, 100, 0.7)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.CitadelScreams", math.random(100, 200), 0, function()
-                    Schema:PlaySound(player.GetAll(), "ambient/levels/citadel/citadel_ambient_scream_loop1.wav", 75, 100, 0.3)
-                end)
-
-                timer.Create("ix.AutonomousJudgment.HeliDistant", math.random(10, 25), 0, function()
-                    Schema:PlaySound(player.GetAll(), heliSounds[math.random(1, #heliSounds)], 75, 100, 0.7)
-                end)
-            end)
-        end,
-        onEnd = function()
-            timer.Remove("ix.AutonomousJudgment.hit1")
-            timer.Remove("ix.AutonomousJudgment.SecondSequence")
-            timer.Remove("ix.AutonomousJudgment.StreetWar1")
-            timer.Remove("ix.AutonomousJudgment.StreetWar2")
-            timer.Remove("ix.AutonomousJudgment.APCDistant")
-            timer.Remove("ix.AutonomousJudgment.CityBattle")
-            timer.Remove("ix.AutonomousJudgment.StriderDistant")
-            timer.Remove("ix.AutonomousJudgment.CityScream")
-            timer.Remove("ix.AutonomousJudgment.GunshipDistant")
-            timer.Remove("ix.AutonomousJudgment.BuildingRubble")
-            timer.Remove("ix.AutonomousJudgment.CitadelScreams")
-            timer.Remove("ix.AutonomousJudgment.HeliDistant")
 
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
