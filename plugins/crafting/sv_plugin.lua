@@ -15,6 +15,10 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         return false
     end
 
+    if not ( IsValid(ply.ixCraftingStation) ) then
+        return false
+    end
+
     if not ( uniqueID ) then
         return false
     end
@@ -23,6 +27,12 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
 
     if not ( recipeData ) then
         return false
+    end
+
+    if ( recipeData.station ) then
+        if not ( ply.ixCraftingStation:GetStationID() == recipeData.station ) then
+            return false
+        end
     end
 
     if ( recipeData.overrideRequirements ) then
