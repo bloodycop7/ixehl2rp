@@ -32,10 +32,13 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
     end
 
     local canCraft = true
+    local notMissingItems = true
+    local failMessage = "You successfully crafted this item!"
 
     if ( recipeData.canCraft ) then
         if not ( recipeData:canCraft(ply) ) then
             canCraft = false
+            failMessage = "You don't have the required items or correct amount of items to craft this."
         end
     end
 
@@ -44,12 +47,21 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
             local itemCount = char:GetInventory():GetItemCount(k2)
             
             if ( itemCount < v2 ) then
-                canCraft = false
+                notMissingItems = false
             end
         end
     end
+
+    if not ( notMissingItems ) then
+        canCraft = false
+        failMessage = "You don't have the required items or correct amount of items to craft this."
+    end
     
-    return canCraft
+    if ( hook.Run("OverrideCraftFailMessage", ply, uniqueID) != nil ) then
+        failMessage = hook.Run("OverrideCraftFailMessage", ply, uniqueID)
+    end
+
+    return canCraft, failMessage
 end
 
 function PLUGIN:CraftRecipe(ply, uniqueID)
@@ -77,7 +89,11 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
         return false
     end
 
-    if not ( self:CanCraftRecipe(ply, uniqueID) ) then
+    local canCraft, failMessage = self:CanCraftRecipe(ply, uniqueID)
+
+    if not ( canCraft ) then
+        ply:Notify(failMessage)
+
         return
     end
 
