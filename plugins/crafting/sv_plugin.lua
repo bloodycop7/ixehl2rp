@@ -131,28 +131,85 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
         return
     end
 
-    for k, v in pairs(recipeData.result) do
-        if not ( ply:GetCharacter():GetInventory():Add(k) ) then
-            ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
-        end
+    if ( recipeData.craftTime ) then
+        recipeData.craftTime = (isfunction(recipeData.craftTime) and recipeData:craftTime(ply) or recipeData.craftTime)
 
-        if ( recipeData.onCraftItem ) then
-            recipeData:onCraftItem(ply, k)
-        end
-    end
+        if ( recipeData.craftTime > 0 ) then
+            ply:SetAction("Crafting...", recipeData.craftTime)
+            ply:DoStaredAction(ply.ixCraftingStation, function()
+                 for k, v in pairs(recipeData.result) do
+                    if not ( ply:GetCharacter():GetInventory():Add(k) ) then
+                        ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
+                    end
 
-    for k, v in pairs(recipeData.requirements) do
-        for i = 1, v do
-            local item = char:GetInventory():HasItem(k)
+                    if ( recipeData.onCraftItem ) then
+                        recipeData:onCraftItem(ply, k)
+                    end
+                end
 
-            if ( item ) then
-                item:Remove()
+                for k, v in pairs(recipeData.requirements) do
+                    for i = 1, v do
+                        local item = char:GetInventory():HasItem(k)
+
+                        if ( item ) then
+                            item:Remove()
+                        end
+                    end
+                end
+
+                if ( recipeData.onCraft ) then
+                    recipeData:onCraft(ply)
+                end
+            end, recipeData.craftTime)
+        else
+            for k, v in pairs(recipeData.result) do
+                if not ( ply:GetCharacter():GetInventory():Add(k) ) then
+                    ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
+                end
+
+                if ( recipeData.onCraftItem ) then
+                    recipeData:onCraftItem(ply, k)
+                end
+            end
+
+            for k, v in pairs(recipeData.requirements) do
+                for i = 1, v do
+                    local item = char:GetInventory():HasItem(k)
+
+                    if ( item ) then
+                        item:Remove()
+                    end
+                end
+            end
+
+            if ( recipeData.onCraft ) then
+                recipeData:onCraft(ply)
             end
         end
-    end
+    else
+        for k, v in pairs(recipeData.result) do
+            if not ( ply:GetCharacter():GetInventory():Add(k) ) then
+                ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
+            end
 
-    if ( recipeData.onCraft ) then
-        recipeData:onCraft(ply)
+            if ( recipeData.onCraftItem ) then
+                recipeData:onCraftItem(ply, k)
+            end
+        end
+
+        for k, v in pairs(recipeData.requirements) do
+            for i = 1, v do
+                local item = char:GetInventory():HasItem(k)
+
+                if ( item ) then
+                    item:Remove()
+                end
+            end
+        end
+
+        if ( recipeData.onCraft ) then
+            recipeData:onCraft(ply)
+        end
     end
 
     return true
