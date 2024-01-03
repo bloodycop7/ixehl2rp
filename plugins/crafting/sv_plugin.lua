@@ -1,7 +1,34 @@
 local PLUGIN = PLUGIN
 util.AddNetworkString("ix.Crafting.DoCraft")
+util.AddNetworkString("ix.Crafting.ClosePanel")
+
+net.Receive("ix.Crafting.ClosePanel", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    if not ( ply:GetCharacter() ) then
+        return
+    end
+
+    if ( IsValid(ply:GetData("ixCraftingStation", nil)) ) then
+        ply:SetData("ixCraftingStation", nil)
+    end
+end)
 
 net.Receive("ix.Crafting.DoCraft", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    if not ( ply:GetCharacter() ) then
+        return
+    end
+
+    if not ( ply:Alive() ) then
+        return
+    end
+
     local uniqueID = net.ReadString()
 
     if not ( uniqueID ) then
@@ -34,7 +61,7 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         return false
     end
 
-    if not ( IsValid(ply.ixCraftingStation) ) then
+    if not ( IsValid(ply:GetData("ixCraftingStation", nil)) ) then
         return false
     end
 
@@ -48,8 +75,8 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         return false
     end
 
-    if ( recipeData.station ) then
-        if not ( ply.ixCraftingStation:GetStationID() == recipeData.station ) then
+    if ( recipeData.stations ) then
+        if not ( recipeData.stations[ply:GetData("ixCraftingStation", nil):GetStationID()] ) then
             return false
         end
     end
@@ -64,16 +91,21 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
     local notMissingItems = true
     local failMessage = "You successfully crafted this item!"
 
+    if not ( Schema:IsCitizen(ply) ) then
+        canCraft = false
+        failMessage = "You must be on the Citizen faction to craft items!"
+    end
+
     if ( recipeData.canCraft ) then
         if not ( recipeData:canCraft(ply) ) then
             canCraft = false
-            failMessage = "You don't have the required items or correct amount of items to craft this."
+            failMessage = "You don't have the required items or correct amount of items to craft this!"
         end
     end
 
-    if ( ply:GetPos():Distance(ply.ixCraftingStation) > 200 ) then
+    if ( ply:GetPos():Distance(ply:GetData("ixCraftingStation", nil):GetPos()) > 200 ) then
         canCraft = false
-        failMessage = "You must be closer to your crafting station."
+        failMessage = "You must be closer to the crafting station!"
     end
 
     for k, v in pairs(char:GetInventory():GetItems()) do
@@ -88,7 +120,7 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
 
     if not ( notMissingItems ) then
         canCraft = false
-        failMessage = "You don't have the required items or correct amount of items to craft this."
+        failMessage = "You don't have the required items or correct amount of items to craft this!"
     end
     
     if ( hook.Run("OverrideCraftFailMessage", ply, uniqueID) != nil ) then
@@ -136,7 +168,7 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
 
         if ( recipeData.craftTime > 0 ) then
             ply:SetAction("Crafting...", recipeData.craftTime)
-            ply:DoStaredAction(ply.ixCraftingStation, function()
+            ply:DoStaredAction(ply:GetData("ixCraftingStation", nil), function()
                  for k, v in pairs(recipeData.result) do
                     if not ( ply:GetCharacter():GetInventory():Add(k) ) then
                         ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
@@ -160,7 +192,9 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
                 if ( recipeData.onCraft ) then
                     recipeData:onCraft(ply)
                 end
-            end, recipeData.craftTime)
+            end, recipeData.craftTime, function()
+                ply:SetAction()
+            end)
         else
             for k, v in pairs(recipeData.result) do
                 if not ( ply:GetCharacter():GetInventory():Add(k) ) then

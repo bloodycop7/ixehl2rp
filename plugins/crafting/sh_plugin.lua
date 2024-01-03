@@ -10,25 +10,31 @@ ix.crafting.stations = {}
 
 function ix.crafting:RegisterRecipe(recipeTable)
     if not ( istable(recipeTable) ) then
-        ErrorNoHalt("recipeTable is not a table!")
+        ErrorNoHalt("recipeTable is not a table!\n")
 
         return
     end
 
     if not ( recipeTable.name ) then
-        ErrorNoHalt("recipeTable.name is not defined!")
+        ErrorNoHalt("recipeTable.name is not defined!\n")
 
         return
     end
 
     if not ( recipeTable.requirements ) then
-        ErrorNoHalt("recipeTable.requirements is not defined!")
+        ErrorNoHalt("recipeTable.requirements is not defined!\n")
 
         return
     end
 
     if not ( recipeTable.result ) then
-        ErrorNoHalt("recipeTable.result is not defined!")
+        ErrorNoHalt("recipeTable.result is not defined!\n")
+
+        return
+    end
+
+    if not ( ix.item.list[recipeTable.uniqueID] ) then
+        ErrorNoHalt( recipeTable.name .. "'s recipe uniqueID is not equal to any valid item!\n")
 
         return
     end
@@ -41,13 +47,13 @@ end
 
 function ix.crafting:RegisterStation(stationTable)
     if not ( istable(stationTable) ) then
-        ErrorNoHalt("recipeTable is not a table!")
+        ErrorNoHalt("recipeTable is not a table!\n")
 
         return
     end
 
     if not ( stationTable.name ) then
-        ErrorNoHalt("recipeTable.name is not defined!")
+        ErrorNoHalt("recipeTable.name is not defined!\n")
 
         return
     end
@@ -84,19 +90,33 @@ function ix.crafting:RegisterStation(stationTable)
             self.nextUse = 0
         end
 
-        function ENT:Use(ply)
+        function STATION:Use(ply)
             if not ( ply:GetEyeTrace().Entity == self ) then
                 return
             end
 
-            self.ixUsedBy = ply
-            ply.ixCraftingStation = self
+            if ( self.nextUse > CurTime() ) then
+                return
+            end
+
+            ply:SetData("ixCraftingStation", self)
+            Schema:OpenUI(ply, "ixCraftingMenu")
+
+            self.nextUse = CurTime() + 1
         end
 
-        function ENT:OnRemove()
-            if ( IsValid(self.ixUsedBy) ) then
-                if ( self.ixUsedBy.ixCraftingStation == self ) then
-                    self.ixUsedBy.ixCraftingStation = nil
+        function STATION:OnRemove()
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                if not ( v:GetCharacter() ) then
+                    continue
+                end
+
+                if ( v:GetData("ixCraftingStation", nil) == self ) then
+                    v:SetData("ixCraftingStation", nil)
                 end
             end
         end

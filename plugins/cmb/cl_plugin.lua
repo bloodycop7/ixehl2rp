@@ -11,7 +11,7 @@ ix.option.Add("combineOverlayAssets", ix.type.bool, true, {
 
 ix.option.Add("combineOutlineDeployables", ix.type.bool, true, {
     category = "Combine Systems",
-})
+})  
 
 ix.option.Add("combineOutlineAssets", ix.type.bool, true, {
     category = "Combine Systems",
