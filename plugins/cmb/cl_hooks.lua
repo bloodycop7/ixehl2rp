@@ -71,7 +71,7 @@ function PLUGIN:HUDPaint()
         surface.SetDrawColor(ColorAlpha(v.rectColor or Color(0, 0, 0), v.drawAlpha))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 30)
 
-        surface.SetDrawColor(v.backColor or Color(0, 100, 255))
+        surface.SetDrawColor(v.color or Color(0, 100, 255))
         surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
 
         draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
