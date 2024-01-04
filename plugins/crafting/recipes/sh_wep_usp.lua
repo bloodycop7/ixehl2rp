@@ -1,10 +1,10 @@
 local RECIPE = {}
 
-local itemData = ix.item.Get("turret")
+local itemData = ix.item.Get("wep_usp")
 
-RECIPE.uniqueID = "turret"
+RECIPE.uniqueID = "wep_usp"
 RECIPE.name = itemData.name
-RECIPE.category = itemData.category
+RECIPE.category = "Weapons"
 RECIPE.model = itemData.model
 RECIPE.description = itemData.description
 RECIPE.requirements = {
@@ -12,7 +12,7 @@ RECIPE.requirements = {
     ["viscerator"] = 2
 }
 RECIPE.result = {
-    ["turret"] = 1
+    ["wep_usp"] = 1
 }
 
 ix.crafting:RegisterRecipe(RECIPE)

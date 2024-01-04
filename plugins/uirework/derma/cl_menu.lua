@@ -192,7 +192,7 @@ function PANEL:GetOverviewInfo(origin, angles, fov)
 	local target = LocalPlayer():GetObserverTarget()
 	local fraction = self.overviewFraction
 	local bDrawPlayer = ((fraction > 0.2) or (!self.bOverviewOut and (fraction > 0.2))) and !IsValid(target)
-	local forward = originAngles:Forward() * 60 - originAngles:Right() * 15
+	local forward = originAngles:Forward() * 70 - originAngles:Right() * 15
 	forward.z = 0
 
 	local newOrigin

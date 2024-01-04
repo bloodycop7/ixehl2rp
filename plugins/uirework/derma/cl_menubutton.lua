@@ -47,13 +47,19 @@ function PANEL:SizeToContents()
 end
 
 function PANEL:PaintBackground(width, height)
-	local alpha = self.selected and 255 or self.currentBackgroundAlpha
+	local alpha = self.selected and 230 or self.currentBackgroundAlpha
 
 	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(self.backgroundColor, alpha))
 end
 
 function PANEL:Paint(width, height)
 	self:PaintBackground(width, height)
+
+	if ( self:IsHovered() ) then
+		surface.SetDrawColor(self:GetBackgroundColor())
+		surface.DrawRect(0, 0, 5, height)
+	end
+
 	BaseClass.Paint(self, width, height)
 end
 
@@ -162,7 +168,7 @@ end
 function PANEL:PaintBackground(width, height)
 	local alpha = self.selected and 255 or self.currentBackgroundAlpha
 
-	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(self.backgroundColor, alpha))
+	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(self:GetBackgroundColor(), alpha))
 end
 
 function PANEL:SetSelected(bValue, bSelectedSection)
@@ -248,6 +254,12 @@ function PANEL:AddButton(name, buttonList)
 	button:SizeToContents()
 	button:SetButtonList(buttonList)
 	button:SetBackgroundColor(self.parent:GetBackgroundColor())
+	button.Paint = function(s, w, h)
+		if ( s:GetSelected() ) then
+			surface.SetDrawColor(self:GetBackgroundColor())
+			surface.DrawRect(0, 0, 20, h)
+		end
+	end
 
 	self.targetHeight = self.targetHeight + button:GetTall()
 	return button
