@@ -174,6 +174,12 @@ if CLIENT then
 			if class and class.ModifyPlayerStep and class:ModifyPlayerStep(client, data) == true then
 				return true
 			end
+
+			local rank = ix.rank.Get(character:GetRank())
+
+			if ( rank and rank.ModifyPlayerStep and rank:ModifyPlayerStep(client, data) == true ) then
+				return true
+			end
 		end
 
 		if client:Crouching() then
