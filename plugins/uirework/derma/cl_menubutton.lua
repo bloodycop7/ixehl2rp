@@ -10,7 +10,7 @@ AccessorFunc(PANEL, "backgroundColor", "BackgroundColor")
 AccessorFunc(PANEL, "backgroundAlpha", "BackgroundAlpha")
 
 function PANEL:Init()
-	self:SetFont("CHud2.5")
+	self:SetFont("ixMenuButtonFont")
 	self:SetTextColor(color_white)
 	self:SetPaintBackground(false)
 	self:SetContentAlignment(4)
@@ -49,7 +49,7 @@ end
 function PANEL:PaintBackground(width, height)
 	local alpha = self.selected and 255 or self.currentBackgroundAlpha
 
-	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(Color(70,70,70), alpha))
+	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(self.backgroundColor, alpha))
 end
 
 function PANEL:Paint(width, height)
@@ -162,7 +162,7 @@ end
 function PANEL:PaintBackground(width, height)
 	local alpha = self.selected and 255 or self.currentBackgroundAlpha
 
-	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(Color(70,70,70), alpha))
+	derma.SkinFunc("DrawImportantBackground", 0, 0, width, height, ColorAlpha(self.backgroundColor, alpha))
 end
 
 function PANEL:SetSelected(bValue, bSelectedSection)

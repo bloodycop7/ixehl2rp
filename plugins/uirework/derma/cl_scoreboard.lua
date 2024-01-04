@@ -276,16 +276,6 @@ function PANEL:SetFaction(faction)
 	self.faction = faction
 end
 
-function PANEL:Paint(width, height)
-    local client = self.player
-	local faction = self.faction
-	
-    draw.RoundedBoxEx(8, 0, 0, width, height, ColorAlpha(faction.color, 50), true, false, false, false)
-    draw.RoundedBoxEx(8, 0, 0, width, 30, faction.color, true, false, false, false)
-    draw.SimpleText(L(faction.name), "CHud2.5", 5, 0, Color(255, 255, 255))
-
-end
-
 function PANEL:Update()
 	local faction = self.faction
 
@@ -321,9 +311,8 @@ function PANEL:Init()
 	end
 
 	self:Dock(FILL)
-	self:DockMargin(scrW / 4,0,0,0)
+	self:DockMargin(scrW / 4, 0, 0, 0)
 	
-
 	self.factions = {}
 	self.nextThink = 0
 

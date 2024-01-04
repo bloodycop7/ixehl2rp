@@ -16,11 +16,11 @@ function PANEL:Init()
 end
 
 function PANEL:SetFont(font)
-	surface.SetFont("CHud2")
+	surface.SetFont(font)
 	local _, height = surface.GetTextSize("W@")
 
 	self:SetTall(height)
-	BaseClass.SetFont(self, "CHud3")
+	BaseClass.SetFont(self, font)
 end
 
 function PANEL:Paint(width, height)
@@ -277,7 +277,7 @@ function PANEL:Init()
 
 	self.enabledText = "✓"
 	self.disabledText = "X"
-	self.font = "CHud3"
+	self.font = "ixMenuButtonFont"
 	self.animationTime = 0.5
 	self.bChecked = false
 	self.labelPadding = 8
@@ -333,7 +333,7 @@ function PANEL:Paint(width, height)
 	surface.DrawRect(0, 0, width, height)
 
 	local offset = self.animationOffset
-	surface.SetFont("CHud3")
+	surface.SetFont(self.font)
 
 	local text = self.disabledText
 	local textWidth, textHeight = surface.GetTextSize(text)
@@ -369,7 +369,7 @@ function PANEL:Init()
 	self.label:Dock(RIGHT)
 	self.label:SetWide(totalWidth + self.labelPadding)
 	self.label:SetContentAlignment(5)
-	self.label:SetFont("CHud3")
+	self.label:SetFont("ixMenuButtonFont")
 	self.label.Paint = function(panel, width, height)
 		surface.SetDrawColor(Color(27,27,27, 150))
 		surface.DrawRect(0, 0, width, height)

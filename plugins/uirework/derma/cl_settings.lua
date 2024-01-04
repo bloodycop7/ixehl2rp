@@ -74,7 +74,7 @@ function PANEL:GetValue()
 end
 
 function PANEL:PerformLayout(width, height)
-	surface.SetFont("CHud2")
+	surface.SetFont("ixMenuButtonFont")
 	local totalWidth = surface.GetTextSize("999")
 
 	self.panel:SetSize(totalWidth + self.padding * 2, height)
@@ -253,7 +253,7 @@ PANEL = {}
 AccessorFunc(PANEL, "bDeleteSelf", "DeleteSelf", FORCE_BOOL)
 
 function PANEL:Init()
-	surface.SetFont("CHud3")
+	surface.SetFont("ixMenuButtonFont")
 	local width, height = surface.GetTextSize("999999")
 
 	self.m_bIsMenuComponent = true
@@ -392,7 +392,7 @@ function PANEL:Init()
 
 	self.setting = self:Add("DComboBox")
 	self.setting:Dock(RIGHT)
-	self.setting:SetFont("CHud3")
+	self.setting:SetFont("ixMenuButtonFont")
 	self.setting:SetTextColor(color_white)
 	self.setting.OnSelect = function(panel)
 		self:OnValueChanged(self:GetValue())
@@ -446,7 +446,7 @@ function PANEL:Init()
 
 	self.text = self:Add("DLabel")
 	self.text:Dock(LEFT)
-	self.text:SetFont("CHud3")
+	self.text:SetFont("ixMenuButtonFont")
 	self.text:SetExpensiveShadow(1, color_black)
 
 	self.backgroundIndex = 0
@@ -457,7 +457,7 @@ function PANEL:SetShowReset(value, name, default)
 
 	if (value and !IsValid(self.reset)) then
 		self.reset = self:Add("DButton")
-		self.reset:SetFont("CHud3")
+		self.reset:SetFont("ixSmallTitleIcons")
 		self.reset:SetText("x")
 		self.reset:SetTextColor(ColorAlpha(derma.GetColor("Warning", self), 100))
 		self.reset:Dock(LEFT)
@@ -571,16 +571,7 @@ function PANEL:AddCategory(name)
 		panel:SetText(name)
 		panel:Dock(TOP)
 		panel:DockMargin(0, 8, 0, 0)
-		panel.Paint = function(s,w,h)
-			
-			surface.SetDrawColor(Color(150,150,150,20))
-			surface.DrawRect(0,0,w,h)
-			
-			surface.SetDrawColor(Color(26,26,26))
-			surface.DrawRect(0,0,w,30)
-
-			draw.DrawText(" "..name,"CHud2",0,0)
-		end
+		panel:SetColor(Color(0, 0, 0))
 
 		self.categories[name] = panel
 		return panel

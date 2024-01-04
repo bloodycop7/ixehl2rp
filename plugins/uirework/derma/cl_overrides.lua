@@ -112,7 +112,6 @@ OverridePanel("DMenu", function()
 		panel:SetTextColor(derma.GetColor("MenuLabel", self, color_black))
 		panel:SetExpensiveShadow(1, color_black)
 		panel:SetTextInset(6, 0) -- there is no icon functionality in DComboBoxes
-		panel:SetFont("CHud3")
 
 		return panel
 	end
