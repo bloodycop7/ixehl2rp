@@ -66,10 +66,10 @@ function PLUGIN:HUDPaint()
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
-        surface.SetFont("ixCombineFont08")
+        surface.SetFont("ixCombineFont12")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
-        draw.RoundedBox(5, x - 2, y, textWidth + 6, padding * 0.9, Color(30, 20, 25, 225))
+        draw.RoundedBox(5, x - 2, y, textWidth + 6, padding * 0.9, Color(20, 20, 20, 225))
         
         self:DrawBox({
             x = x - 2,
@@ -77,10 +77,10 @@ function PLUGIN:HUDPaint()
             w = textWidth + 6,
             h = padding * 0.9,
             rectColor = code.color or color_white,
-            backColor = Color(30, 20, 25, 225)
+            backColor = Color(20, 20, 25, 225)
         })
 
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont12", x, y, color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
@@ -110,7 +110,7 @@ function PLUGIN:HUDPaint()
             w = textWidth,
             h = 30,
             rectColor = v.rectColor or Color(0, 255, 255),
-            backColor = Color(0, 0, 0, v.drawAlpha)
+            backColor = Color(20, 20, 25, v.drawAlpha)
         })
 
         draw.SimpleText(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
