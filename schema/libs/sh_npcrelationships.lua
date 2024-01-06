@@ -100,17 +100,15 @@ if ( SERVER ) then
 
             if ( ix.relationships.CombineNPCs[ent:GetClass()] ) then
                 ent.ZBaseFaction = "combine"
-                ent.m_iClass = 2
 
                 if ( Schema:IsCombine(v) ) then
                     v.ZBaseFaction = "combine"
-                    v.m_iClass = 2
 
                     relationshipStatus = D_LI
                 end
             elseif ( ix.relationships.RebelNPCs[ent:GetClass()] ) then
-                ent.m_iClass = 0
-
+                ent.ZBaseFaction = "ally"
+                
                 if not ( Schema:IsCombine(v) ) then
                     v.ZBaseFaction = "ally"
 
