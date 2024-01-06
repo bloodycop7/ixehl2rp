@@ -18,6 +18,23 @@ ix.relationships.CombineNPCs = {
     ["npc_sniper"] = true,
     ["npc_hunter"] = true,
     ["npc_breen"] = true,
+    ["npc_combine_camera"] = true,
+
+    // ZBase Combine NPCs
+
+    ["zb_metropolice"] = true,
+    ["zb_metropolice_elite"] = true,
+    ["zb_crab_synth"] = true,
+    ["zb_hunter"] = true,
+    ["zb_mortar_synth"] = true,
+    ["zb_combine_nova_prospekt"] = true,
+    ["zb_combine_elite"] = true,
+    ["zb_combine_soldier"] = true,
+    ["zb_stalker"] = true,
+
+    // No Idea where these are from
+
+    ["mbn_apc_manager"] = true,
 }
 
 ix.relationships.RebelNPCs = {
@@ -39,6 +56,21 @@ ix.relationships.RebelNPCs = {
     ["npc_magnusson"] = true,
     ["npc_monk"] = true,
     ["npc_vortigaunt"] = true,
+
+    // ZBase Combine NPCs
+
+    ["zb_kleiner"] = true,
+    ["zb_human_civilian_f"] = true,
+    ["zb_human_medic_f"] = true,
+    ["zb_human_rebel_f"] = true,
+    ["zb_human_refugee_f"] = true,
+    ["zb_human_civilian"] = true,
+    ["zb_human_medic"] = true,
+    ["zb_human_rebel"] = true,
+    ["zb_human_refugee"] = true,
+    ["zb_odessa"] = true,
+    ["zb_friendly_hunter"] = true,
+    ["zb_vortigaunt"] = true
 }
 
 if ( SERVER ) then
@@ -67,11 +99,21 @@ if ( SERVER ) then
             local relationshipStatus = D_HT
 
             if ( ix.relationships.CombineNPCs[ent:GetClass()] ) then
+                ent.ZBaseFaction = "combine"
+                ent.m_iClass = 2
+
                 if ( Schema:IsCombine(v) ) then
+                    v.ZBaseFaction = "combine"
+                    v.m_iClass = 2
+
                     relationshipStatus = D_LI
                 end
             elseif ( ix.relationships.RebelNPCs[ent:GetClass()] ) then
+                ent.m_iClass = 0
+
                 if not ( Schema:IsCombine(v) ) then
+                    v.ZBaseFaction = "ally"
+
                     relationshipStatus = D_LI
                 end
             end
@@ -150,6 +192,12 @@ if ( SERVER ) then
 
     hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
         timer.Simple(0.1, function()
+            if ( Schema:IsCombine(ply) ) then
+                ply.ZBaseFaction = "combine"
+            else
+                ply.ZBaseFaction = "ally"
+            end
+
             for k, v in ipairs(ents.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue

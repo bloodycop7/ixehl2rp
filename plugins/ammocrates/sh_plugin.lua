@@ -105,6 +105,14 @@ function PLUGIN:CreateCrates()
                 ply:SetAction("Refilling...", 1)
                 ply:DoStaredAction(self, function()
                     if ( ix.config.Get("ammoCrateInfinite", false) ) then
+                        local wep = ply:GetActiveWeapon()
+
+                        if not ( IsValid(wep) ) then
+                            return
+                        end
+
+                        local ammoType = wep:GetPrimaryAmmoType()
+
                         if ( v[4] and ix.item.Get(v[4]) ) then
                             if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
                                 ply:Notify("You don't have enough space in your inventory!")
@@ -211,18 +219,29 @@ function PLUGIN:CreateCrates()
                 return
             end
 
+            local wep = ply:GetActiveWeapon()
+
+            if not ( IsValid(wep) ) then
+                return
+            end
+
+            local ammoType = wep:GetPrimaryAmmoType()
+
+            if not ( PLUGIN.ammoTypes[game.GetAmmoName(ammoType)] ) then
+                return
+            end
+            
             ply:SetAction("Refilling...", 1)
             ply:DoStaredAction(self, function()
-                for k, v in pairs(PLUGIN.ammoTypes) do
-                    if ( v[4] and ix.item.Get(v[4]) ) then
-                        if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
-                            ply:Notify("You don't have enough space in your inventory!")
-                        end
-                    else
-                        self:EmitSound("items/ammo_pickup.wav")
-                        ply:GiveAmmo(v[3], k, true)
-                    end
+                if ( PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4] and ix.item.Get(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4]) ) then
+                    if not ( char:GetInventory():Add(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4], 1, {["rounds"] = PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][3]}) ) then
+                        ply:Notify("You don't have enough space in your inventory!")
+                    end                            
+                else
+                    self:EmitSound("items/ammo_pickup.wav")
+                    ply:GiveAmmo(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][3], ammoType, true)
                 end
+
             end, 1, function()
                 ply:SetAction()
             end)

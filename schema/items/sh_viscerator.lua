@@ -3,6 +3,46 @@ ITEM.description = "A deployable entity that attacks enemies."
 ITEM.model = "models/props_junk/cardboard_box004a.mdl"
 ITEM.category = "Combine"
 
+ITEM:Hook("take", function(item)
+    local ply = item.player
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( Schema:IsCP(ply) ) then
+        ply:SetBodygroup(ply:FindBodygroupByName("manhack"), 1)
+    end
+end)
+
+ITEM:Hook("drop", function(item)
+    local ply = item.player
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    timer.Simple(0.1, function()
+        local itemCount = char:GetInventory():GetItemCount(item.uniqueID)
+
+        if ( Schema:IsCP(ply) and itemCount < 1 ) then
+            ply:SetBodygroup(ply:FindBodygroupByName("manhack"), 0)
+        end
+    end)
+end)
+
 ITEM.functions.Deploy = {
     OnRun = function(itemTable)
         local ply = itemTable.player

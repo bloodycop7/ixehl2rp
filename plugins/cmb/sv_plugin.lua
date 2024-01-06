@@ -331,7 +331,9 @@ function ix.cmbSystems:PassiveChatter(ply)
     end
 
     if ( hook.Run("CanPlayerEmitChatter", ply, sounds) != false ) then
-        local length = ix.util.EmitQueuedSounds(true, ply, sounds, 0, 0.1, 35, math.random(90, 105))
+        print("Ay")
+        local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))
+        print(length)
         ply.isReadyForChatter = false
 
         timer.Simple(length, function()
