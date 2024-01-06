@@ -69,15 +69,13 @@ function PLUGIN:HUDPaint()
         surface.SetFont("ixCombineFont12")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
-        draw.RoundedBox(5, x - 2, y, textWidth + 6, padding * 0.9, Color(20, 20, 20, 225))
-        
         self:DrawBox({
             x = x - 2,
             y = y,
-            w = textWidth + 6,
-            h = padding * 0.9,
+            w = textWidth * 1.05,
+            h = textHeight * 1.05,
             rectColor = code.color or color_white,
-            backColor = Color(20, 20, 25, 225)
+            backColor = Color(30, 20, 25, 225)
         })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont12", x, y, color_white, TEXT_ALIGN_LEFT)
@@ -180,7 +178,7 @@ function PLUGIN:HUDPaint()
                 w = textWidth + 6,
                 h = padding * 0.9,
                 rectColor = team.GetColor(v:Team()),
-                backColor = Color(10, 10, 10, v.displayAlpha)
+                backColor = Color(30, 20, 25, v.displayAlpha)
             })
 
             draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
@@ -198,7 +196,7 @@ function PLUGIN:HUDPaint()
                         w = textWidth + 6,
                         h = padding * 0.9,
                         rectColor = team.GetColor(v:Team()),
-                        backColor = Color(10, 10, 10, v.displayAlpha)
+                        backColor = Color(30, 20, 25, v.displayAlpha)
                     })
 
                     draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
@@ -217,7 +215,7 @@ function PLUGIN:HUDPaint()
                     w = textWidth + 6,
                     h = padding * 0.9,
                     rectColor = team.GetColor(v:Team()),
-                    backColor = Color(10, 10, 10, v.displayAlpha)
+                    backColor = Color(30, 20, 25, v.displayAlpha)
                 })
 
                 draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
@@ -229,19 +227,19 @@ function PLUGIN:HUDPaint()
 
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
-            surface.SetFont("ixCombineFont16")
+            surface.SetFont("ixCombineFont14")
             local textWidth, textHeight = surface.GetTextSize(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
                 x = ScrW() - textWidth - padding * 1.2 - 2,
                 y = ScrH() - textHeight - padding * 0.5,
-                w = textWidth + 6,
-                h = textHeight + 6,
+                w = textWidth * 1.1,
+                h = textHeight * 1.05,
                 rectColor = Color(255, 255, 255),
-                backColor = Color(0, 0, 0, 200)
+                backColor = Color(30, 20, 25, 200)
             })
 
-            draw.DrawText(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont16", scrW - padding * 1.2, scrH - padding * 2, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+            draw.DrawText(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
         end
     end
 end
