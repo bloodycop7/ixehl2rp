@@ -210,7 +210,11 @@ function ix.util.EmitQueuedSounds(useNewEmit, entity, sounds, delay, spacing, vo
 				if not ( useNewEmit ) then
 					entity:EmitSound(v, volume, pitch)
 				else
-					Schema:EmitSound(entity, volume, pitch)
+                    if ( SERVER ) then
+					    Schema:PlaySound(entity, volume, pitch)
+                    else
+                        entity:EmitSound(v, volume, pitch)
+                    end
 				end
 			end
 		end)
