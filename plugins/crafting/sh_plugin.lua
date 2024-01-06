@@ -63,8 +63,8 @@ function ix.crafting:RegisterStation(stationTable)
     local STATION = {}
 
     STATION.Type = "anim"
-    STATION.PrintName = "Crafting Station - " .. stationTable.name
-    STATION.Category = "ix: HL2RP"
+    STATION.PrintName = stationTable.name .. " Station"
+    STATION.Category = "ix: HL2RP - Crating Stations"
     STATION.Spawnable = true
     STATION.AdminOnly = true
     STATION.PhysgunDisable = true
