@@ -739,7 +739,7 @@ end
 
 vgui.Register("ixInventory", PANEL, "DFrame")
 
-hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
+--[[hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
 	if (hook.Run("CanPlayerViewInventory") == false) then
 		return
 	end
@@ -795,7 +795,7 @@ hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
 			ix.gui.menu:SetCharacterOverview(false)
 		end
 	}
-end)
+end)]]
 
 hook.Add("PostRenderVGUI", "ixInvHelper", function()
 	local pnl = ix.gui.inv1

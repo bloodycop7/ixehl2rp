@@ -186,6 +186,42 @@ function PANEL:Init()
 			self.attributes:SizeToContents()
 		end
 	end
+	
+	local canvas = self:Add("DTileLayout")
+	local canvasLayout = canvas.PerformLayout
+	canvas.PerformLayout = nil
+	canvas:Dock(TOP)
+
+	ix.gui.menuInventoryContainer = canvas
+
+	local panel = canvas:Add("ixInventory")
+	panel:SetPos(0, 0)
+	panel:SetDraggable(false)
+	panel:SetSizable(false)
+	panel:SetTitle(nil)
+	panel.bNoBackgroundBlur = true
+	panel.childPanels = {}
+
+	local inventory = LocalPlayer():GetCharacter():GetInventory()
+
+	if (inventory) then
+		panel:SetInventory(inventory)
+	end
+
+	ix.gui.inv1 = panel
+
+	if (ix.option.Get("openBags", true)) then
+		for _, v in pairs(inventory:GetItems()) do
+			if (!v.isBag) then
+				continue
+			end
+
+			v.functions.View.OnClick(v)
+		end
+	end
+
+	canvas.PerformLayout = canvasLayout
+	canvas:Layout()
 
 	hook.Run("CreateCharacterInfoCategory", self)
 end
