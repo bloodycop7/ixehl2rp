@@ -175,16 +175,17 @@ function PANEL:Init()
 		screenY = screenY + y
 
 		render.SetScissorRect(0, screenY, width, screenY + newHeight, true)
-		ix.util.DrawBlur(panel, 15, nil, 200)
 
-		-- background dim
-		surface.SetDrawColor(0, 0, 0, 100)
-		surface.DrawRect(0, y, width, newHeight)
+		surface.SetDrawColor(Color(0, 0, 0))
+		surface.SetMaterial(ix.gui.gradients["left"])
+		surface.DrawTexturedRect(0, 0, width + 300, height)
 
 		-- border lines
+		
 		surface.SetDrawColor(ix.config.Get("color") or color_white)
-		surface.DrawRect(0, y, width, 1)
-		surface.DrawRect(0, y + newHeight - 1, width, 1)
+		surface.SetMaterial(ix.gui.gradients["left"])
+		surface.DrawTexturedRect(0, y, width, 2)
+		surface.DrawTexturedRect(0, y + newHeight - 2, width, 2)
 
 		if (matrix) then
 			cam.PushModelMatrix(matrix)
@@ -217,7 +218,7 @@ function PANEL:Init()
 		titleLabel:SetFont("ixTitleFont")
 		titleLabel:SetText(L2("schemaName") or Schema.name or L"unknown")
 		titleLabel:SizeToContents()
-		titleLabel:SetPos(halfWidth - titleLabel:GetWide() * 0.5, halfPadding)
+		titleLabel:SetPos(halfWidth - titleLabel:GetWide() * 1.3, halfPadding)
 		titleLabel:SetPaintedManually(true)
 		newHeight = newHeight + titleLabel:GetTall()
 
@@ -227,7 +228,7 @@ function PANEL:Init()
 			subtitleLabel:SetFont("ixSubTitleFont")
 			subtitleLabel:SetText(subtitle)
 			subtitleLabel:SizeToContents()
-			subtitleLabel:SetPos(halfWidth - subtitleLabel:GetWide() * 0.5, 0)
+			subtitleLabel:SetPos(halfWidth - subtitleLabel:GetWide() * 0.7, 0)
 			subtitleLabel:MoveBelow(titleLabel)
 			subtitleLabel:SetPaintedManually(true)
 			newHeight = newHeight + subtitleLabel:GetTall()

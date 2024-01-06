@@ -110,6 +110,7 @@ function PLUGIN:CreateCrates()
                                 ply:Notify("You don't have enough space in your inventory!")
                             end                            
                         else
+                            self:EmitSound("items/ammo_pickup.wav")
                             ply:GiveAmmo(v[3], k, true)
                         end
                     else
@@ -126,10 +127,11 @@ function PLUGIN:CreateCrates()
                                 return
                             end
                         else
+                            self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
+                            
+                            self:EmitSound("items/ammo_pickup.wav")
                             ply:GiveAmmo(v[3], k, true)
                         end
-
-                        self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
                     end
                 end, 1, function()
                     ply:SetAction()
