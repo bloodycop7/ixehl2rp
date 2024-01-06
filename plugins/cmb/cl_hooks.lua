@@ -231,7 +231,7 @@ function PLUGIN:HUDPaint()
             local textWidth, textHeight = surface.GetTextSize(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
-                x = ScrW() - textWidth - padding * 1.2 - 2,
+                x = ScrW() - textWidth - padding * 1.3,
                 y = ScrH() - textHeight - padding * 0.5,
                 w = textWidth * 1.1,
                 h = textHeight * 1.05,
