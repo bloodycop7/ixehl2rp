@@ -76,11 +76,11 @@ function PLUGIN:HUDPaint()
             y = y,
             w = textWidth + 6,
             h = padding * 0.9,
-            rectColor = Color(255, 255, 255),
+            rectColor = code.color or color_white,
             backColor = Color(30, 20, 25, 225)
         })
 
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
