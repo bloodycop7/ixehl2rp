@@ -331,16 +331,16 @@ function ix.cmbSystems:PassiveChatter(ply)
     end
 
     if ( hook.Run("CanPlayerEmitChatter", ply, sounds) != false ) then
-        print("Ay")
         local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))
-        print(length)
         ply.isReadyForChatter = false
 
-        timer.Simple(length, function()
-            if ( IsValid(ply) ) then
-                ply.isReadyForChatter = true
-            end
-        end)
+        if not ( timer.Exists("ix.ChatterCooldown" .. ply:SteamID64()) ) then
+            timer.Create("ix.CmbChatterCooldown" .. ply:SteamID64(), length, 1, function()
+                if ( IsValid(ply) ) then
+                    ply.isReadyForChatter = true
+                end
+            end)
+        end
     end
 end
 
