@@ -13,7 +13,7 @@ function Schema:OpenUI(ply, panel)
 end
 
 util.AddNetworkString("ix.PlaySound")
-function Schema:PlaySound(players, sound, level, pitch, volume, channel)
+function Schema:PlaySound(players, sound, level, pitch, volume, channel, customCheck)
 	if ( isentity(players) ) then
 		players = {players}
 	end
@@ -25,6 +25,14 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel)
 		net.WriteFloat(volume or 1)
 		net.WriteFloat(channel or CHAN_AUTO)
 	for k, v in ipairs(players) do
+		if not ( IsValid(v) ) then
+			continue
+		end
+
+		if ( customCheck and not customCheck(v) ) then
+			continue
+		end
+
 		net.Send(v)
 	end
 end

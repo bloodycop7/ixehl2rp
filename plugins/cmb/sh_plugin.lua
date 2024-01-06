@@ -194,16 +194,10 @@ ix.cmbSystems.cityCodes = {
         name = "Marginal",
         color = Color(255, 255, 0),
         onStart = function()
+            ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
+            
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
-                    continue
-                end
-
-                if not ( v:GetCharacter() ) then
-                    continue
-                end
-
-                if not ( v:Alive() ) then
                     continue
                 end
 
@@ -230,8 +224,6 @@ ix.cmbSystems.cityCodes = {
                 else
                     Schema:PlaySound(v, "npc/overwatch/cityvoice/f_unrestprocedure1_spkr.wav", 75, 100, 0.5)
                 end
-
-                ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
             
                 if not ( timer.Exists("ixMarginal.HeliFlyBy") ) then
                     timer.Create("ixMarginal.HeliFlyBy", math.random(40, 80), 0, function()
