@@ -739,12 +739,12 @@ end
 
 vgui.Register("ixInventory", PANEL, "DFrame")
 
---[[hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
+hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
 	if (hook.Run("CanPlayerViewInventory") == false) then
 		return
 	end
 
-	tabs["inv"] = {
+	--[[tabs["inv"] = {
 		bDefault = true,
 		
 		Create = function(info, container)
@@ -794,8 +794,8 @@ vgui.Register("ixInventory", PANEL, "DFrame")
 		OnDeselected = function(info, container)
 			ix.gui.menu:SetCharacterOverview(false)
 		end
-	}
-end)]]
+	}]]
+end)
 
 hook.Add("PostRenderVGUI", "ixInvHelper", function()
 	local pnl = ix.gui.inv1

@@ -904,6 +904,12 @@ timer.Create("ix.DeployedEnts.Update", 1, 0, function()
     end
 end)
 
+function PLUGIN:AdjustStaminaOffset(ply)
+    if ( Schema:IsOTA(ply) ) then
+        return 0
+    end
+end
+
 function PLUGIN:CalcMainActivity(ply, vel)
 	if not ( IsValid(ply) ) then
 		return

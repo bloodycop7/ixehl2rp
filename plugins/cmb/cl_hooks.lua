@@ -75,7 +75,7 @@ function PLUGIN:HUDPaint()
             w = textWidth * 1.05,
             h = textHeight * 1.05,
             rectColor = code.color or color_white,
-            backColor = Color(30, 20, 25, 225)
+            backColor = Color(0, 20, 25, 225)
         })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont12", x, y, color_white, TEXT_ALIGN_LEFT)
