@@ -1,4 +1,9 @@
 
+local EHL2RPCredits = {
+	{"eon", "76561198373309941", {"creditManager", "creditLeadDeveloper"}},
+	{"Khall", "76561198174252822", {"UI Designer\n&\nDeveloper"}}
+}
+
 local CREDITS = {
 	{"Alex Grist", "76561197979205163", {"creditLeadDeveloper", "creditManager"}},
 	{"Igor Radovanovic", "76561197990111113", {"creditLeadDeveloper", "creditUIDesigner"}},
@@ -18,7 +23,7 @@ local SPECIALS = {
 local MISC = {
 	{"nebulous", "Staff members finding bugs and providing input"},
 	{"Contributors", "Ongoing support from various developers via GitHub"},
-	{"NutScript", "Providing the base framework to build upon"}
+	{"NutScript", "Providing the base framework to build upon"},
 }
 
 local url = "https://gethelix.co/"
@@ -214,6 +219,25 @@ vgui.Register("ixCreditsSpecials", PANEL, "Panel")
 PANEL = {}
 
 function PANEL:Init()
+	local ehl2rpLabel = self:Add("ixLabel")
+	ehl2rpLabel:SetFont("ixMenuButtonFont")
+	ehl2rpLabel:SetText("ix: Enhanced Half-Life 2 Roleplay")
+	ehl2rpLabel:SetTextColor(ix.config.Get("color"))
+	ehl2rpLabel:SetDropShadow(1)
+	ehl2rpLabel:SetKerning(2)
+	ehl2rpLabel:SetContentAlignment(5)
+	ehl2rpLabel:DockMargin(0, padding * 2, 0, padding)
+	ehl2rpLabel:Dock(TOP)
+	ehl2rpLabel:SizeToContents()
+
+	for _, v in ipairs(EHL2RPCredits) do
+		local row = self:Add("ixCreditsRow")
+		row:SetName(v[1])
+		row:SetAvatar(v[2])
+		row:SetTags(v[3])
+		row:SizeToContents()
+	end
+
 	self:Add("ixCreditsLogo")
 
 	local link = self:Add("DLabel", self)

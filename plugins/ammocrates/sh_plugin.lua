@@ -167,6 +167,93 @@ function PLUGIN:CreateCrates()
 
         scripted_ents.Register(ENT, "ix_ammo_crate_" .. string.lower(k))
     end
+
+    // Infinite Ammo Box
+
+    local ENT = {}
+
+    ENT.Type = "anim"
+    ENT.PrintName = "Infinite Ammo Crate"
+    ENT.Category = "ix: HL2RP - Ammo Crates"
+    ENT.Spawnable = true
+    ENT.AdminOnly = true
+    ENT.PhysgunDisable = true
+    ENT.bNoPersist = true
+
+    function ENT:SetupDataTables()
+        self:NetworkVar("String", 0, "AmmoType")
+    end
+
+    if ( SERVER ) then
+        function ENT:Initialize()
+            self:SetModel("models/items/ammocrate_smg1.mdl")
+            self:PhysicsInit(SOLID_VPHYSICS)
+            self:SetSolid(SOLID_VPHYSICS)
+            self:SetUseType(SIMPLE_USE)
+
+            local physObj = self:GetPhysicsObject()
+
+            if ( IsValid(physObj) ) then
+                physObj:Wake()
+            end
+
+            self:SetAmmoType("infinite")
+        end
+
+        function ENT:Use(ply)
+            if not ( ply:GetEyeTrace().Entity == self ) then
+                return 
+            end
+
+            local char = ply:GetCharacter()
+
+            if not ( char ) then
+                return
+            end
+
+            ply:SetAction("Refilling...", 1)
+            ply:DoStaredAction(self, function()
+                for k, v in pairs(PLUGIN.ammoTypes) do
+                    if ( v[4] and ix.item.Get(v[4]) ) then
+                        if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
+                            ply:Notify("You don't have enough space in your inventory!")
+                        end
+                    else
+                        self:EmitSound("items/ammo_pickup.wav")
+                        ply:GiveAmmo(v[3], k, true)
+                    end
+                end
+            end, 1, function()
+                ply:SetAction()
+            end)
+        end
+
+        function ENT:OnRemove()
+            if not ( ix.shuttingDown ) then
+                Schema:SaveData()
+            end
+        end
+    else
+        ENT.PopulateEntityInfo = true
+
+        function ENT:OnPopulateEntityInfo(container)
+            local text = container:AddRow("name")
+            text:SetImportant()
+            text:SetText(self.PrintName)
+            text:SizeToContents()
+
+            local desc = container:AddRow("description")
+            desc:SetText("An ammunition crate containing all types of ammo.")
+            desc:SizeToContents()
+
+            local ammo = container:AddRow("ammo")
+            ammo:SetText("Remaining Ammo: Infinite")
+            ammo:SetBackgroundColor(Color(175, 130, 0))
+            ammo:SizeToContents()
+        end
+    end
+
+    scripted_ents.Register(ENT, "ix_ammo_crate_infinite")
 end
 
 PLUGIN:CreateCrates()

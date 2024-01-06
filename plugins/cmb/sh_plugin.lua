@@ -123,6 +123,10 @@ local extraExplosions = {
     "ambient/explosions/explode_8.wav"
 }
 
+function PLUGIN:InitPostEntity()
+    ix.cmbSystems:SetCityCode(1)
+end
+
 ix.cmbSystems.cityCodes = {
     {
         name = "Preserved",
@@ -601,9 +605,9 @@ ix.command.Add("TogglePassiveChatter", {
             return
         end
 
-        char:SetData("passiveChatter", (!char:GetData("passiveChatter", false)))
+        char:SetData("passiveChatter", (!char:GetData("passiveChatter", true)))
 
-        if ( char:GetData("passiveChatter", false) ) then
+        if ( char:GetData("passiveChatter", true) ) then
             ply:Notify("You have enabled passive chatter.")
         else
             ply:Notify("You have disabled passive chatter.")

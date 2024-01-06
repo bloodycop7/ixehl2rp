@@ -57,7 +57,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
 
         sounds[#sounds + 1] = "npc/combine_soldier/vo/off1.wav"
 
-        ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, 90)
+        ix.util.EmitQueuedSounds(true, ply, sounds, 0, 0.1, 35, 90)
     end
 
     if ( Schema:IsCombine(ply) ) then
@@ -159,7 +159,7 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
                 return
             end
 
-            if not ( ply:GetCharacter():GetData("passiveChatter", false) ) then
+            if not ( ply:GetCharacter():GetData("passiveChatter", true) ) then
                 return
             end
 

@@ -137,7 +137,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
                         table.insert(sounds, "NPC_MetroPolice.Radio.Off")
                     end
 
-                    local _ = !isGlobal and ix.util.EmitQueuedSounds(speaker, sounds, nil, nil, volume) or netstream.Start(nil, "PlayQueuedSound", nil, sounds, nil, nil, volume)
+                    local _ = !isGlobal and ix.util.EmitQueuedSounds(false, speaker, sounds, nil, nil, volume) or netstream.Start(nil, "PlayQueuedSound", nil, sounds, nil, nil, volume)
 
                     if chatType == "radio" then
                         volume = ix.config.Get("radioVCVolume", 60)
@@ -146,7 +146,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
                         else
                             for k3, v3 in pairs(receivers) do
                                 if v3 == speaker then continue end
-                                ix.util.EmitQueuedSounds(v3, sounds, nil, nil, volume)
+                                ix.util.EmitQueuedSounds(false, v3, sounds, nil, nil, volume)
                             end
                         end
                     end
