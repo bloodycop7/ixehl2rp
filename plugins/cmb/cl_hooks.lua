@@ -28,6 +28,34 @@ function PLUGIN:ShouldDrawCombineHUD()
     return true
 end
 
+function PLUGIN:DrawBox(drawData)
+    drawData.x = drawData.x or 0
+    drawData.y = drawData.y or 0
+    drawData.w = drawData.w or 0
+    drawData.h = drawData.h or 0
+    drawData.rectWidth = drawData.rectWidth or 10
+    drawData.rectHeight = drawData.rectHeight or 1
+
+    drawData.rectColor = drawData.rectColor or Color(255, 255, 255)
+    drawData.backColor = drawData.backColor or Color(0, 0, 0)
+
+    surface.SetDrawColor(drawData.backColor)
+    surface.DrawRect(drawData.x, drawData.y, drawData.w, drawData.h)
+
+    surface.SetDrawColor(drawData.rectColor)
+    surface.DrawRect(drawData.x, drawData.y, drawData.rectWidth, drawData.rectHeight)
+    surface.DrawRect((drawData.x + drawData.w) - drawData.rectWidth, drawData.y, drawData.rectWidth, drawData.rectHeight)
+    surface.DrawRect((drawData.x + drawData.w) - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectHeight)
+    surface.DrawRect(drawData.x + drawData.w - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectWidth)
+    
+    surface.DrawRect(drawData.x, drawData.y, drawData.rectHeight, drawData.rectWidth)
+    surface.DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
+    surface.DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
+
+    surface.DrawRect(drawData.x + drawData.w - drawData.rectWidth, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
+    surface.DrawRect(drawData.x + drawData.w - drawData.rectHeight, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
+end
+
 function PLUGIN:HUDPaint()
     if not ( self:ShouldDrawCombineHUD() ) then
         return
@@ -41,8 +69,16 @@ function PLUGIN:HUDPaint()
         surface.SetFont("ixCombineFont08")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
-        surface.SetDrawColor(Color(10, 10, 10, 200))
-        surface.DrawRect(x - 2, y, textWidth + 6, padding * 0.9)
+        draw.RoundedBox(5, x - 2, y, textWidth + 6, padding * 0.9, Color(30, 20, 25, 225))
+        
+        self:DrawBox({
+            x = x - 2,
+            y = y,
+            w = textWidth + 6,
+            h = padding * 0.9,
+            rectColor = Color(255, 255, 255),
+            backColor = Color(30, 20, 25, 225)
+        })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont08", x, y, code.color or color_white, TEXT_ALIGN_LEFT)
     end
@@ -182,12 +218,15 @@ function PLUGIN:HUDPaint()
 
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
-            draw.SimpleText(wep:Clip1(), "ixCombineFont18", scrW - padding * 5, scrH - padding, color_white, TEXT_ALIGN_RIGHT, TEXT_ALIGN_BOTTOM)
+            surface.SetFont("ixCombineFont14")
+            draw.RoundedBox(5, scrW - padding * 7.5, scrH - padding * 3, padding * 5.4, padding * 2, Color(30, 20, 25, 225))
+            
+            draw.SimpleText(wep:Clip1(), "ixCombineFont18", scrW - padding * 5.5, scrH - padding * 2.9, color_white, TEXT_ALIGN_RIGHT)
 
             surface.SetDrawColor(Color(255, 255, 255))
             surface.DrawRect(scrW - padding * 4.5, scrH - padding - 50, 3, padding * 1.6)
 
-            draw.SimpleText(localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 4, scrH - padding, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_BOTTOM)
+            draw.SimpleText(localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 4.2, scrH - padding * 2.55, color_white, TEXT_ALIGN_LEFT)
         end
     end
 end
@@ -360,4 +399,10 @@ net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 
     ix.cmbSystems:MakeWaypoint(data)
+end)
+
+net.Receive("ix.cmbSystems.SyncSquads", function()
+    local data = net.ReadTable() or {}
+
+    ix.cmbSystems.squads = data
 end)

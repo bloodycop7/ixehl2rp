@@ -220,6 +220,21 @@ function Schema:PlayerJoinedClass(ply, class, oldClass)
 		return
 	end
 
+	local classData = ix.class.Get(class)
+	if ( classData.bodygroups ) then
+		for k, v in pairs(classData.bodygroups) do
+			if ( isstring(k) ) then
+				ply:SetBodygroup(ply:FindBodygroupByName(k), v)
+			else
+				ply:SetBodygroup(k, v)
+			end
+		end
+	end
+
+	if ( classData.skin ) then
+		ply:SetSkin(classData.skin)
+	end
+
 	char:SetData("permaClass", class)
 	hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 end
@@ -231,7 +246,23 @@ function Schema:PlayerJoinedRank(ply, rank, oldRank)
 		return
 	end
 
+	local rankData = ix.rank.Get(rank)
+	if ( rankData.bodygroups ) then
+		for k, v in pairs(rankData.bodygroups) do
+			if ( isstring(k) ) then
+				ply:SetBodygroup(ply:FindBodygroupByName(k), v)
+			else
+				ply:SetBodygroup(k, v)
+			end
+		end
+	end
+
+	if ( rankData.skin ) then
+		ply:SetSkin(rankData.skin)
+	end
+
 	char:SetData("permaRank", rank)
+
 	hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 end
 

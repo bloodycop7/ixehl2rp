@@ -14,6 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 ix.cmbSystems = ix.cmbSystems or {}
+ix.cmbSystems.squads = ix.cmbSystems.squads or {}
 ix.cmbSystems.dispatchNumbers = {
     [1] = "npc/overwatch/radiovoice/one.wav",
     [2] = "npc/overwatch/radiovoice/two.wav",
