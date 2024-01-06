@@ -239,11 +239,12 @@ function PANEL:Init()
 
 	-- button list
 	self.mainButtonList = self:Add("ixCharMenuButtonList")
-	self.mainButtonList:Dock(LEFT)
+	self.mainButtonList:Dock(FILL)
 
 	-- create character button
 	local createButton = self.mainButtonList:Add("ixMenuButton")
 	createButton:SetText("create")
+	createButton:SetContentAlignment(5)
 	createButton:SizeToContents()
 	createButton.DoClick = function()
 		local maximum = hook.Run("GetMaxPlayerCharacter", LocalPlayer()) or ix.config.Get("maxCharacters", 5)
@@ -261,6 +262,7 @@ function PANEL:Init()
 	-- load character button
 	self.loadButton = self.mainButtonList:Add("ixMenuButton")
 	self.loadButton:SetText("load")
+	self.loadButton:SetContentAlignment(5)
 	self.loadButton:SizeToContents()
 	self.loadButton.DoClick = function()
 		self:Dim()
@@ -282,6 +284,7 @@ function PANEL:Init()
 
 		local extraButton = self.mainButtonList:Add("ixMenuButton")
 		extraButton:SetText(extraText, true)
+		extraButton:SetContentAlignment(5)
 		extraButton:SizeToContents()
 		extraButton.DoClick = function()
 			gui.OpenURL(extraURL)
@@ -290,6 +293,7 @@ function PANEL:Init()
 
 	-- leave/return button
 	self.returnButton = self.mainButtonList:Add("ixMenuButton")
+	self.returnButton:SetContentAlignment(5)
 	self:UpdateReturnButton()
 	self.returnButton.DoClick = function()
 		if (self.bUsingCharacter) then

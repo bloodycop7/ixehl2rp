@@ -55,9 +55,13 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 		if ( inventory ) then
 			local items = {}
 
-			for _, v in pairs(inventory:GetItems()) do
+			for k, v in pairs(inventory:GetItems()) do
 				if ( hook.Run("CanPlayerDropItemOnDeath", ply, v) == false ) then
 					continue
+				end
+
+				if ( #items > maxDeathItems ) then
+					break
 				end
 
 				table.insert(items, v)

@@ -22,7 +22,7 @@ You may find various Credits everywhere through out the code, make sure to check
 - localPlayer is cached Clientside, do not use LocalPlayer()
 - scrW is cached Clientside, do not use ScrW()
 - scrH is cached Clientside, do not use ScrH()
-- The schema does not use client:IsCombine(), use Schema:IsCombine(client) instead. (Look at sh_schema to look at more code.)
+- The schema does not use ply:IsCombine(), use Schema:IsCombine(ply) instead. (Look at sh_schema to look at more code.)
 
 **Thanks to all contributors who have submitted pull requests to improve this project!**
 # Useful Navigation
