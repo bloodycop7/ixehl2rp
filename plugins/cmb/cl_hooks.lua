@@ -230,15 +230,19 @@ function PLUGIN:HUDPaint()
 
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
-            surface.SetFont("ixCombineFont14")
-            draw.RoundedBox(5, scrW - padding * 7.5, scrH - padding * 3, padding * 5.4, padding * 2, Color(30, 20, 25, 225))
-            
-            draw.SimpleText(wep:Clip1(), "ixCombineFont18", scrW - padding * 5.5, scrH - padding * 2.9, color_white, TEXT_ALIGN_RIGHT)
+            surface.SetFont("ixCombineFont16")
+            local textWidth, textHeight = surface.GetTextSize(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
-            surface.SetDrawColor(Color(255, 255, 255))
-            surface.DrawRect(scrW - padding * 4.5, scrH - padding - 50, 3, padding * 1.6)
+            self:DrawBox({
+                x = ScrW() - textWidth - padding * 1.2 - 2,
+                y = ScrH() - textHeight - padding * 0.5,
+                w = textWidth + 6,
+                h = textHeight + 6,
+                rectColor = Color(255, 255, 255),
+                backColor = Color(0, 0, 0, 200)
+            })
 
-            draw.SimpleText(localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 4.2, scrH - padding * 2.55, color_white, TEXT_ALIGN_LEFT)
+            draw.DrawText(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont16", scrW - padding * 1.2, scrH - padding * 2, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
         end
     end
 end
