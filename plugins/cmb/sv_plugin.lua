@@ -375,3 +375,28 @@ function ix.cmbSystems:MakeWaypoint(data)
         net.WriteTable(data or {})
     net.Broadcast()
 end
+
+util.AddNetworkString("ix.cmbSystems.SyncSquads")
+function ix.cmbSystems:CreateSquad(ply, squadData)
+    if not ( istable(squadData) ) then
+        ErrorNoHalt("Attempted to create a squad with invalid data!")
+        
+        return
+    end
+
+    if not ( squadData.name ) then
+        squadData.name = "PT-" .. #ix.cmbSystems.squads
+        
+        return
+    end
+
+    squadData.leader = ply
+    squadData.members = squadData.members or {}
+    squadData.id = #ix.cmbSystems.squads
+
+    table.insert(ix.cmbSystems.squads, squadData)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.squads)
+    net.Broadcast()
+end
