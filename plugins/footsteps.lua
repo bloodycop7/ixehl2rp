@@ -163,12 +163,6 @@ if CLIENT then
 		local character = client:GetCharacter()
 
 		if character then
-			local faction = ix.faction.Get(character:GetFaction())
-
-			if faction.ModifyPlayerStep and faction:ModifyPlayerStep(client, data) == true then
-				return true
-			end
-
 			local class = ix.class.Get(character:GetClass())
 
 			if class and class.ModifyPlayerStep and class:ModifyPlayerStep(client, data) == true then
@@ -180,6 +174,12 @@ if CLIENT then
 			if ( rank and rank.ModifyPlayerStep and rank:ModifyPlayerStep(client, data) == true ) then
 				return true
 			end
+
+			local faction = ix.faction.Get(character:GetFaction())
+
+			if faction.ModifyPlayerStep and faction:ModifyPlayerStep(client, data) == true then
+				return true
+			end			
 		end
 
 		if client:Crouching() then

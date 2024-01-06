@@ -33,6 +33,14 @@ function FACTION:GetDefaultName(ply)
 	return "CP:RCT:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(100, 999), 3), true
 end
 
+function FACTION:GetDeathSound(ply)
+	return "npc/metropolice/die" .. math.random(1, 4) .. ".wav"
+end
+
+function FACTION:GetPainSound(ply)
+	return "npc/metropolice/pain" .. math.random(1, 4) .. ".wav"
+end
+
 function FACTION:ModifyPlayerStep(ply, data)
 	if ( data.ladder or data.submerged ) then
 		return

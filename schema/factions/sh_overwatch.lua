@@ -16,6 +16,14 @@ function FACTION:GetDefaultName(ply)
 	return "OTA:OWS:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(1000, 9999), 4), true
 end
 
+function FACTION:GetDeathSound(ply)
+	return "npc/combine_soldier/die" .. math.random(1, 3) .. ".wav"
+end
+
+function FACTION:GetPainSound(ply)
+	return "npc/combine_soldier/pain" .. math.random(1, 3) .. ".wav"
+end
+
 function FACTION:ModifyPlayerStep(ply, data)
 	if ( data.ladder or data.submerged ) then
 		return

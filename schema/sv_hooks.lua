@@ -5,10 +5,22 @@ function Schema:GetPlayerDeathSound(client)
 		return
 	end
 
-	if ( Schema:IsCP(client) ) then
-		return "npc/metropolice/die" .. math.random(1, 4) .. ".wav"
-	elseif ( Schema:IsOTA(client) ) then
-		return "npc/combine_soldier/die" .. math.random(1, 3) .. ".wav"
+	local faction = ix.faction.Get(char:GetFaction())
+	
+	if ( faction and faction.GetDeathSound ) then
+		return faction:GetDeathSound(client)
+	end
+
+	local class = ix.class.list[char:GetClass()]
+
+	if ( class and class.GetDeathSound ) then
+		return class:GetDeathSound(client)
+	end
+
+	local rank = ix.rank.list[char:GetRank()]
+
+	if ( rank and rank.GetDeathSound ) then
+		return rank:GetDeathSound(client)
 	end
 end
 
@@ -19,10 +31,28 @@ function Schema:GetPlayerPainSound(client)
 		return
 	end
 
+	local rank = ix.rank.list[char:GetRank()]
+
+	if ( rank and rank.GetPainSound ) then
+		return rank:GetPainSound(client)
+	end
+
+	local class = ix.class.list[char:GetClass()]
+
+	if ( class and class.GetPainSound ) then
+		return class:GetPainSound(client)
+	end
+
+	local faction = ix.faction.Get(char:GetFaction())
+	
+	if ( faction and faction.GetPainSound ) then
+		return faction:GetPainSound(client)
+	end
+
 	if ( Schema:IsCP(client) ) then
-		return "npc/metropolice/pain" .. math.random(1, 4) .. ".wav"
+		return 
 	elseif ( Schema:IsOTA(client) ) then
-		return "npc/combine_soldier/pain" .. math.random(1, 3) .. ".wav"
+		return 
 	end
 end
 
