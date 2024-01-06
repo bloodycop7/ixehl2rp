@@ -48,14 +48,14 @@ function PLUGIN:HUDPaint()
     end
 
     local plyInfo = tostring(localPlayer) .. " | " .. localPlayer:SteamID64() .. " | " .. char:GetName() .. " (ID: " .. char:GetID() .. ")"
-    local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. math.Round(1 / RealFrameTime()) .. " | " .. localPlayer:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
+    local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. localPlayer:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
 
     local trace = localPlayer:GetEyeTrace().Entity
 
     // local padding = ScreenScale(60)
     local padding = scrH * 0.09
 
-    draw.SimpleText("ix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, Color(165, 165, 165))
+    draw.SimpleText("ix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", Color(165, 165, 165)))
 
     surface.SetFont("ixGenericFont")
     local w, h = surface.GetTextSize("ix: Enhanced Half-Life 2 Roleplay")
