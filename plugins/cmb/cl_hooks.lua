@@ -104,13 +104,16 @@ function PLUGIN:HUDPaint()
         surface.SetFont("ixCombineFont08")
         textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
-        surface.SetDrawColor(ColorAlpha(v.backColor or Color(0, 0, 0), v.drawAlpha))
-        surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 30)
+        self:DrawBox({
+            x = wayPos.x - (textWidth / 2),
+            y = wayPos.y,
+            w = textWidth,
+            h = 30,
+            rectColor = v.rectColor or Color(0, 255, 255),
+            backColor = Color(0, 0, 0, v.drawAlpha)
+        })
 
-        surface.SetDrawColor(v.rectColor or Color(0, 100, 255))
-        surface.DrawRect(wayPos.x - (textWidth / 2), wayPos.y, textWidth, 1)
-
-        draw.SimpleText(v.text .. " (" .. dist .. "m)", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        draw.SimpleText(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
         
         // Uncomment this if you want to use sentBy value on the waypoint
         --[[
@@ -172,11 +175,14 @@ function PLUGIN:HUDPaint()
             surface.SetFont("ixCombineFont08")
             local textWidth, textHeight = surface.GetTextSize(string.upper("<:: " .. v:Name() .. " ::>"))
 
-            surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
-            surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
-
-            surface.SetDrawColor(ColorAlpha(team.GetColor(v:Team()), v.displayAlpha))
-            surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, 2, padding * 0.9)
+            self:DrawBox({
+                x = vPos.x - (textWidth / 2) - 2,
+                y = vPos.y,
+                w = textWidth + 6,
+                h = padding * 0.9,
+                rectColor = team.GetColor(v:Team()),
+                backColor = Color(10, 10, 10, v.displayAlpha)
+            })
 
             draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
 
@@ -187,11 +193,14 @@ function PLUGIN:HUDPaint()
 
                     vPos.y = vPos.y + padding
 
-                    surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
-                    surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
-
-                    surface.SetDrawColor(ColorAlpha(team.GetColor(v:Team()), v.displayAlpha))
-                    surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, 2)
+                    self:DrawBox({
+                        x = vPos.x - (textWidth / 2) - 2,
+                        y = vPos.y,
+                        w = textWidth + 6,
+                        h = padding * 0.9,
+                        rectColor = team.GetColor(v:Team()),
+                        backColor = Color(10, 10, 10, v.displayAlpha)
+                    })
 
                     draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
                 end
@@ -203,11 +212,14 @@ function PLUGIN:HUDPaint()
 
                 vPos.y = vPos.y + padding
 
-                surface.SetDrawColor(Color(10, 10, 10, v.displayAlpha))
-                surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, padding * 0.9)
-
-                surface.SetDrawColor(ColorAlpha(team.GetColor(v:Team()), v.displayAlpha))
-                surface.DrawRect(vPos.x - (textWidth / 2) - 2, vPos.y, textWidth + 6, 2)
+                self:DrawBox({
+                    x = vPos.x - (textWidth / 2) - 2,
+                    y = vPos.y,
+                    w = textWidth + 6,
+                    h = padding * 0.9,
+                    rectColor = team.GetColor(v:Team()),
+                    backColor = Color(10, 10, 10, v.displayAlpha)
+                })
 
                 draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
             end
