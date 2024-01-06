@@ -124,7 +124,9 @@ local extraExplosions = {
 }
 
 function PLUGIN:InitPostEntity()
-    ix.cmbSystems:SetCityCode(1)
+    if ( SERVER ) then
+        ix.cmbSystems:SetCityCode(1)
+    end
 end
 
 ix.cmbSystems.cityCodes = {
