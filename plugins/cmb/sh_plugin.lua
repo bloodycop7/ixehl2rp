@@ -155,40 +155,39 @@ ix.cmbSystems.cityCodes = {
                     end
                 end
             end)
-
-            timer.Create("ixPreserved.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
-                local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
-
-                if not ( dispatchData ) then
-                    return
-                end
-
-                for k, v in ipairs(player.GetAll()) do
-                    if not ( IsValid(v) ) then
-                        continue
-                    end
-
-                    if not ( v:GetCharacter() ) then
-                        continue
-                    end
-
-                    if not ( v:Alive() ) then
-                        continue
-                    end
-
-                    if ( Schema:IsOutside(v) ) then
-                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.7)
-                    else
-                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
-                    end
-
-                    ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
-                end
-            end)
         end,
         onEnd = function()
             timer.Remove("ixPreserved.HeliFlyBy")
             timer.Remove("ixPreserved.DispatchPassive")
+        end,
+        dispatchPassive = function()
+            local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
+
+                if not ( dispatchData ) then
+                return
+            end
+
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                if not ( v:GetCharacter() ) then
+                    continue
+                end
+
+                if not ( v:Alive() ) then
+                    continue
+                end
+
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.7)
+                else
+                    Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
+                end
+
+                ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
+            end
         end
     },
     {
@@ -253,6 +252,20 @@ ix.cmbSystems.cityCodes = {
         name = "Autonomous Judgment",
         color = Color(255, 0, 0),
         onStart = function()
+            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
+            
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+                
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
+                else
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.5)
+                end
+            end
+
             Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
@@ -365,12 +378,41 @@ ix.cmbSystems.cityCodes = {
                     v:StopSound(heliSounds[math.random(1, #heliSounds)])
                 end
             end
+        end,
+        dispatchPassive = function()
+            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
+            
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+                
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
+                else
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.5)
+                end
+            end
         end
     },
     {
         name = "Judgment Waiver",
         color = Color(255, 0, 0),
         onStart = function()
+            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
+            
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+                
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
+                else
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.5)
+                end
+            end
+
             Schema:PlaySound(player.GetAll(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
             Schema:PlaySound(player.GetAll(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
@@ -501,6 +543,21 @@ ix.cmbSystems.cityCodes = {
 
                     v:StopSound("ambient/levels/citadel/citadel_ambient_scream_loop1.wav")
                     v:StopSound(heliSounds[math.random(1, #heliSounds)])
+                end
+            end
+        end,
+        dispatchPassive = function()
+            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
+            
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+                
+                if ( Schema:IsOutside(v) ) then
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
+                else
+                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.5)
                 end
             end
         end
