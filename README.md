@@ -14,15 +14,16 @@ Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Su
 - Combine HUD
 - User Interface
 
+Thank you in advance!
 # Contributions
 You may fork this project and submit pull requests ***if you wish***, it will be very appreciated!\
 You may find various Credits everywhere through out the code, make sure to check them out!
 
 **IMPORTANT**
-- localPlayer is cached Clientside, do not use LocalPlayer()
-- scrW is cached Clientside, do not use ScrW()
-- scrH is cached Clientside, do not use ScrH()
-- The schema does not use ply:IsCombine(), use Schema:IsCombine(ply) instead. (Look at sh_schema to look at more code.)
+- localPlayer is cached Clientside, do not use LocalPlayer()!
+- scrW is cached Clientside, do not use ScrW()!
+- scrH is cached Clientside, do not use ScrH()!
+- The schema does not use ply:IsCombine(), use Schema:IsCombine(ply) instead! (Look at sh_schema to look at more code.)
 
 **Thanks to all contributors who have submitted pull requests to improve this project!**
 # Useful Navigation
@@ -33,6 +34,6 @@ You may find various Credits everywhere through out the code, make sure to check
 [Item Drop Death](https://github.com/bloodycop7/ixehl2rp/blob/main/schema/sv_hooks.lua) - Look for DoPlayerDeath Hook
 # Plugins
 This schema includes custom and open-source plugins.
-If you want to add any to fit your roleplay server, you can find some [here](https://plugins.gethelix.co/all/)
+If you want to add any to fit your roleplay server, you can find some [here](https://plugins.gethelix.co/all/).
 # Donations
-If you feel generous and want to donate, you can do so [here](https://paypal.me/theb3ta)
+If you feel generous and want to donate, you can do so [here](https://paypal.me/theb3ta).
