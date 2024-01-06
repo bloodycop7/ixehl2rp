@@ -32,6 +32,12 @@ function ix.crafting:RegisterRecipe(recipeTable)
         return
     end
 
+    if ( recipeTable.stations and not ix.crafting.stations[recipeTable.stations] ) then
+        ErrorNoHalt("recipeTable.stations contains a non valid station!\n")
+
+        return
+    end
+
     recipeTable.model = recipeTable.model or "models/props_junk/cardboard_box004a.mdl"
     recipeTable.category = recipeTable.category or "Miscellaneous"
 

@@ -82,6 +82,10 @@ function PANEL:PopulateRecipes(category)
             continue
         end
 
+        if ( v.stations and not v.stations[localPlayer:GetData("ixCraftingStation", nil):GetStationID()] ) then
+            continue
+        end
+
         local recipe = self.middlePanel:Add("ixMenuButton")
         recipe:Dock(TOP)
         recipe:SetText(v.name)
