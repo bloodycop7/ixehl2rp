@@ -1,5 +1,5 @@
 # ix: Enhanced Half-Life 2 Roleplay
-ix: Enhanced Half-Life 2 Roleplay is a project started by [eon](https://github.com/bloodycop7), it was made to provide more core functions that you see in Half-Life 2.
+ix: Enhanced Half-Life 2 Roleplay is a project started by [eon](https://github.com/bloodycop7) on the [Helix Framework](https://github.com/NebulousCloud/helix), it was made to provide more core functions that you see in Half-Life 2.
 
 The code is also open-source with a license.\
 **Keep in mind you do require a bit of programming experience to understand what you're reading/modifying!**
