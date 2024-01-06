@@ -5,10 +5,10 @@ function Schema:GetPlayerDeathSound(client)
 		return
 	end
 
-	local faction = ix.faction.Get(char:GetFaction())
-	
-	if ( faction and faction.GetDeathSound ) then
-		return faction:GetDeathSound(client)
+	local rank = ix.rank.list[char:GetRank()]
+
+	if ( rank and rank.GetDeathSound ) then
+		return rank:GetDeathSound(client)
 	end
 
 	local class = ix.class.list[char:GetClass()]
@@ -16,11 +16,11 @@ function Schema:GetPlayerDeathSound(client)
 	if ( class and class.GetDeathSound ) then
 		return class:GetDeathSound(client)
 	end
-
-	local rank = ix.rank.list[char:GetRank()]
-
-	if ( rank and rank.GetDeathSound ) then
-		return rank:GetDeathSound(client)
+	
+	local faction = ix.faction.Get(char:GetFaction())
+	
+	if ( faction and faction.GetDeathSound ) then
+		return faction:GetDeathSound(client)
 	end
 end
 
