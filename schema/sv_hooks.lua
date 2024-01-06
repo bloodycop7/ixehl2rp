@@ -48,12 +48,6 @@ function Schema:GetPlayerPainSound(client)
 	if ( faction and faction.GetPainSound ) then
 		return faction:GetPainSound(client)
 	end
-
-	if ( Schema:IsCP(client) ) then
-		return 
-	elseif ( Schema:IsOTA(client) ) then
-		return 
-	end
 end
 
 function Schema:PlayerSpray(ply)
