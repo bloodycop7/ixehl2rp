@@ -180,6 +180,8 @@ function Schema:GetGameDescription()
 	return "IX: "..(Schema.name or "Unknown")
 end
 
+local ADJUST_SOUND = SoundDuration("npc/metropolice/pain1.wav") > 0 and "" or "../../hl2/sound/"
+
 function ix.util.EmitQueuedSounds(useNewEmit, entity, sounds, delay, spacing, volume, pitch)
 	-- Let there be a delay before any sound is played.
 	delay = delay or 0
