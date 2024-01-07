@@ -301,7 +301,7 @@ if ( SERVER ) then
             if ( data[4] == 0 and not v:GetRemainingAmmo() ) then
                 table.RemoveByValue(data, data[4])
             end
-	    nd
+	    end
 
 	    ix.data.Set("ammoCrates", data)
     end
