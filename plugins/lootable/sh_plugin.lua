@@ -169,11 +169,28 @@ function ix.lootable:Register(lootableData)
 
             self.nextUse = CurTime() + 1
         end
+    else
+        ENT.PopulateEntityInfo = true
+
+        function ENT:OnPopulateEntityInfo(container)
+            local text = container:AddRow("name")
+            text:SetImportant()
+            text:SetText(lootableData.name)
+            text:SizeToContents()
+        end
     end
 
     scripted_ents.Register(ENT, "ix_lootable_" .. uniqueID)
 
     self.stored[uniqueID] = lootableData
+end
+
+if ( SERVER ) then
+    function PLUGIN:CanPlayerSpawnContainer(ply, model, entity)
+        if ( entity:GetClass():find("ix_lootable_*") ) then
+            return false
+        end
+    end
 end
 
 ix.util.Include("sh_lootables.lua")
