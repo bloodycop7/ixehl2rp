@@ -58,4 +58,13 @@ if ( SERVER ) then
             self:Remove()
         end 
     end
+else
+    ENT.PopulateEntityInfo = true
+
+    function ENT:OnPopulateEntityInfo(container)
+        local text = container:AddRow("name")
+        text:SetImportant()
+        text:SetText("Item Crate")
+        text:SizeToContents()
+    end
 end
