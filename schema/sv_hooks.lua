@@ -172,18 +172,6 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("rationDistributions", data)
-
-	for k, v in ipairs(ents.FindByClass("ix_ammo_crate_*")) do
-		data = {}
-
-		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetAmmoType(), v:GetClass()}
-
-		if ( data[4] == 0 and not v:GetRemainingAmmo() ) then
-			table.RemoveByValue(data, data[4])
-		end
-	end
-
-	ix.data.Set("ammoCrates", data)
 end
 
 function Schema:LoadData()
@@ -223,17 +211,6 @@ function Schema:LoadData()
 		ration:SetAngles(v[2])
 		ration:Spawn()
 		ration:Activate()
-	end
-
-	data = ix.data.Get("ammoCrates", {})
-
-	for _, v in ipairs(data) do
-		local crate = ents.Create(v[5])
-		crate:SetPos(v[1])
-		crate:SetAngles(v[2])
-		crate:SetAmmoType(v[3])
-		crate:Spawn()
-		crate:Activate()
 	end
 end
 
