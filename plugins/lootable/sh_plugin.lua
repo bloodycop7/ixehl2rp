@@ -66,6 +66,16 @@ function ix.lootable:Register(lootableData)
         end
     end
 
+    if not ( lootableData.rarity ) then
+        lootableData.rarity = 90
+    else
+        if ( isfunction(lootableData.rarity) ) then
+            lootableData.rarity = lootableData:rarity()
+        else
+            lootableData.rarity = lootableData.rarity
+        end
+    end
+
     local uniqueID = string.lower(lootableData.name)
     uniqueID = string.Replace(uniqueID, " ", "_")
 
@@ -122,7 +132,7 @@ function ix.lootable:Register(lootableData)
 
                         local rarity = math.random(1, 100)
 
-                        if ( rarity > 90 ) then
+                        if ( rarity > lootableData.rarity ) then
                             item = lootableData.rareItems[math.random(1, #lootableData.rareItems)]
                         end
 
