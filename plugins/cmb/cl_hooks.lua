@@ -354,6 +354,10 @@ function PLUGIN:SetupOutlines()
             continue
         end
 
+        if ( v:GetClass():find("generic*") ) then
+            continue
+        end
+
         local outlineColor = hook.Run("GetEntityOutlineColor", v)
 
         if ( outlineColor == nil ) then
