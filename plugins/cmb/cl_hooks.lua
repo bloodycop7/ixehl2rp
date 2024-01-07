@@ -178,7 +178,7 @@ function PLUGIN:HUDPaint()
                 w = textWidth + 6,
                 h = padding * 0.9,
                 rectColor = team.GetColor(v:Team()),
-                backColor = Color(30, 20, 25, v.displayAlpha)
+                backColor = Color(0, 0, 0, v.displayAlpha)
             })
 
             draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
@@ -196,7 +196,7 @@ function PLUGIN:HUDPaint()
                         w = textWidth + 6,
                         h = padding * 0.9,
                         rectColor = team.GetColor(v:Team()),
-                        backColor = Color(30, 20, 25, v.displayAlpha)
+                        backColor = Color(0, 0, 0, v.displayAlpha)
                     })
 
                     draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
@@ -215,7 +215,7 @@ function PLUGIN:HUDPaint()
                     w = textWidth + 6,
                     h = padding * 0.9,
                     rectColor = team.GetColor(v:Team()),
-                    backColor = Color(30, 20, 25, v.displayAlpha)
+                    backColor = Color(0, 0, 0, v.displayAlpha)
                 })
 
                 draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
