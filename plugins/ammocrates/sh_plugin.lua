@@ -142,7 +142,9 @@ function PLUGIN:CreateCrates()
                         end
                     end
                 end, 1, function()
-                    ply:SetAction()
+                    if ( IsValid(ply) ) then
+                        ply:SetAction()
+                    end
                 end)
             end
 
@@ -243,7 +245,9 @@ function PLUGIN:CreateCrates()
                 end
 
             end, 1, function()
-                ply:SetAction()
+                if ( IsValid(ply) ) then
+                    ply:SetAction()
+                end
             end)
         end
 

@@ -360,7 +360,7 @@ function PLUGIN:SetupOutlines()
             outlineColor = Color(255, 0, 0)
         end
 
-        ix.outline.Add(v, outlineColor, 2)
+        ix.outline.Add(v, outlineColor, 1)
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then

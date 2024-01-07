@@ -193,7 +193,9 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
                     recipeData:onCraft(ply)
                 end
             end, recipeData.craftTime, function()
-                ply:SetAction()
+                if ( IsValid(ply) ) then
+                    ply:SetAction()
+                end
             end)
         else
             for k, v in pairs(recipeData.result) do
