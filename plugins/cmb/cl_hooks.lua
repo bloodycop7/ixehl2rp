@@ -66,7 +66,7 @@ function PLUGIN:HUDPaint()
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
-        surface.SetFont("ixCombineFont12")
+        surface.SetFont("ixCombineFont10")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
         self:DrawBox({
@@ -78,7 +78,7 @@ function PLUGIN:HUDPaint()
             backColor = Color(0, 20, 25, 225)
         })
 
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont12", x, y, color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", x, y, color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
