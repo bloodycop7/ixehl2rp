@@ -80,27 +80,27 @@ ITEM.functions.Deploy = {
                 ent:Activate()
                 ent:SetNetVar("owner", ply:GetCharacter():GetID())
 
-                ent.deployedBy = ply
+                ent:SetNWEntity("deployedBy", ply)
                 ent:CallOnRemove("ix.RemoveOwnerLink", function(this)
-                    if not ( IsValid(this.deployedBy) ) then
+                    if not ( IsValid(this:GetNWEntity("deployedBy", nil)) ) then
                         return
                     end
 
-                    if not ( this.deployedBy:GetCharacter() ) then
+                    if not ( this:GetNWEntity("deployedBy", nil):GetCharacter() ) then
                         return
                     end
 
-                    if not ( this.deployedBy.ixDeployedEntities ) then
+                    if not ( this:GetNWEntity("deployedBy", nil).ixDeployedEntities ) then
                         return
                     end
 
-                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
-                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    if ( table.HasValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex())
                     end
 
-                    this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
+                    this:GetNWEntity("deployedBy", nil):GetCharacter():SetData("deployedEntities", this:GetNWEntity("deployedBy", nil).ixDeployedEntities)
 
-                    this.deployedBy = nil
+                    this:SetNWEntity("deployedBy", nil)
                 end)
 
                 ix.relationships.Update(ent)
@@ -142,27 +142,27 @@ ITEM.functions.Deploy = {
                 ent:Activate()
                 ent:SetNetVar("owner", ply:GetCharacter():GetID())
 
-                ent.deployedBy = ply
+                ent:SetNWEntity("deployedBy", ply)
                 ent:CallOnRemove("ix.RemoveOwnerLink", function(this)
-                    if not ( IsValid(this.deployedBy) ) then
+                    if not ( IsValid(this:GetNWEntity("deployedBy", nil)) ) then
                         return
                     end
 
-                    if not ( this.deployedBy:GetCharacter() ) then
+                    if not ( this:GetNWEntity("deployedBy", nil):GetCharacter() ) then
                         return
                     end
 
-                    if not ( this.deployedBy.ixDeployedEntities ) then
+                    if not ( this:GetNWEntity("deployedBy", nil).ixDeployedEntities ) then
                         return
                     end
 
-                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
-                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    if ( table.HasValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex())
                     end
 
-                    this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
+                    this:GetNWEntity("deployedBy", nil):GetCharacter():SetData("deployedEntities", this:GetNWEntity("deployedBy", nil).ixDeployedEntities)
 
-                    this.deployedBy = nil
+                    this:SetNWEntity("deployedBy", nil)
                 end)
 
                 ix.relationships.Update(ent)
@@ -201,27 +201,27 @@ ITEM.functions.Deploy = {
                 ent:Spawn()
                 ent:Activate()
                 ent:SetNetVar("owner", ply:GetCharacter():GetID())
-                ent.deployedBy = ply
+                ent:SetNWEntity("deployedBy", ply)
                 ent:CallOnRemove("ix.RemoveOwnerLink", function(this)
-                    if not ( IsValid(this.deployedBy) ) then
+                    if not ( IsValid(this:GetNWEntity("deployedBy", nil)) ) then
                         return
                     end
 
-                    if not ( this.deployedBy:GetCharacter() ) then
+                    if not ( this:GetNWEntity("deployedBy", nil):GetCharacter() ) then
                         return
                     end
 
-                    if not ( this.deployedBy.ixDeployedEntities ) then
+                    if not ( this:GetNWEntity("deployedBy", nil).ixDeployedEntities ) then
                         return
                     end
 
-                    if ( table.HasValue(this.deployedBy.ixDeployedEntities, this:EntIndex()) ) then
-                        table.RemoveByValue(this.deployedBy.ixDeployedEntities, this:EntIndex())
+                    if ( table.HasValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex()) ) then
+                        table.RemoveByValue(this:GetNWEntity("deployedBy", nil).ixDeployedEntities, this:EntIndex())
                     end
 
-                    this.deployedBy:GetCharacter():SetData("deployedEntities", this.deployedBy.ixDeployedEntities)
+                    this:GetNWEntity("deployedBy", nil):GetCharacter():SetData("deployedEntities", this:GetNWEntity("deployedBy", nil).ixDeployedEntities)
 
-                    this.deployedBy = nil
+                    this:SetNWEntity("deployedBy", nil)
                 end)
 
                 ix.relationships.Update(ent)

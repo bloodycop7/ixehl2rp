@@ -121,7 +121,7 @@ function Schema:CanOverridePlayerHoldObject(ply, ent)
 end
 
 function Schema:EntityRemoved(ent)
-	local deployer = ent.deployedBy
+	local deployer = ent:GetNWEntity("deployedBy", nil)
 
 	if ( IsValid(deployer) ) then
 		local char = deployer:GetCharacter()

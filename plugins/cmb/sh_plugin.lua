@@ -58,12 +58,14 @@ ix.lang.AddTable("english", {
     optCombineOutlineDeployables = "Combine Outline - Deployables",
     optCombineOutlineAssets = "Combine Outline - Assets",
     optCombineOutlineAssetsTeamOnly = "Combine Outline Assets - Team Only",
+    optCombineOutlineNPCs = "Combine Outline - NPCs",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
     optdCombineOutlineDeployables = "Should your deployed entities be outlined",
     optdCombineOutlineAssets = "Should your teammates be outlined",
     optdCombineOutlineAssetsTeamOnly = "Should Outline Assets only apply to teammates.",
+    optdCombineOutlineNPCs = "Should combine npcs be outlined.",
 })
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
@@ -713,7 +715,7 @@ ix.command.Add("Grenade", {
             grenade:Activate()
             grenade:Fire("SetTimer", 2.90)
             grenade:GetPhysicsObject():AddVelocity(ply:GetAimVector() * 950)
-            grenade.deployedBy = ply
+            grenade:SetNWEntity("deployedBy", ply)
             grenade:CallOnRemove("GrenadeRemove", function(this)
                 if ( IsValid(ply) ) then
                     if not ( ply:GetCharacter() ) then
@@ -726,7 +728,7 @@ ix.command.Add("Grenade", {
                         end
                     end
 
-                    this.deployedBy = nil
+                    this:SetNWEntity("deployedBy", nil)
                 end
             end)
 

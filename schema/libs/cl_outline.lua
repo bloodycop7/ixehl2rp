@@ -38,7 +38,6 @@ function ix.outline.Add(ents, color, mode, customCheck)
     end
 
 	if ( ents[1] == nil ) then
-        print("HI?")
         return
     end
 	

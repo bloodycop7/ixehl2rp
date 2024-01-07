@@ -98,6 +98,17 @@ local function ExperimentalFormatting(stringtabl)
     return stringtabl
 end
 
+local allowedChatTypes = {
+    ["ic"] = true,
+    ["w"] = true,
+    ["y"] = true,
+}
+
+local radioChatTypes = {
+    ["cmb_global"] = true,
+    ["cmb_ota"] = true
+}
+
 function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers, rawText)
     local separator = ix.config.Get("separatorVC", nil) != "" and ix.config.Get("separatorVC", nil) or nil
 
