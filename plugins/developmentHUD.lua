@@ -51,8 +51,6 @@ function PLUGIN:HUDPaint()
     local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. localPlayer:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
 
     local trace = localPlayer:GetEyeTrace().Entity
-
-    // local padding = ScreenScale(60)
     local padding = scrH * 0.09
 
     draw.SimpleText("ix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", Color(165, 165, 165)))
