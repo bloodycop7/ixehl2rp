@@ -8,5 +8,8 @@ ix.lootable:Register({
     },
     rareItems = {
         "wep_usp"
-    }
+    },
+    lootTime = function()
+        return math.random(1, 3) 
+    end
 })

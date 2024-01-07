@@ -115,7 +115,7 @@ function ix.lootable:Register(lootableData)
             end
 
             if ( lootableData.lootTime > 0 ) then
-                ply:SetAction("Looting...")
+                ply:SetAction("Looting...", lootableData.lootTime)
                 ply:DoStaredAction(self, function()
                     for i = 1, lootableData.maxItems do
                         local item = lootableData.items[math.random(1, #lootableData.items)]
