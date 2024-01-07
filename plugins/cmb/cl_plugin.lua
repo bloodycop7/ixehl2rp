@@ -55,20 +55,12 @@ for i = 6, 40, 2 do
     surface.CreateFont("ixCombineFont" .. value, {
         font = "Frak",
         size = ScreenScale(i),
-        weight = 200,
+        weight = 100,
         antialias = true,
+        extended = true,
         shadows = true,
     })
-
-    surface.CreateFont("ixCombineFont" .. value .. "-Blurred", {
-        font = "Frak",
-        size = ScreenScale(i),
-        weight = 200,
-        antialias = true,
-        shadows = true,
-        blursize = 2
-    })
-
+    
     // Registers fonts:
         // "ixCombineFont06"
         // "ixCombineFont08"

@@ -181,7 +181,7 @@ function PLUGIN:HUDPaint()
                 backColor = Color(0, 0, 0, v.displayAlpha)
             })
 
-            draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+            draw.SimpleText(string.upper("<:: " .. v:Name() .. " ::>"), "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(color_white, v.displayAlpha), TEXT_ALIGN_CENTER)
 
             if not ( Schema:IsCP(v) ) then // Remove this line and the end at line 162 if you want to use classes for CPs
                 if ( char:GetClass() ) then
@@ -199,7 +199,7 @@ function PLUGIN:HUDPaint()
                         backColor = Color(0, 0, 0, v.displayAlpha)
                     })
 
-                    draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+                    draw.SimpleText("<:: " .. ix.class.list[char:GetClass()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(color_white, v.displayAlpha), TEXT_ALIGN_CENTER)
                 end
             end
 
@@ -218,7 +218,7 @@ function PLUGIN:HUDPaint()
                     backColor = Color(0, 0, 0, v.displayAlpha)
                 })
 
-                draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(team.GetColor(v:Team()), v.displayAlpha), TEXT_ALIGN_CENTER)
+                draw.SimpleText("<:: " .. ix.rank.list[char:GetRank()].name .. " ::>", "ixCombineFont08", vPos.x, vPos.y, ColorAlpha(color_white, v.displayAlpha), TEXT_ALIGN_CENTER)
             end
         end
     end
