@@ -387,5 +387,5 @@ for k, v in ipairs(citizenMaleVCs) do
 end
 
 Schema.voices.AddClass("CitizenMale", function(ply)
-    return Schema:IsCitizen(ply) and ply:IsFemale()
+    return Schema:IsCitizen(ply) and not ply:IsFemale()
 end)
