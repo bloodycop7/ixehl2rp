@@ -466,6 +466,18 @@ function PLUGIN:GetPlayerOutlineColor(target)
 end
 
 function PLUGIN:GetFriendlyOutlineColor(ent)
+    if not ( IsValid(ent) ) then
+        return nil
+    end
+
+    if not ( ent:IsNPC() ) then
+        return nil
+    end
+
+    if not ( ent:Health() > 0 ) then
+        return nil
+    end
+
     if ( ent:GetClass() == "npc_combine_s" ) then
         local model = string.lower(ent:GetModel())
         if ( model == "models/combine_soldier_prisonguard.mdl" and ent:GetSkin() == 0 ) then
@@ -480,7 +492,31 @@ function PLUGIN:GetFriendlyOutlineColor(ent)
             return Color(255, 255, 255)
         end
     end
-end
+
+    if ( ent:GetClass() == "npc_combinegunship" ) then
+        return Color(255, 255, 255)
+    end
+
+    if ( ent:GetClass() == "npc_helicopter" ) then
+        return Color(255, 255, 255)
+    end
+
+    if ( ent:GetClass() == "npc_strider" ) then
+        return Color(255, 255, 255)
+    end
+
+    if ( ent:GetClass() == "npc_rollermine" ) then
+        return Color(0, 255, 255)
+    end
+
+    if ( ent:GetModel() == "models/ez2npc/police.mdl" and ent:GetSkin() == 1 ) then
+        return Color(0, 205, 255)
+    elseif ( ent:GetModel() == "models/ez2npc/police.mdl" and ent:GetSkin() == 2 ) then
+        return Color(200, 70, 70)
+    elseif ( ent:GetClass() == "npc_metropolice" ) then
+        return Color(0, 120, 200)
+    end
+end 
 
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
