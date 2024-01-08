@@ -607,6 +607,10 @@ function PLUGIN:InitializedChatClasses()
                 return false
             end
 
+            if ( ix.chat.classes["ic"]:CanHear(speaker, listener) ) then
+                return true
+            end
+
             if not ( Schema:IsCombine(speaker) ) then
                 return false
             end
@@ -617,6 +621,60 @@ function PLUGIN:InitializedChatClasses()
             chat.AddText(Color(0, 100, 170), "*[CMB] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
         end,
         prefix = {"/cmbradio", "/cmbr"},
+        font = "ixGenericFont",
+    })
+
+    ix.chat.Register("cmb_ota", {
+        CanHear = function(self, speaker, listener)
+            if not ( IsValid(listener) ) then
+                return false
+            end
+
+            local char = listener:GetCharacter()
+
+            if not ( char ) then
+                return false
+            end
+
+            if not ( listener:Alive() ) then
+                return false
+            end
+
+            if ( ix.chat.classes["ic"]:CanHear(speaker, listener) ) then
+                return true
+            end
+
+            if not ( Schema:IsOTA(listener) ) then
+                return false
+            end
+
+            return true
+        end,
+        CanSay = function(self, speaker, text)
+            if not ( IsValid(speaker) ) then
+                return false
+            end
+
+            local char = speaker:GetCharacter()
+
+            if not ( char ) then
+                return false
+            end
+
+            if not ( speaker:Alive() ) then
+                return false
+            end
+
+            if not ( Schema:IsOTA(speaker) ) then
+                return false
+            end
+            
+            return true
+        end,
+        OnChatAdd = function(self, speaker, text)
+            chat.AddText(Color(170, 0, 0), "*[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
+        end,
+        prefix = {"/otaradio", "/otar"},
         font = "ixGenericFont",
     })
 
