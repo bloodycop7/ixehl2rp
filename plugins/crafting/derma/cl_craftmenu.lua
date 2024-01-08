@@ -9,6 +9,14 @@ function PANEL:Init()
         self:Remove()
     end
 
+    if not ( IsValid(localPlayer:GetData("ixCraftingStation", nil)) ) then
+        self:Remove()
+    end
+
+    if not ( localPlayer:GetCharacter() ) then
+        self:Remove()
+    end
+
     ix.gui.craftingMenu = self
 
     self.sysTime = SysTime()
