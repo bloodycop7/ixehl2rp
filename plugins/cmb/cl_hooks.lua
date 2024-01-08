@@ -75,7 +75,7 @@ function PLUGIN:HUDPaint()
             w = textWidth * 1.05,
             h = textHeight * 1.05,
             rectColor = code.color or color_white,
-            backColor = Color(0, 20, 25, 225)
+            backColor = Color(0, 0, 0)
         })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", x, y, color_white, TEXT_ALIGN_LEFT)
@@ -108,7 +108,7 @@ function PLUGIN:HUDPaint()
             w = textWidth,
             h = 30,
             rectColor = v.rectColor or Color(0, 255, 255),
-            backColor = Color(20, 20, 25, v.drawAlpha)
+            backColor = Color(0, 0, 0, v.drawAlpha)
         })
 
         draw.SimpleText(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
@@ -231,15 +231,28 @@ function PLUGIN:HUDPaint()
             local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
-                x = ScrW() - textWidth - padding * 1.3,
-                y = ScrH() - textHeight - padding * 0.5,
+                x = scrW - textWidth - padding * 1.3,
+                y = scrH - textHeight - padding * 0.5,
                 w = textWidth * 1.1,
                 h = textHeight * 1.05,
                 rectColor = Color(255, 255, 255),
-                backColor = Color(0, 0, 0, 200)
+                backColor = Color(0, 0, 0)
             })
 
-            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+            if ( wep:Clip1() <= 10 ) then
+                self:DrawBox({
+                    x = scrW - padding * 6.7,
+                    y = scrH - textHeight - padding * 1.9,
+                    w = padding * 5,
+                    h = padding * 1.3,
+                    rectColor = Color(255, 0, 0),
+                    backColor = Color(0, 0, 0)
+                })
+
+                draw.DrawText("RELOAD", "ixCombineFont14", scrW - padding * 4.3, scrH - padding * 3.3, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+            end
+
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, color_white, TEXT_ALIGN_RIGHT)
         end
     end
 end
