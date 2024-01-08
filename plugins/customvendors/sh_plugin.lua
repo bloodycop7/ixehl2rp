@@ -46,7 +46,7 @@ function ix.vendor:Register(vendorData)
             self:SetUseType(SIMPLE_USE)
             self:SetMoveType(MOVETYPE_NONE)
             self:DropToFloor()
-            ent:SetPos(ent:GetPos() - ent:GetUp() * 6)
+            self:SetPos(self:GetPos() - self:GetUp() * 6)
 
             self:SetVendorID(vendorData.uniqueID)
 
