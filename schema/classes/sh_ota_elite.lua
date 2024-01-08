@@ -9,7 +9,8 @@ function CLASS:OnSet(ply)
         return
     end
 
-    ply:SetModel("models/combine_super_soldier.mdl")
+    char:SetModel("models/combine_super_soldier.mdl")
+    char:SetData("skin", 0)
 end
 
 CLASS_OTA_ELITE = CLASS.index

@@ -9,8 +9,9 @@ function CLASS:OnSet(ply)
         return
     end
 
-    ply:SetModel("models/combine_soldier.mdl")
+    char:SetModel("models/combine_soldier.mdl")
     ply:SetSkin(0)
+    char:SetData("skin", 0)
 end
 
 

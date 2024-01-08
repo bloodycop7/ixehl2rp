@@ -9,8 +9,9 @@ function CLASS:OnSet(ply)
         return
     end
 
-    ply:SetModel("models/combine_soldier.mdl")
+    char:SetModel("models/combine_soldier.mdl")
     ply:SetSkin(1)
+    char:SetData("skin", 1)
 end
 
 CLASS_OTA_SHOTGUNNER = CLASS.index
