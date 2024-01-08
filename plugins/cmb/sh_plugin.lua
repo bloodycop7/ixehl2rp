@@ -751,6 +751,58 @@ ix.command.Add("Grenade", {
     end
 })
 
+ix.command.Add("NewObjective", {
+    description = "Create a new objective.",
+    arguments = {
+        ix.type.text
+    },
+    OnRun = function(self, ply, text)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        ix.cmbSystems:NewObjective({
+            sentBy = ply:Nick(),
+            text = text
+        })
+    end
+})
+
+ix.command.Add("ViewObjectives", {
+    description = "View objectives.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        Schema:OpenUI(ply, "ix.CMB.Objectives")
+    end
+})
+
 ix.command.Add("KickDoor", {
     description = "Kick a door.",
     OnRun = function(self, ply)

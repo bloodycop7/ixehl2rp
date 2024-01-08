@@ -51,8 +51,14 @@ function PANEL:Init()
         surface.DrawRect(0, 0, w, h)
     end
     
+    self:PopulateObjectives()
+end
+
+function PANEL:PopulateObjectives()
+    self.scroll:Clear()
+
     for k, v in pairs(ix.cmbSystems.objectives) do
-        local objective = self.scroll:Add("Panel")
+        local objective = self.scroll:Add("DScrollPanel")
         objective:Dock(TOP)
         objective:DockMargin(0, 0, 0, 5)
         objective:SetTall(padding * 6)
@@ -83,6 +89,21 @@ function PANEL:Init()
         objectiveText:SetText("Objective: " .. v.text)
         objectiveText:SetFont("ixCombineFont08")
         objectiveText:SetAutoStretchVertical(true)
+
+        local removeButton = objective:Add("ixMenuButton")
+        removeButton:Dock(TOP)
+        removeButton:SetText("Remove")
+        removeButton:SetFont("ixCombineFont08")
+        removeButton:SizeToContents()
+        removeButton.DoClick = function()
+            net.Start("ix.Combine.RemoveObjective")
+                net.WriteUInt(k, 8)
+            net.SendToServer()
+
+            timer.Simple(0.1, function()
+                self:PopulateObjectives()
+            end)
+        end
     end
 end
 

@@ -3,6 +3,35 @@ util.AddNetworkString("ix.Combine.SetCityCode")
 util.AddNetworkString("ix.Combine.ToggleBOL")
 util.AddNetworkString("ix.Combine.GiveLP")
 util.AddNetworkString("ix.Combine.TakeLP")
+util.AddNetworkString("ix.Combine.RemoveObjective")
+
+net.Receive("ix.Combine.RemoveObjective", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    local id = net.ReadUInt(8)
+
+    if not ( id ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.objectives[id] ) then
+        return
+    end
+
+    ix.cmbSystems:RemoveObjective(id)
+end)
 
 net.Receive("ix.Combine.GiveLP", function(len, ply)
     if not ( IsValid(ply) ) then
