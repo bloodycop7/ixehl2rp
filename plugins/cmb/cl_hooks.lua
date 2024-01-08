@@ -305,35 +305,35 @@ function PLUGIN:SetupOutlines()
         end
     end
 
-    for k, v in ipairs(ents.GetAll()) do
-        if not ( IsValid(v) ) then
-            continue
-        end
-
-        if not ( v:IsNPC() ) then
-            continue
-        end
-
-        if not ( v:Health() > 0 ) then
-            continue
-        end
-
-        if ( v:GetNWEntity("deployedBy", nil) ) then
-            continue
-        end
-
-        if ( ix.option.Get("combineOutlineNPCs", true) ) then
-            if ( ix.relationships.CombineNPCs[v:GetClass()] ) then
-                local outlineColor = hook.Run("GetFriendlyOutlineColor", v)
-
-                if ( outlineColor == nil ) then
-                    outlineColor = Color(0, 255, 255)
-                end
-
-                ix.outline.Add(v, outlineColor, 0)
-
+    if ( ix.option.Get("combineOutlineNPCs", true) ) then
+        for k, v in ipairs(ents.GetAll()) do
+            if not ( IsValid(v) ) then
                 continue
             end
+
+            if not ( v:IsNPC() ) then
+                continue
+            end
+
+            if not ( v:Health() > 0 ) then
+                continue
+            end
+
+            if ( v:GetNWEntity("deployedBy", nil) == nil ) then
+                continue
+            end
+
+            if not ( ix.relationships.CombineNPCs[v:GetClass()] ) then
+                continue
+            end
+
+            local outlineColor = hook.Run("GetFriendlyOutlineColor", v)
+
+            if ( outlineColor == nil ) then
+                outlineColor = Color(0, 255, 255)
+            end
+
+            ix.outline.Add(v, outlineColor)
         end
     end
 
@@ -364,7 +364,7 @@ function PLUGIN:SetupOutlines()
             outlineColor = Color(255, 0, 0)
         end
 
-        ix.outline.Add(v, outlineColor, 1)
+        ix.outline.Add(v, outlineColor, 2)
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then
@@ -434,7 +434,7 @@ function PLUGIN:SetupOutlines()
                     outlineColor = Color(255, 0, 0)
                 end
 
-                ix.outline.Add(ent, outlineColor, mode, customCheck)
+                ix.outline.Add(ent, outlineColor)
             end
         end
     end
@@ -450,6 +450,23 @@ function PLUGIN:GetPlayerOutlineColor(target)
         elseif ( model == "models/combine_soldier.mdl" and target:GetSkin() == 0 ) then
             return Color(0, 120, 255)
         elseif ( model == "models/combine_soldier.mdl" and target:GetSkin() == 1 ) then
+            return Color(145, 60, 0)
+        elseif ( model == "models/combine_super_soldier.mdl" ) then
+            return Color(255, 255, 255)
+        end
+    end
+end
+
+function PLUGIN:GetFriendlyOutlineColor(ent)
+    if ( ent:GetClass() == "npc_combine_s" ) then
+        local model = string.lower(ent:GetModel())
+        if ( model == "models/combine_soldier_prisonguard.mdl" and ent:GetSkin() == 0 ) then
+            return Color(255, 210, 0)
+        elseif ( model == "models/combine_soldier_prisonguard.mdl" and ent:GetSkin() == 1 ) then
+            return Color(255, 65, 0)
+        elseif ( model == "models/combine_soldier.mdl" and ent:GetSkin() == 0 ) then
+            return Color(0, 120, 255)
+        elseif ( model == "models/combine_soldier.mdl" and ent:GetSkin() == 1 ) then
             return Color(145, 60, 0)
         elseif ( model == "models/combine_super_soldier.mdl" ) then
             return Color(255, 255, 255)
