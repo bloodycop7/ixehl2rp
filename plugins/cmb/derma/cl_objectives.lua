@@ -62,7 +62,6 @@ function PANEL:PopulateObjectives()
         objective:Dock(TOP)
         objective:DockMargin(0, 0, 0, 5)
         objective:SetTall(padding * 6)
-        objective:SetMultiline(true)
         objective.Paint = function(s, w, h)
             PLUGIN:DrawBox({
                 x = 0,
