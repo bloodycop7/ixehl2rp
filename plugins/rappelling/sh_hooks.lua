@@ -34,7 +34,7 @@ function PLUGIN:OnPlayerHitGround(client, inWater, onFloater, speed)
 end
 
 function PLUGIN:PlayerTick(client, moveData)
-	if (client:HasWeapon("rappel_gear")) then
+	if (client:HasWeapon("ix_rappel_gear")) then
 		local onGround = client:OnGround()
 
 		if (onGround and !client.wasOnGround) then
