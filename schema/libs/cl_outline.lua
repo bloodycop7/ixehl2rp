@@ -1,3 +1,5 @@
+// Credits: https://github.com/ShadowBonnieRUS/garrysmod/blob/master/garrysmod/lua/includes/modules/outline.lua
+
 ix.outline = {}
 ix.outline.List = {}
 
@@ -13,7 +15,7 @@ local IsValid = IsValid
 local surface = surface
 
 local RenderEnt = NULL
-local RenderType = 2 // 0 - Before Viewmodel, 1 - Before Effects, 2 - After Effects
+local RenderType = 0 // 0 - Before Viewmodel, 1 - Before Effects, 2 - After Effects
 local OutlineThickness = 1
 
 local StoreTexture = render.GetScreenEffectTexture(0)
