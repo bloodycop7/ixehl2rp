@@ -319,6 +319,10 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
+            if ( v:GetClass():find("generic*") ) then
+                continue
+            end
+
             if ( v:GetNWEntity("deployedBy", nil) == nil ) then
                 continue
             end
@@ -327,7 +331,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            local outlineColor = hook.Run("GetFriendlyOutlineColor", v)
+            local outlineColor = hook.Run("GetFriendlyOutlineColor", v) or nil
 
             if ( outlineColor == nil ) then
                 outlineColor = Color(0, 255, 255)
@@ -421,6 +425,10 @@ function PLUGIN:SetupOutlines()
                 end
 
                 if not ( ent:Health() > 0 or ent:GetClass() == "npc_grenade_frag" ) then
+                    continue
+                end
+
+                if ( v:GetClass():find("generic*") ) then
                     continue
                 end
 
