@@ -505,10 +505,6 @@ function PLUGIN:GetFriendlyOutlineColor(ent)
         return Color(255, 255, 255)
     end
 
-    if ( ent:GetClass() == "npc_rollermine" ) then
-        return Color(0, 255, 255)
-    end
-
     if ( ent:GetModel() == "models/ez2npc/police.mdl" and ent:GetSkin() == 1 ) then
         return Color(0, 205, 255)
     elseif ( ent:GetModel() == "models/ez2npc/police.mdl" and ent:GetSkin() == 2 ) then
