@@ -239,7 +239,7 @@ function PLUGIN:HUDPaint()
                 backColor = Color(0, 0, 0)
             })
 
-            if ( wep:Clip1() <= 10 ) then
+            if ( wep:Clip1() <= wep:GetMaxClip1() / 4 ) then
                 self:DrawBox({
                     x = scrW - padding * 6.7,
                     y = scrH - textHeight - padding * 1.9,
