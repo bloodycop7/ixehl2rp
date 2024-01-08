@@ -361,7 +361,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            local outlineColor = hook.Run("GetEntityOutlineColor", v)
+            local outlineColor = hook.Run("GetEnemyOutlineColor", v)
 
             if ( outlineColor == nil ) then
                 outlineColor = Color(255, 0, 0)
