@@ -542,3 +542,9 @@ net.Receive("ix.cmbSystems.SyncSquads", function()
 
     ix.cmbSystems.squads = data
 end)
+
+net.Receive("ix.cmbSystems.SyncObjectives", function()
+    local data = net.ReadTable() or {}
+
+    ix.cmbSystems.objectives = data
+end)

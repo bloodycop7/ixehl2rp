@@ -378,6 +378,16 @@ end
 
 util.AddNetworkString("ix.cmbSystems.SyncSquads")
 function ix.cmbSystems:CreateSquad(ply, squadData)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
     if not ( istable(squadData) ) then
         ErrorNoHalt("Attempted to create a squad with invalid data!")
         
@@ -393,10 +403,58 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
     squadData.leader = ply
     squadData.members = squadData.members or {}
     squadData.id = #ix.cmbSystems.squads
+    
+    char:SetData("squadID", squadData.id)
 
     table.insert(ix.cmbSystems.squads, squadData)
 
     net.Start("ix.cmbSystems.SyncSquads")
         net.WriteTable(ix.cmbSystems.squads)
+    net.Broadcast()
+end
+
+function ix.cmbSystems:RemoveSquad(id)
+    if not ( id ) then
+        return
+    end
+
+    table.remove(ix.cmbSystems.squads, id)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.squads)
+    net.Broadcast()
+end
+
+util.AddNetworkString("ix.cmbSystems.SyncObjectives")
+function ix.cmbSystems:NewObjective(objectiveData)
+    if not ( istable(objectiveData) ) then
+        ErrorNoHalt("Attempted to create an objective with invalid data!")
+        
+        return
+    end
+
+    if not ( objectiveData.text ) then
+        ErrorNoHalt("Attempted to create an objective without text!")
+        return
+    end
+
+    objectiveData.sentBy = objectiveData.sentBy or "Dispatch"
+
+    ix.cmbSystems.objectives[#ix.cmbSystems.objectives + 1] = objectiveData
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.objectives)
+    net.Broadcast()
+end
+
+function ix.cmbSystems:RemoveObjective(id)
+    if not ( ix.cmbSystems.objectives[id] ) then
+        return
+    end
+
+    ix.cmbSystems.objectives[id] = nil
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.objectives)
     net.Broadcast()
 end
