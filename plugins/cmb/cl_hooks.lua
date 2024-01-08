@@ -323,7 +323,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            if ( v:GetNWEntity("deployedBy", nil) == nil ) then
+            if not ( v:GetNWEntity("deployedBy", nil) == NULL or v:GetNWEntity("deployedBy", nil) == nil ) then
                 continue
             end
 
