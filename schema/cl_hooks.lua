@@ -18,6 +18,119 @@ function Schema:CanPlayerJoinRank(ply, rank, info)
 	return false
 end
 
+// Credits: https://github.com/Lite-Network/lnhl2rpsemiserious/blob/main/schema/cl_schema.lua
+
+function Schema:PopulateHelpMenu(tabs)
+	tabs["voices"] = function(container)
+		local classes = {}
+
+		for k, v in pairs(Schema.voices.classes) do
+			if (v.condition(localPlayer)) then
+				classes[#classes + 1] = k
+			end
+		end
+
+		if (#classes < 1) then
+			local info = container:Add("DLabel")
+			info:SetFont("ixSmallFont")
+			info:SetText("You do not have access to any voice lines!")
+			info:SetContentAlignment(5)
+			info:SetTextColor(color_white)
+			info:SetExpensiveShadow(1, color_black)
+			info:Dock(TOP)
+			info:DockMargin(0, 0, 0, 8)
+			info:SizeToContents()
+			info:SetTall(info:GetTall() + 16)
+
+			info.Paint = function(_, width, height)
+				surface.SetDrawColor(ColorAlpha(derma.GetColor("Error", info), 160))
+				surface.DrawRect(0, 0, width, height)
+			end
+
+			return
+		end
+
+		table.sort(classes, function(a, b)
+			return a < b
+		end)
+
+		local searchEntry = container:Add("ixIconTextEntry")
+		searchEntry:Dock(TOP)
+		searchEntry:SetEnterAllowed(false)
+
+		local function ListVoices(filter)
+			for _, class in ipairs(classes) do
+				local category = container:Add("Panel")
+				category:Dock(TOP)
+				category:DockMargin(0, 0, 0, 8)
+				category:DockPadding(8, 8, 8, 8)
+				category.Paint = function(_, width, height)
+					surface.SetDrawColor(Color(0, 0, 0, 66))
+					surface.DrawRect(0, 0, width, height)
+				end
+				category.removeOnFilter = true
+
+				local categoryLabel = category:Add("DLabel")
+				categoryLabel:SetFont("ixMediumLightFont")
+				categoryLabel:SetText(class:upper())
+				categoryLabel:Dock(FILL)
+				categoryLabel:SetTextColor(color_white)
+				categoryLabel:SetExpensiveShadow(1, color_black)
+				categoryLabel:SizeToContents()
+				categoryLabel.removeOnFilter = true
+				category:SizeToChildren(true, true)
+
+				if self.voices and self.voices.stored and self.voices.stored[class] then
+					for command, info in SortedPairs(self.voices.stored[class]) do
+						if filter == nil or (command:lower():find(filter:lower()) or info.text:lower():find(filter:lower())) then
+							local title = container:Add("ixMenuButton")
+							title:SetFont("ixMediumFont")
+							title:SetText(command:upper())
+							title:Dock(TOP)
+							title:SetTextColor(ix.config.Get("color"))
+							title:SetSize(container:GetWide(), 18)
+							title.DoClick = function()
+								ix.util.Notify("You have copied: "..tostring(command:upper()))
+								SetClipboardText(tostring(command:upper()))
+							end
+							title.removeOnFilter = true
+
+							local description = container:Add("DLabel")
+							description:SetFont("ixSmallFont")
+							description:SetText(info.text)
+							description:Dock(TOP)
+							description:SetTextColor(color_white)
+							description:SetExpensiveShadow(1, color_black)
+							description:SetWrap(true)
+							description:SetAutoStretchVertical(true)
+							description:SizeToContents()
+							description:DockMargin(0, 0, 0, 8)
+							description.removeOnFilter = true
+						end
+					end
+				end
+			end
+		end
+
+		searchEntry.OnChange = function(entry)
+			local function deepRemove(panel)
+				for k, v in pairs(panel:GetChildren()) do
+					if v.removeOnFilter == true then
+						v:Remove()
+					else
+						if v:HasChildren() then deepRemove(v) end
+					end
+				end
+			end
+
+			deepRemove(container)
+			ListVoices(searchEntry:GetValue())
+		end
+
+		ListVoices()
+	end
+end
+
 function Schema:ShouldDrawCrosshair()
 	if ( IsValid(localPlayer:GetActiveWeapon()) ) then
 		if ( localPlayer:GetActiveWeapon():GetClass():find("tfa*") ) then
