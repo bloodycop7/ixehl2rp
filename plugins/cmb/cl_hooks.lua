@@ -228,7 +228,7 @@ function PLUGIN:HUDPaint()
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
             surface.SetFont("ixCombineFont14")
-            local textWidth, textHeight = surface.GetTextSize(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
+            local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
                 x = ScrW() - textWidth - padding * 1.3,
@@ -236,10 +236,10 @@ function PLUGIN:HUDPaint()
                 w = textWidth * 1.1,
                 h = textHeight * 1.05,
                 rectColor = Color(255, 255, 255),
-                backColor = Color(30, 20, 25, 200)
+                backColor = Color(0, 0, 0, 200)
             })
 
-            draw.DrawText(wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, Color(255, 255, 255), TEXT_ALIGN_RIGHT)
         end
     end
 end

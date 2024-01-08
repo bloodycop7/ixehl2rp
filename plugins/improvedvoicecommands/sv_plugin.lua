@@ -112,7 +112,7 @@ local radioChatTypes = {
 function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers, rawText)
     local separator = ix.config.Get("separatorVC", nil) != "" and ix.config.Get("separatorVC", nil) or nil
 
-	if chatType == "ic" or chatType == "w" or chatType == "y" or chatType == "dispatch" or (ix.config.Get("radioVCAllow", true) and chatType == "radio") then
+	if ( allowedChatTypes[chatType] or ( ix.config.Get("radioVCAllow", true) and radioChatTypes[chatType] ) ) then
 		local class = Schema.voices.GetClass(speaker)
 
 		for k, v in pairs(class) do
