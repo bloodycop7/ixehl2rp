@@ -5,6 +5,27 @@ function Schema:SlapPlayer(client)
 	end
 end
 
+function Schema:SetCharBodygroup(ply, index, value)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	index = index or 1
+	value = value or 1
+
+	local groupsData = char:GetData("groups", {})
+	groupsData[index] = value
+
+	char:SetData("groups", groupsData)
+	ply:SetBodygroup(index, value)
+end
+
 util.AddNetworkString("ix.Schema.OpenUI")
 function Schema:OpenUI(ply, panel)
 	net.Start("ix.Schema.OpenUI")
