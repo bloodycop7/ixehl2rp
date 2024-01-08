@@ -12,6 +12,11 @@ ix.vendor:Register({
             price = 0
         }
     },
+    --[[sell = {
+        ["wep_mp7"] = {
+            price = 50,
+        }
+    },]]
     onInit = function(vendorData, ent)
         for i = 1, ent:GetSequenceCount() do
             if ( ent:GetSequenceName(i) == "batonidle1" ) then

@@ -31,6 +31,81 @@ function PANEL:Init()
         ix.util.DrawBlur(s, 1)
     end
 
+    if ( ix.vendor.list[vendorUse:GetVendorID()].sell ) then
+        self.rightPanel = self:Add("DScrollPanel")
+        self.rightPanel:Dock(RIGHT)
+        self.rightPanel:SetWide(self:GetWide() * 0.25)
+        self.rightPanel.Paint = function(s, w, h)
+            surface.SetDrawColor(Color(10, 10, 10, 200))
+            surface.DrawRect(0, 0, w, h)
+            
+            ix.util.DrawBlur(s, 1)
+        end
+
+        for k, v in pairs(ix.vendor.list[vendorUse:GetVendorID()].sell) do
+            local itemData = ix.item.Get(k)
+
+            if not ( itemData ) then
+                ErrorNoHalt("[Helix] Invalid Vendor Item: " .. k .. "\n")
+
+                continue
+            end
+
+            local corePanel = self.rightPanel:Add("DScrollPanel")
+            corePanel:Dock(TOP)
+            corePanel:DockMargin(0, 3, 0, 0)
+            corePanel:SetTall(padding * 8)
+            corePanel.Paint = function(s, w, h)
+                surface.SetDrawColor(Color(0, 0, 0, 200))
+                surface.DrawRect(0, 0, w, h)
+            end
+
+            local nameLabel = corePanel:Add("DLabel")
+            nameLabel:Dock(TOP)
+            nameLabel:DockMargin(0, 5, 0, 0)
+            nameLabel:SetWrap(true)
+            nameLabel:SetText(itemData.name)
+            nameLabel:SetFont("ixMediumLightFont")
+            nameLabel:SetAutoStretchVertical(true)
+
+            if ( itemData.description and string.len(itemData.description) != 0 ) then
+                local descLabel = corePanel:Add("DLabel")
+                descLabel:Dock(TOP)
+                descLabel:DockMargin(0, 2, 0, 0)
+                descLabel:SetWrap(true)
+                descLabel:SetText(itemData.description)
+                descLabel:SetFont("ixSmallFont")
+                descLabel:SetAutoStretchVertical(true)
+            end
+
+            local priceLabel = corePanel:Add("DLabel")
+            priceLabel:Dock(TOP)
+            priceLabel:DockMargin(0, 10, 0, 0)
+            priceLabel:SetWrap(true)
+            priceLabel:SetText("Price: " .. (v.price == 0 and "Free" or v.price))
+            priceLabel:SetFont("ixMediumLightFont")
+            priceLabel:SetAutoStretchVertical(true)
+
+            local button = corePanel:Add("ixMenuButton")
+            button:Dock(TOP)
+            button:SetText("Sell")
+            button:SizeToContents()
+            button.DoClick = function()
+                if ( v.canSell and not v:canSell(localPlayer) ) then
+                    return
+                end
+
+                if ( v.onSell ) then
+                    v:onSell(localPlayer)
+                end
+
+                net.Start("ix.CustomVendor.Sell")
+                    net.WriteString(k)
+                net.SendToServer()
+            end
+        end
+    end
+
     self.closeButton = self.leftPanel:Add("ixMenuButton")
     self.closeButton:Dock(TOP)
     self.closeButton:SetText("Close")

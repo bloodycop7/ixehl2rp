@@ -96,6 +96,69 @@ ix.util.Include("sh_vendors.lua")
 if ( SERVER ) then
     util.AddNetworkString("ix.CustomVendor.CloseMenu")
     util.AddNetworkString("ix.CustomVendor.Purchase")
+    util.AddNetworkString("ix.CustomVendor.Sell")
+
+    net.Receive("ix.CustomVendor.Sell", function(len, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( IsValid(ply:GetNetVar("ixVendorUse", nil)) ) then
+            return
+        end
+
+        local itemID = net.ReadString()
+    
+        if not ( itemID ) then
+            return
+        end
+
+        local itemData = ix.item.Get(itemID)
+
+        if not ( itemData ) then
+            return
+        end
+        
+        local vendorItemData = ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].sell[itemID]
+
+        if not ( vendorItemData ) then
+            return
+        end
+
+        if ( vendorItemData.canSell and not vendorItemData:canSell(ply, ply:GetNetVar("ixVendorUse", nil)) ) then
+            return
+        end
+
+        if ( isfunction(vendorItemData.price) ) then
+            vendorItemData.price = vendorItemData:price(ply, ply:GetNetVar("ixVendorUse", nil)) or 0
+        else
+            vendorItemData.price = vendorItemData.price
+        end
+
+        local inv = char:GetInventory()
+
+        if not ( inv:HasItem(itemID) ) then
+            ply:Notify("You don't have this item")
+
+            return
+        end
+
+        if ( vendorItemData.price and vendorItemData.price > 0 ) then
+            ply:GetCharacter():GiveMoney(vendorItemData.price)
+        end
+
+        if ( vendorItemData.onSell ) then
+            vendorItemData:onSell(ply, ply:GetNetVar("ixVendorUse", nil))
+        end
+
+        inv:Remove(inv:HasItem(itemID):GetID())
+    end)
 
     net.Receive("ix.CustomVendor.CloseMenu", function(len, ply)
         if not ( IsValid(ply) ) then

@@ -967,6 +967,46 @@ ix.command.Add("KickDoor", {
     end
 })
 
+local function FacingWall(client)
+	local data = {}
+	data.start = client:EyePos()
+	data.endpos = data.start + client:GetForward() * 20
+	data.filter = client
+
+	if (!util.TraceLine(data).Hit) then
+		return "@faceWall"
+	end
+end
+
+local function FacingWallBack(client)
+	local data = {}
+	data.start = client:LocalToWorld(client:OBBCenter())
+	data.endpos = data.start - client:GetForward() * 20
+	data.filter = client
+
+	if (!util.TraceLine(data).Hit) then
+		return "@faceWallBack"
+	end
+end
+
+ix.act.Register("LeanWallLeft", {"overwatch"}, {
+    sequence = {
+        {"leanwall_left_idle", offset = function(ply)
+            return ply:GetRight() * -2
+        end},
+    },
+    untimed = true,
+    idle = true
+})
+
+ix.act.Register("LeanWallRight", {"overwatch"}, {
+    sequence = {
+        {"leanwall_right_idle"},
+    },
+    untimed = true,
+    idle = true
+})
+
 ix.cmbSystems.otaWepWhitelist = {
     ["ix_hands"] = true,
     ["ix_keys"] = true,
