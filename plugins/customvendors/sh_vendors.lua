@@ -21,8 +21,8 @@ ix.vendor:Register({
             end
         end
 
-        ent:DropToFloor()
-        ent:SetPos(ent:GetPos() - ent:GetUp() * 6)
+        --ent:DropToFloor()
+        --ent:SetPos(ent:GetPos() - ent:GetUp() * 6)
         ent:SetSkin(2)
     end
 })
