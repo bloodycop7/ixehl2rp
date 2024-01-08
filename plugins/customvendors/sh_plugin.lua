@@ -45,6 +45,8 @@ function ix.vendor:Register(vendorData)
             self:PhysicsInit(SOLID_BBOX)
             self:SetUseType(SIMPLE_USE)
             self:SetMoveType(MOVETYPE_NONE)
+            self:DropToFloor()
+            ent:SetPos(ent:GetPos() - ent:GetUp() * 6)
 
             self:SetVendorID(vendorData.uniqueID)
 

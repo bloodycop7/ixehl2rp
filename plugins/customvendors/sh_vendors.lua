@@ -15,12 +15,14 @@ ix.vendor:Register({
     onInit = function(vendorData, ent)
         for i = 1, ent:GetSequenceCount() do
             if ( ent:GetSequenceName(i) == "batonidle1" ) then
-                ent:ResetSequence(i)
+                ent:ResetSequence(i)                
 
                 break
             end
         end
 
+        ent:DropToFloor()
+        ent:SetPos(ent:GetPos() - ent:GetUp() * 6)
         ent:SetSkin(2)
     end
 })
