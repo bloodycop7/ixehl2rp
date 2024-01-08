@@ -308,6 +308,8 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 				end
 			end
 		end
+
+		newChar:SetData("squadID", nil)
 	end)
 end
 
