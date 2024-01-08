@@ -252,7 +252,7 @@ function PLUGIN:HUDPaint()
                 draw.DrawText("RELOAD", "ixCombineFont14", scrW - padding * 4.3, scrH - padding * 3.3, Color(255, 0, 0), TEXT_ALIGN_CENTER)
             end
 
-            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.2, scrH - padding * 1.8, color_white, TEXT_ALIGN_RIGHT)
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.05, scrH - padding * 1.8, color_white, TEXT_ALIGN_RIGHT)
         end
     end
 end
