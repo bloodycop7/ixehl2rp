@@ -1007,11 +1007,6 @@ ix.act.Register("LeanWallRight", {"overwatch"}, {
     idle = true
 })
 
-ix.cmbSystems.otaWepWhitelist = {
-    ["ix_hands"] = true,
-    ["ix_keys"] = true,
-}
-
 timer.Create("ix.DeployedEnts.Update", 1, 0, function()
     for k, v in ipairs(player.GetAll()) do
         if not ( IsValid(v) ) then
@@ -1067,6 +1062,12 @@ function PLUGIN:AdjustStaminaOffset(ply)
         return 0
     end
 end
+
+ix.cmbSystems.otaWepWhitelist = {
+    ["ix_hands"] = true,
+    ["ix_keys"] = true,
+    ["ix_rappel_gear"] = true,
+}
 
 function PLUGIN:CalcMainActivity(ply, vel)
 	if not ( IsValid(ply) ) then
