@@ -6,7 +6,7 @@ ix.vendor:Register({
     uniqueID = "cp",
     items = {
         ["wep_mp7"] = {
-            price = 5
+            price = 0
         },
         ["wep_usp"] = {
             price = 0
