@@ -428,7 +428,7 @@ function PLUGIN:SetupOutlines()
                     continue
                 end
 
-                if ( v:GetClass():find("generic*") ) then
+                if ( ent:GetClass():find("generic*") ) then
                     continue
                 end
 
