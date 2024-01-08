@@ -1,12 +1,12 @@
 local PLUGIN = PLUGIN
 
 ix.vendor:Register({
-    name = "CP vendor",
+    name = "Civil Protection Vendor",
     model = "models/ez2npc/police.mdl",
     uniqueID = "cp",
     items = {
         ["wep_mp7"] = {
-            price = 0
+            price = 5
         },
         ["wep_usp"] = {
             price = 0
@@ -20,5 +20,7 @@ ix.vendor:Register({
                 break
             end
         end
+
+        ent:SetSkin(2)
     end
 })
