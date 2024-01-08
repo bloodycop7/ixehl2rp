@@ -440,6 +440,23 @@ function PLUGIN:SetupOutlines()
     end
 end
 
+function PLUGIN:GetPlayerOutlineColor(target)
+    if ( Schema:IsOTA(target) ) then
+        local model = string.lower(target:GetModel())
+        if ( model == "models/combine_soldier_prisonguard.mdl" and target:GetSkin() == 0 ) then
+            return Color(255, 210, 0)
+        elseif ( model == "models/combine_soldier_prisonguard.mdl" and target:GetSkin() == 1 ) then
+            return Color(255, 65, 0)
+        elseif ( model == "models/combine_soldier.mdl" and target:GetSkin() == 0 ) then
+            return Color(0, 120, 255)
+        elseif ( model == "models/combine_soldier.mdl" and target:GetSkin() == 1 ) then
+            return Color(145, 60, 0)
+        elseif ( model == "models/combine_super_soldier.mdl" ) then
+            return Color(255, 255, 255)
+        end
+    end
+end
+
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 
