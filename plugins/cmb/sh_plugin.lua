@@ -93,6 +93,11 @@ end, {
     data = {min = 1, max = 3600},
 })
 
+ix.config.Add("grenadeCooldown", 30, "How long should the grenade cooldown be?", nil, {
+    category = "Combine Systems",
+    data = {min = 1, max = 3600},
+})
+
 ix.char.RegisterVar("bOLStatus", {
     field = "bol_status",
     fieldType = ix.type.bool,
@@ -688,10 +693,10 @@ ix.command.Add("Grenade", {
             return
         end
 
-        if ( char:GetData("nextGrenadeThrow", 0) > 0 ) then
+        if ( char:GetData("nextGrenadeThrow", 0) > CurTime() ) then
             ply:Notify("You cannot throw another grenade for another " .. math.ceil(char:GetData("nextGrenadeThrow") - CurTime()) .. " second(s).")
 
-            --return
+            return
         end
 
         if ( ply:GetSequenceInfo(ply:LookupSequence("grenthrow")) ) then
@@ -741,7 +746,7 @@ ix.command.Add("Grenade", {
             char:SetData("deployedEntities", ply.ixDeployedEntities)
         end)
 
-        char:SetData("nextGrenadeThrow", CurTime() + 40)
+        char:SetData("nextGrenadeThrow", CurTime() + ix.config.Get("grenadeCooldown", 30))
     end
 })
 
