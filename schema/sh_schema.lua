@@ -16,7 +16,7 @@ ix.currency.singular = "credit"
 ix.currency.plural = "credits"
 
 for k, v in pairs(ix.faction.indices) do
-    Schema["Is" .. (v.abbreviation or v.name)] = function(self, ply)
+    Schema["Is" .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
@@ -32,7 +32,7 @@ for k, v in pairs(ix.faction.indices) do
 end
 
 for k, v in pairs(ix.class.list) do
-    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or ix.faction.Get(v.faction).name) .. (v.abbreviation or v.name)] = function(self, ply)
+    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
@@ -55,8 +55,10 @@ for k, v in pairs(ix.class.list) do
     end
 end
 
+ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
+
 for k, v in pairs(ix.rank.list) do
-    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or ix.faction.Get(v.faction).name) .. (v.abbreviation or v.name)] = function(self, ply)
+    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
@@ -179,8 +181,6 @@ end
 function Schema:GetGameDescription()
 	return "IX: "..(Schema.name or "Unknown")
 end
-
-ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 
 ix.config.Add("maxItemDrops", 3, "The maximum amount of items that can be dropped by a player on death.", nil, {
     data = {min = 1, max = 10},

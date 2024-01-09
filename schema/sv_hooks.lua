@@ -1,3 +1,34 @@
+util.AddNetworkString("ix.PlayerStartVoice")
+util.AddNetworkString("ix.PlayerEndVoice")
+
+net.Receive("ix.PlayerStartVoice", function(len, ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	hook.Run("PlayerStartVoice", ply)
+end)
+
+net.Receive("ix.PlayerEndVoice", function(len, ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	hook.Run("PlayerEndVoice", ply)
+end)
+
 function Schema:GetPlayerDeathSound(client)
 	local char = client:GetCharacter()
 
@@ -290,13 +321,13 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 		return
 	end
 
-	local permaClass = newChar:GetData("permaClass")
-	local permaClassData = ix.class.list[permaClass]
-
-	local permaRank = newChar:GetData("permaRank")
-	local permaRankData = ix.rank.list[permaRank]
-
 	timer.Simple(0.1, function()
+		local permaClass = newChar:GetData("permaClass")
+		local permaClassData = ix.class.list[permaClass]
+
+		local permaRank = newChar:GetData("permaRank")
+		local permaRankData = ix.rank.list[permaRank]
+
 		if ( permaClass and permaClassData ) then
 			local oldClass = newChar:GetClass()
 			newChar:SetClass(permaClass)

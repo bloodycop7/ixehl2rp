@@ -163,7 +163,15 @@ function Schema:CanPlayerJoinRank(ply, rank, info)
 end
 
 function Schema:PlayerStartVoice(ply)
+	net.Start("ix.PlayerStartVoice")
+	net.SendToServer()
+
 	return true
+end
+
+function Schema:PlayerEndVoice(ply)
+	net.Start("ix.PlayerEndVoice")
+	net.SendToServer()
 end
 
 local COMMAND_PREFIX = "/"

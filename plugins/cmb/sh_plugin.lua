@@ -871,6 +871,209 @@ ix.command.Add("ViewObjectives", {
     end
 })
 
+ix.command.Add("ToggleVoiceRadio", {
+    description = "Toggle voice radio.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
+            ply:Notify("You have a voice radio timeout for " .. string.NiceTime(timer.TimeLeft("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) .. "."))
+            
+            return
+        end
+
+        char:SetData("radioVoice", not char:GetData("radioVoice", false))
+
+        if ( char:GetData("radioVoice", false) ) then
+            ply:Notify("You have enabled voice radio.")
+        else
+            ply:Notify("You have disabled voice radio.")
+        end
+    end
+})
+
+ix.command.Add("ToggleTeamVoiceRadio", {
+    description = "Toggle team voice radio.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
+            ply:Notify("You have a voice radio timeout for " .. string.NiceTime(timer.TimeLeft("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) .. "."))
+            
+            return
+        end
+
+        char:SetData("radioVoiceTeam", not char:GetData("radioVoiceTeam", false))
+
+        if ( char:GetData("radioVoiceTeam", false) ) then
+            ply:Notify("You have enabled team voice radio.")
+        else
+            ply:Notify("You have disabled team voice radio.")
+        end
+    end
+})
+
+ix.command.Add("TimeoutVoiceRadio", {
+    description = "Timeout voice radio for a certain amount of time.",
+    arguments = {
+        ix.type.character,
+        ix.type.number
+    },
+    OnRun = function(self, ply, targetChar, time)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+            ply:Notify("Only Combine Unit Leaders can use this command.")
+
+            return
+        end
+
+        local target = targetChar:GetPlayer()
+
+        if not ( IsValid(target) ) then
+            ply:Notify("You must specify a valid character.")
+
+            return
+        end
+
+        if not ( target:GetCharacter() ) then
+            ply:Notify("You must specify a valid character.")
+
+            return
+        end
+
+        if not ( Schema:IsCombine(target) ) then
+            ply:Notify("This person is not on a combine faction.")
+
+            return
+        end
+
+        if not ( isnumber(time) ) then
+            ply:Notify("You must specify a valid number.")
+
+            return
+        end
+
+        if ( time < 1 ) then
+            ply:Notify("You must specify a number greater than 0.")
+
+            return
+        end
+
+        if not ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
+            timer.Create("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID(), time, 1, function()
+            end)
+
+            targetChar:SetData("radioVoice", false)
+            targetChar:SetData("radioVoiceTeam", false)
+        end
+
+        ply:Notify("You have timed out " .. targetChar:GetName() .. " from using voice radio for " .. string.NiceTime(time) .. ".")
+    end
+})
+
+ix.command.Add("RemoveVoiceRadioTimeout", {
+    description = "Remove a voice radio timeout from a character.",
+    arguments = {
+        ix.type.character
+    },
+    OnRun = function(self, ply, targetChar)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+            ply:Notify("Only Combine Unit Leaders can use this command.")
+
+            return
+        end
+
+        local target = targetChar:GetPlayer()
+
+        if not ( IsValid(target) ) then
+            ply:Notify("You must specify a valid character.")
+
+            return
+        end
+
+        if not ( target:GetCharacter() ) then
+            ply:Notify("You must specify a valid character.")
+
+            return
+        end
+
+        if not ( Schema:IsCombine(target) ) then
+            ply:Notify("This person is not on a combine faction.")
+
+            return
+        end
+
+        if not ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
+            ply:Notify("This person does not have a voice radio timeout.")
+
+            return
+        end
+
+        timer.Remove("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID())
+
+        ply:Notify("You have removed " .. targetChar:GetName() .. "'s voice radio timeout.")
+    end
+})
+
 ix.command.Add("KickDoor", {
     description = "Kick a door.",
     OnRun = function(self, ply)

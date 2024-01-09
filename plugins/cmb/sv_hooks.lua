@@ -167,3 +167,225 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
         end)
     end
 end
+
+function PLUGIN:PlayerStartVoice(ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( ( ply.nextCombineVoiceSound or 0 ) < CurTime() ) then
+        if ( Schema:IsCP(ply) ) then
+            Schema:PlaySound(ply, "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
+
+            ply.nextCombineVoiceSound = CurTime() + 1
+        elseif ( Schema:IsOTA(ply) ) then
+            Schema:PlaySound(ply, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
+
+            ply.nextCombineVoiceSound = CurTime() + 1
+        end
+    end
+
+    if ( char:GetData("radioVoice", false) ) then
+        if ( Schema:IsCP(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                if ( v == ply ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 0.5, 100, 0.5)
+            end
+        elseif ( Schema:IsOTA(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                if ( v == ply ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav", 0.5, 100, 0.5)
+            end
+        end
+    end
+end
+
+function PLUGIN:PlayerEndVoice(ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( ( ply.nextCombineVoiceSoundOff or 0 ) < CurTime() ) then
+        if ( Schema:IsCP(ply) ) then
+            Schema:PlaySound(ply, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
+
+            ply.nextCombineVoiceSoundOff = CurTime() + 1
+        elseif ( Schema:IsOTA(ply) ) then
+            Schema:PlaySound(ply, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
+
+            ply.nextCombineVoiceSoundOff = CurTime() + 1
+        end
+    end
+
+    if ( char:GetData("radioVoice", false) ) then
+        if ( Schema:IsCP(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                if ( v == ply ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 0.5, 100, 0.5)
+            end
+        elseif ( Schema:IsOTA(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 0.5, 100, 0.5)
+            end
+        end
+    elseif ( char:GetData("radioVoiceTeam", false) ) then
+        if ( Schema:IsCP(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                if ( v == ply ) then
+                    continue
+                end
+
+                if not ( v:Team() == ply:Team() ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 0.5, 100, 0.5)
+            end
+        elseif ( Schema:IsOTA(ply) ) then
+            for k, v in ipairs(player.GetAll()) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                if ( v == ply ) then
+                    continue
+                end
+
+                if not ( v:Team() == ply:Team() ) then
+                    continue
+                end
+
+                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 0.5, 100, 0.5)
+            end
+        end
+    end
+end 
+
+function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
+    if not ( IsValid(listener) or IsValid(talker) ) then
+        return
+    end
+
+    local charListener = listener:GetCharacter()
+
+    if not ( charListener ) then
+        return
+    end
+
+    local charTalker = talker:GetCharacter()
+    
+    if not ( charTalker ) then
+        return
+    end
+
+    if ( charTalker:GetData("radioVoice", false) ) then
+        if ( Schema:IsCombine(talker) and Schema:IsCombine(listener) ) then
+            return true
+        end
+    elseif ( charTalker:GetData("radioVoiceTeam", false) ) then
+        if ( Schema:IsCombine(talker) and listener:Team() == talker:Team() ) then
+            return true
+        end
+    end
+end
