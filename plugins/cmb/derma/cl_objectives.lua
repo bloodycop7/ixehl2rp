@@ -86,7 +86,7 @@ function PANEL:PopulateObjectives()
         objectiveText:DockMargin(5, 5, 5, 0)
         objectiveText:SetWrap(true)
         objectiveText:SetText("Objective: " .. v.text)
-        objectiveText:SetFont("ixCombineFont08")
+        objectiveText:SetFont("ixCombineFont10")
         objectiveText:SetAutoStretchVertical(true)
 
         local removeButton = objective:Add("ixMenuButton")
