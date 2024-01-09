@@ -215,4 +215,14 @@ function ITEM:OnRemoved()
 	if not ( IsValid(ply) and ply:IsPlayer() ) then
         return
 	end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( self:GetData("equip", false) ) then
+        self.functions.UnEquip.OnRun(self)
+    end
 end
