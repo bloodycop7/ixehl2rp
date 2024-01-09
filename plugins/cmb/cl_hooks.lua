@@ -459,9 +459,9 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            local char = v:GetCharacter()
+            local vChar = v:GetCharacter()
 
-            if not ( char ) then
+            if not ( vChar ) then
                 continue
             end
 
@@ -469,12 +469,12 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
+            if not ( Schema:IsCombine(v) ) then
+                continue
+            end
+
             if ( ix.option.Get("combineOutlineAssetsTeamOnly", false) ) then
-                if not ( v:Team() == localPlayer:Team() ) then
-                    continue
-                end
-            else
-                if not ( Schema:IsCombine(v) ) then
+                if ( hook.Run("CombineOverlayCanDisplayAssetOnly", v) == false ) then
                     continue
                 end
             end
@@ -487,6 +487,14 @@ function PLUGIN:SetupOutlines()
 
             if ( outlineColor == nil ) then
                 outlineColor = team.GetColor(v:Team())
+            end
+
+            if ( ix.option.Get("combineOverlaySquadOutline", true) ) then
+                if not ( vChar:GetData("squadID", -1) == -1 and char:GetData("squadID", -1) == -1 ) then
+                    if ( vChar:GetData("squadID", -1) == char:GetData("squadID", -1) ) then
+                        outlineColor = ix.option.Get("combineOverlaySquadOutlineColor", color_white)
+                    end
+                end
             end
 
             ix.outline.Add(v, outlineColor)
@@ -545,6 +553,44 @@ function PLUGIN:GetPlayerOutlineColor(target)
             return Color(255, 255, 255)
         end
     end
+end
+
+function PLUGIN:CombineOverlayCanDisplayAssetOnly(ply)
+    if not ( IsValid(localPLayer) ) then
+        return
+    end
+
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(localPlayer) ) then
+        return
+    end
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    if not ( plyChar:GetData("squadID", -1) == -1 and char:GetData("squadID", -1) == -1 ) then
+        if ( plyChar:GetData("squadID", -1) == char:GetData("squadID", -1) ) then
+            return true
+        end
+    end
+
+    if ( ply:Team() != localPlayer:Team() ) then
+        return false
+    end
+
+    return true
 end
 
 function PLUGIN:GetFriendlyOutlineColor(ent)

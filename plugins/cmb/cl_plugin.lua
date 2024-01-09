@@ -45,6 +45,14 @@ ix.option.Add("combineOverlaySquadColor", ix.type.color, Color(0, 255, 150), {
     category = "Combine Systems",
 })
 
+ix.option.Add("combineOverlaySquadOutline", ix.type.bool, true, {
+    category = "Combine Systems",
+})
+
+ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 255), {
+    category = "Combine Systems",
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")

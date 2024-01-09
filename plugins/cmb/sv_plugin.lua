@@ -435,7 +435,17 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
 
     table.insert(ix.cmbSystems.squads, squadData)
 
-    char:SetData("squadID", #ix.cmbSystems.squads)
+    local filter = RecipientFilter()
+    
+    for k, v in ipairs(player.GetAll()) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        filter:AddPlayer(v)
+    end
+
+    char:SetData("squadID", #ix.cmbSystems.squads, false, filter)
 
     net.Start("ix.cmbSystems.SyncSquads")
         net.WriteTable(ix.cmbSystems.squads)
@@ -471,7 +481,18 @@ function ix.cmbSystems:InsertMember(ply, id)
 
     table.insert(ix.cmbSystems.squads[id].members, ply)
 
-    char:SetData("squadID", id)
+
+    local filter = RecipientFilter()
+        
+    for k, v in ipairs(player.GetAll()) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        filter:AddPlayer(v)
+    end
+
+    char:SetData("squadID", id, false, filter)
 
     net.Start("ix.cmbSystems.SyncSquads")
         net.WriteTable(ix.cmbSystems.squads)
@@ -512,7 +533,17 @@ function ix.cmbSystems:RemoveMember(ply, id)
 
         table.RemoveByValue(ix.cmbSystems.squads[id].members, ply)
 
-        char:SetData("squadID", -1)
+        local filter = RecipientFilter()
+
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
+
+            filter:AddPlayer(v)
+        end
+
+        char:SetData("squadID", -1, false, filter)
 
         if ( #ix.cmbSystems.squads[id].members <= 0 ) then
             ix.cmbSystems:RemoveSquad(id)
@@ -544,7 +575,17 @@ function ix.cmbSystems:RemoveSquad(id)
             continue
         end
 
-        char:SetData("squadID", -1)
+        local filter = RecipientFilter()
+        
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
+
+            filter:AddPlayer(v)
+        end
+
+        char:SetData("squadID", -1, false, filter)
     end
 
     table.remove(ix.cmbSystems.squads, id)

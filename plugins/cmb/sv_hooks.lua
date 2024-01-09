@@ -12,7 +12,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
     end
 
     if ( char:GetData("squadID", -1) != -1 ) then
-        ix.cmbSystems:RemoveMember(ply, char:GetData("squadID", -1))
+        ix.cmbSystems:RemoveMember(ply, char:GetData("squadID", -1), false, RecipientFilter())
     end
 
     if ( Schema:IsCombine(ply) ) then

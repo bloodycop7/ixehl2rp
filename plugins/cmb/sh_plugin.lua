@@ -65,6 +65,8 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquad = "Combine Overlay - Squad",
     optCombineOverlaySquadHealth = "Combine Overlay - Squad Health",
     optCombineOverlaySquadColor = "Combine Overlay - Squad Color",
+    optCombineOverlaySquadOutline = "Combine Overlay - Squad Outline",
+    optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -77,6 +79,8 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquad = "Should the combine overlay display squad member(s).",
     optdCombineOverlaySquadHealth = "Should the combine overlay display squad member(s) health.",
     optdCombineOverlaySquadColor = "What color should the combine overlay display squad member(s) as.",
+    optdCombineOverlaySquadOutline = "Should the combine overlay display squad member(s) outline.",
+    optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
 })
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
