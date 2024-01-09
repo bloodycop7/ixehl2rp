@@ -958,13 +958,13 @@ ix.command.Add("TimeoutVoiceRadio", {
             return
         end
 
-        if not ( Schema:IsCombine(ply) ) then
+        if not ( Schema:IsCombine(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Units can use this command.")
 
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return
@@ -1030,13 +1030,13 @@ ix.command.Add("RemoveVoiceRadioTimeout", {
             return
         end
 
-        if not ( Schema:IsCombine(ply) ) then
+        if not ( Schema:IsCombine(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Units can use this command.")
 
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return

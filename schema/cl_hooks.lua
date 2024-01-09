@@ -166,6 +166,10 @@ function Schema:PlayerStartVoice(ply)
 	net.Start("ix.PlayerStartVoice")
 	net.SendToServer()
 
+	if ( IsValid(g_VoicePanelList) ) then
+		g_VoicePanelList:Remove()
+	end
+
 	return true
 end
 
