@@ -100,6 +100,10 @@ ITEM.functions.Equip = {
             return false
         end
 
+        if not ( item.invID == char:GetInventory():GetID() ) then
+            return false
+        end
+
         if ( item:GetData("equip", false) ) then
             return false
         end
@@ -184,6 +188,10 @@ ITEM.functions.UnEquip = {
         local char = ply:GetCharacter()
 
         if not ( char ) then
+            return false
+        end
+
+        if not ( item.invID == char:GetInventory():GetID() ) then
             return false
         end
 
