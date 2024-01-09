@@ -272,99 +272,57 @@ function PLUGIN:PlayerEndVoice(ply)
     end
 
     if ( char:GetData("radioVoice", false) ) then
-        if ( Schema:IsCP(ply) ) then
-            for k, v in ipairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
-
-                local vChar = v:GetCharacter()
-
-                if not ( vChar ) then
-                    continue
-                end
-
-                if not ( Schema:IsCombine(v) ) then
-                    continue
-                end
-
-                if ( v == ply ) then
-                    continue
-                end
-
-                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
             end
-        elseif ( Schema:IsOTA(ply) ) then
-            for k, v in ipairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
 
-                local vChar = v:GetCharacter()
+            local vChar = v:GetCharacter()
 
-                if not ( vChar ) then
-                    continue
-                end
-
-                if not ( Schema:IsCombine(v) ) then
-                    continue
-                end
-
-                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
+            if not ( vChar ) then
+                continue
             end
+
+            if not ( Schema:IsCombine(v) ) then
+                continue
+            end
+
+            if ( v == ply ) then
+                continue
+            end
+
+            local sound = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
+
+            if ( Schema:IsOTA(ply) ) then
+                sound = "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav"
+            end
+
+            Schema:PlaySound(v, sound, 75, 100, 0.6)
         end
     elseif ( char:GetData("radioVoiceTeam", false) ) then
-        if ( Schema:IsCP(ply) ) then
-            for k, v in ipairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
-
-                local vChar = v:GetCharacter()
-
-                if not ( vChar ) then
-                    continue
-                end
-
-                if not ( Schema:IsCombine(v) ) then
-                    continue
-                end
-
-                if ( v == ply ) then
-                    continue
-                end
-
-                if not ( v:Team() == ply:Team() ) then
-                    continue
-                end
-
-                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
+        for k, v in ipairs(player.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
             end
-        elseif ( Schema:IsOTA(ply) ) then
-            for k, v in ipairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
 
-                local vChar = v:GetCharacter()
+            local vChar = v:GetCharacter()
 
-                if not ( vChar ) then
-                    continue
-                end
+            if not ( vChar ) then
+                continue
+            end
 
-                if not ( Schema:IsCombine(v) ) then
-                    continue
-                end
+            if not ( Schema:IsCombine(v) ) then
+                continue
+            end
 
-                if ( v == ply ) then
-                    continue
-                end
+            if not ( v:Team() == ply:Team() ) then
+                continue
+            end
 
-                if not ( v:Team() == ply:Team() ) then
-                    continue
-                end
+            local sound = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
 
-                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
+            if ( Schema:IsOTA(ply) ) then
+                sound = "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav"
             end
         end
     end
