@@ -428,9 +428,9 @@ net.Receive("ix.PlayerChatTextChanged", function(len, ply)
 		end
 
 		if ( Schema:IsOTA(ply) ) then
-			ply:EmitSound("npc/combine_soldier/vo/on"..math.random(1, 2)..".wav")
+			ply:EmitSound("npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav")
 		elseif ( Schema:IsCP(ply) ) then
-			ply:EmitSound("NPC_MetroPolice.Radio.On")
+			ply:EmitSound("npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav")
 		end
 	end
 
