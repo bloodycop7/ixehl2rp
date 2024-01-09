@@ -21,5 +21,6 @@ hook.Add("OnScreenSizeChanged", "OnScreenSizeChanged.ixChangeScreenSize", functi
 
         hook.Run("HUDPaint")
         hook.Run("HUDPaintBackground")
+        hook.Run("LoadFonts", ix.config.Get("font"), ix.config.Get("genericFont"))
     end)
 end)
