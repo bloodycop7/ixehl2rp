@@ -93,10 +93,12 @@ if ( SERVER ) then
                 table.insert(items, v.uniqueID)
 
                 self:SetItems(items)
+                v:Remove()
 
-                v:Remove()                
+                local sterToAdd = hook.Run("GetPlayerSterilizationCreditAward", ply, v) or ( v.sterCreditsReward or 5 )
+
                 totalConfiscatedCount = totalConfiscatedCount + 1
-                sterCreditsNew = sterCreditsNew + ( v.sterCreditsReward or 5 )
+                sterCreditsNew = sterCreditsNew + sterToAdd
             end
             
             if ( totalConfiscatedCount > 0 ) then
