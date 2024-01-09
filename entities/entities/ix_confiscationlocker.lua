@@ -8,6 +8,14 @@ ENT.AdminOnly = true
 ENT.PhysgunDisable = true
 ENT.bNoPersist = true
 
+function ENT:GetWipeTime()
+    return timer.TimeLeft("ix.ConfiscationLocker.Wipe." .. self:EntIndex())
+end
+
+function ENT:OnRemove()
+    timer.Remove("ix.ConfiscationLocker.Wipe." .. self:EntIndex())
+end
+
 if ( SERVER ) then
     util.AddNetworkString("ixConfiscationLockerSyncTime")
 
@@ -39,21 +47,12 @@ if ( SERVER ) then
                 self:SetItems()
             end)
         end
-        self.storedIndex = self:EntIndex()
 
 		self.nextUse = 0
 	end
 
-    function ENT:OnRemove()
-        timer.Remove("ix.ConfiscationLocker.Wipe." .. self:EntIndex())
-    end
-
     function ENT:GetItems()
         return self.items or {}
-    end
-
-    function ENT:GetWipeTime()
-        return timer.TimeLeft("ix.ConfiscationLocker.Wipe." .. self:EntIndex())
     end
 
 	function ENT:Use(ply)
@@ -141,55 +140,12 @@ if ( SERVER ) then
 
 		self.nextUse = CurTime() + 1
     end
-
-    net.Receive("ixConfiscationLockerSyncTime", function(len, ply)
-        if not ( IsValid(ply) ) then
-            return
-        end
-
-        local char = ply:GetCharacter()
-
-        if not ( char ) then
-            return
-        end
-
-        local locker = net.ReadEntity()
-
-        if not ( IsValid(locker) ) then
-            return
-        end
-
-        local timeLeft = locker:GetWipeTime()
-
-        net.Start("ixConfiscationLockerSyncTime")
-            net.WriteFloat(locker.storedIndex)
-            net.WriteFloat(timeLeft)
-        net.Send(ply)
-    end)
 else
-    net.Receive("ixConfiscationLockerSyncTime", function()
-        local storedIndex = net.ReadFloat()
-        local locker = Entity(storedIndex)
-
-        if not ( IsValid(locker) ) then
-            return
+    function ENT:Initialize()
+        if not ( timer.Exists("ix.ConfiscationLocker.Wipe." .. self:EntIndex()) ) then
+            timer.Create("ix.ConfiscationLocker.Wipe." .. self:EntIndex(), ix.config.Get("confiscationLockerWipeTime", (60 * 30)), 0, function()
+            end)
         end
-
-        local timeLeft = net.ReadFloat()
-
-        if ( timer.Exists("ix.ConfiscationLocker.Wipe." .. locker:EntIndex()) ) then
-            timer.Adjust("ix.ConfiscationLocker.Wipe." .. locker:EntIndex(), timeLeft)
-        else
-            timer.Create("ix.ConfiscationLocker.Wipe." .. locker:EntIndex(), timeLeft, 0, function() end)
-        end
-    end)
-
-    function ENT:GetWipeTime()
-        net.Start("ixConfiscationLockerSyncTime")
-            net.WriteEntity(self)
-        net.SendToServer()
-
-        return timer.TimeLeft("ix.ConfiscationLocker.Wipe." .. self:EntIndex()) or 0
     end
 
     ENT.PopulateEntityInfo = true
