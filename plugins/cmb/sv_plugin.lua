@@ -436,14 +436,7 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
     table.insert(ix.cmbSystems.squads, squadData)
 
     local filter = RecipientFilter()
-    
-    for k, v in ipairs(player.GetAll()) do
-        if not ( IsValid(v) ) then
-            continue
-        end
-
-        filter:AddPlayer(v)
-    end
+    filter:AddAllPlayers()
 
     char:SetData("squadID", #ix.cmbSystems.squads, false, filter)
 
@@ -483,14 +476,7 @@ function ix.cmbSystems:InsertMember(ply, id)
 
 
     local filter = RecipientFilter()
-        
-    for k, v in ipairs(player.GetAll()) do
-        if not ( IsValid(v) ) then
-            continue
-        end
-
-        filter:AddPlayer(v)
-    end
+    filter:AddAllPlayers()
 
     char:SetData("squadID", id, false, filter)
 
@@ -534,14 +520,7 @@ function ix.cmbSystems:RemoveMember(ply, id)
         table.RemoveByValue(ix.cmbSystems.squads[id].members, ply)
 
         local filter = RecipientFilter()
-
-        for k, v in ipairs(player.GetAll()) do
-            if not ( IsValid(v) ) then
-                continue
-            end
-
-            filter:AddPlayer(v)
-        end
+        filter:AddAllPlayers()
 
         char:SetData("squadID", -1, false, filter)
 
@@ -576,14 +555,7 @@ function ix.cmbSystems:RemoveSquad(id)
         end
 
         local filter = RecipientFilter()
-        
-        for k, v in ipairs(player.GetAll()) do
-            if not ( IsValid(v) ) then
-                continue
-            end
-
-            filter:AddPlayer(v)
-        end
+        filter:AddAllPlayers()
 
         char:SetData("squadID", -1, false, filter)
     end
