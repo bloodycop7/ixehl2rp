@@ -1,6 +1,5 @@
 CLASS.name = "Electrician"
 CLASS.faction = FACTION_CITIZEN
-CLASS.isDefault = true
 CLASS.abbreviation = "Electrician"
 
 function CLASS:OnSet(ply)
