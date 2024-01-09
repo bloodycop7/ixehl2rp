@@ -99,6 +99,11 @@ ix.config.Add("grenadeCooldown", 30, "How long should the grenade cooldown be?",
     data = {min = 1, max = 3600},
 })
 
+ix.config.Add("squadLimit", 4, "How many units can be in a squad?", nil, {
+    category = "Combine Systems",
+    data = {min = 1, max = 40},
+})
+
 ix.char.RegisterVar("bOLStatus", {
     field = "bol_status",
     fieldType = ix.type.bool,

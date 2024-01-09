@@ -431,6 +431,7 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
 
     squadData.leader = ply
     squadData.members = squadData.members or {ply}
+    squadData.limit = squadData.limit or ix.config.Get("squadLimit", 4)
 
     table.insert(ix.cmbSystems.squads, squadData)
 
@@ -464,6 +465,10 @@ function ix.cmbSystems:InsertMember(ply, id)
         return
     end
 
+    if ( #ix.cmbSystems.squads[id].members >= ix.cmbSystems.squads[id].limit ) then
+        return
+    end
+
     table.insert(ix.cmbSystems.squads[id].members, ply)
 
     char:SetData("squadID", id)
@@ -494,13 +499,11 @@ function ix.cmbSystems:RemoveMember(ply, id)
 
     if ( table.HasValue(ix.cmbSystems.squads[id].members, ply) ) then
         if ( ply == ix.cmbSystems.squads[id].leader ) then
-
             local sortedTable = ix.cmbSystems.squads[id].members
 
             table.RemoveByValue(sortedTable, ply)
 
             table.sort(sortedTable, function(a, b)
-
                 return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
             end)
 
