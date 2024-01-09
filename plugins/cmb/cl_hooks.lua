@@ -61,8 +61,7 @@ function PLUGIN:HUDPaint()
         return
     end
 
-    local padding = ScreenScale(10)
-    local x, y = padding, padding
+    local padding = ScreenScale(8)
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
     if ( code ) then
@@ -70,15 +69,15 @@ function PLUGIN:HUDPaint()
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
         self:DrawBox({
-            x = x - 2,
-            y = y,
+            x = padding,
+            y = padding,
             w = textWidth * 1.05,
             h = textHeight * 1.05,
             rectColor = code.color or color_white,
             backColor = Color(0, 0, 0)
         })
 
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", x, y, color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT)
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do
@@ -227,7 +226,7 @@ function PLUGIN:HUDPaint()
 
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
-            surface.SetFont("ixCombineFont14")
+            surface.SetFont("ixCombineFont10")
             local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
@@ -240,6 +239,9 @@ function PLUGIN:HUDPaint()
             })
 
             if ( wep:Clip1() <= wep:GetMaxClip1() / 4 ) then
+                surface.SetFont("ixCombineFont10")
+                local textWidth2, textHeight2 = surface.GetTextSize("RELOAD")
+
                 self:DrawBox({
                     x = scrW - padding * 6.7,
                     y = scrH - textHeight - padding * 1.9,
@@ -249,10 +251,10 @@ function PLUGIN:HUDPaint()
                     backColor = Color(0, 0, 0)
                 })
 
-                draw.DrawText("RELOAD", "ixCombineFont14", scrW - padding * 4.3, scrH - padding * 3.3, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 4.3, scrH - ( textHeight + textHeight2 ) - padding * 0.5, Color(255, 0, 0), TEXT_ALIGN_CENTER)
             end
 
-            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont14", scrW - padding * 1.05, scrH - padding * 1.8, color_white, TEXT_ALIGN_RIGHT)
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
         end
     end
 end

@@ -15,6 +15,11 @@ hook.Add("OnReloaded", "OnReloaded.ixLoadCharacter", function()
 end)
 
 hook.Add("OnScreenSizeChanged", "OnScreenSizeChanged.ixChangeScreenSize", function()
-    scrW = ScrW()
-    scrH = ScrH()
+    timer.Simple(1, function()
+        scrW = ScrW()
+        scrH = ScrH()
+
+        hook.Run("HUDPaint")
+        hook.Run("HUDPaintBackground")
+    end)
 end)
