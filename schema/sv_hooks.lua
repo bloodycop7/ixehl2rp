@@ -243,10 +243,10 @@ function Schema:PlayerJoinedClass(ply, class, oldClass)
 	if ( classData.bodygroups ) then
 		for k, v in pairs(classData.bodygroups) do
 			if ( isstring(k) ) then
-				ply:SetBodygroup(ply:FindBodygroupByName(k), v)
-			else
-				ply:SetBodygroup(k, v)
+				k = ply:FindBodygroupByName(k)
 			end
+
+			ply:SetBodygroup(k, v)
 		end
 	end
 

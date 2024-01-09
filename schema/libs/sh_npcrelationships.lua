@@ -99,6 +99,10 @@ if ( SERVER ) then
             local relationshipStatus = D_HT
 
             if ( ix.relationships.CombineNPCs[ent:GetClass()] ) then
+                local oldTable = ent.VJ_NPC_Class or {}
+                oldTable[#oldTable + 1] = "CLASS_COMBINE"
+
+                ent.VJ_NPC_Class = oldTable
                 ent.ZBaseFaction = "combine"
 
                 if ( Schema:IsCombine(v) ) then
@@ -107,6 +111,10 @@ if ( SERVER ) then
                     relationshipStatus = D_LI
                 end
             elseif ( ix.relationships.RebelNPCs[ent:GetClass()] ) then
+                local oldTable = ent.VJ_NPC_Class or {}
+                oldTable[#oldTable + 1] = "CLASS_REBEL"
+
+                ent.VJ_NPC_Class = oldTable
                 ent.ZBaseFaction = "ally"
                 
                 if not ( Schema:IsCombine(v) ) then
