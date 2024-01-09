@@ -62,7 +62,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
 
             sounds[#sounds + 1] = "npc/combine_soldier/vo/off1.wav"
 
-            ix.util.EmitQueuedSounds(v, sounds, 0, 0.1, 40, 90)
+            ix.util.EmitQueuedSounds(v, sounds, 0, 0.1, 40)
         end
 
         ix.cmbSystems:MakeWaypoint({
