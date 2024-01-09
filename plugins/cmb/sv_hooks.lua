@@ -60,7 +60,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
                 sounds[#sounds + 1] = v2
             end
 
-            sounds[#sounds + 1] = "npc/combine_soldier/vo/off1.wav"
+            sounds[#sounds + 1] = "npc/overwatch/radiovoice/off2.wav"
 
             ix.util.EmitQueuedSounds(v, sounds, 0, 0.1, 40)
         end
