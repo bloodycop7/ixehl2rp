@@ -169,6 +169,12 @@ function Schema:PlayerStartVoice(ply)
 	return true
 end
 
+function Schema:HUDShouldDraw(element)
+	if ( element == "CHudVoiceStatus" or element == "CHudVoiceSelfStatus" ) then
+		return false
+	end
+end
+
 function Schema:PlayerEndVoice(ply)
 	net.Start("ix.PlayerEndVoice")
 	net.SendToServer()

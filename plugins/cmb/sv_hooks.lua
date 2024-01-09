@@ -212,7 +212,7 @@ function PLUGIN:PlayerStartVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
             end
         elseif ( Schema:IsOTA(ply) ) then
             for k, v in ipairs(player.GetAll()) do
@@ -234,7 +234,7 @@ function PLUGIN:PlayerStartVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
             end
         end
     end
@@ -284,7 +284,7 @@ function PLUGIN:PlayerEndVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
             end
         elseif ( Schema:IsOTA(ply) ) then
             for k, v in ipairs(player.GetAll()) do
@@ -302,7 +302,7 @@ function PLUGIN:PlayerEndVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
             end
         end
     elseif ( char:GetData("radioVoiceTeam", false) ) then
@@ -330,7 +330,7 @@ function PLUGIN:PlayerEndVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
             end
         elseif ( Schema:IsOTA(ply) ) then
             for k, v in ipairs(player.GetAll()) do
@@ -356,7 +356,7 @@ function PLUGIN:PlayerEndVoice(ply)
                     continue
                 end
 
-                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 0.5, 100, 0.5)
+                Schema:PlaySound(v, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
             end
         end
     end
