@@ -190,6 +190,24 @@ ITEM.functions.UnEquip = {
     end
 }
 
+function ITEM:OnLoadout()
+    local ply = self.player
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( self:GetData("equip", false) ) then
+        self.functions.Equip.OnRun(self)
+    end
+end
+
 function ITEM:OnRemoved()
 	local inventory = ix.item.inventories[self.invID]
 	local ply = inventory.GetOwner and inventory:GetOwner()

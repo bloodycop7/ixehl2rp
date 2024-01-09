@@ -327,6 +327,14 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 			end
 		end
 
+		local inv = newChar:GetInventory()
+
+		for k, v in pairs(inv:GetItems()) do
+			if ( v.OnLoadout ) then
+				v:Call("OnLoadout", ply)
+			end
+		end
+		
 		newChar:SetData("squadID", nil)
 	end)
 end
