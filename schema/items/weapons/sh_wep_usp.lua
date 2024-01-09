@@ -10,3 +10,4 @@ ITEM.iconCam = {
 	fov	= 5.0470897275697,
 	pos	= Vector(0, 200, -1)
 }
+ITEM.illegal = true

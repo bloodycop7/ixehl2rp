@@ -10,3 +10,4 @@ ITEM.iconCam = {
 	ang = Angle(59.19, 219.05, 0),
 	fov = 1.94
 }
+ITEM.illegal = true
