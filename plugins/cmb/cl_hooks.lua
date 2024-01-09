@@ -104,15 +104,9 @@ function PLUGIN:HUDPaint()
                 })
 
                 draw.SimpleText("<:: " .. squad.name, "ixCombineFont10", padding, padding * 2.5, color_white, TEXT_ALIGN_LEFT)
-            
-                local sortRankMembers = squad.members
-
-                table.sort(sortRankMembers, function(a, b)
-                    return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
-                end)
 
                 local paddingOffset = 0
-                for k, v in pairs(sortRankMembers) do
+                for k, v in pairs(squad.members) do
                     if not ( IsValid(v) ) then
                         continue
                     end
