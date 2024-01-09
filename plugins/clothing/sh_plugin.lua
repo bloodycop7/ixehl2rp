@@ -16,6 +16,10 @@ function PLUGIN:Think()
             return
         end
         
+        if not ( char:GetInventory() ) then // bots :d
+            continue
+        end
+
         if ( ( v.nextClothingThink or 0 ) > CurTime() ) then
             continue
         end
