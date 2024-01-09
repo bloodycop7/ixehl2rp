@@ -760,7 +760,7 @@ ix.command.Add("Grenade", {
             return
         end
 
-        if ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64()) ) then
+        if ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64() .. "." .. char:GetID()) ) then
             ply:Notify("You cannot throw another grenade for another " .. math.ceil(timer.TimeLeft("ix.Char.GrenadeCooldown." .. ply:SteamID64())) .. " second(s).")
 
             return
@@ -814,7 +814,7 @@ ix.command.Add("Grenade", {
         end)
 
         if not ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64()) ) then
-            timer.Create("ix.Char.GrenadeCooldown." .. ply:SteamID64(), ix.config.Get("grenadeCooldown", 30), 1, function() end)
+            timer.Create("ix.Char.GrenadeCooldown." .. ply:SteamID64() .. "." .. char:GetID(), ix.config.Get("grenadeCooldown", 30), 1, function() end)
         end
     end
 })
