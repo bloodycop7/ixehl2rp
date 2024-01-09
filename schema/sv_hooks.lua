@@ -366,7 +366,7 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 			end
 		end
 		
-		newChar:SetData("squadID", nil)
+		newChar:SetData("squadID", -1)
 	end)
 end
 
