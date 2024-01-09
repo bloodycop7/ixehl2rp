@@ -737,6 +737,10 @@ ix.command.Add("CreateSquad", {
             return
         end
 
+        if not ( ply:Alive() ) then
+            return
+        end
+
         if not ( Schema:IsCombine(ply) ) then
             ply:Notify("Only Combine Units can use this command.")
 
@@ -786,6 +790,65 @@ ix.command.Add("CreateSquad", {
     end
 })
 
+ix.command.Add("JoinSquad", {
+    description = "Joins a squad.",
+    arguments = {
+        ix.type.string
+    },
+    OnRun = function(self, ply, name)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( ply:Alive() ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( char:GetData("squadID", -1) == -1 ) then
+            ply:Notify("You are already in a squad.")
+
+            return
+        end
+
+        local squadData
+
+        for k, v in pairs(ix.cmbSystems.squads) do
+            if ( v.name == name ) then
+                squadData = v
+
+                break
+            end
+        end
+
+        if not ( squadData ) then
+            ply:Notify("A squad with that name does not exist.")
+
+            return
+        end
+
+        if ( #squadData.members >= squadData.limit ) then
+            ply:Notify("That squad is full.")
+
+            return
+        end
+
+        ix.cmbSystems:InsertMember(ply, #squadData + 1)
+    end
+
+})
+
 ix.command.Add("KickSquadMember", {
     description = "Kicks a squad member.",
     arguments = {
@@ -803,6 +866,10 @@ ix.command.Add("KickSquadMember", {
         end
 
         if not ( target ) then
+            return
+        end
+
+        if not ( ply:Alive() ) then
             return
         end
 
@@ -872,6 +939,10 @@ ix.command.Add("LeaveSquad", {
         local char = ply:GetCharacter()
 
         if not ( char ) then
+            return
+        end
+
+        if not ( ply:Alive() ) then
             return
         end
 
