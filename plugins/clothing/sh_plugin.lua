@@ -6,10 +6,6 @@ PLUGIN.author = "eon"
 
 function PLUGIN:Think()
     for k, v in ipairs(player.GetAll()) do
-        if ( ( v.nextClothingThink or 0 ) > CurTime() ) then
-            continue
-        end
-
         if not ( IsValid(v) ) then
             continue
         end
@@ -18,6 +14,10 @@ function PLUGIN:Think()
 
         if not ( char ) then
             return
+        end
+        
+        if ( ( v.nextClothingThink or 0 ) > CurTime() ) then
+            continue
         end
 
         for _, item in pairs(char:GetInventory():GetItemsByBase("base_clothing", false)) do
