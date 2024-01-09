@@ -24,6 +24,7 @@ ITEM:Hook("drop", function(item)
 
     if ( item:GetData("equip", false) ) then
         item.functions.UnEquip.OnRun(item)
+        item:SetData("equip", nil)
     end
 end)
 
@@ -170,7 +171,7 @@ ITEM.functions.UnEquip = {
             item:OnUnEquipped(ply)
         end
 
-        item:SetData("equip", false)
+        item:SetData("equip", nil)
         return false
     end,
     OnCanRun = function(item)
