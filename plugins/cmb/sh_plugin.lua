@@ -782,6 +782,82 @@ ix.command.Add("CreateSquad", {
     end
 })
 
+ix.command.Add("KickSquadMember", {
+    description = "Kicks a squad member.",
+    arguments = {
+        ix.type.character
+    },
+    OnRun = function(self, ply, target)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
+        if not ( target ) then
+            return
+        end
+
+        local targetPly = target:GetPlayer()
+
+        if not ( IsValid(targetPly) ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( Schema:IsCombine(targetPly) ) then
+            ply:Notify("You can only kick Combine Units.")
+
+            return
+        end
+
+        if ( char:GetData("squadID", -1) == -1 ) then
+            ply:Notify("You are not in a squad.")
+
+            return
+        end
+
+        if ( target:GetData("squadID", -1) == -1 ) then
+            ply:Notify("This unit is not in a squad.")
+
+            return
+        end
+
+        if not ( char:GetData("squadID", -1) == target:GetData("squadID", -1) ) then
+            ply:Notify("You are not in the same squad as this unit.")
+
+            return
+        end
+
+        local squadData = ix.cmbSystems.squads[char:GetData("squadID", -1)]
+
+        if not ( squadData ) then
+            ply:Notify("Your squad is invalid, your squad id has been reset.")
+            char:SetData("squadID", -1)
+
+            return
+        end
+
+        if not ( squadData.leader == ply or ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) ) then
+            ply:Notify("You don't have the authority to kick a squad member.")
+
+            return
+        end
+
+        ix.cmbSystems:RemoveMember(targetPly, char:GetData("squadID", -1))
+    end
+
+})
+
 ix.command.Add("LeaveSquad", {
     description = "Leaves your current squad.",
     OnRun = function(self, ply)
