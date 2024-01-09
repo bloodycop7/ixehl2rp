@@ -789,7 +789,9 @@ ix.command.Add("LeaveSquad", {
             return
         end
 
-        if not ( ply:GetCharacter() ) then
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
             return
         end
 
@@ -799,20 +801,20 @@ ix.command.Add("LeaveSquad", {
             return
         end
 
-        if ( ply:GetCharacter():GetData("squadID", -1) == -1 ) then
+        if ( char:GetData("squadID", -1) == -1 ) then
             ply:Notify("You are not in a squad.")
 
             return
         end
 
-        if not ( ix.cmbSystems.squads[ply:GetCharacter():GetData("squadID", -1)] ) then
-            ply:GetCharacter():SetData("squadID", -1)
+        if not ( ix.cmbSystems.squads[char:GetData("squadID", -1)] ) then
+            char:SetData("squadID", -1)
             ply:Notify("Squad invalid, your squad id has been reset.")
 
             return
         end
 
-        ix.cmbSystems:RemoveMember(ply, ply:GetCharacter():GetData("squadID", -1))
+        ix.cmbSystems:RemoveMember(ply, char:GetData("squadID", -1))
     end
 })
 
