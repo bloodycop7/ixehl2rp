@@ -628,7 +628,7 @@ function PLUGIN:InitializedChatClasses()
             chat.AddText(Color(0, 100, 170), "[CMB] " .. speaker:GetChar():GetName() .. ": " .. text)
         end,
         prefix = {"/cmbradio", "/cmbr"},
-        font = "ixCombineChatFont",
+        font = "ixMonoMediumFont",
     })
 
     ix.chat.Register("cmb_ota", {
@@ -682,7 +682,7 @@ function PLUGIN:InitializedChatClasses()
             chat.AddText(Color(170, 0, 0), "*[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
         end,
         prefix = {"/otaradio", "/otar"},
-        font = "ixGenericFont",
+        font = "ixMonoMediumFont",
     })
 
     ix.chat.Register("cmb_dispatch", {
