@@ -84,6 +84,7 @@ ITEM.functions.Equip = {
         end
 
         item:SetData("equip", true)
+        char:SetData("outfits", outfitData)
 
         return false
     end,
@@ -176,6 +177,7 @@ ITEM.functions.UnEquip = {
         end
 
         item:SetData("equip", nil)
+        char:SetData("outfits", outfitData)
         return false
     end,
     OnCanRun = function(item)
