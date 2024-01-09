@@ -430,7 +430,7 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
     end
 
     squadData.leader = ply
-    squadData.members = squadData.members or {}
+    squadData.members = squadData.members or {ply}
     squadData.id = #ix.cmbSystems.squads
     
     char:SetData("squadID", squadData.id)
@@ -445,6 +445,20 @@ end
 function ix.cmbSystems:RemoveSquad(id)
     if not ( id ) then
         return
+    end
+
+    for k, v in ipairs(ix.cmbSystems.squads.members) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        local char = v:GetCharacter()
+
+        if not ( char ) then
+            continue
+        end
+
+        char:SetData("squadID", -1)
     end
 
     table.remove(ix.cmbSystems.squads, id)

@@ -11,6 +11,8 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         return
     end
 
+    char:SetData("squadID", -1)
+
     if ( Schema:IsCombine(ply) ) then
         local numbers = {}
 
