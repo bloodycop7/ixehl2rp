@@ -771,7 +771,7 @@ ix.command.Add("CreateSquad", {
             if ( v.name == name ) then
                 ply:Notify("A squad with that name already exists.")
 
-                break
+                return
             end
         end
 
