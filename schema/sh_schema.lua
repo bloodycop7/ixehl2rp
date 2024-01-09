@@ -192,7 +192,7 @@ ix.config.Add("maxItemCrateDrops", 4, "The maximum amount of items an item cache
     category = "misc"
 })
 
-ix.config.Add("confiscationLockerWipeTime", (60 * 30), "The maximum amount of items an item cache can drop", nil, {
+ix.config.Add("confiscationLockerWipe", (60 * 30), "The maximum amount of items an item cache can drop", nil, {
     data = {min = 1, max = 3600},
     category = "misc"
 })
