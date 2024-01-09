@@ -598,6 +598,10 @@ function PLUGIN:InitializedChatClasses()
                 return false
             end
 
+            if ( ix.chat.classes["ic"]:CanHear(speaker, listener) ) then
+                return true
+            end
+            
             return true
         end,
         CanSay = function(self, speaker, text)
@@ -615,10 +619,6 @@ function PLUGIN:InitializedChatClasses()
                 return false
             end
 
-            if ( ix.chat.classes["ic"]:CanHear(speaker, listener) ) then
-                return true
-            end
-
             if not ( Schema:IsCombine(speaker) ) then
                 return false
             end
@@ -626,10 +626,10 @@ function PLUGIN:InitializedChatClasses()
             return true
         end,
         OnChatAdd = function(self, speaker, text)
-            chat.AddText(Color(0, 100, 170), "*[CMB] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
+            chat.AddText(Color(0, 100, 170), "[CMB] " .. speaker:GetChar():GetName() .. ": " .. text)
         end,
         prefix = {"/cmbradio", "/cmbr"},
-        font = "ixGenericFont",
+        font = "ixCombineChatFont",
     })
 
     ix.chat.Register("cmb_ota", {

@@ -54,6 +54,15 @@ function ix.cmbSystems:MakeWaypoint(data)
 end
 
 function PLUGIN:LoadFonts(font, genericFont)
+    surface.CreateFont("ixCombineChatFont", {
+        font = "Tahoma",
+        size = ScreenScale(7),
+        weight = 1000,
+        antialias = true,
+        extended = true,
+        shadow = false,
+    })
+
     for i = 6, 40, 2 do
         local value = Schema:ZeroNumber(i, 2)
 

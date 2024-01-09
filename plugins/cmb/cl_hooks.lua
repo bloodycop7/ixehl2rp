@@ -243,7 +243,7 @@ function PLUGIN:HUDPaint()
                 local textWidth2, textHeight2 = surface.GetTextSize("RELOAD")
 
                 self:DrawBox({
-                    x = scrW - padding * 6.7,
+                    x = scrW - padding * 5.7,
                     y = scrH - textHeight - padding * 1.9,
                     w = padding * 5,
                     h = padding * 1.3,
@@ -251,7 +251,7 @@ function PLUGIN:HUDPaint()
                     backColor = Color(0, 0, 0)
                 })
 
-                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 4.3, scrH - ( textHeight + textHeight2 ) - padding * 0.5, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 5.7 / 1.75, scrH - ( textHeight + textHeight2 ) - padding * 0.7, Color(255, 0, 0), TEXT_ALIGN_CENTER)
             end
 
             draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
