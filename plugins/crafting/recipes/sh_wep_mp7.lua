@@ -8,8 +8,8 @@ RECIPE.category = "Weapons"
 RECIPE.model = itemData.model
 RECIPE.description = itemData.description
 RECIPE.requirements = {
-    ["water"] = 2,
-    ["viscerator"] = 2
+    ["metal_plate"] = 4,
+    ["gear"] = 3
 }
 RECIPE.result = {
     ["wep_mp7"] = 1
