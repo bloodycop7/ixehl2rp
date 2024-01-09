@@ -63,7 +63,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
     if ( Schema:IsCombine(ply) ) then
         ix.cmbSystems:MakeWaypoint({
             pos = ply:GetPos(),
-            text = "Lost Biosignal for Unit " .. char:GetName() .. ".",
+            text = "BSL " .. char:GetName() .. ".",
             color = Color(255, 0, 0),
             duration = 5
         })
