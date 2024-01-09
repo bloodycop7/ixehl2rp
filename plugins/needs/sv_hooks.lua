@@ -14,17 +14,16 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
 end
 
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
-    if ( ply:GetCharacter() ) then
-        ply:GetCharacter():SetData("isConsuming", false)
+    if ( newChar ) then
+        newChar:SetData("isConsuming", false)
 
         if not ( timer.Exists("ix.Characters.Needs.Hunger." .. newChar:GetID()) ) then
             timer.Create("ix.Characters.Needs.Hunger." .. newChar:GetID(), ix.config.Get("hungerRate", 60), 0, function()
-                if ( ply:GetCharacter() ) then
-                    local char = ply:GetCharacter()
-                    local hunger = char:GetHunger()
+                if ( newChar ) then
+                    local hunger = newChar:GetHunger()
 
                     if ( hunger > 10 ) then
-                        char:SetHunger(hunger - 1)
+                        newChar:SetHunger(hunger - 1)
                     end
                 end
             end)
@@ -32,12 +31,11 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
 
         if not ( timer.Exists("ix.Characters.Needs.Thirst." .. newChar:GetID()) ) then
             timer.Create("ix.Characters.Needs.Thirst." .. newChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
-                if ( ply:GetCharacter() ) then
-                    local char = ply:GetCharacter()
+                if ( newChar ) then
                     local thirst = char:GetThirst()
                     
                     if ( thirst > 10 ) then
-                        char:SetThirst(thirst - 1)
+                        newChar:SetThirst(thirst - 1)
                     end
                 end
             end)
