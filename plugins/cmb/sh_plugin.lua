@@ -727,7 +727,9 @@ ix.command.Add("CreateSquad", {
             return
         end
 
-        if not ( ply:GetCharacter() ) then
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
             return
         end
 
@@ -755,6 +757,12 @@ ix.command.Add("CreateSquad", {
 
         if ( limit > ix.config.Get("squadLimit", 4) ) then
             ply:Notify("The squad limit cannot be higher than " .. ix.config.Get("squadLimit", 4) .. ".")
+
+            return
+        end
+
+        if not ( char:GetData("squadID", -1) == -1 ) then
+            ply:Notify("You are already in a squad.")
 
             return
         end
