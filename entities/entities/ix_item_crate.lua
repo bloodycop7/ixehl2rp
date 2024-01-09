@@ -14,7 +14,7 @@ if ( SERVER ) then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
-		self:SetHealth(50)
+		self:SetHealth(60)
 
 		local physics = self:GetPhysicsObject()
 		physics:EnableMotion(false)
@@ -51,8 +51,10 @@ if ( SERVER ) then
                 table.insert(tableBase, v.uniqueID)
             end
 
-            for i = 1, math.random(0, ix.config.Get("maxItemCrateDrops", 3)) do
-                ix.item.Spawn(table.Random(tableBase), self:GetPos() + self:GetUp() * math.random(1, 30) + self:GetRight() * math.random(-30, 30))
+            if not ( table.IsEmpty(tableBase) ) then
+                for i = 1, math.random(0, ix.config.Get("maxItemCrateDrops", 3)) do
+                    ix.item.Spawn(table.Random(tableBase), self:GetPos() + self:GetUp() * math.random(1, 30) + self:GetRight() * math.random(-30, 30))
+                end
             end
 
             self:Remove()

@@ -760,8 +760,8 @@ ix.command.Add("Grenade", {
             return
         end
 
-        if ( char:GetData("nextGrenadeThrow", 0) > CurTime() ) then
-            ply:Notify("You cannot throw another grenade for another " .. math.ceil(char:GetData("nextGrenadeThrow") - CurTime()) .. " second(s).")
+        if ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64()) ) then
+            ply:Notify("You cannot throw another grenade for another " .. math.ceil(timer.TimeLeft("ix.Char.GrenadeCooldown." .. ply:SteamID64())) .. " second(s).")
 
             return
         end
@@ -813,7 +813,9 @@ ix.command.Add("Grenade", {
             char:SetData("deployedEntities", ply.ixDeployedEntities)
         end)
 
-        char:SetData("nextGrenadeThrow", CurTime() + ix.config.Get("grenadeCooldown", 30))
+        if not ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64()) ) then
+            timer.Create("ix.Char.GrenadeCooldown." .. ply:SteamID64(), ix.config.Get("grenadeCooldown", 30), 1, function() end)
+        end
     end
 })
 
