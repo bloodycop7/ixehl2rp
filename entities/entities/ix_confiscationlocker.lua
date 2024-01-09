@@ -31,7 +31,7 @@ if ( SERVER ) then
 		physics:Sleep()
 
         if not ( timer.Exists("ix.ConfiscationLocker.Wipe." .. self:EntIndex()) ) then
-            timer.Create("ix.ConfiscationLocker.Wipe." .. self:EntIndex(), 60, 0, function()
+            timer.Create("ix.ConfiscationLocker.Wipe." .. self:EntIndex(), ix.config.Get("confiscationLockerWipeTime", (60 * 30)), 0, function()
                 if not ( IsValid(self) ) then
                     return
                 end
