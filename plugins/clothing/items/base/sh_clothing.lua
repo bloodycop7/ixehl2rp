@@ -15,6 +15,18 @@ if ( CLIENT ) then
     end
 end
 
+ITEM:Hook("drop", function(item)
+    local ply = item.player
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+    if ( item:GetData("equip", false) ) then
+        item.functions.UnEquip.OnRun(item)
+    end
+end)
+
 ITEM.functions.Equip = {
     name = "Equip",
     OnRun = function(item)
