@@ -716,6 +716,98 @@ function PLUGIN:OnReloaded()
     self:InitializedChatClasses()
 end
 
+ix.command.Add("CreateSquad", {
+    description = "Creates a new squad",
+    arguments = {
+        ix.type.string,
+        bit.bor(ix.type.number, ix.type.optional)
+    },
+    OnRun = function(self, ply, name, limit)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        if not ( ply:GetCharacter() ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( limit ) then
+            limit = ix.config.Get("squadLimit", 4)
+        end
+
+        if not ( isnumber(limit) ) then
+            ply:Notify("The squad limit must be a number.")
+
+            return
+        end
+
+        if ( limit < 2 ) then
+            ply:Notify("The squad limit must be at least 2.")
+
+            return
+        end
+
+        if ( limit > ix.config.Get("squadLimit", 4) ) then
+            ply:Notify("The squad limit cannot be higher than " .. ix.config.Get("squadLimit", 4) .. ".")
+
+            return
+        end
+
+        for k, v in pairs(ix.cmbSystems.squads) do
+            if ( v.name == name ) then
+                ply:Notify("A squad with that name already exists.")
+
+                break
+            end
+        end
+
+        ix.cmbSystems:CreateSquad(ply, {
+            name = name,
+            limit = limit
+        })
+    end
+})
+
+ix.command.Add("LeaveSquad", {
+    description = "Leaves your current squad.",
+    OnRun = function(self, ply)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        if not ( ply:GetCharacter() ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if ( ply:GetCharacter():GetData("squadID", -1) == -1 ) then
+            ply:Notify("You are not in a squad.")
+
+            return
+        end
+
+        if not ( ix.cmbSystems.squads[ply:GetCharacter():GetData("squadID", -1)] ) then
+            ply:GetCharacter():SetData("squadID", -1)
+            ply:Notify("Squad invalid, your squad id has been reset.")
+
+            return
+        end
+
+        ix.cmbSystems:RemoveMember(ply, ply:GetCharacter():GetData("squadID", -1))
+    end
+})
+
 ix.command.Add("TogglePassiveChatter", {
     description = "Toggles passive chatter.",
     OnRun = function(self, ply)

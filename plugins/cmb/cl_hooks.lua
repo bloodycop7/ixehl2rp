@@ -104,8 +104,14 @@ function PLUGIN:HUDPaint()
 
             draw.SimpleText("<:: " .. squad.name, "ixCombineFont10", padding, padding * 2.5, color_white, TEXT_ALIGN_LEFT)
         
+            local sortRankMembers = squad.members
+
+            table.sort(sortRankMembers, function(a, b)
+                return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
+            end)
+
             local paddingOffset = 0
-            for k, v in pairs(squad.members) do
+            for k, v in pairs(sortRankMembers) do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -125,14 +131,10 @@ function PLUGIN:HUDPaint()
                 surface.SetFont("ixCombineFont08")
                 local playerWidth, playerHeight = surface.GetTextSize("<:: " .. playerText)
 
-                if ( v == squad.leader ) then
-                    playerWidth, playerHeight = surface.GetTextSize("<:: " .. playerText)
-                end
-
                 self:DrawBox({
                     x = ( padding * 1.8 ) - textWidth * 0.01,
                     y = padding * 4 + paddingOffset,
-                    w = playerWidth * 1.05,
+                    w = playerWidth + padding * 0.6,
                     h = textHeight * 1.05,
                     rectColor = Color(255, 255, 255),
                     backColor = Color(0, 0, 0)
