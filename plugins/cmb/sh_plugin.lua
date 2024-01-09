@@ -1163,7 +1163,10 @@ ix.command.Add("ToggleVoiceRadio", {
             return
         end
 
-        char:SetData("radioVoice", not char:GetData("radioVoice", false))
+        local filter = RecipientFilter()
+        filter:AddAllPlayers()
+
+        char:SetData("radioVoice", not char:GetData("radioVoice", false), false, filter)
 
         if ( char:GetData("radioVoice", false) ) then
             ply:Notify("You have enabled voice radio.")
@@ -1198,7 +1201,10 @@ ix.command.Add("ToggleTeamVoiceRadio", {
             return
         end
 
-        char:SetData("radioVoiceTeam", not char:GetData("radioVoiceTeam", false))
+        local filter = RecipientFilter()
+        filter:AddAllPlayers()
+
+        char:SetData("radioVoiceTeam", not char:GetData("radioVoiceTeam", false), false, filter)
 
         if ( char:GetData("radioVoiceTeam", false) ) then
             ply:Notify("You have enabled team voice radio.")
@@ -1273,8 +1279,11 @@ ix.command.Add("TimeoutVoiceRadio", {
             timer.Create("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID(), time, 1, function()
             end)
 
-            targetChar:SetData("radioVoice", false)
-            targetChar:SetData("radioVoiceTeam", false)
+            local filter = RecipientFilter()
+            filter:AddAllPlayers()
+
+            targetChar:SetData("radioVoice", false, false, filter)
+            targetChar:SetData("radioVoiceTeam", false, false, filter)
         end
 
         ply:Notify("You have timed out " .. targetChar:GetName() .. " from using voice radio for " .. string.NiceTime(time) .. ".")
