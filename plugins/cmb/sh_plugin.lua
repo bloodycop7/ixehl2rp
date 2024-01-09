@@ -63,6 +63,8 @@ ix.lang.AddTable("english", {
     optCombineOutlineColorNPCsEnemy = "Combine Outline Color - Enemy NPCs",
     optCombineOutlineColorNPCsFriendlyFallback = "Combine Outline Color - Friendly NPCs Fallback",
     optCombineOverlaySquad = "Combine Overlay - Squad",
+    optCombineOverlaySquadHealth = "Combine Overlay - Squad Health",
+    optCombineOverlaySquadColor = "Combine Overlay - Squad Color",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -73,6 +75,8 @@ ix.lang.AddTable("english", {
     optdCombineOutlineColorNPCsEnemy = "What color should enemy npcs be outlined as.",
     optdCombineOutlineColorNPCsFriendlyFallback = "What color should friendly npcs be outlined as.",
     optdCombineOverlaySquad = "Should the combine overlay display squad member(s).",
+    optdCombineOverlaySquadHealth = "Should the combine overlay display squad member(s) health.",
+    optdCombineOverlaySquadColor = "What color should the combine overlay display squad member(s) as.",
 })
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)

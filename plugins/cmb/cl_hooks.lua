@@ -123,6 +123,10 @@ function PLUGIN:HUDPaint()
                         playerText = v:Nick() .. " (Leader)"
                     end
 
+                    if ( ix.option.Get("combineOverlaySquadHealth", true) ) then
+                        playerText = playerText .. " (" .. v:Health() .. "%)"
+                    end
+
                     surface.SetFont("ixCombineFont08")
                     local playerWidth, playerHeight = surface.GetTextSize("<:: " .. playerText)
 
@@ -135,7 +139,7 @@ function PLUGIN:HUDPaint()
                         backColor = Color(0, 0, 0)
                     })
 
-                    draw.SimpleText("<:: " .. playerText, "ixCombineFont08", padding * 1.8, padding * 4.1 + paddingOffset, color_white, TEXT_ALIGN_LEFT)
+                    draw.SimpleText("<:: " .. playerText, "ixCombineFont08", padding * 1.8, padding * 4.1 + paddingOffset, ix.option.Get("combineOverlaySquadColor", color_white), TEXT_ALIGN_LEFT)
 
                     paddingOffset = paddingOffset + padding * 0.5 + playerHeight
                 end
