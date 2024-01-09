@@ -64,12 +64,18 @@ function PLUGIN:HUDPaint()
     local padding = ScreenScale(8)
     local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
 
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
     if ( code ) then
         surface.SetFont("ixCombineFont10")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
 
         self:DrawBox({
-            x = padding,
+            x = padding - textWidth * 0.01,
             y = padding,
             w = textWidth * 1.05,
             h = textHeight * 1.05,
@@ -78,6 +84,65 @@ function PLUGIN:HUDPaint()
         })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT)
+    end
+
+    if ( char:GetData("squadID", -1) != -1 ) then
+        local squad = ix.cmbSystems.squads[char:GetData("squadID", -1)]
+
+        if ( squad ) then
+            surface.SetFont("ixCombineFont10")
+            local textWidth, textHeight = surface.GetTextSize("<:: " .. squad.name)
+
+            self:DrawBox({
+                x = padding - textWidth * 0.01,
+                y = padding * 2.5,
+                w = textWidth * 1.05,
+                h = textHeight * 1.05,
+                rectColor = color_white,
+                backColor = Color(0, 0, 0)
+            })
+
+            draw.SimpleText("<:: " .. squad.name, "ixCombineFont10", padding, padding * 2.5, color_white, TEXT_ALIGN_LEFT)
+        
+            local paddingOffset = 0
+            for k, v in pairs(squad.members) do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+                
+                local vChar = v:GetCharacter()
+
+                if not ( vChar ) then
+                    continue
+                end
+
+                local playerText = v:Nick()
+
+                if ( v == squad.leader ) then
+                    playerText = v:Nick() .. " (Leader)"
+                end
+
+                surface.SetFont("ixCombineFont08")
+                local playerWidth, playerHeight = surface.GetTextSize("<:: " .. playerText)
+
+                if ( v == squad.leader ) then
+                    playerWidth, playerHeight = surface.GetTextSize("<:: " .. playerText)
+                end
+
+                self:DrawBox({
+                    x = ( padding * 1.8 ) - textWidth * 0.01,
+                    y = padding * 4 + paddingOffset,
+                    w = playerWidth * 1.05,
+                    h = textHeight * 1.05,
+                    rectColor = Color(255, 255, 255),
+                    backColor = Color(0, 0, 0)
+                })
+
+                draw.SimpleText("<:: " .. playerText, "ixCombineFont08", padding * 1.8, padding * 4.1 + paddingOffset, color_white, TEXT_ALIGN_LEFT)
+
+                paddingOffset = paddingOffset + padding * 0.5 + playerHeight
+            end
+        end
     end
 
     for k, v in pairs(ix.cmbSystems.waypoints) do

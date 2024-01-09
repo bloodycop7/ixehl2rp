@@ -431,15 +431,94 @@ function ix.cmbSystems:CreateSquad(ply, squadData)
 
     squadData.leader = ply
     squadData.members = squadData.members or {ply}
-    squadData.id = #ix.cmbSystems.squads
-    
-    char:SetData("squadID", squadData.id)
 
     table.insert(ix.cmbSystems.squads, squadData)
+
+    char:SetData("squadID", #ix.cmbSystems.squads)
 
     net.Start("ix.cmbSystems.SyncSquads")
         net.WriteTable(ix.cmbSystems.squads)
     net.Broadcast()
+end
+
+function ix.cmbSystems:InsertMember(ply, id)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.squads[id] ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.squads[id].members ) then
+        return
+    end
+
+    if ( table.HasValue(ix.cmbSystems.squads[id].members, ply) ) then
+        return
+    end
+
+    table.insert(ix.cmbSystems.squads[id].members, ply)
+
+    char:SetData("squadID", id)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.squads)
+    net.Broadcast()
+end
+
+function ix.cmbSystems:RemoveMember(ply, id)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.squads[id] ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.squads[id].members ) then
+        return
+    end
+
+    if ( table.HasValue(ix.cmbSystems.squads[id].members, ply) ) then
+        if ( ply == ix.cmbSystems.squads[id].leader ) then
+
+            local sortedTable = ix.cmbSystems.squads[id].members
+
+            table.RemoveByValue(sortedTable, ply)
+
+            table.sort(sortedTable, function(a, b)
+
+                return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
+            end)
+
+            ix.cmbSystems.squads[id].leader = sortedTable[1]
+        end
+
+        table.RemoveByValue(ix.cmbSystems.squads[id].members, ply)
+
+        char:SetData("squadID", -1)
+
+        if ( #ix.cmbSystems.squads[id].members <= 0 ) then
+            ix.cmbSystems:RemoveSquad(id)
+        end
+
+        net.Start("ix.cmbSystems.SyncSquads")
+            net.WriteTable(ix.cmbSystems.squads)
+        net.Broadcast()
+    end
 end
 
 function ix.cmbSystems:RemoveSquad(id)
@@ -447,7 +526,11 @@ function ix.cmbSystems:RemoveSquad(id)
         return
     end
 
-    for k, v in ipairs(ix.cmbSystems.squads.members) do
+    if not ( ix.cmbSystems.squads[id] ) then
+        return
+    end
+
+    for k, v in ipairs(ix.cmbSystems.squads[id].members) do
         if not ( IsValid(v) ) then
             continue
         end

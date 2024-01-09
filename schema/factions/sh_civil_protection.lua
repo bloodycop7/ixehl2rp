@@ -34,14 +34,48 @@ function FACTION:GetDefaultName(ply)
 end
 
 function FACTION:GetDeathSound(ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
 	return "npc/metropolice/die" .. math.random(1, 4) .. ".wav"
 end
 
 function FACTION:GetPainSound(ply)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
 	return "npc/metropolice/pain" .. math.random(1, 4) .. ".wav"
 end
 
+function FACTION:OnCharacterCreated(ply, char)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	if not ( char ) then
+		return
+	end
+
+	char:SetClass(CLASS_CP_OFFICER)
+	char:SetRank(RANK_CP_RECRUIT)
+
+	char:SetData("permaClass", char:GetClass())
+	char:SetData("permaRank", char:GetRank())
+end
+
 function FACTION:ModifyPlayerStep(ply, data)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
 	if ( data.ladder or data.submerged ) then
 		return
 	end
