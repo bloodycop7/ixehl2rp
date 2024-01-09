@@ -175,12 +175,11 @@ ix.cmbSystems.cityCodes = {
         end,
         onEnd = function()
             timer.Remove("ixPreserved.HeliFlyBy")
-            timer.Remove("ixPreserved.DispatchPassive")
         end,
         dispatchPassive = function()
             local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
 
-                if not ( dispatchData ) then
+            if not ( dispatchData ) then
                 return
             end
 
@@ -202,9 +201,9 @@ ix.cmbSystems.cityCodes = {
                 else
                     Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
                 end
-
-                ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
             end
+
+            ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
         end
     },
     {
