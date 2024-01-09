@@ -25,6 +25,14 @@ ix.option.Add("combineOutlineNPCs", ix.type.bool, true, {
     category = "Combine Systems",
 })
 
+ix.option.Add("combineOutlineColorNPCsEnemy", ix.type.color, Color(255, 0, 0), {
+    category = "Combine Systems",
+})
+
+ix.option.Add("combineOutlineColorNPCsFriendlyFallback", ix.type.color, Color(0, 175, 255), {
+    category = "Combine Systems",
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")

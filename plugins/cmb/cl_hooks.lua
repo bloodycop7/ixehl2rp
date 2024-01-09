@@ -416,7 +416,7 @@ function PLUGIN:SetupOutlines()
             local outlineColor = hook.Run("GetFriendlyOutlineColor", v) or nil
 
             if ( outlineColor == nil ) then
-                outlineColor = Color(0, 255, 255)
+                outlineColor = ix.option.Get("combineOutlineColorNPCsFriendlyFallback", Color(0, 175, 255))
             end
 
             ix.outline.Add(v, outlineColor)
@@ -446,7 +446,7 @@ function PLUGIN:SetupOutlines()
             local outlineColor = hook.Run("GetEnemyOutlineColor", v)
 
             if ( outlineColor == nil ) then
-                outlineColor = Color(255, 0, 0)
+                outlineColor = ix.option.Get("combineOutlineColorNPCsEnemy", Color(255, 0, 0))
             end
 
             ix.outline.Add(v, outlineColor, 2)
