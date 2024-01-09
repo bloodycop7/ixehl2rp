@@ -172,6 +172,14 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("rationDistributions", data)
+
+	data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_confiscationlocker")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles(), v.items}
+	end
+
+	ix.data.Set("confiscationLockers", data)
 end
 
 function Schema:LoadData()
@@ -211,6 +219,16 @@ function Schema:LoadData()
 		ration:SetAngles(v[2])
 		ration:Spawn()
 		ration:Activate()
+	end
+
+	data = ix.data.Get("confiscationLockers", {})
+	for _, v in ipairs(data) do
+		local locker = ents.Create("ix_confiscationlocker")
+		locker:SetPos(v[1])
+		locker:SetAngles(v[2])
+		locker.items = v[3]
+		locker:Spawn()
+		locker:Activate()
 	end
 end
 
