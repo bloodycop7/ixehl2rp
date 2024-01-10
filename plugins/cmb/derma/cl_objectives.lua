@@ -57,7 +57,7 @@ end
 function PANEL:PopulateObjectives()
     self.scroll:Clear()
 
-    for k, v in pairs(ix.cmbSystems.objectives) do
+    for k, v in SortedPairsByMemberValue(ix.cmbSystems.objectives, "priority") do
         local objective = self.scroll:Add("DScrollPanel")
         objective:Dock(TOP)
         objective:DockMargin(0, 0, 0, 5)
@@ -68,7 +68,7 @@ function PANEL:PopulateObjectives()
                 y = 0,
                 w = w,
                 h = h,
-                rectColor = ( v.priority and Color(255, 175, 0) or color_white ),
+                rectColor = ( v.priority and Color(255, 100, 0) or color_white ),
                 backColor = Color(20, 20, 20, 255)
             })
         end
