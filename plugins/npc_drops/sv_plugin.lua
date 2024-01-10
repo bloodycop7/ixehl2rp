@@ -1,12 +1,55 @@
 local PLUGIN = PLUGIN
 
 ix.npcDrops:Define("npc_metropolice", {
-    items = {},
+    items = {
+        "wep_mp7"
+    },
     rareItems = {},
-    rarity = function(ply)
-        return 50
-    end,
-    rarityChance = function(ply)
+    GetRarityChance = function(self, ply)
         return math.random(1, 100)
+    end,
+    GetDropCount = function(self, ply)
+        return 2
+    end,
+    OnDrop = function(self, ply, item)
+        if not ( ply:IsPlayer() ) then
+            return
+        end
     end
 })
+
+function PLUGIN:OnNPCKilled(npc, attacker, wep)
+    if not ( IsValid(npc) ) then
+        return
+    end
+
+    if not ( ix.npcDrops.stored[npc:GetClass()] ) then
+        return
+    end
+
+    local dropData = ix.npcDrops.stored[npc:GetClass()]
+
+    if not ( dropData ) then
+        return
+    end
+
+    for i = 1, ( dropData:GetDropCount(attacker) or 1 ) do
+        local item = dropData.items[math.random(1, #dropData.items)]
+        
+        if not ( #dropData.rareItems <= 0 ) then
+            if ( ( dropData:GetRarityChance(attacker) or math.random(1, 100) ) >= math.random(1, 100) ) then
+                item = dropData.rareItems[math.random(1, #dropData.rareItems)]
+            end
+        end
+
+        if not ( ix.item.Get(item) ) then
+            continue
+        end
+
+        ix.item.Spawn(item, npc:GetPos() + npc:GetUp() * 10)
+
+        if ( dropData.OnDrop ) then
+            dropData:OnDrop(attacker, item)
+        end
+    end
+end
