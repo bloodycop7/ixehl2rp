@@ -69,7 +69,7 @@ function PANEL:PopulateObjectives()
                 y = 0,
                 w = w,
                 h = h,
-                rectColor = ( v.priority and Color(255, 100, 0) or color_white ),
+                rectColor = ( v.priority and Color(255, 165, 0) or color_white ),
                 backColor = Color(20, 20, 20, 255)
             })
         end
