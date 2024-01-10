@@ -43,7 +43,8 @@ function ITEM:PopulateTooltip(tooltip)
 
     if ( uses > 0 ) then
         local uses = tooltip:AddRow("uses")
-        uses:SetText(self:GetData("uses", 1))
+        uses:SetText("Uses Remaining: " .. self:GetData("uses", 1))
+        uses:SetBackgroundColor(ix.config.Get("color"))
         uses:SizeToContents()
     end
 end
