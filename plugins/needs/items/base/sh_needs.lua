@@ -42,7 +42,7 @@ function ITEM:PopulateTooltip(tooltip)
     local uses = self:GetData("uses", 1)
 
     if ( uses > 0 ) then
-        local uses = container:AddRow("uses")
+        local uses = tooltip:AddRow("uses")
         uses:SetText(self:GetData("uses", 1))
         uses:SizeToContents()
     end
