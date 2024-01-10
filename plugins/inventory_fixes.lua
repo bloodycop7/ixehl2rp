@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/Heyter/helix-plugins/blob/master/inventory_fixes/sh_plugin.lua
+// Credits: https://github.com/Heyter/helix-plugins/blob/master/inventory_fixes/sh_plugin.lua
 
 PLUGIN.name = "Inventory fixes"
 PLUGIN.description = "Bug fix with complete removal of inventory."

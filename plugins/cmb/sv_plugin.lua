@@ -589,6 +589,20 @@ function ix.cmbSystems:NewObjective(objectiveData)
     net.Broadcast()
 end
 
+function ix.cmbSystems:SetPriorityObjective(id, bPriority)
+    if not ( ix.cmbSystems.objectives[id] ) then
+        return
+    end
+
+    bPriority = bPriority or false
+
+    ix.cmbSystems.objectives[id].priority = bPriority
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.objectives)
+    net.Broadcast()
+end
+
 function ix.cmbSystems:RemoveObjective(id)
     if not ( ix.cmbSystems.objectives[id] ) then
         return

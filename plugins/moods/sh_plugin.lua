@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/riggs9162/RiggsHelixPlugins/tree/main/moods
+// Credits: https://github.com/riggs9162/RiggsHelixPlugins/tree/main/moods
 
 PLUGIN.name = "Moods"
 PLUGIN.description = "Allows you to add new mood types for different types of animation classes."

@@ -28,46 +28,40 @@ ITEM.functions.HealSelf = {
         if ( item.GetHealTime ) then
             local healTime = item:GetHealTime() or 2
 
-            local success = pcall(function()
-                if ( item.OnHealStart ) then
-                    item:OnHealStart(ply)
+            if ( item.OnHealStart ) then
+                item:OnHealStart(ply)
+            end
+
+            ply:SetAction("Healing...", healTime, function()
+                if not ( IsValid(ply) ) then
+                    return
                 end
 
-                ply:SetAction("Healing...", healTime, function()
-                    if not ( IsValid(ply) ) then
-                        return
-                    end
+                if not ( ply:Alive() ) then
+                    return
+                end
 
-                    if not ( ply:Alive() ) then
-                        return
-                    end
+                if not ( ply:GetCharacter() ) then
+                    return
+                end
 
-                    if not ( ply:GetCharacter() ) then
-                        return
-                    end
+                health = ply:Health()
 
-                    health = ply:Health()
+                ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
 
-                    ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
-
-                    if ( item.OnHeal ) then
-                        item:OnHeal(ply)
-                    end
-                end)
+                if ( item.OnHeal ) then
+                    item:OnHeal(ply)
+                end
             end)
-
-            if ( success ) then
-                return true
-            end
         else
             ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
 
             if ( item.OnHeal ) then
                 item:OnHeal(ply)
             end
-
-            return true
         end
+
+        return true
     end,
     OnCanRun = function(item)
         local ply = item.player
@@ -176,6 +170,8 @@ ITEM.functions.HealOther = {
                 item:OnHeal(target)
             end
         end
+
+        return true
     end,
     OnCanRun = function(item)
         local ply = item.player

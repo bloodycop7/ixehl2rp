@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/riggs9162/RiggsHelixPlugins/blob/main/shove.lua
+// Credits: https://github.com/riggs9162/RiggsHelixPlugins/blob/main/shove.lua
 
 PLUGIN.name = "Overwatch Shove"
 PLUGIN.description = "A Command which gives the Overwatch the ability to knock players out with the /shove command."

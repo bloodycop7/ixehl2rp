@@ -38,6 +38,8 @@ function PLUGIN:DrawBox(drawData)
 
     drawData.rectColor = drawData.rectColor or Color(255, 255, 255)
     drawData.backColor = drawData.backColor or Color(0, 0, 0)
+    drawData.rectBackAlpha = drawData.rectBackAlpha or 40
+    drawData.rectBackThickness = drawData.rectBackThickness or 1
 
     surface.SetDrawColor(drawData.backColor)
     surface.DrawRect(drawData.x, drawData.y, drawData.w, drawData.h)
@@ -54,6 +56,9 @@ function PLUGIN:DrawBox(drawData)
 
     surface.DrawRect(drawData.x + drawData.w - drawData.rectWidth, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
     surface.DrawRect(drawData.x + drawData.w - drawData.rectHeight, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
+
+    surface.SetDrawColor(ColorAlpha(drawData.rectColor, drawData.rectBackAlpha))
+    surface.DrawOutlinedRect(drawData.x, drawData.y, drawData.w, drawData.h, drawData.rectBackThickness)
 end
 
 function PLUGIN:HUDPaint()
@@ -80,7 +85,7 @@ function PLUGIN:HUDPaint()
             w = textWidth * 1.05,
             h = textHeight * 1.05,
             rectColor = code.color or color_white,
-            backColor = Color(0, 0, 0)
+            backColor = Color(0, 0, 0),
         })
 
         draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT)

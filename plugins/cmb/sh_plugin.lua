@@ -1173,6 +1173,92 @@ ix.command.Add("ToggleVoiceRadio", {
     end
 })
 
+ix.command.Add("SetPriorityObjective", {
+    description = "Set a priority objective.",
+    arguments = {
+        ix.type.string
+    },
+    OnRun = function(self, ply, text)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+            ply:Notify("Only Combine Unit Leaders can use this command.")
+
+            return
+        end
+
+        local objectiveID
+
+        for k, v in pairs(ix.cmbSystems.objectives) do
+            if not ( ix.util.StringMatches(text, v.text) ) then
+                continue
+            end
+
+            objectiveID = k
+            break
+        end
+
+        if not ( objectiveID ) then
+            ply:Notify("You must specify a valid objective.")
+
+            return
+        end
+
+        ix.cmbSystems:SetPriorityObjective(objectiveID, true)
+    end
+})
+
+ix.command.Add("RemovePriorityObjective", {
+    description = "Removes a priority objective.",
+    arguments = {
+        ix.type.string
+    },
+    OnRun = function(self, ply, text)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        if not ( Schema:IsCombine(ply) ) then
+            ply:Notify("Only Combine Units can use this command.")
+
+            return
+        end
+
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+            ply:Notify("Only Combine Unit Leaders can use this command.")
+
+            return
+        end
+
+        local objectiveID
+
+        for k, v in pairs(ix.cmbSystems.objectives) do
+            if not ( ix.util.StringMatches(text, v.text) ) then
+                continue
+            end
+
+            objectiveID = k
+            break
+        end
+
+        if not ( objectiveID ) then
+            ply:Notify("You must specify a valid objective.")
+
+            return
+        end
+
+        ix.cmbSystems:SetPriorityObjective(objectiveID, false)
+    end
+})
+
 ix.command.Add("ToggleTeamVoiceRadio", {
     description = "Toggle team voice radio.",
     OnRun = function(self, ply)

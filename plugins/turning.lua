@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/TankNut/helix-plugins/blob/master/turning.lua
+// Credits: https://github.com/TankNut/helix-plugins/blob/master/turning.lua
 
 PLUGIN.name = "Turning"
 PLUGIN.description = "Adds support for playermodels playing turning animations."

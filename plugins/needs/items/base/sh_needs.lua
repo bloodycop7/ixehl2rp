@@ -4,15 +4,55 @@ ITEM.model = "models/props_lab/crematorcase.mdl"
 ITEM.width = 1
 ITEM.height = 1
 ITEM.price = 0
-ITEM.thirstAmount = 0
-ITEM.hungerAmount = 0
-ITEM.consumeTime = 0
+
+function ITEM:GetHungerAmount(ply)
+    return 0
+end
+
+function ITEM:GetThirstAmount(ply)
+    return 0
+end
+
+function ITEM:GetConsumeTime(ply)
+    return 0
+end
+
+function ITEM:OnInstanced(index, x, y, item)
+    local ply = item.player
+    local itemData = ix.item.instances[item.id]
+
+    if not ( itemData ) then
+        return
+    end
+
+    local ply
+
+    if ( item.playerID ) then
+        ply = player.GetBySteamID64(item.playerID)
+    end
+
+    if ( IsValid(ply) ) then
+        itemData:SetData("uses", ( itemData.GetUses and itemData:GetUses(ply) ) or 1)
+    else
+        itemData:SetData("uses", ( itemData.GetUses and itemData:GetUses() ) or 1)
+    end
+end
 
 ITEM:Hook("drop", function(item)
     local ply = item.player
 
     if not ( IsValid(ply) ) then
         return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( char:GetData("isConsuming", false) ) then
+        char:SetData("isConsuming", false)
     end
 end)
 
@@ -31,8 +71,8 @@ function ITEM:Consume(ply)
         return
     end
 
-    self.hungerAmount = self:GetHungerAmount(ply) or 10
-    self.thirstAmount = self:GetThirstAmount(ply) or 10
+    self.hungerAmount = ( self.GetHungerAmount and self:GetHungerAmount(ply) ) or 10
+    self.thirstAmount = ( self.GetThirstAmount and self:GetThirstAmount(ply) ) or 10
     
     if ( self.hungerAmount ) then
         char:SetHunger(math.Clamp(char:GetHunger() + self.hungerAmount, 0, 100))
@@ -66,7 +106,7 @@ ITEM.functions.Consume = {
             return
         end
 
-        item.consumeTime = item:GetConsumeTime(ply) or 0
+        item.consumeTime = ( item.GetConsumeTime and item:GetConsumeTime(ply) ) or 0
 
         if ( item.consumeTime > 0 ) then
             char:SetData("isConsuming", true)
@@ -82,16 +122,18 @@ ITEM.functions.Consume = {
                     item:OnConsumed(ply) // Can be used for emitting sounds, particles, etc.
                 end
             end)
-
-            return true
         else
             item:Consume(ply)
 
             if ( item.OnConsumed ) then
                 item:OnConsumed(ply) // Can be used for emitting sounds, particles, etc.
             end
-            
-            return true
+        end
+
+        item:SetData("uses", item:GetData("uses", 1) - 1)
+
+        if ( item:GetData("uses", 1) > 0 ) then
+            return false
         end
 
         return true

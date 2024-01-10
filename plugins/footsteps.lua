@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/TankNut/helix-plugins/blob/master/footsteps.lua
+// Credits: https://github.com/TankNut/helix-plugins/blob/master/footsteps.lua
 
 PLUGIN.name = "Footsteps"
 PLUGIN.description = "Rewrites and improves on Source's handling of footsteps."
