@@ -38,6 +38,16 @@ function ITEM:OnInstanced(index, x, y, item)
     end
 end
 
+function ITEM:PopulateTooltip(tooltip)
+    local uses = self:GetData("uses", 1)
+
+    if ( uses > 0 ) then
+        local uses = container:AddRow("uses")
+        uses:SetText(self:GetData("uses", 1))
+        uses:SizeToContents()
+    end
+end
+
 ITEM:Hook("drop", function(item)
     local ply = item.player
 
