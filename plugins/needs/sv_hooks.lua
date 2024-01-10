@@ -47,7 +47,7 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
         end
 
         if not ( timer.Exists("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID()) ) then
-            timer.Create("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), 1, 1, function()
+            timer.Create("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), 1, 0, function()
                 if ( newChar ) then
                     if not ( ix.config.Get("needsEnabled", true) ) then
                         return
