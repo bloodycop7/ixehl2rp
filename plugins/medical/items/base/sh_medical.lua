@@ -23,33 +23,41 @@ ITEM.functions.HealSelf = {
         if ( item.GetHealTime ) then
             local healTime = item:GetHealTime() or 2
 
-            ply:SetAction("Healing...", healTime, function()
-                if not ( IsValid(ply) ) then
-                    return
-                end
+            local success = pcall(function()
+                ply:SetAction("Healing...", healTime, function()
+                    if not ( IsValid(ply) ) then
+                        return
+                    end
 
-                if not ( ply:Alive() ) then
-                    return
-                end
+                    if not ( ply:Alive() ) then
+                        return
+                    end
 
-                if not ( ply:GetCharacter() ) then
-                    return
-                end
+                    if not ( ply:GetCharacter() ) then
+                        return
+                    end
 
-                health = ply:Health()
+                    health = ply:Health()
 
-                ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
+                    ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
 
-                if ( item.OnHeal ) then
-                    item:OnHeal(ply)
-                end
+                    if ( item.OnHeal ) then
+                        item:OnHeal(ply)
+                    end
+                end)
             end)
+
+            if ( success ) then
+                return true
+            end
         else
             ply:SetHealth(math.Clamp(health + (item:GetHealAmount(ply) or 10), 0, 100))
 
             if ( item.OnHeal ) then
                 item:OnHeal(ply)
             end
+
+            return true
         end
     end
 }
