@@ -158,6 +158,7 @@ else
 
         local time = container:AddRow("wipeTime")
         time:SetText("Expires in: " .. string.NiceTime(math.Round(self:GetWipeTime() or 0, 0)))
+        time:SetBackgroundColor(ix.config.Get("color"))
         time:SizeToContents()
     end
 end
