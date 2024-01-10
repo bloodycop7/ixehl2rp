@@ -38,7 +38,7 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
                         return
                     end
 
-                    local thirst = char:GetThirst()
+                    local thirst = newChar:GetThirst()
                     
                     newChar:SetThirst(math.Clamp(thirst - 1, 0, 100))
                 end
