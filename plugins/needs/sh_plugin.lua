@@ -29,6 +29,10 @@ ix.char.RegisterVar("thirst", {
     bNoDisplay = true,
 })
 
+ix.config.Add("needsEnabled", true, "Whether or not the needs system is enabled.", nil, {
+    category = "Needs"
+})
+
 ix.config.Add("hungerRate", 120, "How fast the player gets hungry.", function(newVal)
     if ( SERVER ) then
         for k, v in pairs(player.GetAll()) do

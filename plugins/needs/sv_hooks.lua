@@ -20,6 +20,10 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
         if not ( timer.Exists("ix.Characters.Needs.Hunger." .. newChar:GetID()) ) then
             timer.Create("ix.Characters.Needs.Hunger." .. newChar:GetID(), ix.config.Get("hungerRate", 60), 0, function()
                 if ( newChar ) then
+                    if not ( ix.config.Get("needsEnabled", true) ) then
+                        return
+                    end
+
                     local hunger = newChar:GetHunger()
 
                     newChar:SetHunger(math.Clamp(hunger - 1, 0, 100))
@@ -30,6 +34,10 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
         if not ( timer.Exists("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. newChar:GetID()) ) then
             timer.Create("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
                 if ( newChar ) then
+                    if not ( ix.config.Get("needsEnabled", true) ) then
+                        return
+                    end
+
                     local thirst = char:GetThirst()
                     
                     newChar:SetThirst(math.Clamp(thirst - 1, 0, 100))
@@ -41,6 +49,10 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
             if not ( timer.Exists("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID()) ) then
                 timer.Create("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), 1, 1, function()
                     if ( newChar ) then
+                        if not ( ix.config.Get("needsEnabled", true) ) then
+                            return
+                        end
+
                         local hunger = newChar:GetHunger()
                         local thirst = newChar:GetThirst()
 
