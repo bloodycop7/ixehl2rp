@@ -45,7 +45,7 @@ function PANEL:Init()
 
     self.scroll = self:Add("DScrollPanel")
     self.scroll:Dock(FILL)
-    self.scroll:DockMargin(5, 20, 5, 30)
+    self.scroll:DockMargin(5, 20, 0, 30)
     self.scroll.Paint = function(s, w, h)
         surface.SetDrawColor(Color(30, 30, 30, 240))
         surface.DrawRect(0, 0, w, h)
@@ -60,8 +60,9 @@ function PANEL:PopulateObjectives()
     for k, v in SortedPairsByMemberValue(ix.cmbSystems.objectives, "priority") do
         local objective = self.scroll:Add("DScrollPanel")
         objective:Dock(TOP)
-        objective:DockMargin(0, 0, 0, 5)
         objective:SetTall(padding * 6)
+        objective:DockMargin(0, 5, 0, 0)
+
         objective.Paint = function(s, w, h)
             PLUGIN:DrawBox({
                 x = 0,
