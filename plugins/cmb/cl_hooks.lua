@@ -33,12 +33,12 @@ function PLUGIN:DrawBox(drawData)
     drawData.y = drawData.y or 0
     drawData.w = drawData.w or 0
     drawData.h = drawData.h or 0
-    drawData.rectWidth = drawData.rectWidth or 10
-    drawData.rectHeight = drawData.rectHeight or 1
+    drawData.rectWidth = drawData.rectWidth or 7
+    drawData.rectHeight = drawData.rectHeight or 2
 
     drawData.rectColor = drawData.rectColor or Color(255, 255, 255)
     drawData.backColor = drawData.backColor or Color(0, 0, 0)
-    drawData.rectBackAlpha = drawData.rectBackAlpha or 40
+    drawData.rectBackAlpha = drawData.rectBackAlpha or 35
     drawData.rectBackThickness = drawData.rectBackThickness or 1
 
     surface.SetDrawColor(drawData.backColor)

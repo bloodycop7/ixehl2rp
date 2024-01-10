@@ -598,6 +598,8 @@ function ix.cmbSystems:SetPriorityObjective(id, bPriority)
 
     ix.cmbSystems.objectives[id].priority = bPriority
 
+    print(ix.cmbSystems.objectives[id].priority)
+
     net.Start("ix.cmbSystems.SyncObjectives")
         net.WriteTable(ix.cmbSystems.objectives)
     net.Broadcast()

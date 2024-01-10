@@ -1198,7 +1198,7 @@ ix.command.Add("SetPriorityObjective", {
         local objectiveID
 
         for k, v in pairs(ix.cmbSystems.objectives) do
-            if not ( ix.util.StringMatches(text, v.text) ) then
+            if not ( ix.util.StringMatches(v.text, text) ) then
                 continue
             end
 
@@ -1241,7 +1241,7 @@ ix.command.Add("RemovePriorityObjective", {
         local objectiveID
 
         for k, v in pairs(ix.cmbSystems.objectives) do
-            if not ( ix.util.StringMatches(text, v.text) ) then
+            if not ( ix.util.StringMatches(v.text, text) ) then
                 continue
             end
 
