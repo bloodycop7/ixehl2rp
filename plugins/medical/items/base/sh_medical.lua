@@ -104,7 +104,7 @@ ITEM.functions.HealOther = {
 
         local trace = util.TraceLine({
             start = ply:EyePos(),
-            endpos = ply:EyePos() + ply:GetAimVector() * 96,
+            endpos = ply:EyePos() + ply:GetAimVector() * ( item.GetHealDistance and item:GetHealDistance(ply, target) or 96 ) or 96,
             filter = ply
         })
 
@@ -114,7 +114,7 @@ ITEM.functions.HealOther = {
             return false
         end
 
-        if not ( ply:GetPos():Distance(target:GetPos()) <= 100 ) then
+        if not ( ply:GetPos():Distance(target:GetPos()) <= ( item.GetHealDistance and item:GetHealDistance(ply, target) or 96 ) or 96 ) then
             return false
         end
 
