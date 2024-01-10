@@ -11,3 +11,7 @@ end
 function ITEM:GetHealAmount(ply)
     return 30
 end
+
+function ITEM:OnHeal(ply)
+    Schema:PlaySound(ply, "items/medshot4.wav")
+end

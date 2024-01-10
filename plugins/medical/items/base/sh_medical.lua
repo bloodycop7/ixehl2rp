@@ -68,6 +68,28 @@ ITEM.functions.HealSelf = {
 
             return true
         end
+    end,
+    OnCanRun = function(item)
+        local ply = item.player
+
+        if not ( IsValid(ply) ) then
+            return false
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return false
+        end
+
+        local health = ply:Health()
+        local maxHealth = ply:GetMaxHealth()
+
+        if ( health >= maxHealth ) then
+            return false
+        end
+
+        return true
     end
 }
 
