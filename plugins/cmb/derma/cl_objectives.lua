@@ -113,7 +113,7 @@ function PANEL:Paint(w, h)
         w = w,
         h = h,
         rectColor = color_white,
-        rectWidth = 20,
+        rectWidth = 10,
         backColor = color_black
     })
 end
