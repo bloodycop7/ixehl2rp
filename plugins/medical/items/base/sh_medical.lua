@@ -24,6 +24,10 @@ ITEM.functions.HealSelf = {
             local healTime = item:GetHealTime() or 2
 
             local success = pcall(function()
+                if ( item.OnHealStart ) then
+                    item:OnHealStart(ply)
+                end
+
                 ply:SetAction("Healing...", healTime, function()
                     if not ( IsValid(ply) ) then
                         return
