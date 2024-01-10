@@ -419,6 +419,10 @@ function PLUGIN:SetupOutlines()
                 outlineColor = ix.option.Get("combineOutlineColorNPCsFriendlyFallback", Color(0, 175, 255))
             end
 
+            if ( hook.Run("ShouldOutlineEntity", v, "friendly_npcs") == false ) then
+                continue
+            end
+
             ix.outline.Add(v, outlineColor)
         end
 
@@ -447,6 +451,10 @@ function PLUGIN:SetupOutlines()
 
             if ( outlineColor == nil ) then
                 outlineColor = ix.option.Get("combineOutlineColorNPCsEnemy", Color(255, 0, 0))
+            end
+
+            if ( hook.Run("ShouldOutlineEntity", v, "hostile") == false ) then
+                continue
             end
 
             ix.outline.Add(v, outlineColor, 2)
@@ -497,6 +505,10 @@ function PLUGIN:SetupOutlines()
                 end
             end
 
+            if ( hook.Run("ShouldOutlineEntity", v, "friendly") == false ) then
+                continue
+            end
+
             ix.outline.Add(v, outlineColor)
         end
     end
@@ -530,6 +542,10 @@ function PLUGIN:SetupOutlines()
 
                 if ( ent:GetClass() == "npc_grenade_frag" ) then
                     outlineColor = Color(255, 0, 0)
+                end
+
+                if ( hook.Run("ShouldOutlineEntity", v, "deployable") == false ) then
+                    continue
                 end
 
                 ix.outline.Add(ent, outlineColor)
@@ -644,7 +660,27 @@ function PLUGIN:GetFriendlyOutlineColor(ent)
     elseif ( ent:GetClass() == "npc_metropolice" ) then
         return Color(0, 120, 200)
     end
-end 
+end
+
+function PLUGIN:ShouldOutlineEntity(ent, type)
+    if not ( IsValid(ent) ) then
+        return
+    end
+
+    if not ( ent:IsNPC() ) then
+        return
+    end
+
+    if not ( ent:Health() > 0 ) then
+        return
+    end
+
+    if ( type == "friendly_npcs" ) then
+        if ( ent:GetClass() == "npc_combine_camera" ) then
+            return false
+        end
+    end
+end
 
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
