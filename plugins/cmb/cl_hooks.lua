@@ -38,7 +38,7 @@ function PLUGIN:DrawBox(drawData)
 
     drawData.rectColor = drawData.rectColor or Color(255, 255, 255)
     drawData.backColor = drawData.backColor or Color(0, 0, 0)
-    drawData.rectBackAlpha = drawData.rectBackAlpha or 35
+    drawData.rectBackAlpha = drawData.rectBackAlpha or 50
     drawData.rectBackThickness = drawData.rectBackThickness or 1
 
     surface.SetDrawColor(drawData.backColor)
