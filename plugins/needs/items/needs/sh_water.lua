@@ -4,15 +4,27 @@ ITEM.description = "A blue can filled with some carbonated flavoured water. Deli
 ITEM.category = "Consumables"
 
 function ITEM:GetThirstAmount(ply)
-    return 50
+    if ( self:GetData("uses", 1) < 2 ) then
+        return 10
+    end
+
+    return 2
 end
 
 function ITEM:GetHungerAmount(ply)
-    return 5
+    if ( self:GetData("uses", 1) < 2 ) then
+        return 10
+    end
+
+    return 2
 end
 
 function ITEM:GetConsumeTime(ply)
     return 3
+end
+
+function ITEM:GetUses()
+    return 4
 end
 
 local RECIPE = {}

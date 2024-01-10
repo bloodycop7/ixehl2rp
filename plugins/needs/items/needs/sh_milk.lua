@@ -3,17 +3,31 @@ ITEM.desc = "A bottle filled with milk."
 ITEM.price = 5
 ITEM.model = "models/props_junk/garbage_milkcarton002a.mdl"
 ITEM.category = "Consumables"
-ITEM.thirstAmount = 20
-ITEM.hungerAmount = 5
+
+function ITEM:GetThirstAmount()
+    if ( self:GetData("uses", 1) < 2 ) then
+        return 10
+    end
+
+    return 2
+end
+
+function ITEM:GetHungerAmount()
+    if ( self:GetData("uses", 1) < 2 ) then
+        return 10
+    end
+
+    return 2
+end
+
+function ITEM:GetUses()
+    return 4
+end
 
 function ITEM:OnConsumed(ply)
     ply:RestoreStamina(5)
 end
 
 function ITEM:GetConsumeTime(ply)
-    if ( Schema:IsCP(ply) ) then
-        return 10
-    else
-        return 5
-    end
+    return 4
 end
