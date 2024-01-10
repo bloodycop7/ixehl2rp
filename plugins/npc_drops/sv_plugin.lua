@@ -9,7 +9,7 @@ ix.npcDrops:Define("npc_metropolice", {
         return math.random(1, 100)
     end,
     GetDropCount = function(self, ply)
-        return 2
+        return 1
     end,
     OnDrop = function(self, ply, item)
         if not ( ply:IsPlayer() ) then
@@ -31,6 +31,16 @@ function PLUGIN:OnNPCKilled(npc, attacker, wep)
 
     if not ( dropData ) then
         return
+    end
+
+    if ( npc.GetWeapons ) then
+        for k, v in pairs(npc:GetWeapons()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
+            
+            v:Remove()
+        end
     end
 
     for i = 1, ( dropData:GetDropCount(attacker) or 1 ) do
