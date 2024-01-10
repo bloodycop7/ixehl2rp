@@ -31,8 +31,8 @@ function ITEM:Consume(ply)
         return
     end
 
-    self.hungerAmount = ( self.GetHungerAmount and self:GetHungerAmount(ply) ) or ( self.hungerAmount or 0 )
-    self.thirstAmount = ( self.GetThirstAmount and self:GetThirstAmount(ply) ) or ( self.thirstAmount or 0 )
+    self.hungerAmount = self:GetHungerAmount(ply) or 10
+    self.thirstAmount = self:GetThirstAmount(ply) or 10
     
     if ( self.hungerAmount ) then
         char:SetHunger(math.Clamp(char:GetHunger() + self.hungerAmount, 0, 100))
@@ -66,7 +66,7 @@ ITEM.functions.Consume = {
             return
         end
 
-        item.consumeTime = ( item.GetConsumeTime and item:GetConsumeTime(ply) ) or ( item.consumeTime or 0 )
+        item.consumeTime = item:GetConsumeTime(ply) or 0
 
         if ( item.consumeTime > 0 ) then
             char:SetData("isConsuming", true)

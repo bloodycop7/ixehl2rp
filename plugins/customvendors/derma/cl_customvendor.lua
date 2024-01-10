@@ -91,14 +91,6 @@ function PANEL:Init()
             button:SetText("Sell")
             button:SizeToContents()
             button.DoClick = function()
-                if ( v.canSell and not v:canSell(localPlayer) ) then
-                    return
-                end
-
-                if ( v.onSell ) then
-                    v:onSell(localPlayer)
-                end
-
                 net.Start("ix.CustomVendor.Sell")
                     net.WriteString(k)
                 net.SendToServer()
@@ -163,22 +155,6 @@ function PANEL:Init()
         button:SetText("Purchase")
         button:SizeToContents()
         button.DoClick = function()
-            if ( v.canPurchase and not v.canPurchase(localPlayer) ) then
-                return
-            end
-
-            if ( v.price and v.price > 0 ) then
-                if not ( localPlayer:GetCharacter():HasMoney(v.price) ) then
-                    localPlayer:Notify("You don't have enough money to purchase this item.")
-
-                    return
-                end
-            end
-
-            if ( v.onPurchase ) then
-                v.onPurchase(localPlayer)
-            end
-
             net.Start("ix.CustomVendor.Purchase")
                 net.WriteString(k)
             net.SendToServer()

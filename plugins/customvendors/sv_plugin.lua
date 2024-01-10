@@ -40,12 +40,6 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
         return
     end
 
-    if ( isfunction(vendorItemData.price) ) then
-        vendorItemData.price = vendorItemData:price(ply, ply:GetNetVar("ixVendorUse", nil)) or 0
-    else
-        vendorItemData.price = vendorItemData.price
-    end
-
     local inv = char:GetInventory()
 
     if not ( inv:HasItem(itemID) ) then
@@ -54,8 +48,8 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
         return
     end
 
-    if ( vendorItemData.price and vendorItemData.price > 0 ) then
-        ply:GetCharacter():GiveMoney(vendorItemData.price)
+    if ( ( vendorItemData.GetPrice and vendorItemData:GetPrice(ply, ply:GetNetVar("ixVendorUse", nil)) or 0 ) > 0 ) then
+        ply:GetCharacter():GiveMoney(vendorItemData:GetPrice(ply, ply:GetNetVar("ixVendorUse", nil)))
     end
 
     if ( vendorItemData.onSell ) then
@@ -120,20 +114,14 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
         return
     end
 
-    if ( isfunction(vendorItemData.price) ) then
-        vendorItemData.price = vendorItemData:price(ply, ply:GetNetVar("ixVendorUse", nil)) or 0
-    else
-        vendorItemData.price = vendorItemData.price
-    end
-
-    if ( vendorItemData.price and vendorItemData.price > 0 ) then
+    if ( ( vendorItemData.GetPrice and vendorItemData:GetPrice(ply) or 0 ) > 0  ) then
         if not ( ply:GetCharacter():HasMoney(vendorItemData.price) ) then
             ply:Notify("You don't have enough money to purchase this item.")
 
             return
         end
 
-        ply:GetCharacter():TakeMoney(vendorItemData.price)
+        ply:GetCharacter():TakeMoney(vendorItemData:GetItemPrice(ply, ply:GetNetVar("ixVendorUse", nil)))
     end
 
     local inv = char:GetInventory()
