@@ -220,7 +220,7 @@ else
 
 	local UI = {}
 
-	local gradient = Material("vgui/gradient-l")
+	local gradient = ix.gui.gradients["left"]
 	local padding = 8
 
 	function UI:Init()
@@ -238,51 +238,66 @@ else
 
 		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
 
-		self.topPanel = self:Add("Panel")
-		self.topPanel:Dock(TOP)
-		self.topPanel:SetTall(30)
-		self.topPanel:DockPadding(padding * 2, padding * 0.25, 0, 0)
-		self.topPanel.Paint = function(s, w, h)
-			surface.SetDrawColor(Color(0, 0, 0, 190))
-			surface.DrawRect(0, 0, w, h)
-
-			surface.SetDrawColor(Color(0, 255, 255))
-			surface.DrawRect(0, 0, 10, h)
+		local closeButton = self:Add("ixMenuButton")
+		closeButton:Dock(TOP)
+		closeButton:DockMargin(self:GetWide() / 30, 0, 0, 0)
+		closeButton:SetText("Log out")
+		closeButton:SetTextColor(Color(0, 255, 255))
+		closeButton:SetFont("ixCombineFont10")
+		closeButton.DoClick = function(this)
+			self:MoveTo(0 - scrW * 0.50, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2, function()
+				self:Remove()
+			end)
 		end
-
-		local title = self.topPanel:Add("DLabel")
-		title:Dock(LEFT)
-		title:SetFont("ixCombineFont14")
-		title:SetText("Combine Terminal")
-		title:SetTextColor(Color(0, 255, 255))
-		title:SetContentAlignment(4)
-		title:SizeToContents()
-
-		self.topPanel:SizeToContents()
+		closeButton:SetContentAlignment(5)
+		closeButton:SizeToContents()
 
 		self.leftPanel = self:Add("DScrollPanel")
 		self.leftPanel:Dock(LEFT)
-		self.leftPanel:SetWide(padding * 40)
-		self.leftPanel:DockMargin(0, padding * 0.3, 0, 0)
+		self.leftPanel:SetWide(padding * 39)
+		self.leftPanel:DockMargin(15, padding * 0.3, 0, 15)
 		self.leftPanel.Paint = function(pnl, w, h)
 			ix.util.DrawBlur(pnl)
 
+			--[[
 			surface.SetDrawColor(Color(0, 0, 0, 190))
 			surface.DrawRect(0, 0, w, h)
 
 			surface.SetDrawColor(Color(0, 255, 255))
 			surface.DrawRect(0, 0, 10, h)
+			]]
+
+			ix.plugin.list["cmb"]:DrawBox({
+				x = 0,
+				y = 0,
+				w = w,
+				h = h,
+				backColor = Color(0, 0, 0),
+				rectColor = Color(0, 255, 255),
+			})
 		end
 
 		self.rightPanel = self:Add("DScrollPanel")
 		self.rightPanel:Dock(RIGHT)
-		self.rightPanel:SetWide(padding * 79.5)
-		self.rightPanel:DockMargin(0, padding * 0.3, 0, 0)
-		self.rightPanel.Paint = function(pnl, w, h)
-			ix.util.DrawBlur(pnl)
+		self.rightPanel:SetWide(padding * 76)
+		self.rightPanel:DockMargin(0, padding * 0.3, 15, 15)
 
+		self.rightPanel.Paint = function(pnl, w, h)
+			--ix.util.DrawBlur(pnl)
+
+			--[[
 			surface.SetDrawColor(Color(0, 0, 0, 190))
 			surface.DrawRect(0, 0, w, h)
+			]]
+
+			ix.plugin.list["cmb"]:DrawBox({
+				x = 0,
+				y = 0,
+				w = w,
+				h = h,
+				backColor = Color(0, 0, 0),
+				rectColor = Color(0, 255, 255),
+			})
 		end
 
 		self.cityCodesButton = self.leftPanel:Add("ixMenuButton")
@@ -314,6 +329,7 @@ else
 					surface.SetMaterial(gradient)
 					surface.DrawTexturedRect(0, 0, w, h)]]
 
+					--[[
 					surface.SetDrawColor(ColorAlpha(v.color, 100))
 					surface.DrawOutlinedRect(0, 0, w, h, 2)
 
@@ -326,15 +342,36 @@ else
 					surface.SetDrawColor(ColorAlpha(v.color, 50))
 					surface.SetMaterial(gradient)
 					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
+					]]
+
+					ix.plugin.list["cmb"]:DrawBox({
+						x = 0,
+						y = 0,
+						w = w,
+						h = h,
+						backColor = Color(0, 0, 0),
+						rectColor = (pnl:IsHovered() and ColorAlpha(v.color, 255) or ColorAlpha(v.color, 100)),
+					})
 				end
 			end
 		end
 		self.cityCodesButton.Paint = function(s, w, h)
+			--[[
 			surface.SetDrawColor(Color(0, 65, 65))
 			surface.DrawRect(0, 0, w, h)
 
 			surface.SetDrawColor(Color(0, 255, 255))
 			surface.DrawOutlinedRect(0, 0, w, h, 2)
+			]]
+
+			ix.plugin.list["cmb"]:DrawBox({
+				x = 0,
+				y = 0,
+				w = w,
+				h = h,
+				backColor = Color(0, 0, 0),
+				rectColor = (s:IsHovered() and Color(0, 255, 255) or Color(0, 100, 100)),
+			})
 		end
 		self.cityCodesButton:SizeToContents()
 
@@ -384,6 +421,7 @@ else
 
 				buttonMain.paintW = 0
 				buttonMain.Paint = function(pnl, w, h)
+					--[[
 					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 100))
 					surface.DrawOutlinedRect(0, 0, w, h, 2)
 
@@ -396,6 +434,16 @@ else
 					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 50))
 					surface.SetMaterial(gradient)
 					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
+					]]
+
+					ix.plugin.list["cmb"]:DrawBox({
+						x = 0,
+						y = 0,
+						w = w,
+						h = h,
+						backColor = Color(0, 0, 0),
+						rectColor = (pnl:IsHovered() and ColorAlpha(ix.faction.Get(v:Team()).color, 255) or ColorAlpha(ix.faction.Get(v:Team()).color, 100)),
+					})
 				end
 
 				local name = buttonMain:Add("DLabel")
@@ -474,35 +522,44 @@ else
 			end
 		end
 		self.citizenIndexButton.Paint = function(s, w, h)
+			--[[
 			surface.SetDrawColor(Color(0, 65, 65))
 			surface.DrawRect(0, 0, w, h)
 
 			surface.SetDrawColor(Color(0, 255, 255))
 			surface.DrawOutlinedRect(0, 0, w, h, 2)
-		end
-		self.citizenIndexButton:SizeToContents()
+			]]
 
-		local closeButton = self.topPanel:Add("ixMenuButton")
-		closeButton:Dock(RIGHT)
-		closeButton:SetText("Log out")
-		closeButton:SetTextColor(Color(0, 255, 255))
-		closeButton:SetFont("ixCombineFont10")
-		closeButton.DoClick = function(this)
-			self:MoveTo(0 - scrW * 0.50, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2, function()
-				self:Remove()
-			end)
+			ix.plugin.list["cmb"]:DrawBox({
+				x = 0,
+				y = 0,
+				w = w,
+				h = h,
+				backColor = Color(0, 0, 0),
+				rectColor = (s:IsHovered() and Color(0, 255, 255) or Color(0, 100, 100)),
+			})
 		end
-		closeButton:SetContentAlignment(5)
-		closeButton:SizeToContents()
+
+		self.citizenIndexButton:SizeToContents()
 	end
 
 	function UI:Paint(w, h)
+		--[[
 		surface.SetDrawColor(Color(0, 255, 255))
 		surface.DrawRect(0, 0, 10, h)
 
 		surface.SetDrawColor(Color(39, 143, 143, 200))
 		surface.SetMaterial(gradient)
 		surface.DrawTexturedRect(10, 0, w, h)
+		]]
+
+		ix.plugin.list["cmb"]:DrawBox({
+			x = 0,
+			y = 0,
+			w = w,
+			h = h,
+			backColor = Color(0, 0, 0),
+		})
 	end
 
 	vgui.Register("ixCombineTerminal", UI, "Panel")
