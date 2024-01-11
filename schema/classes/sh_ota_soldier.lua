@@ -15,4 +15,4 @@ function CLASS:OnSet(ply)
 end
 
 
-CLASS_OTA_SOLDIER = CLASS.index
+CLASS_OW_SOLDIER = CLASS.index

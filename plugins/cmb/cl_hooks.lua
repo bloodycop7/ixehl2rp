@@ -560,7 +560,7 @@ function PLUGIN:SetupOutlines()
 end
 
 function PLUGIN:GetPlayerOutlineColor(target)
-    if ( Schema:IsOTA(target) ) then
+    if ( Schema:IsOW(target) ) then
         local model = string.lower(target:GetModel())
         if ( model == "models/combine_soldier_prisonguard.mdl" and target:GetSkin() == 0 ) then
             return Color(255, 210, 0)

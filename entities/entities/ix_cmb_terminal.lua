@@ -82,7 +82,7 @@ if ( SERVER ) then
 			return
 		end
 
-		if ( Schema:IsOTA(ply) ) then
+		if ( Schema:IsOW(ply) ) then
 			ply:SetLocalVelocity(Vector(0, 0, 0))
 			ply:ForceSequence("console_type")
 		end

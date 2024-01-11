@@ -344,7 +344,7 @@ function ix.cmbSystems:PassiveChatter(ply)
 
     if ( Schema:IsCP(ply) ) then
         sounds = {"npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav"}
-    elseif ( Schema:IsOTA(ply) ) then
+    elseif ( Schema:IsOW(ply) ) then
         sounds = {"ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"}
     end
 
@@ -352,7 +352,7 @@ function ix.cmbSystems:PassiveChatter(ply)
 
     if ( Schema:IsCP(ply) ) then
         sounds[#sounds + 1] = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
-    elseif ( Schema:IsOTA(ply) ) then
+    elseif ( Schema:IsOW(ply) ) then
         sounds[#sounds + 1] = "ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"
     end
 

@@ -256,5 +256,5 @@ for k, v in ipairs(otaVoicelines) do
 end
 
 Schema.voices.AddClass("OverwatchTranshumanArm", function(ply)
-    return Schema:IsOTA(ply)
+    return Schema:IsOW(ply)
 end)

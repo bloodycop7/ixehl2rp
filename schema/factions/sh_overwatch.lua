@@ -1,7 +1,7 @@
 FACTION.name = "Combine Overwatch"
 FACTION.description = "The Combine Overwatch, also referred to simply as Overwatch, is the primary military force of The Combine."
 FACTION.color = Color(150, 20, 0)
-FACTION.abbreviation = "OTA"
+FACTION.abbreviation = "OW"
 
 FACTION.models = {
 	"models/combine_soldier.mdl"
@@ -30,7 +30,7 @@ FACTION.taglines = {
 }
 
 function FACTION:GetDefaultName(ply)
-	return "OTA:OWS:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(1000, 9999), 4), true
+	return "OW:OWS:" .. string.upper(self.taglines[math.random(1, #self.taglines)]) .. ":" .. Schema:ZeroNumber(math.random(1000, 9999), 4), true
 end
 
 function FACTION:GetDeathSound(ply)
@@ -63,4 +63,4 @@ function FACTION:ModifyPlayerStep(ply, data)
 	data.volume = data.volume * (data.running and 0.5 or 0.4)
 end
 
-FACTION_OTA = FACTION.index
+FACTION_OW = FACTION.index

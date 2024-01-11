@@ -23,7 +23,7 @@ ix.config.Add("shoveTime", 20, "How long should a character be unconscious after
 ix.command.Add("shove", {
     description = "Knock someone out.",
     OnRun = function(self, ply)
-        if not ( Schema:IsOTA(ply) ) then
+        if not ( Schema:IsOW(ply) ) then
             return false, "You need to be a Overwatch Soldier to run this command."
         end
 

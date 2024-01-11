@@ -192,7 +192,7 @@ function PLUGIN:PlayerStartVoice(ply)
             Schema:PlaySound(ply, "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
 
             ply.nextCombineVoiceSound = CurTime() + 1
-        elseif ( Schema:IsOTA(ply) ) then
+        elseif ( Schema:IsOW(ply) ) then
             Schema:PlaySound(ply, "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav", 75, 100, 0.6)
 
             ply.nextCombineVoiceSound = CurTime() + 1
@@ -221,7 +221,7 @@ function PLUGIN:PlayerStartVoice(ply)
 
             local sound = "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav"
 
-            if ( Schema:IsOTA(ply) ) then
+            if ( Schema:IsOW(ply) ) then
                 sound = "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav"
             end
 
@@ -249,7 +249,7 @@ function PLUGIN:PlayerStartVoice(ply)
 
             local sound = "npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav"
 
-            if ( Schema:IsOTA(ply) ) then
+            if ( Schema:IsOW(ply) ) then
                 sound = "npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav"
             end
         end
@@ -272,7 +272,7 @@ function PLUGIN:PlayerEndVoice(ply)
             Schema:PlaySound(ply, "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav", 75, 100, 0.6)
 
             ply.nextCombineVoiceSoundOff = CurTime() + 1
-        elseif ( Schema:IsOTA(ply) ) then
+        elseif ( Schema:IsOW(ply) ) then
             Schema:PlaySound(ply, "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav", 75, 100, 0.6)
 
             ply.nextCombineVoiceSoundOff = CurTime() + 1
@@ -301,7 +301,7 @@ function PLUGIN:PlayerEndVoice(ply)
 
             local sound = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
 
-            if ( Schema:IsOTA(ply) ) then
+            if ( Schema:IsOW(ply) ) then
                 sound = "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav"
             end
 
@@ -329,7 +329,7 @@ function PLUGIN:PlayerEndVoice(ply)
 
             local sound = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
 
-            if ( Schema:IsOTA(ply) ) then
+            if ( Schema:IsOW(ply) ) then
                 sound = "npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav"
             end
         end

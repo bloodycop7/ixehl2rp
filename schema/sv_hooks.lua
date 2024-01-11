@@ -429,7 +429,7 @@ net.Receive("ix.PlayerChatTextChanged", function(len, ply)
 			return
 		end
 
-		if ( Schema:IsOTA(ply) ) then
+		if ( Schema:IsOW(ply) ) then
 			ply:EmitSound("npc/combine_soldier/vo/on" .. math.random(1, 2) .. ".wav")
 		elseif ( Schema:IsCP(ply) ) then
 			ply:EmitSound("npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav")
@@ -456,7 +456,7 @@ net.Receive("ix.PlayerFinishChat", function(len, ply)
 	end
 
 	if ( Schema:IsCombine(ply) ) then
-		if ( Schema:IsOTA(ply) ) then
+		if ( Schema:IsOW(ply) ) then
 			ply:EmitSound("npc/combine_soldier/vo/off" .. math.random(1, 3) .. ".wav")
 		elseif ( Schema:IsCP(ply) ) then
 			ply:EmitSound("NPC_MetroPolice.Radio.Off")

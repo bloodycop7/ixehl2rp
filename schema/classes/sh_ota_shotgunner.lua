@@ -14,4 +14,4 @@ function CLASS:OnSet(ply)
     char:SetData("skin", 1)
 end
 
-CLASS_OTA_SHOTGUNNER = CLASS.index
+CLASS_OW_SHOTGUNNER = CLASS.index

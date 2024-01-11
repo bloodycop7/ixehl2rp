@@ -13,4 +13,4 @@ function CLASS:OnSet(ply)
     char:SetData("skin", 0)
 end
 
-CLASS_OTA_ELITE = CLASS.index
+CLASS_OW_ELITE = CLASS.index

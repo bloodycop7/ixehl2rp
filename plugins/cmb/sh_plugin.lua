@@ -695,7 +695,7 @@ function PLUGIN:InitializedChatClasses()
                 return true
             end
 
-            if not ( Schema:IsOTA(listener) ) then
+            if not ( Schema:IsOW(listener) ) then
                 return false
             end
 
@@ -716,7 +716,7 @@ function PLUGIN:InitializedChatClasses()
                 return false
             end
 
-            if not ( Schema:IsOTA(speaker) ) then
+            if not ( Schema:IsOW(speaker) ) then
                 return false
             end
             
@@ -961,7 +961,7 @@ ix.command.Add("KickSquadMember", {
             return
         end
 
-        if not ( squadData.leader == ply or ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) ) then
+        if not ( squadData.leader == ply or ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) ) ) then
             ply:Notify("You don't have the authority to kick a squad member.")
 
             return
@@ -1054,7 +1054,7 @@ ix.command.Add("Grenade", {
             return
         end
 
-        if not ( Schema:IsOTA(ply) ) then
+        if not ( Schema:IsOW(ply) ) then
             ply:Notify("Only Transhuman Arm units can use this command.")
 
             return
@@ -1222,7 +1222,7 @@ ix.command.Add("SetPriorityObjective", {
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return
@@ -1265,7 +1265,7 @@ ix.command.Add("RemovePriorityObjective", {
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return
@@ -1350,7 +1350,7 @@ ix.command.Add("TimeoutVoiceRadio", {
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) or ply:IsAdmin() ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return
@@ -1422,7 +1422,7 @@ ix.command.Add("RemoveVoiceRadioTimeout", {
             return
         end
 
-        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOTAElite(ply) or ply:IsAdmin() ) then
+        if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
             ply:Notify("Only Combine Unit Leaders can use this command.")
 
             return
@@ -1657,7 +1657,7 @@ timer.Create("ix.DeployedEnts.Update", 1, 0, function()
 end)
 
 function PLUGIN:AdjustStaminaOffset(ply)
-    if ( Schema:IsOTA(ply) ) then
+    if ( Schema:IsOW(ply) ) then
         return 0
     end
 end
@@ -1683,7 +1683,7 @@ function PLUGIN:CalcMainActivity(ply, vel)
 		return
 	end
 
-	if not ( Schema:IsOTA(ply) ) then
+	if not ( Schema:IsOW(ply) ) then
 		return
 	end
 

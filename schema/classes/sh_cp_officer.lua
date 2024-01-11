@@ -1,4 +1,4 @@
-CLASS.name = "Officer"
+CLASS.name = "Patrol Officer"
 CLASS.faction = FACTION_CP
 CLASS.isDefault = true
 
