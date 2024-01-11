@@ -14,5 +14,4 @@ function CLASS:OnSet(ply)
     char:SetData("skin", 0)
 end
 
-
 CLASS_OW_SOLDIER = CLASS.index
