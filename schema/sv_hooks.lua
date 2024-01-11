@@ -378,8 +378,8 @@ function Schema:PlayerSetHandsModel(ply, ent)
 			return
 		end
 
-		if ( self:IsOTA(ply) ) then
-			if ( self:IsOTAElite(ply) ) then
+		if ( self:IsOW(ply) ) then
+			if ( self:IsOWElite(ply) ) then
 				ply:SetPlayerColor(Vector(1, 0, 0))
 				
 				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
@@ -387,10 +387,10 @@ function Schema:PlayerSetHandsModel(ply, ent)
 				ent:SetBodyGroups("000000")
 			end
 			
-			if ( self:IsOTASoldier(ply) or self:IsOTAShotgunner(ply) ) then
+			if ( self:IsOWSoldier(ply) or self:IsOWShotgunner(ply) ) then
 				local skin = 0
 
-				if ( self:IsOTAShotgunner(ply) ) then
+				if ( self:IsOWShotgunner(ply) ) then
 					skin = 1
 				end
 
