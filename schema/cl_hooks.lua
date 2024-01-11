@@ -208,6 +208,11 @@ function Schema:ChatTextChanged(text)
 	end
 end
 
+function Schema:StartChat(teamChat)
+	net.Start("ix.PlayerStartChat")
+	net.SendToServer()
+end
+
 function Schema:FinishChat()
 	net.Start("ix.PlayerFinishChat")
 	net.SendToServer()
