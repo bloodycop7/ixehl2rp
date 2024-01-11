@@ -10,9 +10,9 @@ ix.config.Add("thirdperson", false, "Allow Thirdperson in the server.", nil, {
 })
 
 ix.lang.AddTable("english", {
-	optThirdpersonSmoothPosition = "Toggle Thirdperson Smooth Position",
-	optThirdpersonSmoothAngle = "Toggle Thirdperson Smooth Angle",
-	optThirdpersonSmoothness = "Thirdperson Smoothness",
+	optThirdpersonSmoothPosition = "Smooth Position",
+	optThirdpersonSmoothAngle = "Smooth Angle",
+	optThirdpersonSmoothness = "Smoothness",
 
 	optdThirdpersonSmoothPosition = "Should the thirdperson camera be smooth?",
 	optdThirdpersonSmoothAngle = "Should the thirdperson camera angle be smooth?",
