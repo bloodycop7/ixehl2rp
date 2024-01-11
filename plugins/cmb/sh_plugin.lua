@@ -725,7 +725,7 @@ function PLUGIN:InitializedChatClasses()
         OnChatAdd = function(self, speaker, text)
             chat.AddText(Color(170, 0, 0), "*[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
         end,
-        prefix = {"/otaradio", "/otar"},
+        prefix = {"/owr", "/owradio"},
         font = "ixMonoMediumFont",
     })
 
