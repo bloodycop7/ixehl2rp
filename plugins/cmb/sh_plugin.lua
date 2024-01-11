@@ -67,6 +67,7 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquadColor = "Combine Overlay - Squad Color",
     optCombineOverlaySquadOutline = "Combine Overlay - Squad Outline",
     optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
+    optDispatchAnnouncementType = "Dispatch Announcement Type",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -81,6 +82,7 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquadColor = "What color should the combine overlay display squad member(s) as.",
     optdCombineOverlaySquadOutline = "Should the combine overlay display squad member(s) outline.",
     optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
+    optdDispatchAnnouncementType = "What type of announcement should dispatch make.",
 })
 
 ix.option.Add("dispatchAnnouncementType", ix.type.array, "chat_sound", {
