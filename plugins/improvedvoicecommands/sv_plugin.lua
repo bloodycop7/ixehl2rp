@@ -106,7 +106,7 @@ local allowedChatTypes = {
 
 local radioChatTypes = {
     ["cmb_global"] = true,
-    ["cmb_ota"] = true
+    ["cmb_ow"] = true
 }
 
 function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers, rawText)

@@ -675,7 +675,7 @@ function PLUGIN:InitializedChatClasses()
         font = "ixMonoMediumFont",
     })
 
-    ix.chat.Register("cmb_ota", {
+    ix.chat.Register("cmb_ow", {
         CanHear = function(self, speaker, listener)
             if not ( IsValid(listener) ) then
                 return false
