@@ -260,7 +260,7 @@ else
 
 		self.topPanel:SizeToContents()
 
-		self.leftPanel = self:Add("Panel")
+		self.leftPanel = self:Add("DScrollPanel")
 		self.leftPanel:Dock(LEFT)
 		self.leftPanel:SetWide(padding * 40)
 		self.leftPanel:DockMargin(0, padding * 0.3, 0, 0)
