@@ -367,11 +367,21 @@ else
 					continue
 				end
 
-				local buttonMain = self.rightPanel:Add("Panel")
+				local buttonMain = self.rightPanel:Add("DHorizontalScroller")
 				buttonMain:Dock(TOP)
 				buttonMain:SetContentAlignment(5)
 				buttonMain:SetTall(40)
 				buttonMain:DockMargin(0, 10, 0, 0)
+				
+				buttonMain.btnLeft.Paint = function()
+					return true
+				end
+				buttonMain.btnLeft:MoveToBack()
+				buttonMain.btnRight.Paint = function()
+					return true
+				end
+				buttonMain.btnRight:MoveToBack()
+
 				buttonMain.paintW = 0
 				buttonMain.Paint = function(pnl, w, h)
 					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 100))
@@ -394,10 +404,12 @@ else
 				name:SetFont("ixCombineFont10")
 				name:SetText(char:GetName())
 				name:SetContentAlignment(5)
+				buttonMain:AddPanel(name)
 				name:SizeToContents()
 
 				local button = buttonMain:Add("ixMenuButton")
-				button:Dock(RIGHT)
+				button:Dock(LEFT)
+				button:DockMargin(5, 0, 0, 0)
 				button:SetWide(50)
 				button:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
 				button:SetFont("ixCombineFont08")
@@ -409,10 +421,11 @@ else
 
 					this:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
 				end
+				buttonMain:AddPanel(button)
 				button:SizeToContents()
 
 				button = buttonMain:Add("ixMenuButton")
-				button:Dock(RIGHT)
+				button:Dock(LEFT)
 				button:SetText("Give LP")
 				button:SetFont("ixCombineFont08")
 				button:SetContentAlignment(5)
@@ -429,10 +442,11 @@ else
 					end)
 				end
 
+				buttonMain:AddPanel(button)
 				button:SizeToContents()
 
 				button = buttonMain:Add("ixMenuButton")
-				button:Dock(RIGHT)
+				button:Dock(LEFT)
 				button:SetText("Take LP")
 				button:SetFont("ixCombineFont08")
 				button:SetContentAlignment(5)
@@ -453,7 +467,10 @@ else
 					end)
 				end
 
+				buttonMain:AddPanel(button)
 				button:SizeToContents()
+
+				buttonMain:SizeToContents()
 			end
 		end
 		self.citizenIndexButton.Paint = function(s, w, h)
