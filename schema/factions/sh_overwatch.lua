@@ -8,8 +8,25 @@ FACTION.models = {
 }
 
 FACTION.taglines = {
+	"leader",
+	"flash",
+	"ranger",
+	"hunter",
+	"blade",
+	"scar",
+	"hammer",
+	"sweeper",
+	"swift",
+	"fist",
 	"sword",
-    "swift",
+	"savage",
+	"tracker",
+	"slash",
+	"razor",
+	"stab",
+	"spear",
+	"striker",
+	"dagger"
 }
 
 function FACTION:GetDefaultName(ply)
