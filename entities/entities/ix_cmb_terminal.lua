@@ -219,8 +219,6 @@ else
     end
 
 	local UI = {}
-
-	local gradient = ix.gui.gradients["left"]
 	local padding = 8
 
 	function UI:Init()
@@ -326,7 +324,7 @@ else
 				button.paintW = 0
 				button.Paint = function(pnl, w, h)
 					--[[surface.SetDrawColor(ColorAlpha(v.color, 10))
-					surface.SetMaterial(gradient)
+					surface.SetMaterial(ix.gui.gradients["left"])
 					surface.DrawTexturedRect(0, 0, w, h)]]
 
 					--[[
@@ -340,7 +338,7 @@ else
 					end
 
 					surface.SetDrawColor(ColorAlpha(v.color, 50))
-					surface.SetMaterial(gradient)
+					surface.SetMaterial(ix.gui.gradients["left"])
 					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
 					]]
 
@@ -432,7 +430,7 @@ else
 					end
 
 					surface.SetDrawColor(ColorAlpha(ix.faction.Get(char:GetFaction()).color, 50))
-					surface.SetMaterial(gradient)
+					surface.SetMaterial(ix.gui.gradients["left"])
 					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
 					]]
 
@@ -549,7 +547,7 @@ else
 		surface.DrawRect(0, 0, 10, h)
 
 		surface.SetDrawColor(Color(39, 143, 143, 200))
-		surface.SetMaterial(gradient)
+		surface.SetMaterial(ix.gui.gradients["left"])
 		surface.DrawTexturedRect(10, 0, w, h)
 		]]
 
