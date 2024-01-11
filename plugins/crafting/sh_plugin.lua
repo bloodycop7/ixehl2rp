@@ -136,5 +136,5 @@ end
 
 ix.util.Include("sv_plugin.lua")
 
-ix.util.IncludeDir(PLUGIN.folder .. "/station", true)
+ix.util.IncludeDir(PLUGIN.folder .. "/stations", true)
 ix.util.IncludeDir(PLUGIN.folder .. "/recipes", true)
