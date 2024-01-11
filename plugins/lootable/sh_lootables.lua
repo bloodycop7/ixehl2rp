@@ -32,7 +32,7 @@ ix.lootable:Register(lootable)
 lootable = {}
 
 lootable.name = "Trash Can"
-lootable.model = "models/props_junk/TrashDumpster01a.mdl"
+lootable.model = "models/props_trainstation/trashcan_indoor001a.mdl"
 
 function lootable:lootTime()
     return 4
