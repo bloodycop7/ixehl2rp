@@ -1,4 +1,5 @@
 local PLUGIN = PLUGIN
+
 util.AddNetworkString("ix.CustomVendor.CloseMenu")
 util.AddNetworkString("ix.CustomVendor.Purchase")
 util.AddNetworkString("ix.CustomVendor.Sell")

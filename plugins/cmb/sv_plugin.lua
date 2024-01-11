@@ -1,4 +1,5 @@
 local PLUGIN = PLUGIN
+
 util.AddNetworkString("ix.Combine.SetCityCode")
 util.AddNetworkString("ix.Combine.ToggleBOL")
 util.AddNetworkString("ix.Combine.GiveLP")

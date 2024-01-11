@@ -1,4 +1,5 @@
 local PLUGIN = PLUGIN
+
 util.AddNetworkString("ix.Crafting.DoCraft")
 util.AddNetworkString("ix.Crafting.ClosePanel")
 

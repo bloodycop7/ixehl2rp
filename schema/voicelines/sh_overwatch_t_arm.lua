@@ -215,7 +215,6 @@ local otaVoicelines = {
     {"DONTMOVE", "Don't move!", "npc/metropolice/vo/dontmove.wav"},
     {"EXAMINE", "Examine", "npc/metropolice/vo/examine.wav"},
     {"EXPIRED", "Expired", "npc/metropolice/vo/expired.wav"},
-    {"COPY", "Copy", "npc/metropolice/vo/copy.wav"},
     {"COVERMEIN", "Cover me, I'm going in!", "npc/metropolice/vo/covermegoingin.wav"},
     {"DBCOUNT", "DB count is", "npc/metropolice/vo/dbcountis.wav"},
     {"DEFENDER", "Defender!", "npc/metropolice/vo/defender.wav"},
