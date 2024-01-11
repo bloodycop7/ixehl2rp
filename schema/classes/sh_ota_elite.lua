@@ -1,5 +1,5 @@
 CLASS.name = "Elite"
-CLASS.faction = FACTION_OTA
+CLASS.faction = FACTION_OW
 CLASS.isDefault = false
 
 function CLASS:OnSet(ply)

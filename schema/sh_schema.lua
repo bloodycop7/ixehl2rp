@@ -92,7 +92,7 @@ function Schema:IsCombine(ply)
         return false
     end
 
-    return self:IsOTA(ply) or self:IsCP(ply)
+    return self:IsOW(ply) or self:IsCP(ply)
 end
 
 // Credits: https://github.com/NebulousCloud/helix-hl2rp/blob/master/schema/sh_schema.lua#L32-L35

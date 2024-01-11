@@ -297,7 +297,7 @@ ix.cmbSystems.passiveChatterLines = {
         "npc/overwatch/radiovoice/remindermemoryreplacement.wav",
         "npc/overwatch/radiovoice/rewardnotice.wav"
     },
-    [FACTION_OTA] = {
+    [FACTION_OW] = {
         "npc/combine_soldier/vo/prison_soldier_activatecentral.wav",
         "npc/combine_soldier/vo/prison_soldier_boomersinbound.wav",
         "npc/combine_soldier/vo/prison_soldier_bunker1.wav",
