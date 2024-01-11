@@ -406,6 +406,12 @@ function Schema:PlayerSetHandsModel(ply, ent)
 	end)
 end
 
+local keys = {
+	["y"] = true,
+	["w"] = true,
+	["t"] = true,
+}
+
 util.AddNetworkString("ix.PlayerChatTextChanged")
 net.Receive("ix.PlayerChatTextChanged", function(len, ply)
 	if not ( IsValid(ply) ) then
@@ -425,7 +431,7 @@ net.Receive("ix.PlayerChatTextChanged", function(len, ply)
 	local key = net.ReadString()
 
 	if ( Schema:IsCombine(ply) ) then
-		if not ( key == "y" or key == "w" or key == "r" or key == "t" ) then
+		if not ( keys[key] ) then
 			return
 		end
 
@@ -458,7 +464,7 @@ net.Receive("ix.PlayerStartChat", function(len, ply)
 	local key = net.ReadString()
 
 	if ( Schema:IsCombine(ply) ) then
-		if not ( key == "y" or key == "w" or key == "r" or key == "t" ) then
+		if not ( keys[key] ) then
 			return
 		end
 
