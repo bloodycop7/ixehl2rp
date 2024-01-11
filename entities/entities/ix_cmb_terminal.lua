@@ -302,7 +302,7 @@ else
 				button:SetFont("ixCombineFont10")
 				button:SetContentAlignment(5)
 				button:SetTall(40)
-				button:DockMargin(0, 10, 0, 0)
+				button:DockMargin(5, 10, 5, 0)
 				button.DoClick = function(this)
 					net.Start("ix.Combine.SetCityCode")
 						net.WriteUInt(k, 8)
