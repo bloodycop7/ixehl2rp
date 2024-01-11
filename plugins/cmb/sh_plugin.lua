@@ -83,6 +83,20 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
 })
 
+ix.option.Add("dispatchAnnouncementType", ix.type.array, "chat_sound", {
+    category = "Combine Systems",
+    bNetworked = true,
+	populate = function()
+        local types = {}
+
+        types["chat_sound"] = "Chat + Sound"
+        types["chat"] = "Chat"
+        types["sound"] = "Sound"
+
+        return types
+    end,
+})
+
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
     if ( SERVER ) then
         for k, v in ipairs(player.GetAll()) do
@@ -215,13 +229,16 @@ ix.cmbSystems.cityCodes = {
                     continue
                 end
 
-                if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.7)
-                else
-                    Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
+                if ( ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "sound" ) then
+                    if ( Schema:IsOutside(v) ) then
+                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.7)
+                    else
+                        Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.4)
+                    end
                 end
             end
 
+            ix.useDispatchHearCheck = true
             ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
         end
     },
@@ -406,19 +423,22 @@ ix.cmbSystems.cityCodes = {
                 end
             end
         end,
-        dispatchPassive = function()
-            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
-            
+        dispatchPassive = function()    
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
                 end
                 
-                if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
-                else
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.5)
+                if ( ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "sound" ) then
+                    if ( Schema:IsOutside(v) ) then
+                        Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
+                    else
+                        Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.5)
+                    end
                 end
+
+                ix.useDispatchHearCheck = true
+                ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
             end
         end
     },
@@ -573,19 +593,22 @@ ix.cmbSystems.cityCodes = {
                 end
             end
         end,
-        dispatchPassive = function()
-            ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
-            
+        dispatchPassive = function()    
             for k, v in ipairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
                 end
                 
-                if ( Schema:IsOutside(v) ) then
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
-                else
-                    Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.5)
+                if ( ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "sound" ) then
+                    if ( Schema:IsOutside(v) ) then
+                        Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
+                    else
+                        Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.5)
+                    end
                 end
+
+                ix.useDispatchHearCheck = true
+                ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
             end
         end
     }
@@ -708,6 +731,14 @@ function PLUGIN:InitializedChatClasses()
         CanHear = function(self, speaker, listener)
             if not ( IsValid(listener) ) then
                 return false
+            end
+
+            if ( ( ix.useDispatchHearCheck or false ) ) then
+                if not ( ix.option.Get(listener, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(listener, "dispatchAnnouncementType", "chat_sound") == "chat" ) then
+                    return false
+                end
+
+                ix.useDispatchHearCheck = false
             end
 
             return true

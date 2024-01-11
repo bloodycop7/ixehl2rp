@@ -226,7 +226,7 @@ net.Receive("ix.PlaySound", function()
 	local volume = net.ReadFloat()
 	local channel = net.ReadFloat()
 
-	EmitSound(sound, localPlayer:GetPos(), -1, channel, volume, level, 0, pitch)
+	EmitSound(sound, localPlayer:GetPos(), -2, channel, volume, level, 0, pitch)
 end)
 
 net.Receive("ix.PlayGesture", function(len)
