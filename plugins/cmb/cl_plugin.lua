@@ -2,55 +2,94 @@ local PLUGIN = PLUGIN
 ix.cmbSystems.waypoints = {}
 
 ix.option.Add("combineOverlay", ix.type.bool, true, {
-    category = "Combine Systems"
+    category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlayAssets", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOutlineDeployables", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })  
 
 ix.option.Add("combineOutlineAssets", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOutlineAssetsTeamOnly", ix.type.bool, false, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOutlineNPCs", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOutlineColorNPCsEnemy", ix.type.color, Color(255, 0, 0), {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOutlineColorNPCsFriendlyFallback", ix.type.color, Color(0, 175, 255), {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlaySquad", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlaySquadHealth", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlaySquadColor", ix.type.color, Color(0, 255, 150), {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlaySquadOutline", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 255), {
     category = "Combine Systems",
+    hidden = function()
+        return !Schema:IsCombine(localPlayer)
+    end
 })
 
 function ix.cmbSystems:MakeWaypoint(data)
