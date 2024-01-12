@@ -3,97 +3,92 @@ ix.cmbSystems.waypoints = {}
 
 ix.option.Add("combineOptionsVisibility", ix.type.bool, true, {
     category = "Combine Systems",
+    hidden = function()
+        if not ( IsValid(localPlayer) ) then
+            return true
+        end
+
+        local char = localPlayer:GetCharacter()
+
+        if not ( char ) then
+            return true
+        end
+
+        return Schema:IsCombine(localPlayer)
+    end,
 })
+
+local function OptionVisible()
+    if ( Schema:IsCombine(localPlayer) ) then
+        return false
+    end
+
+    return not ix.option.Get("combineOptionsVisibility", true)
+end
 
 ix.option.Add("combineOverlay", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlayAssets", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOutlineDeployables", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })  
 
 ix.option.Add("combineOutlineAssets", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOutlineAssetsTeamOnly", ix.type.bool, false, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOutlineNPCs", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOutlineColorNPCsEnemy", ix.type.color, Color(255, 0, 0), {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOutlineColorNPCsFriendlyFallback", ix.type.color, Color(0, 175, 255), {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlaySquad", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlaySquadHealth", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlaySquadColor", ix.type.color, Color(0, 255, 150), {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlaySquadOutline", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 255), {
     category = "Combine Systems",
-    hidden = function()
-        return !ix.option.Get("combineOptionsVisibility")
-    end
+    hidden = OptionVisible,
 })
 
 function ix.cmbSystems:MakeWaypoint(data)

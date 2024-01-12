@@ -54,7 +54,6 @@ end, {
 })
 
 ix.lang.AddTable("english", {
-    optCombineOptionsVisibility = "Combine Options Visibility",
 	optCombineOverlay = "Combine Overlay",
     optCombineOverlayAssets = "Combine Overlay - Assets",
     optCombineOutlineDeployables = "Combine Outline - Deployables",
@@ -69,6 +68,7 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquadOutline = "Combine Overlay - Squad Outline",
     optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
     optDispatchAnnouncementType = "Dispatch Announcement Type",
+    optCombineOptionsVisibility = "Combine Options Visibility",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -84,11 +84,21 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquadOutline = "Should the combine overlay display squad member(s) outline.",
     optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
     optdDispatchAnnouncementType = "What type of announcement should dispatch make.",
+    optdCombineOptionsVisibility = "Should combine options be visible to non-combine players.",
 })
+
+local function OptionVisible()
+    if ( Schema:IsCombine(localPlayer) ) then
+        return false
+    end
+
+    return !ix.option.Get("combineOptionsVisibility", true)
+end
 
 ix.option.Add("dispatchAnnouncementType", ix.type.array, "chat_sound", {
     category = "Combine Systems",
     bNetworked = true,
+    hidden = OptionVisible,
 	populate = function()
         local types = {}
 
