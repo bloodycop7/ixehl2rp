@@ -11,6 +11,10 @@ vendor.items["wep_mp7"] = {
         if ( timer.Exists("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
             return false
         end
+
+        if ( ply:GetCharacter():GetInventory():HasItem("wep_mp7") ) then
+            return false
+        end
     end,
     GetPrice = function(ply, vendorEnt)
         return 0
@@ -29,6 +33,10 @@ vendor.items["wep_usp"] = {
             return false
         end
 
+        if ( ply:GetCharacter():GetInventory():HasItem("wep_usp") ) then
+            return false
+        end
+
         return true
     end,
     GetPrice = function(self, ply)
@@ -43,9 +51,16 @@ vendor.items["wep_usp"] = {
 }
 
 vendor.items["wep_stunstick"] = {
+    canPurchase = function(ply)
+        if ( ply:GetCharacter():GetInventory():HasItem("wep_stunstick") ) then
+            return false
+        end
+
+        return true
+    end,
     GetPrice = function(self, ply)
         return 0
-    end
+    end,
 }
 
 function vendor:onInit(ent)

@@ -229,8 +229,10 @@ function PANEL:Init()
             continue
         end
 
-        if not ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
-            continue
+        if ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) > 0 ) then
+            if ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
+                continue
+            end
         end
 
         local corePanel = self.leftPanel:Add("DScrollPanel")
@@ -300,8 +302,10 @@ function PANEL:Init()
             continue
         end
 
-        if ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
-            continue
+        if ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) > 0 ) then
+            if ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
+                continue
+            end
         end
 
         local corePanel = self.leftPanel:Add("DScrollPanel")
