@@ -67,7 +67,7 @@ function PANEL:Init()
                 continue
             end
 
-            if ( v.canSell and not v.canSell(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
+            if ( v.canSell and not v["canSell"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
                 continue
             end
 
@@ -80,7 +80,7 @@ function PANEL:Init()
             local corePanel = self.rightPanel:Add("DScrollPanel")
             corePanel:Dock(TOP)
             corePanel:DockMargin(0, 3, 0, 0)
-            corePanel:SetTall(padding * 8)
+            corePanel:SetTall(padding * 7)
             corePanel.Paint = function(s, w, h)
                 surface.SetDrawColor(Color(0, 0, 0, 200))
                 surface.DrawRect(0, 0, w, h)
@@ -108,7 +108,7 @@ function PANEL:Init()
             priceLabel:Dock(TOP)
             priceLabel:DockMargin(0, 10, 0, 0)
             priceLabel:SetWrap(true)
-            priceLabel:SetText("Price: " .. ( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
+            priceLabel:SetText("Price: " .. ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
             priceLabel:SetFont("ixMediumLightFont")
             priceLabel:SetAutoStretchVertical(true)
 
@@ -140,7 +140,7 @@ function PANEL:Init()
                 continue
             end
 
-            if ( v.canSell and v.canSell(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
+            if ( v.canSell and v["canSell"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
                 continue
             end
 
@@ -153,7 +153,7 @@ function PANEL:Init()
             local corePanel = self.rightPanel:Add("DScrollPanel")
             corePanel:Dock(TOP)
             corePanel:DockMargin(0, 3, 0, 0)
-            corePanel:SetTall(padding * 8)
+            corePanel:SetTall(padding * 7)
             corePanel.Paint = function(s, w, h)
                 surface.SetDrawColor(Color(0, 0, 0, 200))
                 surface.DrawRect(0, 0, w, h)
@@ -181,7 +181,7 @@ function PANEL:Init()
             priceLabel:Dock(TOP)
             priceLabel:DockMargin(0, 10, 0, 0)
             priceLabel:SetWrap(true)
-            priceLabel:SetText("Price: " .. ( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
+            priceLabel:SetText("Price: " .. ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
             priceLabel:SetFont("ixMediumLightFont")
             priceLabel:SetAutoStretchVertical(true)
 
@@ -196,8 +196,6 @@ function PANEL:Init()
             end
 
             button:SetDisabled(true)
-
-            local inv = localPlayer:GetCharacter():GetInventory()
         end
     end
 
@@ -227,18 +225,18 @@ function PANEL:Init()
             continue
         end
 
-        if ( v.canPurchase and not v.canPurchase(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
+        if ( v.canPurchase and not v["canPurchase"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
             continue
         end
 
-        if not ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
+        if not ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
             continue
         end
 
         local corePanel = self.leftPanel:Add("DScrollPanel")
         corePanel:Dock(TOP)
         corePanel:DockMargin(0, 3, 0, 0)
-        corePanel:SetTall(padding * 8)
+        corePanel:SetTall(padding * 7)
         corePanel.Paint = function(s, w, h)
             surface.SetDrawColor(Color(0, 0, 0, 200))
             surface.DrawRect(0, 0, w, h)
@@ -266,7 +264,7 @@ function PANEL:Init()
         priceLabel:Dock(TOP)
         priceLabel:DockMargin(0, 10, 0, 0)
         priceLabel:SetWrap(true)
-        priceLabel:SetText("Price: " .. ( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
+        priceLabel:SetText("Price: " .. ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
         priceLabel:SetFont("ixMediumLightFont")
         priceLabel:SetAutoStretchVertical(true)
 
@@ -298,18 +296,18 @@ function PANEL:Init()
             continue
         end
 
-        if ( v.canPurchase and v.canPurchase(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
+        if ( v.canPurchase and v["canPurchase"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) ) then
             continue
         end
 
-        if ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
+        if ( localPlayer:GetCharacter():HasMoney( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) ) ) then
             continue
         end
 
         local corePanel = self.leftPanel:Add("DScrollPanel")
         corePanel:Dock(TOP)
         corePanel:DockMargin(0, 3, 0, 0)
-        corePanel:SetTall(padding * 8)
+        corePanel:SetTall(padding * 7)
         corePanel.Paint = function(s, w, h)
             surface.SetDrawColor(Color(0, 0, 0, 200))
             surface.DrawRect(0, 0, w, h)
@@ -337,7 +335,7 @@ function PANEL:Init()
         priceLabel:Dock(TOP)
         priceLabel:DockMargin(0, 10, 0, 0)
         priceLabel:SetWrap(true)
-        priceLabel:SetText("Price: " .. ( ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v:GetPrice(localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
+        priceLabel:SetText("Price: " .. ( ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 ) == 0 and "Free" or ( v.GetPrice and v["GetPrice"](localPlayer, localPlayer:GetNetVar("ixVendorUse", nil)) or 0 )))
         priceLabel:SetFont("ixMediumLightFont")
         priceLabel:SetAutoStretchVertical(true)
 

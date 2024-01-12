@@ -30,14 +30,18 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
     if not ( itemData ) then
         return
     end
-    
+
+    if ( ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
+        return
+    end
+
     local vendorItemData = ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].sell[itemID]
 
     if not ( vendorItemData ) then
         return
     end
 
-    if ( vendorItemData.canSell and not vendorItemData:canSell(ply, ply:GetNetVar("ixVendorUse", nil)) ) then
+    if ( vendorItemData.canSell and not vendorItemData["canSell"](ply, ply:GetNetVar("ixVendorUse", nil)) ) then
         return
     end
 
@@ -49,12 +53,12 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
         return
     end
 
-    if ( ( vendorItemData.GetPrice and vendorItemData:GetPrice(ply, ply:GetNetVar("ixVendorUse", nil)) or 0 ) > 0 ) then
-        ply:GetCharacter():GiveMoney(vendorItemData:GetPrice(ply, ply:GetNetVar("ixVendorUse", nil)))
+    if ( ( vendorItemData.GetPrice and vendorItemData["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)) or 0 ) > 0 ) then
+        ply:GetCharacter():GiveMoney(vendorItemData["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)))
     end
 
     if ( vendorItemData.onSell ) then
-        vendorItemData:onSell(ply, ply:GetNetVar("ixVendorUse", nil))
+        vendorItemData["onSell"](ply, ply:GetNetVar("ixVendorUse", nil))
     end
 
     inv:Remove(inv:HasItem(itemID):GetID())
@@ -105,24 +109,28 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
         return
     end
     
+    if ( ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
+        return
+    end
+
     local vendorItemData = ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].items[itemID]
 
     if not ( vendorItemData ) then
         return
     end
 
-    if ( vendorItemData.canPurchase and not vendorItemData:canPurchase(ply, ply:GetNetVar("ixVendorUse", nil)) ) then
+    if ( vendorItemData.canPurchase and not vendorItemData["canPurchase"](ply, ply:GetNetVar("ixVendorUse", nil)) ) then
         return
     end
 
-    if ( ( vendorItemData.GetPrice and vendorItemData:GetPrice(ply) or 0 ) > 0  ) then
-        if not ( ply:GetCharacter():HasMoney(( vendorItemData.GetPrice and vendorItemData:GetPrice(ply) or 0 )) ) then
+    if ( ( vendorItemData.GetPrice and vendorItemData["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)) or 0 ) > 0  ) then
+        if not ( ply:GetCharacter():HasMoney(( vendorItemData.GetPrice and vendorItemData["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)) or 0 )) ) then
             ply:Notify("You don't have enough money to purchase this item.")
 
             return
         end
 
-        ply:GetCharacter():TakeMoney(vendorItemData:GetItemPrice(ply, ply:GetNetVar("ixVendorUse", nil)))
+        ply:GetCharacter():TakeMoney(vendorItemData:["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)))
     end
 
     local inv = char:GetInventory()
@@ -132,6 +140,6 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
     end
 
     if ( vendorItemData.onPurchase ) then
-        vendorItemData:onPurchase(ply, ply:GetNetVar("ixVendorUse", nil))
+        vendorItemData["onPurchase"](ply, ply:GetNetVar("ixVendorUse", nil))
     end
 end)
