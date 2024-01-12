@@ -111,7 +111,7 @@ end
 
 function PANEL:Add(name)
 	local panel = vgui.Create(name, self)
-	panel:Dock(LEFT)
+	panel:Dock(TOP)
 
 	return panel
 end
@@ -244,10 +244,16 @@ function PANEL:Init()
 	self.mainButtonList:Dock(FILL)
 	self.mainButtonList:DockMargin(scrW * 0.15, 0, 0, 0)
 
+	self.buttonPanel = self:Add("Panel")
+	self.buttonPanel:Dock(BOTTOM)
+	self.buttonPanel:SetTall(60)
+	self.buttonPanel:DockMargin(scrW * 0.15, 0, 0, 0)
+
 	-- create character button
-	local createButton = self.mainButtonList:Add("ixMenuButton")
+	local createButton = self.buttonPanel:Add("ixMenuButton")
 	createButton:SetText("create")
 	createButton:SetContentAlignment(5)
+	createButton:Dock(LEFT)
 	createButton:SizeToContents()
 	createButton.DoClick = function()
 		local maximum = hook.Run("GetMaxPlayerCharacter", LocalPlayer()) or ix.config.Get("maxCharacters", 5)
@@ -263,9 +269,10 @@ function PANEL:Init()
 	end
 
 	-- load character button
-	self.loadButton = self.mainButtonList:Add("ixMenuButton")
+	self.loadButton = self.buttonPanel:Add("ixMenuButton")
 	self.loadButton:SetText("load")
 	self.loadButton:SetContentAlignment(5)
+	self.loadButton:Dock(LEFT)
 	self.loadButton:SizeToContents()
 	self.loadButton.DoClick = function()
 		self:Dim()
@@ -285,9 +292,10 @@ function PANEL:Init()
 			extraText = L(extraText:sub(2))
 		end
 
-		local extraButton = self.mainButtonList:Add("ixMenuButton")
+		local extraButton = self.buttonPanel:Add("ixMenuButton")
 		extraButton:SetText(extraText, true)
 		extraButton:SetContentAlignment(5)
+		extraButton:Dock(LEFT)
 		extraButton:SizeToContents()
 		extraButton.DoClick = function()
 			gui.OpenURL(extraURL)
@@ -295,8 +303,9 @@ function PANEL:Init()
 	end
 
 	-- leave/return button
-	self.returnButton = self.mainButtonList:Add("ixMenuButton")
+	self.returnButton = self.buttonPanel:Add("ixMenuButton")
 	self.returnButton:SetContentAlignment(5)
+	self.returnButton:Dock(LEFT)
 	self:UpdateReturnButton()
 	self.returnButton.DoClick = function()
 		if (self.bUsingCharacter) then
@@ -308,7 +317,7 @@ function PANEL:Init()
 
 	self.mainButtonList:SizeToContents()
 
-	for k, v in pairs(self.mainButtonList:GetCanvas():GetChildren()) do
+	for k, v in pairs(self.buttonPanel:GetChildren()) do
 		v:SetTall(60)
 		v:SizeToContents()
 	end
