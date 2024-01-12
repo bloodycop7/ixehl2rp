@@ -8,7 +8,7 @@ vendor.items = {}
 
 vendor.items["wep_mp7"] = {
     canPurchase = function(ply, ent)
-        if ( timer.Exists("ixMP7Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
+        if ( timer.Exists("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
             return false
         end
     end,
@@ -16,8 +16,8 @@ vendor.items["wep_mp7"] = {
         return 0
     end,
     onPurchase = function(ply, vendorEnt)
-        if not ( timer.Exists("ixMP7Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
-            timer.Create("ixMP7Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID(), 180, 1, function()
+        if not ( timer.Exists("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
+            timer.Create("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID(), 180, 1, function()
             end)
         end
     end
@@ -25,10 +25,20 @@ vendor.items["wep_mp7"] = {
 
 vendor.items["wep_usp"] = {
     canPurchase = function(ply)
+        if ( timer.Exists("ix.USP.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
+            return false
+        end
 
+        return true
     end,
     GetPrice = function(self, ply)
         return 0
+    end,
+    onPurchase = function(ply, vendorEnt)
+        if not ( timer.Exists("ix.USP.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
+            timer.Create("ix.USP.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID(), 180, 1, function()
+            end)
+        end
     end
 }
 
