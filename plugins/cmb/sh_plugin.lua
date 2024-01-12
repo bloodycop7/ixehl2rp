@@ -54,6 +54,7 @@ end, {
 })
 
 ix.lang.AddTable("english", {
+    optCombineOptionsVisibility = "Combine Options Visibility",
 	optCombineOverlay = "Combine Overlay",
     optCombineOverlayAssets = "Combine Overlay - Assets",
     optCombineOutlineDeployables = "Combine Outline - Deployables",
