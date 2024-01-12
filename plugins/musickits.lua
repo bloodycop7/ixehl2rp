@@ -477,9 +477,10 @@ local function InCombat() // simple for now
         return true
     end
 
-    if ( ix.combine and ix.combine.socioStatus ) then
-        local current = ix.combine.socioStatus.GetCurrent()
-        return ( current == "fractured" or current == "lost" )
+    if ( ix.cmbSystems.GetCityCode ) then
+        local current = ix.cmbSystems:GetCityCode()
+        
+        return current > 2
     end
 end
 
@@ -582,9 +583,9 @@ function PLUGIN:Think()
             DebugPrint("Playing combat track...")
 
             timer.Remove("ixMusicCombatTrackTime")
-            timer.Create("ixMusicCombatTrackTime", l, 1, function()
+            timer.Create("ixMusicCombatTrackTime", l + 2, 1, function()
                 if currentCombat then
-                    currentCombat:Stop()
+                    currentCombat:FadeOut(2)
                     DebugPrint("Stopping combat track (track complete)...")
                 end
             end)
@@ -619,9 +620,9 @@ function PLUGIN:Think()
         DebugPrint("Playing ambient track...")
 
         timer.Remove("ixMusicPassiveTrackTime")
-        timer.Create("ixMusicPassiveTrackTime", l, 1, function()
+        timer.Create("ixMusicPassiveTrackTime", l + 2, 1, function()
             if currentPassive then
-                currentPassive:Stop()
+                currentPassive:FadeOut(2)
                 DebugPrint("Stopping ambient track (track complete)...")
             end
         end)

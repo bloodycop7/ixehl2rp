@@ -156,7 +156,7 @@ function PANEL:Init()
 	infoLabel = self:Add("DLabel")
 	infoLabel:SetTextColor(Color(255, 255, 255, 25))
 	infoLabel:SetFont("ixMenuMiniFont")
-	infoLabel:SetText("ix: Enhanced Half-Life 2 Roleplay / eon.")
+	infoLabel:SetText("Helix: Enhanced Half-Life 2 Roleplay / eon.")
 	infoLabel:SizeToContents()
 	infoLabel:SetPos(ScrW() - infoLabel:GetWide() - 4, ScrH() - infoLabel:GetTall() * 2 - 4)
 

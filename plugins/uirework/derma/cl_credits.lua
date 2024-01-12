@@ -221,7 +221,7 @@ PANEL = {}
 function PANEL:Init()
 	local ehl2rpLabel = self:Add("ixLabel")
 	ehl2rpLabel:SetFont("ixMenuButtonFont")
-	ehl2rpLabel:SetText("ix: Enhanced Half-Life 2 Roleplay")
+	ehl2rpLabel:SetText("Helix\nEnhanced Half-Life 2 Roleplay")
 	ehl2rpLabel:SetTextColor(ix.config.Get("color"))
 	ehl2rpLabel:SetDropShadow(1)
 	ehl2rpLabel:SetKerning(2)

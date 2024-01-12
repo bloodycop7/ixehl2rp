@@ -124,6 +124,7 @@ local otaVoicelines = {
     {"RANGE", "Range", "npc/combine_soldier/vo/range.wav"},
     {"RANGER", "Ranger", "npc/combine_soldier/vo/ranger.wav"},
     {"RAZOR", "Razor", "npc/combine_soldier/vo/razor.wav"},
+    {"READYCHARGES", "Ready charges", "npc/combine_soldier/vo/readycharges.wav"},
     {"READYEXTRACTORS", "Ready extractors", "npc/combine_soldier/vo/readyextractors.wav"},
     {"READYWEAPONS", "Ready weapons", "npc/combine_soldier/vo/readyweapons.wav"},
     {"READYWEAPONSHOSTILES", "Ready weapons, possible hostiles inbound", "npc/combine_soldier/vo/readyweaponshostilesinbound.wav"},

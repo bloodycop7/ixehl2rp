@@ -53,10 +53,10 @@ function PLUGIN:HUDPaint()
     local trace = localPlayer:GetEyeTrace().Entity
     local padding = scrH * 0.09
 
-    draw.SimpleText("ix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", Color(165, 165, 165)))
+    draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", Color(165, 165, 165)))
 
     surface.SetFont("ixGenericFont")
-    local w, h = surface.GetTextSize("ix: Enhanced Half-Life 2 Roleplay")
+    local w, h = surface.GetTextSize("Helix: Enhanced Half-Life 2 Roleplay")
     padding = padding - (h - ScreenScale(0.3))
 
     draw.SimpleText(plyInfo, "ixSmallFont", 10, scrH - padding, Color(165, 165, 165))
