@@ -111,7 +111,7 @@ end
 
 function PANEL:Add(name)
 	local panel = vgui.Create(name, self)
-	panel:Dock(TOP)
+	panel:Dock(LEFT)
 
 	return panel
 end
@@ -242,11 +242,13 @@ function PANEL:Init()
 	-- button list
 	self.mainButtonList = self:Add("ixCharMenuButtonList")
 	self.mainButtonList:Dock(FILL)
+	self.mainButtonList:DockMargin(scrW * 0.15, 0, 0, 0)
 
 	-- create character button
 	local createButton = self.mainButtonList:Add("ixMenuButton")
 	createButton:SetText("create")
 	createButton:SetContentAlignment(5)
+	createButton:SetTall(80)
 	createButton:SizeToContents()
 	createButton.DoClick = function()
 		local maximum = hook.Run("GetMaxPlayerCharacter", LocalPlayer()) or ix.config.Get("maxCharacters", 5)
@@ -306,6 +308,11 @@ function PANEL:Init()
 	end
 
 	self.mainButtonList:SizeToContents()
+
+	for k, v in pairs(self.mainButtonList:GetCanvas():GetChildren()) do
+		v:SetTall(60)
+		v:SizeToContents()
+	end
 end
 
 function PANEL:UpdateReturnButton(bValue)
