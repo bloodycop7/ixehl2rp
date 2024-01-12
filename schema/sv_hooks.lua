@@ -366,9 +366,10 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 			end
 		end
 		
-		if ( newChar:GetData("squadID", -1) != -1 ) then
-        	ix.cmbSystems:RemoveMember(ply, newChar:GetData("squadID", -1))
-    	end
+		local filter = RecipientFilter()
+        filter:AddAllPlayers()
+
+        newChar:SetData("squadID", -1, false, filter)
 	end)
 end
 
