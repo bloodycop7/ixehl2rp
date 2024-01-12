@@ -2,25 +2,19 @@ ITEM.name = "Grenade"
 ITEM.description = "A small grenade that can be thrown."
 ITEM.model = "models/items/grenadeammo.mdl"
 
-ITEM.functions.throw = {
+ITEM.functions.Throw = {
     name = "Throw",
     OnRun = function(item)
         local ply = item.player
 
         if not ( IsValid(ply) ) then
-            return
+            return false
         end
 
         local char = ply:GetCharacter()
 
         if not ( char ) then
-            return
-        end
-
-        if ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64() .. "." .. char:GetID()) ) then
-            ply:Notify("You cannot throw another grenade for another " .. math.ceil(timer.TimeLeft("ix.Char.GrenadeCooldown." .. ply:SteamID64())) .. " second(s).")
-
-            return
+            return false
         end
 
         if ( ply:GetSequenceInfo(ply:LookupSequence("grenthrow")) ) then
@@ -30,11 +24,11 @@ ITEM.functions.throw = {
 
         timer.Simple(0.7, function()
             if not ( IsValid(ply) ) then // AKA Run the command and leave :skull:
-                return
+                return false
             end
 
             if not ( ply:GetCharacter() ) then
-                return
+                return false
             end
 
             local grenade = ents.Create("npc_grenade_frag")
@@ -70,10 +64,6 @@ ITEM.functions.throw = {
             char:SetData("deployedEntities", ply.ixDeployedEntities)
         end)
 
-        if not ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64()) ) then
-            timer.Create("ix.Char.GrenadeCooldown." .. ply:SteamID64() .. "." .. char:GetID(), ix.config.Get("grenadeCooldown", 30), 1, function() end)
-        end
-
         return true
     end,
     
@@ -87,10 +77,6 @@ ITEM.functions.throw = {
         local char = ply:GetCharacter()
 
         if not ( char ) then
-            return false
-        end
-
-        if ( timer.Exists("ix.Char.GrenadeCooldown." .. ply:SteamID64() .. "." .. char:GetID()) ) then
             return false
         end
 
