@@ -4,22 +4,19 @@ local vendor = {}
 vendor.name = "Civil Protection Vendor"
 vendor.model = "models/ez2npc/police.mdl"
 vendor.uniqueID = "cp"
-vendor.items = {
-    ["wep_mp7"] = {
-        price = 0
-    },
-    ["wep_usp"] = {
-        price = 0
-    }
+vendor.items = {}
+
+vendor.items["wep_mp7"] = {
+    GetPrice = function(self, ply)
+        return 50
+    end
 }
 
-vendor.sell = {
-    ["wep_mp7"] = {
-        price = 50,
-    }
-}
+vendor.items["wep_usp"] = {}
 
-function vendor:onInit(vendorData, ent)
+vendor.items["wep_stunstick"] = {}
+
+function vendor:onInit(ent)
     for i = 1, ent:GetSequenceCount() do
         if ( ent:GetSequenceName(i) == "batonidle1" ) then
             ent:ResetSequence(i)                

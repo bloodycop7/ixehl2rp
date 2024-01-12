@@ -116,7 +116,7 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
     end
 
     if ( ( vendorItemData.GetPrice and vendorItemData:GetPrice(ply) or 0 ) > 0  ) then
-        if not ( ply:GetCharacter():HasMoney(vendorItemData.price) ) then
+        if not ( ply:GetCharacter():HasMoney(( vendorItemData.GetPrice and vendorItemData:GetPrice(ply) or 0 )) ) then
             ply:Notify("You don't have enough money to purchase this item.")
 
             return
