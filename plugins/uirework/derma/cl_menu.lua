@@ -18,7 +18,7 @@ function PANEL:Init()
 	self.manualChildren = {}
 	self.noAnchor = CurTime() + 0.4
 	self.anchorMode = true
-	self.rotationOffset = Angle(0, 185, 0)
+	self.rotationOffset = Angle(0, 180, 0)
 
 	self.bCharacterOverview = false
 	self.bOverviewOut = false
