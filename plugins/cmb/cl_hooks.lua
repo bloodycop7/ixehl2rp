@@ -549,7 +549,7 @@ function PLUGIN:SetupOutlines()
                     outlineColor = Color(255, 0, 0)
                 end
 
-                if ( hook.Run("ShouldOutlineEntity", v, "deployable") == false ) then
+                if ( hook.Run("ShouldOutlineEntity", ent, "deployable") == false ) then
                     continue
                 end
 
