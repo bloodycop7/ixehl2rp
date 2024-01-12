@@ -9,12 +9,25 @@ vendor.items = {}
 vendor.items["wep_mp7"] = {
     GetPrice = function(self, ply)
         return 50
+    end,
+
+}
+
+vendor.items["wep_usp"] = {
+    GetPrice = function(self, ply)
+        return 50
     end
 }
 
-vendor.items["wep_usp"] = {}
-
 vendor.items["wep_stunstick"] = {}
+
+vendor.sell = {}
+vendor.sell["wep_mp7"] = {
+    GetPrice = function(self, ply)
+        return 50
+    end,
+
+}
 
 function vendor:onInit(ent)
     for i = 1, ent:GetSequenceCount() do
