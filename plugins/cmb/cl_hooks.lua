@@ -488,6 +488,7 @@ function PLUGIN:SetupOutlines()
 
             if ( ix.option.Get("combineOutlineAssetsTeamOnly", false) ) then
                 if ( hook.Run("CombineOverlayCanDisplayAssetOnly", v) == false ) then
+                    print(v)
                     continue
                 end
             end
@@ -577,7 +578,7 @@ function PLUGIN:GetPlayerOutlineColor(target)
 end
 
 function PLUGIN:CombineOverlayCanDisplayAssetOnly(ply)
-    if not ( IsValid(localPLayer) ) then
+    if not ( IsValid(localPlayer) ) then
         return
     end
 
@@ -601,13 +602,17 @@ function PLUGIN:CombineOverlayCanDisplayAssetOnly(ply)
         return
     end
 
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
     if not ( plyChar:GetData("squadID", -1) == -1 and char:GetData("squadID", -1) == -1 ) then
         if ( plyChar:GetData("squadID", -1) == char:GetData("squadID", -1) ) then
             return true
         end
     end
 
-    if ( ply:Team() != localPlayer:Team() ) then
+    if not ( ply:Team() == localPlayer:Team() ) then
         return false
     end
 
