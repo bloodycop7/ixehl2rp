@@ -52,7 +52,7 @@ ITEM.functions.Equip = {
                 oldItem:SetData("equip", false)
 
                 if ( oldItem.OnUnEquipped ) then
-                    oldItem:OnUnEquipped(ply)
+                    oldItem["OnUnEquipped"](ply)
                 end
             end
         end
@@ -80,7 +80,7 @@ ITEM.functions.Equip = {
         end
 
         if ( item.OnEquipped ) then
-            item:OnEquipped(ply) // Can be used for like sounds and shit idk
+            item["OnEquipped"](ply) // Can be used for like sounds and shit idk
         end
 
         item:SetData("equip", true)
@@ -173,7 +173,7 @@ ITEM.functions.UnEquip = {
         end
 
         if ( item.OnUnEquipped ) then
-            item:OnUnEquipped(ply)
+            item["OnUnEquipped"](ply)
         end
 
         item:SetData("equip", nil)
@@ -205,7 +205,7 @@ ITEM.functions.UnEquip = {
             return false
         end
 
-        if ( item.CanUnEquip and item:CanUnEquip() == false ) then
+        if ( item.CanUnEquip and item["CanUnEquip"](ply) == false ) then
             return false
         end
 
