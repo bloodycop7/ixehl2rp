@@ -130,7 +130,7 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
             return
         end
 
-        ply:GetCharacter():TakeMoney(vendorItemData:["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)))
+        ply:GetCharacter():TakeMoney(vendorItemData["GetPrice"](ply, ply:GetNetVar("ixVendorUse", nil)))
     end
 
     local inv = char:GetInventory()
