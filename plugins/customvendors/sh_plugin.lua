@@ -75,7 +75,7 @@ function ix.vendor:Register(vendorData)
                 return
             end
 
-            if ( self.nextUse > CurTime() ) then
+            if ( ( self.nextUse or 0 ) > CurTime() ) then
                 return
             end
 
