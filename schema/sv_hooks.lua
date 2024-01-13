@@ -39,12 +39,20 @@ function Schema:GetPlayerDeathSound(client)
 	local rank = ix.rank.list[char:GetRank()]
 
 	if ( rank and rank.GetDeathSound ) then
+		if not ( rank.faction == char:GetFaction() ) then
+			return
+		end
+
 		return rank:GetDeathSound(client)
 	end
 
 	local class = ix.class.list[char:GetClass()]
 
 	if ( class and class.GetDeathSound ) then
+		if not ( class.faction == char:GetFaction() ) then
+			return
+		end
+
 		return class:GetDeathSound(client)
 	end
 	
@@ -65,12 +73,20 @@ function Schema:GetPlayerPainSound(client)
 	local rank = ix.rank.list[char:GetRank()]
 
 	if ( rank and rank.GetPainSound ) then
+		if not ( rank.faction == char:GetFaction() ) then
+			return
+		end
+
 		return rank:GetPainSound(client)
 	end
 
 	local class = ix.class.list[char:GetClass()]
 
 	if ( class and class.GetPainSound ) then
+		if not ( class.faction == char:GetFaction() ) then
+			return
+		end
+
 		return class:GetPainSound(client)
 	end
 
