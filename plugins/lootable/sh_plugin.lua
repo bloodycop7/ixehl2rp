@@ -45,46 +45,6 @@ function ix.lootable:Register(lootableData)
         lootableData.rareItems = self.defaultConfig.rareItems
     end
 
-    if not ( lootableData.lootTime ) then
-        lootableData.lootTime = 5
-    else
-        if ( isfunction(lootableData.lootTime) ) then
-            lootableData.lootTime = lootableData:lootTime()
-        else
-            lootableData.lootTime = lootableData.lootTime
-        end
-    end
-
-    if not ( lootableData.maxItems ) then
-        lootableData.maxItems = 5
-    else
-        if ( isfunction(lootableData.maxItems) ) then
-            lootableData.maxItems = lootableData:maxItems()
-        else
-            lootableData.maxItems = lootableData.maxItems
-        end
-    end
-
-    if not ( lootableData.lootDelay ) then
-        lootableData.lootDelay = 300
-    else
-        if ( isfunction(lootableData.lootDelay) ) then
-            lootableData.lootDelay = lootableData:lootDelay()
-        else
-            lootableData.lootDelay = lootableData.lootDelay
-        end
-    end
-
-    if not ( lootableData.rarity ) then
-        lootableData.rarity = 90
-    else
-        if ( isfunction(lootableData.rarity) ) then
-            lootableData.rarity = lootableData:rarity()
-        else
-            lootableData.rarity = lootableData.rarity
-        end
-    end
-
     local uniqueID = string.lower(lootableData.name)
     uniqueID = string.Replace(uniqueID, " ", "_")
 
@@ -133,6 +93,11 @@ function ix.lootable:Register(lootableData)
             
                 return
             end
+
+            lootableData.lootTime = ( lootableData.lootTime and lootableData["lootTime"](ply) or math.random(2, 5) )
+            lootableData.lootDelay = ( lootableData.lootDelay and lootableData["lootDelay"](ply) or math.random(60, 120) )
+            lootableData.maxItems = ( lootableData.maxItems and lootableData["maxItems"](ply) or math.random(1, 3) )
+            lootableData.rarity = ( lootableData.rarity and lootableData["rarity"](ply) or math.random(1, 100) )
 
             if ( lootableData.lootTime > 0 ) then
                 ply:SetAction("Looting...", lootableData.lootTime)
