@@ -298,80 +298,83 @@ else
 			})
 		end
 
-		self.cityCodesButton = self.leftPanel:Add("ixMenuButton")
-		self.cityCodesButton:Dock(TOP)
-		self.cityCodesButton:SetText("City Codes")
-		self.cityCodesButton:SetFont("ixCombineFont10")
-		self.cityCodesButton:SetTextColor(color_white)
-		self.cityCodesButton:DockMargin(11, 10, 3, 0)
-		self.cityCodesButton:SetContentAlignment(5)
-		self.cityCodesButton.DoClick = function(this)
-			self.rightPanel:Clear()
+		if ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
+			self.cityCodesButton = self.leftPanel:Add("ixMenuButton")
+			self.cityCodesButton:Dock(TOP)
+			self.cityCodesButton:SetText("City Codes")
+			self.cityCodesButton:SetFont("ixCombineFont10")
+			self.cityCodesButton:SetTextColor(color_white)
+			self.cityCodesButton:DockMargin(11, 10, 3, 0)
+			self.cityCodesButton:SetContentAlignment(5)
+			self.cityCodesButton.DoClick = function(this)
+				self.rightPanel:Clear()
 
-			for k, v in pairs(ix.cmbSystems.cityCodes) do
-				local button = self.rightPanel:Add("ixMenuButton")
-				button:Dock(TOP)
-				button:SetText(v.name)
-				button:SetFont("ixCombineFont10")
-				button:SetContentAlignment(5)
-				button:SetTall(40)
-				button:DockMargin(5, 10, 5, 0)
-				button.DoClick = function(this)
-					net.Start("ix.Combine.SetCityCode")
-						net.WriteUInt(k, 8)
-					net.SendToServer()
-				end
-				button.paintW = 0
-				button.Paint = function(pnl, w, h)
-					--[[surface.SetDrawColor(ColorAlpha(v.color, 10))
-					surface.SetMaterial(ix.gui.gradients["left"])
-					surface.DrawTexturedRect(0, 0, w, h)]]
-
-					--[[
-					surface.SetDrawColor(ColorAlpha(v.color, 100))
-					surface.DrawOutlinedRect(0, 0, w, h, 2)
-
-					if ( pnl:IsHovered() ) then
-						pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, w)
-					else
-						pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, 0)
+				for k, v in pairs(ix.cmbSystems.cityCodes) do
+					local button = self.rightPanel:Add("ixMenuButton")
+					button:Dock(TOP)
+					button:SetText(v.name)
+					button:SetFont("ixCombineFont10")
+					button:SetContentAlignment(5)
+					button:SetTall(40)
+					button:DockMargin(5, 10, 5, 0)
+					button.DoClick = function(this)
+						net.Start("ix.Combine.SetCityCode")
+							net.WriteUInt(k, 8)
+						net.SendToServer()
 					end
+					button.paintW = 0
+					button.Paint = function(pnl, w, h)
+						--[[surface.SetDrawColor(ColorAlpha(v.color, 10))
+						surface.SetMaterial(ix.gui.gradients["left"])
+						surface.DrawTexturedRect(0, 0, w, h)]]
 
-					surface.SetDrawColor(ColorAlpha(v.color, 50))
-					surface.SetMaterial(ix.gui.gradients["left"])
-					surface.DrawTexturedRect(0, 0, pnl.paintW, h)
-					]]
+						--[[
+						surface.SetDrawColor(ColorAlpha(v.color, 100))
+						surface.DrawOutlinedRect(0, 0, w, h, 2)
 
-					ix.plugin.list["cmb"]:DrawBox({
-						x = 0,
-						y = 0,
-						w = w,
-						h = h,
-						backColor = Color(0, 0, 0),
-						rectColor = (pnl:IsHovered() and ColorAlpha(v.color, 255) or ColorAlpha(v.color, 100)),
-					})
+						if ( pnl:IsHovered() ) then
+							pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, w)
+						else
+							pnl.paintW = Lerp(FrameTime() * 10, pnl.paintW, 0)
+						end
+
+						surface.SetDrawColor(ColorAlpha(v.color, 50))
+						surface.SetMaterial(ix.gui.gradients["left"])
+						surface.DrawTexturedRect(0, 0, pnl.paintW, h)
+						]]
+
+						ix.plugin.list["cmb"]:DrawBox({
+							x = 0,
+							y = 0,
+							w = w,
+							h = h,
+							backColor = Color(0, 0, 0),
+							rectColor = (pnl:IsHovered() and ColorAlpha(v.color, 255) or ColorAlpha(v.color, 100)),
+						})
+					end
 				end
 			end
-		end
-		self.cityCodesButton.Paint = function(s, w, h)
-			--[[
-			surface.SetDrawColor(Color(0, 65, 65))
-			surface.DrawRect(0, 0, w, h)
+			self.cityCodesButton.Paint = function(s, w, h)
+				--[[
+				surface.SetDrawColor(Color(0, 65, 65))
+				surface.DrawRect(0, 0, w, h)
 
-			surface.SetDrawColor(Color(0, 255, 255))
-			surface.DrawOutlinedRect(0, 0, w, h, 2)
-			]]
+				surface.SetDrawColor(Color(0, 255, 255))
+				surface.DrawOutlinedRect(0, 0, w, h, 2)
+				]]
 
-			ix.plugin.list["cmb"]:DrawBox({
-				x = 0,
-				y = 0,
-				w = w,
-				h = h,
-				backColor = Color(0, 0, 0),
-				rectColor = (s:IsHovered() and Color(0, 255, 255) or Color(0, 100, 100)),
-			})
+				ix.plugin.list["cmb"]:DrawBox({
+					x = 0,
+					y = 0,
+					w = w,
+					h = h,
+					backColor = Color(0, 0, 0),
+					rectColor = (s:IsHovered() and Color(0, 255, 255) or Color(0, 100, 100)),
+				})
+			end
+			
+			self.cityCodesButton:SizeToContents()
 		end
-		self.cityCodesButton:SizeToContents()
 
 		self.citizenIndexButton = self.leftPanel:Add("ixMenuButton")
 		self.citizenIndexButton:Dock(TOP)

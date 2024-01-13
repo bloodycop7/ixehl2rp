@@ -21,6 +21,10 @@ net.Receive("ix.Combine.RemoveObjective", function(len, ply)
         return
     end
 
+    if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
+        return
+    end
+
     local id = net.ReadUInt(8)
 
     if not ( id ) then
@@ -150,6 +154,10 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
     end
 
     if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
         return
     end
 
