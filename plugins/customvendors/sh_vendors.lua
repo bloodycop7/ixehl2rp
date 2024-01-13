@@ -10,8 +10,6 @@ vendor.sell = {}
 vendor.items["wep_mp7"] = {
     canPurchase = function(ply, ent)
         if ( timer.Exists("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
-            ply:Notify("You can't buy another MP7 for another " .. math.Round(timer.TimeLeft("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID())) .. " seconds.")
-
             return false
         end
 
