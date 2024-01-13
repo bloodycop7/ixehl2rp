@@ -54,12 +54,7 @@ end
 
 function PANEL:Paint(width, height)
 	self:PaintBackground(width, height)
-
-	if ( self:IsHovered() ) then
-		surface.SetDrawColor(self:GetBackgroundColor())
-		surface.DrawRect(0, 0, 5, height)
-	end
-
+	
 	BaseClass.Paint(self, width, height)
 end
 
