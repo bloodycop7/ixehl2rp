@@ -7,27 +7,6 @@ vendor.uniqueID = "cp"
 vendor.items = {}
 vendor.sell = {}
 
-vendor.sell["wep_stunstick"] = {
-    price = 0,
-    amount = 1,
-    type = "weapon",
-    model = "models/weapons/w_stunbaton.mdl",
-    weapon = "weapon_stunstick",
-    category = "Weapons",
-    condition = 100,
-    flags = {
-        ["equip"] = true,
-        ["display"] = true,
-        ["weapon"] = true,
-    },
-    data = {
-        ["Rarity"] = "Common",
-        ["Condition"] = 100,
-        ["ClipOne"] = 0,
-        ["ClipTwo"] = 0,
-    },
-}
-
 vendor.items["wep_mp7"] = {
     canPurchase = function(ply, ent)
         if ( timer.Exists("ix.MP7.Cooldown." .. ply:SteamID64() .. "." .. ply:GetCharacter():GetID()) ) then
