@@ -12,8 +12,8 @@ net.Receive("ix.Crafting.ClosePanel", function(len, ply)
         return
     end
 
-    if ( IsValid(ply:GetData("ixCraftingStation", nil)) ) then
-        ply:SetData("ixCraftingStation", nil)
+    if ( IsValid(ply:GetNetVar("ixCraftingStation", nil)) ) then
+        ply:SetNetVar("ixCraftingStation", nil)
     end
 end)
 

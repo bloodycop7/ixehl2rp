@@ -9,7 +9,7 @@ function PANEL:Init()
         self:Remove()
     end
 
-    if not ( IsValid(localPlayer:GetData("ixCraftingStation", nil)) ) then
+    if not ( IsValid(localPlayer:GetNetVar("ixCraftingStation", nil)) ) then
         self:Remove()
     end
 
@@ -19,19 +19,22 @@ function PANEL:Init()
 
     ix.gui.craftingMenu = self
 
-    self.sysTime = SysTime()
-
-    self:SetSize(scrW * 0.6, scrH * 0.6)
+    self:SetSize(scrW, scrH)
     self:Center()
     self:MakePopup()
 
     local craftLabel = self:Add("DLabel")
     craftLabel:Dock(TOP)
-    craftLabel:SetText(ix.crafting.stations[localPlayer:GetData("ixCraftingStation", nil):GetStationID()].name .. " Station")
+    craftLabel:SetText(ix.crafting.stations[localPlayer:GetNetVar("ixCraftingStation", nil):GetStationID()].name .. " Station")
     craftLabel:SetFont("ixIntroSubtitleFont")
     craftLabel:SetTextColor(color_white)
     craftLabel:SetContentAlignment(5)
     craftLabel:SizeToContents()
+    craftLabel.Paint = function(s, w, h)
+        surface.SetDrawColor(10, 10, 10, 230)
+        surface.SetMaterial(ix.gui.gradients["up"])
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
 
     self.leftPanel = self:Add("DScrollPanel")
     self.leftPanel:Dock(LEFT)
@@ -39,20 +42,25 @@ function PANEL:Init()
     self.leftPanel.Paint = function(s, w, h)
         surface.SetDrawColor(10, 10, 10, 230)
         surface.SetMaterial(ix.gui.gradients["left"])
-        surface.DrawTexturedRect(0, 0, w, h)
-    end
-
-    self.middlePanel = self:Add("DScrollPanel")
-    self.middlePanel:Dock(FILL)
-    self.middlePanel.Paint = function(s, w, h)
+        surface.DrawTexturedRect(0, 0, w, h * 2)
     end
 
     self.rightPanel = self:Add("DScrollPanel")
     self.rightPanel:Dock(RIGHT)
     self.rightPanel:SetWide(self:GetWide() * 0.32)
     self.rightPanel.Paint = function(s, w, h)
-        surface.SetDrawColor(Color(0, 0, 0, 240))
-        surface.DrawRect(0, 0, w, h)
+        surface.SetDrawColor(10, 10, 10, 230)
+        surface.SetMaterial(ix.gui.gradients["right"])
+        surface.DrawTexturedRect(0, 0, w, h)
+    end
+
+    self.middlePanel = self:Add("DScrollPanel")
+    self.middlePanel:Dock(BOTTOM)
+    self.middlePanel:SetTall(self:GetTall() * 0.3)
+    self.middlePanel.Paint = function(s, w, h)
+        surface.SetDrawColor(10, 10, 10, 230)
+        surface.SetMaterial(ix.gui.gradients["down"])
+        surface.DrawTexturedRect(0, 0, w, h)
     end
 
     self.categories = {}
@@ -90,7 +98,7 @@ function PANEL:PopulateRecipes(category)
             continue
         end
 
-        if ( v.stations and not v.stations[localPlayer:GetData("ixCraftingStation", nil):GetStationID()] ) then
+        if ( v.stations and not v.stations[localPlayer:GetNetVar("ixCraftingStation", nil):GetStationID()] ) then
             continue
         end
 
@@ -116,6 +124,16 @@ end
 function PANEL:PopulateRecipe(recipe)
     self.rightPanel:Clear()
 
+    if ( self.recipeModelTable ) then
+        self.recipeModelTable:Remove()
+    end
+
+    self.recipeModelTable = ClientsideModel(recipe.model)
+    self.recipeModelTable:SetPos(recipe.overview and recipe.overview["pos"](localPlayer, localPlayer:GetNetVar("ixCraftingStation", nil)) or localPlayer:GetNetVar("ixCraftingStation", nil):GetPos() + localPlayer:GetNetVar("ixCraftingStation", nil):GetUp() * 20)
+    self.recipeModelTable:SetAngles(recipe.overview and recipe.overview["ang"](localPlayer, localPlayer:GetNetVar("ixCraftingStation", nil)) or localPlayer:GetNetVar("ixCraftingStation", nil):GetRight():Angle() + Angle(0, 0, 90))
+    self.recipeModelTable:Spawn()
+    self.recipeModelTable.isFromStation = true
+
     local recipeName = self.rightPanel:Add("DLabel")
     recipeName:Dock(TOP)
     recipeName:SetText(recipe.name)
@@ -132,14 +150,6 @@ function PANEL:PopulateRecipe(recipe)
     recipeDesc:SetContentAlignment(5)
     recipeDesc:SetAutoStretchVertical(true)
     recipeDesc:SetWrap(true)
-
-    local recipeModel = self.rightPanel:Add("ixModelPanel")
-    recipeModel:Dock(TOP)
-    recipeModel:SetSize(256, 256)
-    recipeModel:SetModel(recipe.model)
-    recipeModel:SetFOV(50)
-    recipeModel:SetCamPos(recipeModel:GetCamPos() + Vector(0, 0, 0, 10))
-    recipeModel:SetLookAt(Vector(0, 0, 10))
 
     local recipeIngredients = self.rightPanel:Add("DLabel")
     recipeIngredients:Dock(TOP)
@@ -183,10 +193,6 @@ function PANEL:PopulateRecipe(recipe)
 end
 
 function PANEL:Paint(w, h)
-    Derma_DrawBackgroundBlur(self, self.sysTime)
-
-    surface.SetDrawColor(0, 0, 0, 230)
-    surface.DrawRect(0, 0, w, h)
 end
 
 function PANEL:Think()
@@ -196,6 +202,14 @@ function PANEL:Think()
 end
 
 function PANEL:OnRemove()
+    for k, v in pairs(ents.FindByClass("class C_BaseFlex")) do
+        if not ( v.isFromStation ) then
+            continue
+        end
+
+        v:Remove() 
+    end
+
     net.Start("ix.Crafting.ClosePanel")
     net.SendToServer()
 end

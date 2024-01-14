@@ -107,7 +107,7 @@ function ix.crafting:RegisterStation(stationTable)
                 return
             end
 
-            ply:SetData("ixCraftingStation", self)
+            ply:SetNetVar("ixCraftingStation", self)
             Schema:OpenUI(ply, "ixCraftingMenu")
 
             self.nextUse = CurTime() + 1
@@ -123,8 +123,8 @@ function ix.crafting:RegisterStation(stationTable)
                     continue
                 end
 
-                if ( v:GetData("ixCraftingStation", nil) == self ) then
-                    v:SetData("ixCraftingStation", nil)
+                if ( v:GetNetVar("ixCraftingStation", nil) == self ) then
+                    v:GetNetVar("ixCraftingStation", nil)
                 end
             end
         end
@@ -135,6 +135,7 @@ function ix.crafting:RegisterStation(stationTable)
 end
 
 ix.util.Include("sv_plugin.lua")
+ix.util.Include("cl_hooks.lua")
 
 ix.util.IncludeDir(PLUGIN.folder .. "/stations", true)
 ix.util.IncludeDir(PLUGIN.folder .. "/recipes", true)
