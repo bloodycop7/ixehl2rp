@@ -11,7 +11,12 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Hunter-Chopper Carpet Bombing](https://steamcommunity.com/sharedfiles/filedetails/?id=466842084)\
 [Strider & Gunship Cannon](https://steamcommunity.com/sharedfiles/filedetails/?id=464423406)\
 [Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)\
-[Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)
+[Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)\
+[LVS: Framework](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
+[LVS: Helicopters](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
+[LVS: Planes](https://steamcommunity.com/sharedfiles/filedetails/?id=2912826012)\
+[LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409&searchtext=)\
+[LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)
 
 # Help Needed!
 Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
