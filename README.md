@@ -10,7 +10,8 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)\
 [Hunter-Chopper Carpet Bombing](https://steamcommunity.com/sharedfiles/filedetails/?id=466842084)\
 [Strider & Gunship Cannon](https://steamcommunity.com/sharedfiles/filedetails/?id=464423406)\
-[Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)
+[Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)\
+[Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)
 
 # Help Needed!
 Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
