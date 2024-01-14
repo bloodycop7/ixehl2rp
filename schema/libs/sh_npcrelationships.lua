@@ -57,7 +57,7 @@ ix.relationships.RebelNPCs = {
     ["npc_monk"] = true,
     ["npc_vortigaunt"] = true,
 
-    // ZBase Combine NPCs
+    // ZBase Rebel NPCs
 
     ["zb_kleiner"] = true,
     ["zb_human_civilian_f"] = true,
@@ -98,15 +98,29 @@ if ( SERVER ) then
 
             local relationshipStatus = D_HT
 
-            if ( ix.relationships.CombineNPCs[ent:GetClass()] ) then
+            local checkName = ent:GetClass()
+
+            if ( string.find(checkName, "zbase*") ) then
+                checkName = ent:GetNWString("NPCName", ent.NPCName)
+            end
+
+            if ( ix.relationships.CombineNPCs[checkName] ) then
                 local oldTable = ent.VJ_NPC_Class or {}
                 oldTable[#oldTable + 1] = "CLASS_COMBINE"
 
                 ent.VJ_NPC_Class = oldTable
-                ent.ZBaseFaction = "combine"
+
+
+                if ( ent:GetClass():find("zbase*") ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(ent, "combine")
+                    end
+                end
 
                 if ( Schema:IsCombine(v) ) then
-                    v.ZBaseFaction = "combine"
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(v, "combine")
+                    end
 
                     relationshipStatus = D_LI
                 end

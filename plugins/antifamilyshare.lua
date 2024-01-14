@@ -41,6 +41,10 @@ function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
                     continue
                 end
 
+                if not ( v:IsAdmin() ) then
+                    continue
+                end
+
                 v:ChatNotify("Family share account " .. ply:Name() .. " (" .. steamID64 .. ") attempted to join the server.")
             end
         end
