@@ -1,7 +1,7 @@
 ITEM.name = "Pulse Rifle"
 ITEM.description = "A dark energy powered assault rifle."
 ITEM.model = "models/weapons/w_irifle.mdl"
-ITEM.class = "tfa_projecthl2_ar2"
+ITEM.class = "tfa_mmod_ar2"
 ITEM.weaponCategory = "primary"
 ITEM.width = 4
 ITEM.height = 2

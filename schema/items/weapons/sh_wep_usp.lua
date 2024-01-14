@@ -1,7 +1,7 @@
 ITEM.name = ".9mm Pistol"
 ITEM.description = "A sidearm utilising 9mm Ammunition."
 ITEM.model = "models/weapons/w_pistol.mdl"
-ITEM.class = "tfa_projecthl2_usp"
+ITEM.class = "tfa_mmod_pistol"
 ITEM.weaponCategory = "sidearm"
 ITEM.width = 2
 ITEM.height = 1
