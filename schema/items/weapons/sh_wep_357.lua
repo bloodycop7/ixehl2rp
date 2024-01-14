@@ -1,7 +1,7 @@
 ITEM.name = ".357 Magnum"
 ITEM.description = "A sidearm utilising .357 Caliber ammunition."
 ITEM.model = "models/weapons/w_357.mdl"
-ITEM.class = "tfa_mmod_357"
+ITEM.class = "tfa_projecthl2_357"
 ITEM.weaponCategory = "sidearm"
 ITEM.width = 2
 ITEM.height = 1

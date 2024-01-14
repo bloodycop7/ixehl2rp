@@ -1,7 +1,7 @@
 ITEM.name = "MP7"
 ITEM.description = "A compact, fully automatic sub-machine gun."
 ITEM.model = "models/weapons/w_smg1.mdl"
-ITEM.class = "tfa_mmod_smg"
+ITEM.class = "tfa_projecthl2_smg"
 ITEM.weaponCategory = "primary"
 ITEM.width = 3
 ITEM.height = 2
