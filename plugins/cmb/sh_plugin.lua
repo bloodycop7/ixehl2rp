@@ -145,10 +145,6 @@ ix.config.Add("squadLimit", 4, "How many units can be in a squad?", nil, {
     data = {min = 1, max = 40},
 })
 
-ix.config.Add("combineGlowEyes", true, "Should combine have glowing eyes?", nil, {
-    category = "Combine Systems",
-})
-
 ix.char.RegisterVar("bOLStatus", {
     field = "bol_status",
     fieldType = ix.type.bool,

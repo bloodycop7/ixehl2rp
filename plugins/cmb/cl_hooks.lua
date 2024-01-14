@@ -488,7 +488,6 @@ function PLUGIN:SetupOutlines()
 
             if ( ix.option.Get("combineOutlineAssetsTeamOnly", false) ) then
                 if ( hook.Run("CombineOverlayCanDisplayAssetOnly", v) == false ) then
-                    print(v)
                     continue
                 end
             end
