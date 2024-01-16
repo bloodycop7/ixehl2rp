@@ -202,6 +202,10 @@ ix.config.Add("rationInterval", (60 * 30), "How often a player can receive a rat
     category = "rations"
 })
 
+ix.config.Add("itemOutline", true, "Whether or not items should be outlined when hovered.", nil, {
+    category = "misc"
+})
+
 ix.command.Add("CharSetRank", {
 	description = "Sets the rank of a character.",
 	adminOnly = true,

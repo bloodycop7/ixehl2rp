@@ -18,6 +18,39 @@ function Schema:CanPlayerJoinRank(ply, rank, info)
 	return false
 end
 
+ix.lang.AddTable("english", {
+	optItemOutlineColor = "Item Outline Color",
+	optdItemOutlinecolor = "The color of the outline for items.",
+})
+
+function Schema:SetupOutlines()
+	if not ( IsValid(localPlayer) ) then
+		return
+	end
+
+	local char = localPlayer:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	local trace = {}
+	trace.start = localPlayer:GetShootPos()
+	trace.endpos = trace.start + localPlayer:GetAimVector() * 160
+	trace.filter = localPlayer
+	trace.mask = MASK_SHOT_HULL
+
+	local entity = util.TraceHull(trace).Entity
+
+	if ( IsValid(entity) and ( entity:GetClass() == "ix_item" or hook.Run("CanOutlineEntity", entity) == true ) ) then
+		if ( entity:GetClass() == "ix_item" and not ix.config.Get("itemOutline", true) ) then
+			return
+		end
+
+		ix.outline.Add(entity, ix.option.Get("itemOutlineColor", color_white), 2)
+	end
+end
+
 // Credits: https://github.com/Lite-Network/lnhl2rpsemiserious/blob/main/schema/cl_schema.lua
 
 function Schema:PopulateHelpMenu(tabs)
