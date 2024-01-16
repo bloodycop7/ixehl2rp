@@ -43,7 +43,7 @@ function Schema:SetupOutlines()
 	local entity = util.TraceHull(trace).Entity
 
 	if ( IsValid(entity) and ( entity:GetClass() == "ix_item" or hook.Run("CanOutlineEntity", entity) == true ) ) then
-		if ( entity:GetClass() == "ix_item" and not ix.config.Get("itemOutline", true) ) then
+		if ( entity:GetClass() == "ix_item" and ( not ix.config.Get("itemOutline", true) or not ix.option.Get("itemOutline", true) ) ) then
 			return
 		end
 
