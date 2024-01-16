@@ -21,6 +21,9 @@ end
 ix.lang.AddTable("english", {
 	optItemOutlineColor = "Item Outline Color",
 	optdItemOutlinecolor = "The color of the outline for items.",
+
+	optItemOutline = "Item Outline",
+	optdItemOutline = "Whether or not to draw an outline around items.",
 })
 
 function Schema:SetupOutlines()
