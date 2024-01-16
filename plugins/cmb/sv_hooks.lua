@@ -376,3 +376,27 @@ PLUGIN["LVS.CanPlayerDrive"] = function(self, ply, car)
         end
     end
 end
+
+function PLUGIN:OnEntityCreated(ent)
+    if not ( IsValid(ent) ) then
+        return
+    end
+
+    if ( ent:GetClass() == "npc_combine_camera" ) then
+        if not ( IsValid(ent.ixCamDetector) ) then
+            ent.ixCamDetector = ents.Create("base_entity")
+            ent.ixCamDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector")
+            
+            ent.ixCamDetector.AcceptInput = function(s, name, ply, camera, data)
+                print(s, name, ply, camera, data)
+            end
+
+            ent.ixCamDetector:Spawn()
+            ent.ixCamDetector:Activate()
+        end
+
+        local values = ent:GetKeyValues()
+	    ent:SetKeyValue("innerradius", values.outerradius) -- remove the outer/inner radius thing cuz its kinda pointless
+        ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
+    end
+end
