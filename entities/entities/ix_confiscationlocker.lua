@@ -102,7 +102,7 @@ if ( SERVER ) then
             
             if ( totalConfiscatedCount > 0 ) then
                 ply:Notify("You have confiscated " .. totalConfiscatedCount .. " item(s) and gained " .. sterCreditsNew .. " Sterilization Credits.")
-                char:SetSterilizationCredits(char:GetSterilizationCredits() + sterCreditsNew)
+                char:SetRankPoints(char:GetRankPoints() + sterCreditsNew)
             end
         else
             local items = self:GetItems()

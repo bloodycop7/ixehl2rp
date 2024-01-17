@@ -61,6 +61,28 @@ function PLUGIN:DrawBox(drawData)
     surface.DrawOutlinedRect(drawData.x, drawData.y, drawData.w, drawData.h, drawData.rectBackThickness)
 end
 
+function PLUGIN:Think()
+    if not ( IsValid(localPlayer) ) then
+        return
+    end
+
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(localPlayer) ) then
+        return
+    end
+
+    for k, v in pairs(ix.cmbSystems.waypoints) do
+        if ( v.duration and v.duration < CurTime() ) then
+            ix.cmbSystems.waypoints[k] = nil
+        end
+    end
+end
+
 function PLUGIN:HUDPaint()
     if not ( self:ShouldDrawCombineHUD() ) then
         return

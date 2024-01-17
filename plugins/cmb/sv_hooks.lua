@@ -383,20 +383,56 @@ function PLUGIN:OnEntityCreated(ent)
     end
 
     if ( ent:GetClass() == "npc_combine_camera" ) then
-        if not ( IsValid(ent.ixCamDetector) ) then
-            ent.ixCamDetector = ents.Create("base_entity")
-            ent.ixCamDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector")
-            
-            ent.ixCamDetector.AcceptInput = function(s, name, ply, camera, data)
-                print(s, name, ply, camera, data)
+        if ( IsValid(ent.ixCamDetector) ) then
+            ent.ixCamDetector:Remove()
+            ent.ixCamDetector = nil
+        end
+
+        ent.ixCamDetector = ents.Create("base_entity")
+        ent.ixCamDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector")
+        
+        ent.ixCamDetector.AcceptInput = function(s, name, ply, camera, data)
+            if not ( ply:IsPlayer() or ply:IsNPC() ) then
+                return
             end
 
-            ent.ixCamDetector:Spawn()
-            ent.ixCamDetector:Activate()
+            if ( ( ply.ixLastCameraDetected or 0 ) > CurTime() ) then
+                camera:SetTarget(ply)
+                camera:Fire("SetAngry")
+            end
+
+            if ( data == "OnFoundPlayer" or data == "OnFoundEnemy" ) then
+                camera:SetTarget(ply)
+                camera:Fire("SetAngry")
+
+                timer.Simple(2, function()
+                    if ( IsValid(camera) ) then
+                        camera:Fire("SetIdle")
+                    end
+                end)
+
+                ix.cmbSystems:MakeWaypoint({
+                    pos = ply:GetPos(),
+                    text = "CAMERA DETECTED.",
+                    color = Color(255, 0, 0),
+                    duration = 5
+                })
+
+                ply.ixLastCameraDetected = CurTime() + 60
+            end
         end
+
+        ent.ixCamDetector:Spawn()
+        ent.ixCamDetector:Activate()
 
         local values = ent:GetKeyValues()
 	    ent:SetKeyValue("innerradius", values.outerradius) -- remove the outer/inner radius thing cuz its kinda pointless
         ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
+        ent:Fire("addoutput", "OnFoundEnemy ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundEnemy:0:-1")
+        ent:CallOnRemove("ixCamDetector." .. ent:EntIndex() .. "." .. ent:GetClass(), function(this)
+            if ( IsValid(this.ixCamDetector) ) then
+                this.ixCamDetector:Remove()
+            end
+        end)
     end
 end
