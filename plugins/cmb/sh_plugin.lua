@@ -166,6 +166,8 @@ ix.cmbSystems.Deployments.Functions = {
         self.dropship:Fire("addoutput", "OnFinishedDropoff " .. self.dropship.inputDetector:GetName() .. ":SetTrack:" .. self.dropship.pathTrack2:GetName() .. ":1")
         self.dropship.pathTrack2:Fire("addoutput", "OnPass " .. self.dropship.inputDetector:GetName() .. ":Kill:0:1")
 
+        self.dropship.playerPos = {}
+
         local tuID = "ix.DropshipDeployment." .. self.dropship:GetClass() .. "." .. self.dropship:EntIndex() .. "." .. ( self.id or numbID )
         timer.Create(tuID, 0.5, 0, function()
             if not ( IsValid(self.dropship) ) then
@@ -194,7 +196,16 @@ ix.cmbSystems.Deployments.Functions = {
                         continue
                     end
 
-                    charPly:SetPos(self.dropship:GetPos() + self.dropship:GetForward() * 170)
+                    if ( IsValid(self.dropship.playerPos[k]) ) then
+                        self.dropship.playerPos[k]:Remove()
+                    end
+
+                    self.dropship.playerPos[k] = ents.Create("info_target")
+                    self.dropship.playerPos[k]:SetPos(self.dropship:GetPos() + self.dropship:GetForward() * 170)
+                    self.dropship.playerPos[k]:SetName("ix_dropship_deployment_" .. ( self.id or numbID ) .. "_player_pos_" .. k)
+                    self.dropship.playerPos[k]:Spawn()
+
+                    charPly:SetPos(self.dropship.playerPos[k] or self.dropship:GetPos() + self.dropship:GetForward() * 170)
                     charPly:SetViewEntity(charPly)
                     charPly:SetNoDraw(false)
                     charPly:SetNotSolid(false)
