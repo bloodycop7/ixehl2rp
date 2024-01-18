@@ -1,4 +1,4 @@
-local otaVoicelines = {
+local owVoicelines = {
     {"0", "Zero", "npc/combine_soldier/vo/zero.wav"},
     {"1", "One", "npc/combine_soldier/vo/one.wav"},
     {"10", "Ten", "npc/combine_soldier/vo/ten.wav"},
@@ -252,7 +252,7 @@ local otaVoicelines = {
     {"AFFIRMATIVE2", "Affirmative", "npc/metropolice/vo/affirmative2.wav"},
 }
 
-for k, v in ipairs(otaVoicelines) do
+for k, v in ipairs(owVoicelines) do
     Schema.voices.Add("OverwatchTranshumanArm", v[1], v[2], v[3])
 end
 
