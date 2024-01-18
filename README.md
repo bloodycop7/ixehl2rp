@@ -20,6 +20,10 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)
 
+**Fonts:**
+[Raju Regular](https://www.onlinewebfonts.com/download/ab87eec92788f9572b9c13028bf2edb6) - Main Schema Font
+[Frak](https://fontmeme.com/fonts/frak-font/) - Combine Font
+
 # Help Needed!
 Hello, as of currently no contribution seems necessary, don't get your hopes down tho! If you feel like something can be overhauled / made more optimized, then free feel to do so!
 
