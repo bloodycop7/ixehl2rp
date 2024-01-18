@@ -670,7 +670,7 @@ function ix.cmbSystems.Deployments:InsertMember(ply, uID)
         return
     end
 
-    if ( table.HasValue(deploymentData.units, ply) ) then
+    if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
         return
     end
 
