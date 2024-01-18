@@ -247,7 +247,7 @@ function PANEL:Init()
 	self.buttonPanel = self:Add("Panel")
 	self.buttonPanel:Dock(BOTTOM)
 	self.buttonPanel:SetTall(60)
-	self.buttonPanel:DockMargin(scrW * 0.15, 0, 0, 0)
+	self.buttonPanel:DockMargin(scrW * 0.20, 0, 0, 0)
 
 	-- create character button
 	local createButton = self.buttonPanel:Add("ixMenuButton")
