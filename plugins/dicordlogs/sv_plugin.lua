@@ -21,8 +21,8 @@ function ix.DiscordLogs:Format(ent)
 end
 
 function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
-    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. util.SteamIDTo64(steamid), function(body, len, headers, code)
-        ix.DiscordLogs.StoredAvatars[util.SteamIDTo64(steamid)] = util.JSONToTable(body).response.players[1].avatarfull
+    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. ply:SteamID64(), function(body, len, headers, code)
+        ix.DiscordLogs.StoredAvatars[ply:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
     end)
 end
 
