@@ -402,8 +402,6 @@ function PLUGIN:OnEntityCreated(ent)
                     duration = 5
                 })
             end
-
-            return false
         end
 
         ent.ixCamDetector:Spawn()
