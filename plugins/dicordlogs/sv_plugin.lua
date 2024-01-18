@@ -43,6 +43,10 @@ ix.DiscordLogs.Webhooks = {
 require("reqwest")
 
 function ix.DiscordLogs:SendWebhook(webhook, bodyData)
+    if not ( ix.config.Get("discordLogs", true) ) then
+        return
+    end
+    
     bodyData.username = bodyData.userName or "Helix: Enhanced Half-Life 2 Roleplay"
     bodyData.avatar_url = bodyData.avatarURL or "https://cdn.discordapp.com/icons/1069473418195501086/4f6c7bfbccad06c24be5fb8aba497950.webp?size=96"
     bodyData.content = "<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T> " .. bodyData.content or "`TestMessage`"
