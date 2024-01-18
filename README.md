@@ -21,7 +21,7 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)
 
 # Help Needed!
-Hello, as of currently no contribution seems necessary, don't get your hopes down tho! If you feel something can be overhauled / made more optimized, then free feel to do so!
+Hello, as of currently no contribution seems necessary, don't get your hopes down tho! If you feel like something can be overhauled / made more optimized, then free feel to do so!
 
 Thank you in advance!
 # Contributions
