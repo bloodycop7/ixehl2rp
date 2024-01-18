@@ -229,6 +229,12 @@ ix.cmbSystems.Deployments.Functions = {
         self.dropship:DeleteOnRemove(self.dropship.landTarget)
         self.dropship:DeleteOnRemove(self.dropship.inputDetector)
         self.dropship:DeleteOnRemove(self.dropship.fakeSeat)
+
+        for k, v in pairs(self.dropship.playerPos) do
+            if ( IsValid(v) ) then
+                self.dropship:DeleteOnRemove(v)
+            end
+        end
     end
 }
 
