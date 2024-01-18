@@ -16,7 +16,9 @@ The code is also open-source with a license, therefore you are allowed to modify
 [LVS: Helicopters](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
 [LVS: Planes](https://steamcommunity.com/sharedfiles/filedetails/?id=2912826012)\
 [LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409&searchtext=)\
-[LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)
+[LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)\
+[Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
+[Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)
 
 # Help Needed!
 Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
