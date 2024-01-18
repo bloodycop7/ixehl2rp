@@ -89,6 +89,10 @@ function PLUGIN:PlayerSay(ply, text, teamChat)
 end
 
 function PLUGIN:PlayerSpawnedProp(ply, model, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -97,6 +101,10 @@ function PLUGIN:PlayerSpawnedProp(ply, model, ent)
 end
 
 function PLUGIN:PlayerSpawnedRagdoll(ply, model, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -105,6 +113,10 @@ function PLUGIN:PlayerSpawnedRagdoll(ply, model, ent)
 end
 
 function PLUGIN:PlayerSpawnedEffect(ply, model, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -113,6 +125,10 @@ function PLUGIN:PlayerSpawnedEffect(ply, model, ent)
 end
 
 function PLUGIN:PlayerSpawnedVehicle(ply, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -121,6 +137,10 @@ function PLUGIN:PlayerSpawnedVehicle(ply, ent)
 end
 
 function PLUGIN:PlayerSpawnedSENT(ply, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -129,6 +149,10 @@ function PLUGIN:PlayerSpawnedSENT(ply, ent)
 end
 
 function PLUGIN:PlayerSpawnedNPC(ply, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -137,6 +161,10 @@ function PLUGIN:PlayerSpawnedNPC(ply, ent)
 end
 
 function PLUGIN:PlayerSpawnedSWEP(ply, ent)
+    if not ( IsValid(ply) or IsValid(ent) ) then
+        return
+    end
+    
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -145,6 +173,10 @@ function PLUGIN:PlayerSpawnedSWEP(ply, ent)
 end
 
 function PLUGIN:PlayerGiveSWEP(ply, class, swep)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ply:SteamName(),
         avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
@@ -157,9 +189,15 @@ function PLUGIN:PlayerHurt(victim, attacker, healthRemaining, damageTaken)
         return
     end
 
+    local msg = "World"
+
+    if ( IsValid(attacker) and attacker:IsPlayer() and attacker:IsNPC() ) then
+        msg = attacker:IsPlayer() and attacker:Nick() or attacker:GetClass()
+    end
+
     ix.DiscordLogs:SendWebhook("admin", {
         userName = ix.DiscordLogs:Format(victim),
         avatarURL = ix.DiscordLogs.StoredAvatars[victim:SteamID64()],
-        content = "`" .. ( attacker:IsPlayer() or attacker:IsNPC() and ix.DiscordLogs:Format(attacker) or "World" ) .. " hurt " .. ix.DiscordLogs:Format(victim) .. " for " .. damageTaken .. " damage. (" .. healthRemaining .. " health remaining)`",
+        content = "`" .. msg .. " hurt " .. ix.DiscordLogs:Format(victim) .. " for " .. damageTaken .. " damage. (" .. healthRemaining .. " health remaining)`",
     })
 end
