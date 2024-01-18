@@ -21,16 +21,20 @@ function ix.DiscordLogs:Format(ent)
 end
 
 function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
-    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. ply:SteamID64(), function(body, len, headers, code)
+    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. ply:SteamID64(), pcall(function(body, len, headers, code)
         ix.DiscordLogs.StoredAvatars[ply:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
-    end)
+    end))
 end
 
 function PLUGIN:OnReloaded()
     for k, v in ipairs(player.GetAll()) do
-        http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. v:SteamID64(), function(body, len, headers, code)
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. v:SteamID64(), pcall(function(body, len, headers, code)
             ix.DiscordLogs.StoredAvatars[v:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
-        end)
+        end))
     end
 end
 
