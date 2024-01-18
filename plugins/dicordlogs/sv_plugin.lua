@@ -1,7 +1,7 @@
 // Get a Steam Web API: https://steamcommunity.com/dev/apikey
 // Requires: https://github.com/WilliamVenner/gmsv_reqwest/releases
 
-local PLUGIN 
+local PLUGIN = PLUGIN
 
 ix.DiscordLogs = ix.DiscordLogs or {}
 ix.DiscordLogs.SteamAPI = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
