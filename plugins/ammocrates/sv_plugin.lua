@@ -11,10 +11,6 @@ function PLUGIN:SaveData()
 
     for k, v in ipairs(ents.FindByClass("ix_ammo_crate_*")) do
         data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetAmmoType(), v:GetClass()}
-
-        if ( data[4] == 0 and not v:GetRemainingAmmo() ) then
-            table.RemoveByValue(data, data[4])
-        end
     end
 
     ix.data.Set("ammoCrates", data)
@@ -24,7 +20,7 @@ function PLUGIN:LoadData()
     data = ix.data.Get("ammoCrates", {})
 
     for _, v in ipairs(data) do
-        local crate = ents.Create(v[5])
+        local crate = ents.Create(v[4])
         crate:SetPos(v[1])
         crate:SetAngles(v[2])
         crate:SetAmmoType(v[3])

@@ -32,7 +32,7 @@ function PLUGIN:OnReloaded()
             ix.DiscordLogs.StoredAvatars[v:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
         end)
     end
-end)
+end
 
 ix.DiscordLogs.Webhooks = {
     ["chat"] = "1197234158615941210/UeTAIZYxP9QrLfyKrUCO0cGWq5mmG0pgh_EMrMz0Bdw9flttUhNSd7T0pBi3HAVL4YS7",
