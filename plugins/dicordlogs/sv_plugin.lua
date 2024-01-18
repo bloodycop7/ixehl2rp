@@ -35,9 +35,9 @@ function PLUGIN:OnReloaded()
 end
 
 ix.DiscordLogs.Webhooks = {
-    ["chat"] = "1197234158615941210/UeTAIZYxP9QrLfyKrUCO0cGWq5mmG0pgh_EMrMz0Bdw9flttUhNSd7T0pBi3HAVL4YS7",
-    ["joinleave"] = "1197234158615941210/UeTAIZYxP9QrLfyKrUCO0cGWq5mmG0pgh_EMrMz0Bdw9flttUhNSd7T0pBi3HAVL4YS7",
-    ["admin"] = "1197234158615941210/UeTAIZYxP9QrLfyKrUCO0cGWq5mmG0pgh_EMrMz0Bdw9flttUhNSd7T0pBi3HAVL4YS7",
+    ["chat"] = "https://discord.com/api/webhooks/XXXXXXXX/XXXXX",
+    ["joinleave"] = "https://discord.com/api/webhooks/XXXXXXXX/XXXXX",
+    ["admin"] = "https://discord.com/api/webhooks/XXXXXXXX/XXXXX",
 }
 
 require("reqwest")
@@ -50,16 +50,16 @@ function ix.DiscordLogs:SendWebhook(webhook, bodyData)
     bodyData.username = bodyData.userName or "Helix: Enhanced Half-Life 2 Roleplay"
     bodyData.avatar_url = bodyData.avatarURL or "https://cdn.discordapp.com/icons/1069473418195501086/4f6c7bfbccad06c24be5fb8aba497950.webp?size=96"
     bodyData.content = "<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T> " .. bodyData.content or "`TestMessage`"
-    
+
     reqwest({
         method = "POST",
-        url = ( baseAPIURL .. ix.DiscordLogs.Webhooks[webhook] ) or webhook,
+        url = ix.DiscordLogs.Webhooks[webhook] or webhook,
         timeout = 1,
         body = util.TableToJSON(bodyData),
         type = "application/json",
         headers = {
             ["User-Agent"] = "My User Agent"
-        },
+        }
     })
 end
 
