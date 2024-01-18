@@ -1101,7 +1101,7 @@ ix.command.Add("JoinSquad", {
         local squadData
 
         for k, v in pairs(ix.cmbSystems.Squads.Stored) do
-            if ( v.name == name ) then
+            if ( ix.util.StringMatches(v.name, name) ) then
                 squadData = v
 
                 break
