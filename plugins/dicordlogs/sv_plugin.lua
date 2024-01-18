@@ -79,7 +79,7 @@ gameevent.Listen("player_disconnect")
 hook.Add("player_disconnect", "ix.DiscordLogs.PlayerLeave", function(data)
     ix.DiscordLogs:SendWebhook("joinleave", {
         userName = data.name,
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
+        avatarURL = ix.DiscordLogs.StoredAvatars[util.SteamIDTo64(data.networkid)],
         content = "`" .. data.name .. " (" .. util.SteamIDTo64(data.networkid) .. ") has left the server: " .. data.reason .. "`",
     })
 end)
