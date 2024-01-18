@@ -396,6 +396,10 @@ function PLUGIN:OnEntityCreated(ent)
             end
 
             if ( data == "OnFoundPlayer" or data == "OnFoundEnemy" ) then
+                if ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64()) ) then
+                    return false
+                end
+
                 camera:SetTarget(ply)
                 camera:Fire("SetAngry")
 
@@ -406,6 +410,11 @@ function PLUGIN:OnEntityCreated(ent)
                         end
 
                         camera:Fire("SetIdle")
+                    end)
+                end
+
+                if not ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64()) ) then
+                    timer.Create("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64(), 2, 1, function()
                     end)
                 end
 
