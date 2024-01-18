@@ -89,7 +89,7 @@ function PLUGIN:HUDPaint()
     end
 
     local padding = ScreenScale(8)
-    local code = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
+    local code = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
 
     local char = localPlayer:GetCharacter()
 
@@ -115,7 +115,7 @@ function PLUGIN:HUDPaint()
 
     if ( ix.option.Get("combineOverlaySquad", true) ) then
         if ( char:GetData("squadID", -1) != -1 ) then
-            local squad = ix.cmbSystems.squads[char:GetData("squadID", -1)]
+            local squad = ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)]
 
             if ( squad ) then
                 surface.SetFont("ixCombineFont10")
@@ -722,11 +722,17 @@ end)
 net.Receive("ix.cmbSystems.SyncSquads", function()
     local data = net.ReadTable() or {}
 
-    ix.cmbSystems.squads = data
+    ix.cmbSystems.Squads.Stored = data
 end)
 
 net.Receive("ix.cmbSystems.SyncObjectives", function()
     local data = net.ReadTable() or {}
 
-    ix.cmbSystems.objectives = data
+    ix.cmbSystems.Objectives.Stored = data
+end)
+
+net.Receive("ix.cmbSystems.SyncDeployments", function()
+    local data = net.ReadTable() or {}
+
+    ix.cmbSystems.Deployments.Stored = data
 end)

@@ -478,7 +478,7 @@ local function InCombat() // simple for now
     end
 
     if ( ix.cmbSystems.GetCityCode ) then
-        local current = ix.cmbSystems:GetCityCode()
+        local current = ix.cmbSystems.CityCodes:Get()
         
         return current > 2
     end

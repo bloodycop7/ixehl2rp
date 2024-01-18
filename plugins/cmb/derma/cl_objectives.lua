@@ -57,7 +57,7 @@ end
 function PANEL:PopulateObjectives()
     self.scroll:Clear()
 
-    for k, v in SortedPairsByMemberValue(ix.cmbSystems.objectives, "priority") do
+    for k, v in SortedPairsByMemberValue(ix.cmbSystems.Objectives.Stored, "priority") do
         local objective = self.scroll:Add("DScrollPanel")
         objective:Dock(TOP)
         objective:SetTall(padding * 6)

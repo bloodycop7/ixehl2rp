@@ -13,10 +13,212 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
-ix.cmbSystems = ix.cmbSystems or {}
-ix.cmbSystems.squads = ix.cmbSystems.squads or {}
-ix.cmbSystems.objectives = ix.cmbSystems.objectives or {}
+ix.cmbSystems = ix.cmbSystems or { Objectives = { Stored ={} }, Squads = { Stored = {} }, CityCodes = {}, Deployments = {} }
+ix.cmbSystems.Deployments.Functions = {
+    ["test_deployment"] = function(self) // self is the Deployments Table defined in Deployments.Stored
+        if not ( self.units and not table.IsEmpty(self.units) ) then
+            return
+        end
+
+        local numbID = math.random(9999)
+
+        if ( IsValid(self.dropship) ) then
+            self.dropship:Remove()
+        end
+
+        self.dropship = ents.Create("npc_combinedropship")
+        self.dropship:SetPos(Vector(-4584.637207, 5433.729980, 3293.612793))
+        self.dropship:SetAngles(Angle(0, 0, 0))
+        self.dropship:SetKeyValue("gunrange", "2500")
+        self.dropship:SetKeyValue("cratetype", "1")
+        self.dropship:CapabilitiesAdd(CAP_MOVE_FLY)
+        self.dropship:SetName("ix_dropship_deployment_" .. ( self.id or numbID ))
+
+        self.dropship:Spawn()
+        self.dropship:Activate()
+
+        local attachname = self.dropship:GetChildren()[2]:LookupAttachment("deploy_start")
+        local attachment = self.dropship:GetChildren()[2]:GetAttachment(attachname)
+
+        if ( IsValid(self.dropship.fakeSeat) ) then
+            self.dropship.fakeSeat:Remove()
+        end
+
+        self.dropship.fakeSeat = ents.Create("prop_physics")
+        self.dropship.fakeSeat:SetModel("models/hunter/blocks/cube025x025x025.mdl")
+        self.dropship.fakeSeat:SetPos(attachment.Pos + attachment.Ang:Forward() * 95 + attachment.Ang:Up() * 85)
+        self.dropship.fakeSeat:SetAngles(self.dropship:GetAngles())
+        self.dropship.fakeSeat:SetParent(self.dropship)
+        self.dropship.fakeSeat:Spawn()
+        self.dropship.fakeSeat:SetColor(Color(0, 0, 0, 0))
+        self.dropship.fakeSeat:SetRenderMode(RENDERMODE_TRANSCOLOR)
+        self.dropship.fakeSeat.Spectators = {}
+        self.dropship.fakeSeat:CallOnRemove("ix.DropshipDeployment." .. self.dropship:GetClass() .. "." .. self.dropship:EntIndex() .. "." .. ( self.id or numbID ), function()
+            for k, v in ipairs(self.dropship.fakeSeat.Spectators) do
+                v = ix.char.loaded[v]
+
+                if not ( v ) then
+                    continue
+                end
+
+                local charPly = v:GetPlayer()
+
+                if not ( IsValid(charPly) ) then
+                    continue
+                end
+
+                if not ( charPly:GetParent() == self.dropship ) then
+                    break
+                end
+
+                charPly:SetViewEntity(charPly)
+                charPly:SetNoDraw(false)
+                charPly:SetNotSolid(false)
+                charPly:SetMoveType(MOVETYPE_WALK)
+                charPly:Freeze(false)
+                charPly:SetParent(nil)
+            end
+        end)
+
+        for k, v in ipairs(self.units) do
+            v = ix.char.loaded[v]
+
+            if not ( v ) then
+                continue
+            end
+
+            local charPly = v:GetPlayer()
+
+            if not ( IsValid(charPly) ) then
+                continue
+            end
+
+            if not ( charPly:Alive() ) then
+                continue
+            end
+
+            charPly:Notify("You started deploying to " .. self.name .. ".")
+            charPly:SetViewEntity(self.dropship.fakeSeat)
+            charPly:SetNoDraw(true)
+            charPly:SetNotSolid(true)
+            charPly:SetMoveType(MOVETYPE_NONE)
+            charPly:Freeze(true)
+            charPly:SetParent(self.dropship)
+
+            self.dropship.fakeSeat.Spectators[#self.dropship.fakeSeat.Spectators + 1] = charPly:GetChar():GetID()
+        end
+
+        if ( IsValid(self.dropship.inputDetector) ) then
+            self.dropship.inputDetector:Remove()
+        end
+
+        if ( IsValid(self.dropship.pathTrack1) ) then
+            self.dropship.pathTrack1:Remove()
+        end
+
+        if ( IsValid(self.dropship.pathTrack2) ) then
+            self.dropship.pathTrack2:Remove()
+        end
+
+        if ( IsValid(self.dropship.landTarget) ) then
+            self.dropship.landTarget:Remove()
+        end
+        
+        self.dropship.inputDetector = ents.Create("base_entity")
+        self.dropship.inputDetector:SetName("ix_deployment_" .. ( self.id or numbID ) .. "_input_detector")
+        
+        self.dropship.inputDetector.AcceptInput = function(s, name, activator, caller, data)
+            activator:Fire(name, tostring(data))
+        end
+
+        self.dropship.inputDetector:Spawn()
+        self.dropship.inputDetector:Activate()
+
+        self.dropship.pathTrack1 = ents.Create("path_track")
+        self.dropship.pathTrack1:SetPos(Vector(1618.565063, 4444.400391, 486.162445))
+        self.dropship.pathTrack1:SetName(self.dropship:GetName() .. "_path_track_1")
+        self.dropship.pathTrack1:Spawn()
+        self.dropship.pathTrack1:Activate()
+
+        self.dropship.pathTrack2 = ents.Create("path_track")
+        self.dropship.pathTrack2:SetPos(Vector(1561.090698, -1098.755493, 1613.055664))
+        self.dropship.pathTrack2:SetName(self.dropship:GetName() .. "_path_track_2")
+        self.dropship.pathTrack2:SetKeyValue("target", self.dropship:GetName() .. "_path_track_3")
+        self.dropship.pathTrack2:Spawn()
+        self.dropship.pathTrack2:Activate()
+
+        self.dropship.pathTrack3 = ents.Create("path_track")
+        self.dropship.pathTrack3:SetPos(Vector(-2624.462891, -1078.657349, 837.081116))
+        self.dropship.pathTrack3:SetName(self.dropship:GetName() .. "_path_track_3")
+        self.dropship.pathTrack3:Spawn()
+        self.dropship.pathTrack3:Activate()
+
+        self.dropship.landTarget = ents.Create("info_target")
+        self.dropship.landTarget:SetPos(Vector(502.990662, 4306.221191, -31.968750))
+        self.dropship.landTarget:SetName(self.dropship:GetName() .. "_land_target")
+        self.dropship.landTarget:Spawn()
+
+        self.dropship:Fire("StopWaitingForDropoff")
+        self.dropship:Fire("SetLandTarget", self.dropship.landTarget:GetName())
+        self.dropship:Fire("FlyToSpecificTrackViaPath", self.dropship.pathTrack1:GetName())
+
+        self.dropship.pathTrack1:Fire("addoutput", "OnPass " .. self.dropship.inputDetector:GetName() .. ":LandTakeCrate:1")
+        self.dropship:Fire("addoutput", "OnFinishedDropoff " .. self.dropship.inputDetector:GetName() .. ":SetTrack:" .. self.dropship.pathTrack2:GetName() .. ":1")
+        self.dropship.pathTrack2:Fire("addoutput", "OnPass " .. self.dropship.inputDetector:GetName() .. ":Kill:0:1")
+
+        local tuID = "ix.DropshipDeployment." .. self.dropship:GetClass() .. "." .. self.dropship:EntIndex() .. "." .. ( self.id or numbID )
+        timer.Create(tuID, 0.5, 0, function()
+            if not ( IsValid(self.dropship) ) then
+                timer.Remove(tuID)
+
+                return
+            end
+        
+            if ( self.dropship:OnGround() ) then
+                hook.Run("OnDropshipLanded", self.dropship)
+
+                for k, v in ipairs(self.units) do
+                    v = ix.char.loaded[v]
+
+                    if not ( v ) then
+                        continue
+                    end
+
+                    local charPly = v:GetPlayer()
+
+                    if not ( IsValid(charPly) ) then
+                        continue
+                    end
+
+                    if not ( charPly:Alive() ) then
+                        continue
+                    end
+
+                    charPly:SetPos(self.dropship:GetPos() + self.dropship:GetForward() * 170)
+                    charPly:SetViewEntity(charPly)
+                    charPly:SetNoDraw(false)
+                    charPly:SetNotSolid(false)
+                    charPly:SetMoveType(MOVETYPE_WALK)
+                    charPly:Freeze(false)
+                    charPly:SetParent(nil)
+
+                    charPly:Notify("You finished deploying to " .. self.name .. ".")
+                end
+
+                timer.Remove(tuID)
+            end
+        end)
+
+        self.dropship:DeleteOnRemove(self.dropship.pathTrack1)
+        self.dropship:DeleteOnRemove(self.dropship.pathTrack2)
+        self.dropship:DeleteOnRemove(self.dropship.landTarget)
+        self.dropship:DeleteOnRemove(self.dropship.inputDetector)
+        self.dropship:DeleteOnRemove(self.dropship.fakeSeat)
+    end
+}
+
 ix.cmbSystems.dispatchNumbers = {
+    [0] = "npc/overwatch/radiovoice/zero.wav",
     [1] = "npc/overwatch/radiovoice/one.wav",
     [2] = "npc/overwatch/radiovoice/two.wav",
     [3] = "npc/overwatch/radiovoice/three.wav",
@@ -208,11 +410,11 @@ local extraExplosions = {
 
 function PLUGIN:InitPostEntity()
     if ( SERVER ) then
-        ix.cmbSystems:SetCityCode(1)
+        ix.cmbSystems.CityCodes:Set(1)
     end
 end
 
-ix.cmbSystems.cityCodes = {
+ix.cmbSystems.CityCodes.Stored = {
     {
         name = "Preserved",
         color = Color(0, 255, 0),
@@ -647,7 +849,7 @@ ix.cmbSystems.cityCodes = {
     }
 }
 
-function ix.cmbSystems:GetCityCode()
+function ix.cmbSystems.CityCodes:Get()
     return GetGlobalInt("ixCityCode", 1)
 end
 
@@ -849,7 +1051,7 @@ ix.command.Add("CreateSquad", {
             return
         end
 
-        for k, v in pairs(ix.cmbSystems.squads) do
+        for k, v in pairs(ix.cmbSystems.Squads.Stored) do
             if ( v.name == name ) then
                 ply:Notify("A squad with that name already exists.")
 
@@ -857,7 +1059,7 @@ ix.command.Add("CreateSquad", {
             end
         end
 
-        ix.cmbSystems:CreateSquad(ply, {
+        ix.cmbSystems.Squads:CreateSquad(ply, {
             name = name,
             limit = limit
         })
@@ -898,7 +1100,7 @@ ix.command.Add("JoinSquad", {
 
         local squadData
 
-        for k, v in pairs(ix.cmbSystems.squads) do
+        for k, v in pairs(ix.cmbSystems.Squads.Stored) do
             if ( v.name == name ) then
                 squadData = v
 
@@ -918,7 +1120,7 @@ ix.command.Add("JoinSquad", {
             return
         end
 
-        ix.cmbSystems:InsertMember(ply, #squadData + 1)
+        ix.cmbSystems.Squads:InsertMember(ply, #squadData + 1)
     end
 
 })
@@ -983,7 +1185,7 @@ ix.command.Add("KickSquadMember", {
             return
         end
 
-        local squadData = ix.cmbSystems.squads[char:GetData("squadID", -1)]
+        local squadData = ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)]
 
         if not ( squadData ) then
             ply:Notify("Your squad is invalid, your squad id has been reset.")
@@ -998,7 +1200,7 @@ ix.command.Add("KickSquadMember", {
             return
         end
 
-        ix.cmbSystems:RemoveMember(targetPly, char:GetData("squadID", -1))
+        ix.cmbSystems.Squads:RemoveMember(targetPly, char:GetData("squadID", -1))
     end
 
 })
@@ -1032,14 +1234,14 @@ ix.command.Add("LeaveSquad", {
             return
         end
 
-        if not ( ix.cmbSystems.squads[char:GetData("squadID", -1)] ) then
+        if not ( ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)] ) then
             char:SetData("squadID", -1)
             ply:Notify("Squad invalid, your squad id has been reset.")
 
             return
         end
 
-        ix.cmbSystems:RemoveMember(ply, char:GetData("squadID", -1))
+        ix.cmbSystems.Squads:RemoveMember(ply, char:GetData("squadID", -1))
     end
 })
 
@@ -1094,7 +1296,7 @@ ix.command.Add("NewObjective", {
             return
         end
 
-        ix.cmbSystems:NewObjective({
+        ix.cmbSystems.Objectives:NewObjective({
             sentBy = ply:Nick(),
             text = text
         })
@@ -1198,7 +1400,7 @@ ix.command.Add("SetPriorityObjective", {
             return
         end
 
-        ix.cmbSystems:SetPriorityObjective(objectiveID, true)
+        ix.cmbSystems.Objectives:SetPriorityObjective(objectiveID, true)
     end
 })
 
@@ -1241,7 +1443,7 @@ ix.command.Add("RemovePriorityObjective", {
             return
         end
 
-        ix.cmbSystems:SetPriorityObjective(objectiveID, false)
+        ix.cmbSystems.Objectives:SetPriorityObjective(objectiveID, false)
     end
 })
 
@@ -1676,3 +1878,10 @@ function PLUGIN:CalcMainActivity(ply, vel)
 		ply.CalcSeqOverride = ply:LookupSequence(playAnim) or ply.CalcSeqOverride
 	end
 end
+
+ix.cmbSystems.Deployments.Stored = {
+    ["test_deployment"] = {
+        name = "Rooftop / Residental Block 1",
+        units = {},
+    }
+}

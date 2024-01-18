@@ -309,7 +309,7 @@ else
 			self.cityCodesButton.DoClick = function(this)
 				self.rightPanel:Clear()
 
-				for k, v in pairs(ix.cmbSystems.cityCodes) do
+				for k, v in pairs(ix.cmbSystems.CityCodes.Stored) do
 					local button = self.rightPanel:Add("ixMenuButton")
 					button:Dock(TOP)
 					button:SetText(v.name)
