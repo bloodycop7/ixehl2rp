@@ -21,9 +21,7 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)
 
 # Help Needed!
-Hello, as some of you may have tested/noticed. The UI in the Schema is Janky (Sucks), if you are good with Derma (VGUI) and if you wish to contribute. Please fork the project and submit a pull request upgrading as many as you choose of the following:
-- Combine HUD
-- User Interface
+Hello, as of currently no contribution seems necessary, don't get your hopes down tho! If you feel something can be overhauled / made more optimized, then free feel to do so!
 
 Thank you in advance!
 # Contributions
