@@ -2,6 +2,12 @@ util.AddNetworkString("ix.PlayerStartVoice")
 util.AddNetworkString("ix.PlayerEndVoice")
 
 net.Receive("ix.PlayerStartVoice", function(len, ply)
+	if ( ( ix.nextStartVoice or 0 ) > CurTime() ) then
+		return
+	end
+
+	ix.nextStartVoice = CurTime() + 0.5
+
 	if not ( IsValid(ply) ) then
 		return
 	end
@@ -16,6 +22,12 @@ net.Receive("ix.PlayerStartVoice", function(len, ply)
 end)
 
 net.Receive("ix.PlayerEndVoice", function(len, ply)
+	if ( ( ix.nextEndVoiceVoice or 0 ) > CurTime() ) then
+		return
+	end
+
+	ix.nextEndVoiceVoice = CurTime() + 0.5
+
 	if not ( IsValid(ply) ) then
 		return
 	end
@@ -431,6 +443,12 @@ local keys = {
 
 util.AddNetworkString("ix.PlayerChatTextChanged")
 net.Receive("ix.PlayerChatTextChanged", function(len, ply)
+	if ( ( ix.nextPlayerTextChanged or 0 ) > CurTime() ) then
+		return
+	end
+
+	ix.nextPlayerTextChanged = CurTime() + 0.5
+
 	if not ( IsValid(ply) ) then
 		return
 	end
@@ -464,6 +482,12 @@ end)
 
 util.AddNetworkString("ix.PlayerStartChat")
 net.Receive("ix.PlayerStartChat", function(len, ply)
+	if ( ( ix.nextPlayerStartChat or 0 ) > CurTime() ) then
+		return
+	end
+
+	ix.nextPlayerStartChat = CurTime() + 0.5
+
 	if not ( IsValid(ply) ) then
 		return
 	end
@@ -497,6 +521,12 @@ end)
 
 util.AddNetworkString("ix.PlayerFinishChat")
 net.Receive("ix.PlayerFinishChat", function(len, ply)
+	if ( ( ix.nextPlayerFinishChat or 0 ) > CurTime() ) then
+		return
+	end
+
+	ix.nextPlayerFinishChat = CurTime() + 0.5
+
 	if not ( IsValid(ply) ) then
 		return
 	end

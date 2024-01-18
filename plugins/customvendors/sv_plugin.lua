@@ -5,6 +5,12 @@ util.AddNetworkString("ix.CustomVendor.Purchase")
 util.AddNetworkString("ix.CustomVendor.Sell")
 
 net.Receive("ix.CustomVendor.Sell", function(len, ply)
+    if ( ( ix.nextVendorSell or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.nextVendorSell = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
@@ -65,6 +71,12 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
 end)
 
 net.Receive("ix.CustomVendor.CloseMenu", function(len, ply)
+    if ( ( ix.nextVendorCloseMenu or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.nextVendorCloseMenu = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
@@ -83,6 +95,12 @@ net.Receive("ix.CustomVendor.CloseMenu", function(len, ply)
 end)
 
 net.Receive("ix.CustomVendor.Purchase", function(len, ply)
+    if ( ( ix.nextVendorPurchase or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.nextVendorPurchase = CurTime() + 0.5
+    
     if not ( IsValid(ply) ) then
         return
     end

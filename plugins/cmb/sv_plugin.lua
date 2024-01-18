@@ -7,6 +7,12 @@ util.AddNetworkString("ix.Combine.TakeLP")
 util.AddNetworkString("ix.Combine.RemoveObjective")
 
 net.Receive("ix.Combine.RemoveObjective", function(len, ply)
+    if ( ( ix.cmbSystems.nextRemoveObjectiveCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextRemoveObjectiveCountdown = CurTime() + 0.5
+    
     if not ( IsValid(ply) ) then
         return
     end
@@ -39,6 +45,12 @@ net.Receive("ix.Combine.RemoveObjective", function(len, ply)
 end)
 
 net.Receive("ix.Combine.GiveLP", function(len, ply)
+    if ( ( ix.cmbSystems.giveLPCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.giveLPCountdown = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
@@ -90,6 +102,12 @@ net.Receive("ix.Combine.GiveLP", function(len, ply)
 end)
 
 net.Receive("ix.Combine.TakeLP", function(len, ply)
+    if ( ( ix.cmbSystems.nextTakeLPCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextTakeLPCountdown = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
@@ -150,14 +168,14 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
         return
     end
 
-    local id = net.ReadUInt(8)
-    local codeData = ix.cmbSystems.CityCodes.Stored[id]
-
     if ( ( ix.nextCityCodeChange or 0 ) > CurTime() ) then
         ply:Notify("You must wait " .. math.Round(ix.nextCityCodeChange - CurTime()) .. " more second(s) before changing the city code again.")
 
         return
     end
+
+    local id = net.ReadUInt(8)
+    local codeData = ix.cmbSystems.CityCodes.Stored[id]    
 
     if not ( codeData ) then
         return
@@ -176,6 +194,12 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
 end)
 
 net.Receive("ix.Combine.ToggleBOL", function(len, ply)
+    if ( ( ix.cmbSystems.nextBOLSet or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextBOLSet = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end

@@ -34,6 +34,12 @@ end
 
 if (CLIENT) then
 	net.Receive("ixSafeboxOpen", function()
+		if ( ( ix.cmbSystems.nextSafeBoxOpen or 0 ) > CurTime() ) then
+        	return
+    	end
+
+    	ix.cmbSystems.nextVendorPurchase = CurTime() + ix.config.Get("safeboxOpenTime", 0.5)
+
 		if (IsValid(ix.gui.menu)) then
 			return
 		end

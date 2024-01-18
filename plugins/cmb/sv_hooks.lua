@@ -381,58 +381,36 @@ function PLUGIN:OnEntityCreated(ent)
     if not ( IsValid(ent) ) then
         return
     end
-
+    
     if ( ent:GetClass() == "npc_combine_camera" ) then
         if ( IsValid(ent.ixCamDetector) ) then
             ent.ixCamDetector:Remove()
-            ent.ixCamDetector = nil
         end
 
         ent.ixCamDetector = ents.Create("base_entity")
         ent.ixCamDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector")
-        
         ent.ixCamDetector.AcceptInput = function(s, name, ply, camera, data)
             if not ( ply:IsPlayer() or ply:IsNPC() ) then
-                return
-            end
-
-            if ( ( ply.ixLastCameraDetected or 0 ) > CurTime() ) then
-                camera:SetTarget(ply)
-                camera:Fire("SetAngry")
+                return false
             end
 
             if ( data == "OnFoundPlayer" or data == "OnFoundEnemy" ) then
-                camera:SetTarget(ply)
-                camera:Fire("SetAngry")
-
-                timer.Simple(2, function()
-                    if ( IsValid(camera) ) then
-                        camera:Fire("SetIdle")
-                    end
-                end)
-
                 ix.cmbSystems:MakeWaypoint({
                     pos = ply:GetPos(),
                     text = "CAMERA DETECTED.",
                     color = Color(255, 0, 0),
                     duration = 5
                 })
-
-                ply.ixLastCameraDetected = CurTime() + 60
             end
+
+            return false
         end
 
         ent.ixCamDetector:Spawn()
         ent.ixCamDetector:Activate()
 
-        local values = ent:GetKeyValues()
-	    ent:SetKeyValue("innerradius", values.outerradius) -- remove the outer/inner radius thing cuz its kinda pointless
         ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
         ent:Fire("addoutput", "OnFoundEnemy ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundEnemy:0:-1")
-        ent:CallOnRemove("ixCamDetector." .. ent:EntIndex() .. "." .. ent:GetClass(), function(this)
-            if ( IsValid(this.ixCamDetector) ) then
-                this.ixCamDetector:Remove()
-            end
-        end)
+        ent:DeleteOnRemove(ent.ixCamDetector)
     end
 end

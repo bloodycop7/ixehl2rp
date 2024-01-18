@@ -4,6 +4,12 @@ util.AddNetworkString("ix.Crafting.DoCraft")
 util.AddNetworkString("ix.Crafting.ClosePanel")
 
 net.Receive("ix.Crafting.ClosePanel", function(len, ply)
+    if ( ( ix.crafting.nextCraftPanelClose or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.crafting.nextCraftPanelClose = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
@@ -18,6 +24,12 @@ net.Receive("ix.Crafting.ClosePanel", function(len, ply)
 end)
 
 net.Receive("ix.Crafting.DoCraft", function(len, ply)
+    if ( ( ix.crafting.nextCraftDoCraft or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.crafting.nextCraftDoCraft = CurTime() + 0.5
+
     if not ( IsValid(ply) ) then
         return
     end
