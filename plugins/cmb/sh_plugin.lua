@@ -205,13 +205,17 @@ ix.cmbSystems.Deployments.Functions = {
                     self.dropship.playerPos[k]:SetName("ix_dropship_deployment_" .. ( self.id or numbID ) .. "_player_pos_" .. k)
                     self.dropship.playerPos[k]:Spawn()
 
-                    charPly:SetPos(self.dropship.playerPos[k] or self.dropship:GetPos() + self.dropship:GetForward() * 170)
+                    charPly:SetPos( ( ix.util.IsEmpty(self.dropship.playerPos[k]:GetPos()) and self.dropship.playerPos[k]:GetPos() or ix.util.FindEmptyPos(self.dropship.playerPos[k]:GetPos(), {charPly}, 100, 10, Vector(72, 72, 16)) ) )
                     charPly:SetViewEntity(charPly)
                     charPly:SetNoDraw(false)
                     charPly:SetNotSolid(false)
                     charPly:SetMoveType(MOVETYPE_WALK)
                     charPly:Freeze(false)
                     charPly:SetParent(nil)
+
+                    if ( IsValid(self.dropship.playerPos[k]) ) then
+                        self.dropship.playerPos[k]:Remove()
+                    end
 
                     charPly:Notify("You finished deploying to " .. self.name .. ".")
                 end
