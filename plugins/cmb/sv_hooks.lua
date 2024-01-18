@@ -396,7 +396,7 @@ function PLUGIN:OnEntityCreated(ent)
             end
 
             if ( data == "OnFoundPlayer" or data == "OnFoundEnemy" ) then
-                if ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64()) ) then
+                if ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. tostring(ply)) ) then
                     return false
                 end
 
@@ -413,8 +413,8 @@ function PLUGIN:OnEntityCreated(ent)
                     end)
                 end
 
-                if not ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64()) ) then
-                    timer.Create("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. ply:SteamID64(), 2, 1, function()
+                if not ( timer.Exists("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. tostring(ply)) ) then
+                    timer.Create("ix.Cam." .. ent:GetClass() .. "." .. ent:EntIndex() .. "Detected." .. tostring(ply), 2, 1, function()
                     end)
                 end
 
