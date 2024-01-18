@@ -382,6 +382,7 @@ function PLUGIN:OnEntityCreated(ent)
         return
     end
     
+    
     if ( ent:GetClass() == "npc_combine_camera" ) then
         if ( IsValid(ent.ixCamDetector) ) then
             ent.ixCamDetector:Remove()
@@ -395,9 +396,22 @@ function PLUGIN:OnEntityCreated(ent)
             end
 
             if ( data == "OnFoundPlayer" or data == "OnFoundEnemy" ) then
+                camera:SetTarget(ply)
+                camera:Fire("SetAngry")
+
+                if not ( timer.Exists("ix.Cam." camera:GetClass() .. "." .. camera:EntIndex() .. ".Reset") ) then
+                    timer.Create("ix.Cam." camera:GetClass() .. "." .. camera:EntIndex() .. ".Reset", 2, 1, function()
+                        if not ( IsValid(camera) ) then
+                            return
+                        end
+
+                        camera:Fire("SetIdle")
+                    end)
+                end
+
                 ix.cmbSystems:MakeWaypoint({
                     pos = ply:GetPos(),
-                    text = "CAMERA DETECTED.",
+                    text = "CAMERA /// " .. camera:EntIndex(),
                     color = Color(255, 0, 0),
                     duration = 5
                 })
@@ -407,8 +421,37 @@ function PLUGIN:OnEntityCreated(ent)
         ent.ixCamDetector:Spawn()
         ent.ixCamDetector:Activate()
 
-        ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
-        ent:Fire("addoutput", "OnFoundEnemy ix." .. ent:GetClass() .."." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundEnemy:0:-1")
+        ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
+        ent:Fire("addoutput", "OnFoundEnemy ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundEnemy:0:-1")
         ent:DeleteOnRemove(ent.ixCamDetector)
+    elseif ( ent:GetClass() == "npc_cscanner" ) then
+        if ( IsValid(ent.scannerOutputDetector) ) then
+            ent.scannerOutputDetector:Remove()
+        end
+
+        ent.scannerOutputDetector = ents.Create("base_entity")
+        ent.scannerOutputDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector")
+        ent.scannerOutputDetector.AcceptInput = function(s, name, ply, scanner, data)
+            print(name, ply, scanner, data)
+            if not ( ply:IsPlayer() or ply:IsNPC() ) then
+                return false
+            end
+
+            if ( data == "OnPhotographPlayer" or data == "OnPhotographNPC" ) then
+                ix.cmbSystems:MakeWaypoint({
+                    pos = ply:GetPos(),
+                    text = "AIRWATCH /// " .. ent:EntIndex(),
+                    color = Color(255, 0, 0),
+                    duration = 5
+                })
+            end
+        end
+
+        ent.scannerOutputDetector:Spawn()
+
+        ent:Fire("addoutput", "OnPhotographPlayer ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographPlayer:0:-1")
+        ent:Fire("addoutput", "OnPhotographNPC ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographNPC:0:-1")
+        ent:DeleteOnRemove(ent.scannerOutputDetector)
     end
+    
 end
