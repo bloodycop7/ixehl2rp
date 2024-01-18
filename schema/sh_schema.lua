@@ -15,6 +15,10 @@ ix.currency.symbol = "C"
 ix.currency.singular = "credit"
 ix.currency.plural = "credits"
 
+ix.config.SetDefault("font", "Raju Regular")
+ix.config.SetDefault("genericFont", "Raju Regular")
+ix.config.SetDefault("combineFont", "Frak")
+
 for k, v in pairs(ix.faction.indices) do
     Schema["Is" .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
