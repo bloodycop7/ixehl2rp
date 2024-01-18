@@ -399,7 +399,7 @@ function PLUGIN:OnEntityCreated(ent)
                 camera:SetTarget(ply)
                 camera:Fire("SetAngry")
 
-                if not ( timer.Exists("ix.Cam." camera:GetClass() .. "." .. camera:EntIndex() .. ".Reset") ) then
+                if not ( timer.Exists("ix.Cam." .. camera:GetClass() .. "." .. camera:EntIndex() .. ".Reset") ) then
                     timer.Create("ix.Cam." camera:GetClass() .. "." .. camera:EntIndex() .. ".Reset", 2, 1, function()
                         if not ( IsValid(camera) ) then
                             return
