@@ -773,8 +773,9 @@ function ix.cmbSystems.Deployments:Start(uID)
     end
 
     deploymentData.id = uID
-        if ( ix.cmbSystems.Deployments.Functions[uID] ) then
-            ix.cmbSystems.Deployments.Functions[uID](deploymentData)
+        local runID = deploymentData.funcID or uID
+        if ( ix.cmbSystems.Deployments.Functions[runID] ) then
+            ix.cmbSystems.Deployments.Functions[runID](deploymentData)
         end
     deploymentData.id = nil
 end
