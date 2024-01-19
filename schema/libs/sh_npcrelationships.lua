@@ -135,7 +135,6 @@ if ( SERVER ) then
                 end
 
                 ent.VJ_NPC_Class = oldTable
-                ent.ZBaseFaction = "ally"
                 
                 if ( ent:GetClass():find("zbase*") ) then
                     if ( ZBaseSetFaction ) then
