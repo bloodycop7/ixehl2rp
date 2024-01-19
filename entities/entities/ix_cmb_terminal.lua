@@ -236,6 +236,18 @@ else
 
 		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
 
+		local ply = localPlayer
+
+		if not ( IsValid(ply) ) then
+			self:Remove()
+		end
+
+		local char = ply:GetCharacter()
+
+		if not ( char ) then
+			self:Remove()
+		end
+
 		local closeButton = self:Add("ixMenuButton")
 		closeButton:Dock(TOP)
 		closeButton:DockMargin(self:GetWide() / 30, 0, 0, 0)
