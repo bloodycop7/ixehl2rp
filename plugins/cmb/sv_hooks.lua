@@ -461,6 +461,22 @@ function PLUGIN:OnEntityCreated(ent)
         ent:Fire("addoutput", "OnPhotographPlayer ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographPlayer:0:-1")
         ent:Fire("addoutput", "OnPhotographNPC ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographNPC:0:-1")
         ent:DeleteOnRemove(ent.scannerOutputDetector)
+    end    
+end
+
+local whitelistEnts = {
+    ["lvs_wheeldrive_wheel"] = true,
+    ["lvs_wheeldrive_hl2_combine_apc"] = true,
+}
+
+function PLUGIN:CanGoThroughForcefield(ent, forcefield)
+    if not ( IsValid(ent) or IsValid(forcefield) ) then
+        return
     end
-    
+
+    print(whitelistEnts[ent:GetClass()], ent:GetClass())
+
+    if ( whitelistEnts[ent:GetClass()] ) then
+        return true
+    end
 end

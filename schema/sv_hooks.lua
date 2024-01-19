@@ -239,6 +239,14 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("confiscationLockers", data)
+
+	data = {}
+
+	for _, v in ipairs(ents.FindByClass("ix_cmb_forcefield")) do
+		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetMode()}
+	end
+
+	ix.data.Set("cmbForcefields", data)
 end
 
 function Schema:LoadData()
@@ -288,6 +296,16 @@ function Schema:LoadData()
 		locker.items = v[3]
 		locker:Spawn()
 		locker:Activate()
+	end
+
+	data = ix.data.Get("cmbForcefields", {})
+	for _, v in ipairs(data) do
+		local forcefield = ents.Create("ix_cmb_forcefield")
+		forcefield:SetPos(v[1])
+		forcefield:SetAngles(v[2])
+		forcefield:SetMode(v[3] or 1)
+		forcefield:Spawn()
+		forcefield:Activate()
 	end
 end
 
