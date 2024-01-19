@@ -104,12 +104,15 @@ if ( SERVER ) then
                 checkName = ent:GetNWString("NPCName", ent.NPCName)
             end
 
-            if ( ix.relationships.CombineNPCs[checkName] ) then
+            if ( ix.relationships.CombineNPCs[checkName] and not ent.inpcIgnore) then
                 local oldTable = ent.VJ_NPC_Class or {}
-                oldTable[#oldTable + 1] = "CLASS_COMBINE"
+
+
+                if not ( table.HasValue(oldTable, "CLASS_COMBINE") ) then
+                    oldTable[#oldTable + 1] = "CLASS_COMBINE"
+                end
 
                 ent.VJ_NPC_Class = oldTable
-
 
                 if ( ent:GetClass():find("zbase*") ) then
                     if ( ZBaseSetFaction ) then
@@ -124,15 +127,26 @@ if ( SERVER ) then
 
                     relationshipStatus = D_LI
                 end
-            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] ) then
+            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] or ent.inpcIgnore ) then
                 local oldTable = ent.VJ_NPC_Class or {}
-                oldTable[#oldTable + 1] = "CLASS_REBEL"
+
+                if not ( table.HasValue(oldTable, "CLASS_REBEL") ) then
+                    oldTable[#oldTable + 1] = "CLASS_REBEL"
+                end
 
                 ent.VJ_NPC_Class = oldTable
                 ent.ZBaseFaction = "ally"
                 
+                if ( ent:GetClass():find("zbase*") ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(ent, "ally")
+                    end
+                end
+
                 if not ( Schema:IsCombine(v) ) then
-                    v.ZBaseFaction = "ally"
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(v, "ally")
+                    end
 
                     relationshipStatus = D_LI
                 end

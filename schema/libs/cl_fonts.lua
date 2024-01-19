@@ -42,7 +42,7 @@ function GAMEMODE:LoadFonts(font, genericFont)
 
 	surface.CreateFont("ixMenuButtonFont", {
 		font = font,
-		size = ScreenScale(14),
+		size = ScreenScale(16),
 		extended = true,
 		weight = 100
 	})
