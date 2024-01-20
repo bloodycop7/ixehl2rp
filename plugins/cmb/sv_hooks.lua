@@ -373,7 +373,6 @@ function PLUGIN:OnEntityCreated(ent)
         return
     end
     
-    
     if ( ent:GetClass() == "npc_combine_camera" ) then
         if ( IsValid(ent.ixCamDetector) ) then
             ent.ixCamDetector:Remove()
@@ -424,7 +423,7 @@ function PLUGIN:OnEntityCreated(ent)
         ent:Fire("addoutput", "OnFoundPlayer ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundPlayer:0:-1")
         ent:Fire("addoutput", "OnFoundEnemy ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".ixCamDetector:ixCamDetect." .. ent:EntIndex() .. ":OnFoundEnemy:0:-1")
         ent:DeleteOnRemove(ent.ixCamDetector)
-    elseif ( ent:GetClass() == "npc_cscanner" ) then
+    elseif ( ent:GetClass() == "npc_cscanner" or ent:GetClass() == "npc_clawscanner" ) then
         if ( IsValid(ent.scannerOutputDetector) ) then
             ent.scannerOutputDetector:Remove()
         end
