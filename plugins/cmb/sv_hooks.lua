@@ -476,7 +476,13 @@ function PLUGIN:CanGoThroughForcefield(ent, forcefield)
 
     print(whitelistEnts[ent:GetClass()], ent:GetClass())
 
-    if ( whitelistEnts[ent:GetClass()] ) then
+    local combineNPCClass = ent:GetClass()
+
+    if ( combineNPCClass:find("zbase*") ) then
+        combineNPCClass = ent:GetNWString("NPCName", ent.NPCName)
+    end
+
+    if ( whitelistEnts[ent:GetClass()] or ix.relationships.CombineNPCs[combineNPCClass] ) then
         return true
     end
 end

@@ -104,9 +104,14 @@ if ( SERVER ) then
                 checkName = ent:GetNWString("NPCName", ent.NPCName)
             end
 
-            if ( ix.relationships.CombineNPCs[checkName] and not ent.inpcIgnore) then
-                local oldTable = ent.VJ_NPC_Class or {}
+            local isRebelNPC = false
 
+            if ( checkName:find("turret") and ( ent:HasSpawnFlags(SF_FLOOR_TURRET_CITIZEN) or false ) ) then
+                isRebelNPC = true
+            end
+
+            if ( ix.relationships.CombineNPCs[checkName] and not isRebelNPC) then
+                local oldTable = ent.VJ_NPC_Class or {}
 
                 if not ( table.HasValue(oldTable, "CLASS_COMBINE") ) then
                     oldTable[#oldTable + 1] = "CLASS_COMBINE"
@@ -127,7 +132,7 @@ if ( SERVER ) then
 
                     relationshipStatus = D_LI
                 end
-            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] or ent.inpcIgnore ) then
+            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] or isRebelNPC ) then
                 local oldTable = ent.VJ_NPC_Class or {}
 
                 if not ( table.HasValue(oldTable, "CLASS_REBEL") ) then
