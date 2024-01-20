@@ -93,6 +93,8 @@ if (SERVER) then
 		self:SetMoveType(MOVETYPE_PUSH)
 		self:MakePhysicsObjectAShadow()
 		self:SetMode(MODE_ALLOW_ALL)
+
+		Schema:SaveData()
 	end
 
 	function ENT:StartTouch(entity)
@@ -123,6 +125,7 @@ if (SERVER) then
 		end
 
 		if (!ix.shuttingDown and !self.ixIsSafe) then
+			Schema:SaveData()
 		end
 	end
 
