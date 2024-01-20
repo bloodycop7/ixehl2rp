@@ -216,7 +216,7 @@ function PLUGIN:HUDPaint()
     end
 
     if ( ix.option.Get("combineOverlayAssets", true) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -489,7 +489,7 @@ function PLUGIN:SetupOutlines()
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end

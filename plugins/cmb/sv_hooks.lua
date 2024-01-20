@@ -36,7 +36,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             end
         end
 
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -200,7 +200,7 @@ function PLUGIN:PlayerStartVoice(ply)
     end
 
     if ( char:GetData("radioVoice", false) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -228,7 +228,7 @@ function PLUGIN:PlayerStartVoice(ply)
             Schema:PlaySound(v, sound, 75, 100, 0.6)
         end
     elseif ( char:GetData("radioVoiceTeam", false) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -280,7 +280,7 @@ function PLUGIN:PlayerEndVoice(ply)
     end
 
     if ( char:GetData("radioVoice", false) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -308,7 +308,7 @@ function PLUGIN:PlayerEndVoice(ply)
             Schema:PlaySound(v, sound, 75, 100, 0.6)
         end
     elseif ( char:GetData("radioVoiceTeam", false) ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end

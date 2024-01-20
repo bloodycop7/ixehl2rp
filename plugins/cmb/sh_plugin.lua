@@ -335,7 +335,7 @@ ix.option.Add("dispatchAnnouncementType", ix.type.array, "chat_sound", {
 
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
     if ( SERVER ) then
-        for k, v in ipairs(player.Iterator()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then 
                 continue
             end
@@ -441,7 +441,7 @@ ix.cmbSystems.CityCodes.Stored = {
         color = Color(0, 255, 0),
         onStart = function()
             timer.Create("ixPreserved.HeliFlyBy", math.random(10, 80), 0, function()
-                for k, v in ipairs(player.Iterator()) do
+                for k, v in player.Iterator() do
                     if not ( IsValid(v) ) then
                         continue
                     end
@@ -472,7 +472,7 @@ ix.cmbSystems.CityCodes.Stored = {
                 return
             end
 
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -504,7 +504,7 @@ ix.cmbSystems.CityCodes.Stored = {
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
             
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -554,7 +554,7 @@ ix.cmbSystems.CityCodes.Stored = {
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
             
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -636,7 +636,7 @@ ix.cmbSystems.CityCodes.Stored = {
             timer.Remove("ix.AutonomousJudgment.CitadelScreams")
             timer.Remove("ix.AutonomousJudgment.HeliDistant")
 
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -680,7 +680,7 @@ ix.cmbSystems.CityCodes.Stored = {
             end
         end,
         dispatchPassive = function()    
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -704,7 +704,7 @@ ix.cmbSystems.CityCodes.Stored = {
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
             
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -773,7 +773,7 @@ ix.cmbSystems.CityCodes.Stored = {
                 end)
 
                 timer.Create("ix.JudgmentWaiver.Earthquakes", math.random(10, 20), 0, function()
-                    for k, v in ipairs(player.Iterator()) do
+                    for k, v in player.Iterator() do
                         if not ( IsValid(v) ) then
                             continue
                         end
@@ -806,7 +806,7 @@ ix.cmbSystems.CityCodes.Stored = {
             timer.Remove("ix.JudgmentWaiver.HeliDistant")
             timer.Remove("ix.JudgmentWaiver.Earthquakes")
 
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -850,7 +850,7 @@ ix.cmbSystems.CityCodes.Stored = {
             end
         end,
         dispatchPassive = function()    
-            for k, v in ipairs(player.Iterator()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -1783,7 +1783,7 @@ ix.act.Register("LeanWallRight", {"overwatch"}, {
 })
 
 timer.Create("ix.DeployedEnts.Update", 1, 0, function()
-    for k, v in ipairs(player.Iterator()) do
+    for k, v in player.Iterator() do
         if not ( IsValid(v) ) then
             continue
         end

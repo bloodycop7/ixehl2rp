@@ -72,6 +72,7 @@ if ( SERVER ) then
         end
 
         if ( not convertToChatType == "ic" and chatType:CanHear(talker, listener) ) then
+            print(listener .. " can hear " .. talker .. ".")
             return true
         end
     end

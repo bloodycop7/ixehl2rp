@@ -119,7 +119,7 @@ end
 function Schema:PlayGesture(ply, gesture)
     if ( SERVER ) then
         net.Start("ix.PlayGesture")
-            net.WriteEntity(ply)
+            net.WritePlayer(ply)
             net.WriteString(gesture)
         net.Broadcast()
     end

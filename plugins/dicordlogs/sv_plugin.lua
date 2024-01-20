@@ -27,11 +27,7 @@ function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
 end
 
 function PLUGIN:OnReloaded()
-    for k, v in ipairs(player.Iterator()) do
-        if not ( IsValid(v) ) then
-            continue
-        end
-
+    for k, v in player.Iterator() do
         http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. v:SteamID64(), pcall(function(body, len, headers, code)
             ix.DiscordLogs.StoredAvatars[v:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
         end))

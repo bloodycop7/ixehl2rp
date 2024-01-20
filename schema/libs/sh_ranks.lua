@@ -91,7 +91,7 @@ end
 function ix.rank.GetPlayers(rank)
 	local players = {}
 
-	for _, v in ipairs(player.Iterator()) do
+	for _, v in player.Iterator() do
 		local char = v:GetCharacter()
 
 		if (char and char:GetRank() == rank) then
