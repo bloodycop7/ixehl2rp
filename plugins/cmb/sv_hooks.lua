@@ -368,15 +368,6 @@ function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
     end
 end
 
-PLUGIN["LVS.CanPlayerDrive"] = function(self, ply, car)
-    if ( car:GetModel():find("combine_apc") ) then
-        if not ( Schema:IsCombine(ply) ) then
-            car:EmitSound("buttons/combine_button_locked.wav")
-            return false
-        end
-    end
-end
-
 function PLUGIN:OnEntityCreated(ent)
     if not ( IsValid(ent) ) then
         return
