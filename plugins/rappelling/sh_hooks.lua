@@ -42,7 +42,7 @@ function PLUGIN:PlayerTick(client, moveData)
 		elseif (!onGround and client.wasOnGround) then
 			client.wasOnGround = false
 
-			if (!client.rappelling and moveData:KeyDown(IN_WALK) and client:GetMoveType() != MOVETYPE_NOCLIP) then
+			if (!client.rappelling and client:IsWalking() and client:GetMoveType() != MOVETYPE_NOCLIP) then
 				self:StartRappel(client)
 			end
 		end
@@ -63,7 +63,7 @@ function PLUGIN:Move(client, moveData)
 		if (!client:OnGround() and (client:EyePos().z) < client.rappelPos.z) then
 			rappelFalling = true
 
-			if (moveData:KeyDown(IN_WALK)) then
+			if (client:IsWalking()) then
 				moveData:SetForwardSpeed(0)
 				moveData:SetSideSpeed(0)
 

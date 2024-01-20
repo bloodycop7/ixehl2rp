@@ -72,7 +72,7 @@ if CLIENT then
 				continue
 			end
 
-			if ix.config.Get("silentWalking") and client:KeyDown(IN_WALK) then
+			if ix.config.Get("silentWalking") and client:IsWalking() then
 				continue
 			end
 
@@ -121,7 +121,7 @@ if CLIENT then
 		if client:WaterLevel() >= 1 then
 			val = 0.6
 		else
-			if client:KeyDown(IN_WALK) and vel < 90 then
+			if client:IsWalking() and vel < 90 then
 				val = 0.375 / (vel / 90)
 			else
 				val = math.max(math.Remap(vel, 90, 235, 0.4, 0.3), 0.1)
