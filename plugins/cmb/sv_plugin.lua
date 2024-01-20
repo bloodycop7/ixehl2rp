@@ -674,6 +674,10 @@ function ix.cmbSystems.Deployments:InsertMember(ply, uID)
         return
     end
 
+    if not ( ply:IsPlayer() ) then
+        return
+    end
+
     local char = ply:GetCharacter()
 
     if not ( char ) then
