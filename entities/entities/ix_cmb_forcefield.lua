@@ -217,9 +217,7 @@ if (SERVER) then
 		end
         
         if ( IsValid(entity) and entity:GetClass() == "ix_cmb_forcefield" ) then
-            print("first check")
             if ( IsValid(b) ) then
-                print("second check")
                 if ( hook.Run("CanGoThroughForcefield", b, entity) == false ) then
                     return true
                 end

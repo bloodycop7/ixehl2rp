@@ -474,9 +474,8 @@ function PLUGIN:CanGoThroughForcefield(ent, forcefield)
         return
     end
 
-    print(ent)
+    --[[
     if ( ent:GetClass() == "ix_item" ) then
-        print("HI")
         local dissolver = ents.Create("env_entity_dissolver")
         dissolver:SetKeyValue("dissolvetype", 3)
         dissolver:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".dissolver.base")
@@ -488,6 +487,7 @@ function PLUGIN:CanGoThroughForcefield(ent, forcefield)
 
         return true
     end
+    ]]
 
     local combineNPCClass = ent:GetClass()
 
