@@ -53,9 +53,14 @@ if ( SERVER ) then
         end
         
         local talkerChar = talker:GetCharacter()
+
+        if not ( talkerChar ) then
+            return
+        end
+
         local listenerChar = listener:GetCharacter()
 
-        if not ( talkerChar or listenerChar ) then
+        if not ( listenerChar ) then
             return
         end
 

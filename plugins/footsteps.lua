@@ -112,6 +112,16 @@ if CLIENT then
 	end
 
 	function GAMEMODE:GetNextStepTime(client, vel)
+		if not ( IsValid(client) ) then
+			return
+		end
+
+		local char = client:GetCharacter()
+
+		if not ( char ) then
+			return
+		end
+
 		if client:GetMoveType() == MOVETYPE_LADDER then
 			return 0.45
 		end
@@ -121,7 +131,7 @@ if CLIENT then
 		if client:WaterLevel() >= 1 then
 			val = 0.6
 		else
-			if client:IsWalking() and vel < 90 then
+			if client:KeyDown(IN_WALK) and vel < 90 then
 				val = 0.375 / (vel / 90)
 			else
 				val = math.max(math.Remap(vel, 90, 235, 0.4, 0.3), 0.1)

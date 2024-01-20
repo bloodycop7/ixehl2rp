@@ -218,6 +218,7 @@ ix.cmbSystems.Deployments.Functions = {
                     end
 
                     charPly:Notify("You finished deploying to " .. self.name .. ".")
+                    self.units = {}
                 end
 
                 timer.Remove(tuID)
