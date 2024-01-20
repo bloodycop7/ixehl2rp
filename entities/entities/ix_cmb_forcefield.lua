@@ -127,7 +127,7 @@ if (SERVER) then
 	end
 
 	local MODES = {
-		{
+		{ // Return false to allow going through.
 			function(ply)
 				return false
 			end,
@@ -208,33 +208,41 @@ if (SERVER) then
 		local entity = b
         local realEnt = b
 
-		if (a:IsPlayer()) then
+		if (a:GetClass() != "ix_cmb_forcefield") then
 			ply = a
 			entity = b
-		elseif (b:IsPlayer()) then
+		elseif (b:GetClass() != "ix_cmb_forcefield") then
 			ply = b
 			entity = a
 		end
-
-        if ( IsValid(realEnt) ) then
-            if ( hook.Run("CanGoThroughForcefield", realEnt, entity) != true ) then
-                return true
+        
+        if ( IsValid(entity) and entity:GetClass() == "ix_cmb_forcefield" ) then
+            print("first check")
+            if ( IsValid(b) ) then
+                print("second check")
+                if ( hook.Run("CanGoThroughForcefield", b, entity) == false ) then
+                    return true
+                end
             end
-
-            return false
         end
 
 		if (IsValid(entity) and entity:GetClass() == "ix_cmb_forcefield") then
-			if (IsValid(ply)) then
+			if (IsValid(ply) and ply:IsPlayer() ) then
 				if ( Schema:IsCombine(ply) ) then
 					return false
 				end
 
 				local mode = entity:GetMode() or 1
 
+                if ( istable(MODES[mode]) and MODES[mode][1](ply) == true ) then
+                    if ( hook.Run("CanGoThroughForcefield", b, entity) == true ) then
+                        return false
+                    end
+                end
+
 				return istable(MODES[mode]) and MODES[mode][1](ply)
 			else
-				return entity:GetMode() != 4
+				return true
 			end
 		end
 	end)

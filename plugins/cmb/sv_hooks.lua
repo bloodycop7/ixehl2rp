@@ -474,7 +474,20 @@ function PLUGIN:CanGoThroughForcefield(ent, forcefield)
         return
     end
 
-    print(whitelistEnts[ent:GetClass()], ent:GetClass())
+    print(ent)
+    if ( ent:GetClass() == "ix_item" ) then
+        print("HI")
+        local dissolver = ents.Create("env_entity_dissolver")
+        dissolver:SetKeyValue("dissolvetype", 3)
+        dissolver:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".dissolver.base")
+        dissolver:Spawn()
+
+        ent:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".dissolver")
+        dissolver:Fire("Dissolve", ent:GetName(), 0)
+        dissolver:Remove()
+
+        return true
+    end
 
     local combineNPCClass = ent:GetClass()
 
