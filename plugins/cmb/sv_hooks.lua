@@ -11,9 +11,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         return
     end
 
-    if ( char:GetData("squadID", -1) != -1 ) then
-        ix.cmbSystems.Squads:RemoveMember(ply, char:GetData("squadID", -1))
-    end
+    ix.cmbSystems.Squads:RemoveMember(ply, char:GetData("squadID", -1))
 
     if ( Schema:IsCombine(ply) ) then
         local numbers = {}
@@ -73,7 +71,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             pos = ply:GetPos(),
             text = "BSL " .. char:GetName() .. ".",
             color = Color(255, 0, 0),
-            duration = 5
+            duration = 60
         })
     end
 end
