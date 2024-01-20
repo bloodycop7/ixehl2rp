@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 function PLUGIN:Think()
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in ipairs(player.Iterator()) do
         if not ( IsValid(v) ) then
             continue
         end

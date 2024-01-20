@@ -325,7 +325,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
     dispatchData.lastUsed = true
 
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in ipairs(player.Iterator()) do
         if ( Schema:IsOutside(v) ) then
             Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.8)
         else
@@ -734,8 +734,10 @@ function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
         deploymentData.units = {}
     end
 
-    if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
-        table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
+    if ( ply:IsPlayer() ) then
+        if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
+            table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
+        end
     end
 
     net.Start("ix.cmbSystems.SyncDeployments")

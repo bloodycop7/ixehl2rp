@@ -57,7 +57,7 @@ if (SERVER) then
 	
 		if (type(player) != "table") then
 			if (!player) then
-				player = _player.GetAll();
+				player = _player.Iterator();
 			else
 				player = {player};
 			end;

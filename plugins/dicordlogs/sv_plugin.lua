@@ -27,7 +27,7 @@ function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
 end
 
 function PLUGIN:OnReloaded()
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in ipairs(player.Iterator()) do
         if not ( IsValid(v) ) then
             continue
         end
