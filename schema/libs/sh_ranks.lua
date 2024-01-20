@@ -154,7 +154,7 @@ if (SERVER) then
 		end
 
 		net.Start("ixRankUpdate")
-			net.WriteEntity(client)
+			net.WritePlayer(client)
 		net.Broadcast()
 	end
 end

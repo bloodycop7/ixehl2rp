@@ -61,7 +61,7 @@ net.Receive("ix.Combine.GiveLP", function(len, ply)
         return
     end
 
-    local target = net.ReadEntity()
+    local target = net.ReadPlayer()
 
     if not ( IsValid(target) ) then
         return
@@ -118,7 +118,7 @@ net.Receive("ix.Combine.TakeLP", function(len, ply)
         return
     end
 
-    local target = net.ReadEntity()
+    local target = net.ReadPlayer()
 
     if not ( IsValid(target) ) then
         return
@@ -210,7 +210,7 @@ net.Receive("ix.Combine.ToggleBOL", function(len, ply)
         return
     end
 
-    local target = net.ReadEntity()
+    local target = net.ReadPlayer()
 
     if not ( IsValid(target) ) then
         return
@@ -734,10 +734,8 @@ function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
         deploymentData.units = {}
     end
 
-    if ( ply:IsPlayer() ) then
-        if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
-            table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
-        end
+    if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
+        table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
     end
 
     net.Start("ix.cmbSystems.SyncDeployments")

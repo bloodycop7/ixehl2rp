@@ -275,7 +275,7 @@ net.Receive("ix.PlayGesture", function(len)
 		return
 	end
 
-	local playerT = net.ReadEntity()
+	local playerT = net.ReadPlayer()
 
 	if not ( IsValid(playerT) ) then
 		return

@@ -477,7 +477,7 @@ else
 				button:SetContentAlignment(5)
 				button.DoClick = function(this)
 					net.Start("ix.Combine.ToggleBOL")
-						net.WriteEntity(v)
+						net.WritePlayer(v)
 					net.SendToServer()
 
 					this:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
@@ -497,7 +497,7 @@ else
 						end
 
 						net.Start("ix.Combine.GiveLP")
-							net.WriteEntity(v)
+							net.WritePlayer(v)
 							net.WriteString(text)
 						net.SendToServer()
 					end)
@@ -522,7 +522,7 @@ else
 						end
 
 						net.Start("ix.Combine.TakeLP")
-							net.WriteEntity(v)
+							net.WritePlayer(v)
 							net.WriteString(text)
 						net.SendToServer()
 					end)
