@@ -24,6 +24,9 @@ ix.lang.AddTable("english", {
 
 	optItemOutline = "Item Outline",
 	optdItemOutline = "Whether or not to draw an outline around items.",
+
+	optBackgroundImages = "Main Menu Images",
+	optdBackgroundImages = "Whether or not to display images in the main menu.",
 })
 
 function Schema:SetupOutlines()

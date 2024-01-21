@@ -136,6 +136,21 @@ AccessorFunc(PANEL, "bUsingCharacter", "UsingCharacter", FORCE_BOOL)
 
 local leftGradient = ix.gui.gradients["left"]
 
+local images = {}
+local files, dirs = file.Find("gamemodes/" .. Schema.folder .. "/backgrounds/*", "GAME")
+
+for k, v in pairs(files) do
+	images[#images + 1] = v
+end
+
+if not ( timer.Exists("ixMenuMenuImageSwitcher") ) then
+	timer.Create("ixMenuMenuImageSwitcher", math.random(3, 6), 0, function()
+		if ( IsValid(ix.gui.characterMenu) and ix.option.Get("backgroundImages", true) ) then
+			ix.gui.characterMenu.backgroundImage = images[math.random(1, #images)]
+		end
+	end)
+end
+
 function PANEL:Init()
 	local parent = self:GetParent()
 	local padding = self:GetPadding()
@@ -145,6 +160,8 @@ function PANEL:Init()
 
 	self.bUsingCharacter = LocalPlayer().GetCharacter and LocalPlayer():GetCharacter()
 	self:DockPadding(padding, padding, padding, padding)
+
+	self.backgroundImage = self.backgroundImage or images[math.random(1, #images)]
 
 	local infoLabel = self:Add("DLabel")
 	infoLabel:SetTextColor(Color(255, 255, 255, 25))
@@ -402,6 +419,8 @@ function PANEL:Init()
 	self.currentAlpha = 255
 	self.volume = 0
 
+	self.backgroundImage = self.backgroundImage or images[math.random(1, #images)]
+
 	ix.gui.characterMenu = self
 
 	if (!IsValid(ix.gui.intro)) then
@@ -542,6 +561,12 @@ function PANEL:Close(bFromMenu)
 end
 
 function PANEL:Paint(width, height)
+	if ( IsValid(ix.gui.characterMenu) and ix.gui.characterMenu.backgroundImage and ix.option.Get("backgroundImages", true) ) then
+		surface.SetMaterial(Material("gamemodes/" .. Schema.folder .. "/backgrounds/" .. ix.gui.characterMenu.backgroundImage))
+		surface.SetDrawColor(255, 255, 255)
+		surface.DrawTexturedRect(0, 0, width, height)
+	end
+
 	surface.SetTexture(gradient)
 	surface.SetDrawColor(0, 0, 0, 255)
 	surface.DrawTexturedRect(0, 0, width, height)
