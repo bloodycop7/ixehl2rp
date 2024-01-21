@@ -27,7 +27,7 @@ function Schema:SendCaption(duration, ...)
 		end
 	end
 
-	compiledString = compiledString .. "<I><clr>"
+	compiledString = compiledString .. "<clr>"
 
 	gui.AddCaption(compiledString, duration or 5)
 end
