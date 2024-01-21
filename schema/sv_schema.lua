@@ -114,13 +114,14 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel, customC
 		players = {players}
 	end
 
-	net.Start("ix.PlaySound")
-		net.WriteString(sound)
-		net.WriteFloat(level or 75)
-		net.WriteFloat(pitch or 100)
-		net.WriteFloat(volume or 1)
-		net.WriteFloat(channel or CHAN_AUTO)
-	for k, v in ipairs(players) do
+	level = level or 75
+	pitch = pitch or 100
+	volume = volume or 1
+	channel = channel or CHAN_AUTO
+
+	local recpFilter = RecipientFilter()
+	
+	for k, v in player.Iterator() do
 		if not ( IsValid(v) ) then
 			continue
 		end
@@ -129,8 +130,16 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel, customC
 			continue
 		end
 
-		net.Send(v)
+		recpFilter:AddPlayer(v)
 	end
+
+	net.Start("ix.PlaySound")
+		net.WriteString(sound)
+		net.WriteFloat(level)
+		net.WriteFloat(pitch)
+		net.WriteFloat(volume)
+		net.WriteFloat(channel)
+	net.Send(recpFilter)
 end
 
 util.AddNetworkString("ix.PlayGesture")
