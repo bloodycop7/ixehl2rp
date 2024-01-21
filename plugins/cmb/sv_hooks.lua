@@ -357,6 +357,10 @@ function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
         return
     end
 
+    if ( listener == talker ) then
+        return
+    end
+
     if ( charTalker:GetData("radioVoice", false) ) then
         if ( Schema:IsCombine(talker) and Schema:IsCombine(listener) ) then
             return true
