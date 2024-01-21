@@ -34,37 +34,39 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             end
         end
 
-        for k, v in player.Iterator() do
-            if not ( IsValid(v) ) then
-                continue
+        if ( Schema:IsCP(ply) ) then
+            for k, v in player.Iterator() do
+                if not ( IsValid(v) ) then
+                    continue
+                end
+
+                local char = v:GetCharacter()
+
+                if not ( char ) then
+                    continue
+                end
+
+                if not ( Schema:IsCombine(v) ) then
+                    continue
+                end
+
+                local sounds = {
+                    "npc/overwatch/radiovoice/on3.wav",
+                    "npc/overwatch/radiovoice/attention.wav",
+                    "npc/overwatch/radiovoice/_comma.wav",
+                    "npc/overwatch/radiovoice/lostbiosignalforunit.wav"
+                }
+
+                sounds[#sounds + 1] = "npc/overwatch/radiovoice/" .. tagline .. ".wav"
+
+                for k2, v2 in ipairs(numbers) do
+                    sounds[#sounds + 1] = v2
+                end
+
+                sounds[#sounds + 1] = "npc/overwatch/radiovoice/off2.wav"
+
+                ix.util.EmitQueuedSounds(v, sounds, 0, 0.1, 40)
             end
-
-            local char = v:GetCharacter()
-
-            if not ( char ) then
-                continue
-            end
-
-            if not ( Schema:IsCombine(v) ) then
-                continue
-            end
-
-            local sounds = {
-                "npc/overwatch/radiovoice/on3.wav",
-                "npc/overwatch/radiovoice/attention.wav",
-                "npc/overwatch/radiovoice/_comma.wav",
-                "npc/overwatch/radiovoice/lostbiosignalforunit.wav"
-            }
-
-            sounds[#sounds + 1] = "npc/overwatch/radiovoice/" .. tagline .. ".wav"
-
-            for k2, v2 in ipairs(numbers) do
-                sounds[#sounds + 1] = v2
-            end
-
-            sounds[#sounds + 1] = "npc/overwatch/radiovoice/off2.wav"
-
-            ix.util.EmitQueuedSounds(v, sounds, 0, 0.1, 40)
         end
 
         ix.cmbSystems:MakeWaypoint({
