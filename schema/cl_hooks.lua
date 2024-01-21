@@ -257,6 +257,10 @@ function Schema:FinishChat()
 	net.SendToServer()
 end
 
+function Schema:MessageReceived(ply, info)
+	PrintTable(info)
+end
+
 net.Receive("ix.Schema.OpenUI", function()
 	local panel = net.ReadString()
 

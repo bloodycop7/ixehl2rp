@@ -110,7 +110,7 @@ function PLUGIN:HUDPaint()
             backColor = Color(0, 0, 0),
         })
 
-        draw.SimpleText("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT)
+        draw.SimpleTextOutlined("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
     end
 
     if ( ix.option.Get("combineOverlaySquad", true) ) then
