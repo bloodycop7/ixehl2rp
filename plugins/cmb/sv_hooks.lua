@@ -73,7 +73,8 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             pos = ply:GetPos(),
             text = "BSL " .. char:GetName() .. ".",
             color = Color(255, 0, 0),
-            duration = 60
+            duration = 60,
+            sound = "buttons/button17.wav"
         })
     end
 end

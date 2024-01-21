@@ -710,6 +710,10 @@ end
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 
+    if ( data.sound and string.len(data.sound) > 0 ) then
+        Schema:PlaySound(data.sound) 
+    end
+
     ix.cmbSystems:MakeWaypoint(data)
 end)
 

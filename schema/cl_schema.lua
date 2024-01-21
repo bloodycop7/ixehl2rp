@@ -3,6 +3,14 @@ function Schema:OpenUI(panel)
 end
 
 function Schema:PlaySound(sound, level, pitch, volume, channel, customCheck)
+	if not ( IsValid(localPlayer) ) then
+		return
+	end
+	
+	if ( customCheck and not customCheck(localPlayer) ) then
+		return
+	end
+
 	EmitSound(sound, LocalPlayer():GetPos(), -2, channel or CHAN_AUTO, volume or 1, level or 75, 0, 1, pitch or 100)
 end
 
