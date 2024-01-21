@@ -22,7 +22,7 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)
 
 **Fonts:**
-[Raju Regular](https://www.onlinewebfonts.com/download/ab87eec92788f9572b9c13028bf2edb6) - Main Schema Font
+[Raju Regular](https://www.onlinewebfonts.com/download/ab87eec92788f9572b9c13028bf2edb6) - Main Schema Font\
 [Frak](https://fontmeme.com/fonts/frak-font/) - Combine Font
 
 # Help Needed!
