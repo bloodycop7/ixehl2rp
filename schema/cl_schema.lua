@@ -2,6 +2,10 @@ function Schema:OpenUI(panel)
 	return vgui.Create(panel)
 end
 
+function Schema:PlaySound(sound, level, pitch, volume, channel, customCheck)
+	EmitSound(sound, LocalPlayer():GetPos(), -2, channel or CHAN_AUTO, volume or 1, level or 75, 0, 1, pitch or 100)
+end
+
 ix.option.Add("itemOutlineColor", ix.type.color, Color(255, 255, 255), {
 	category = "appearance"
 })
