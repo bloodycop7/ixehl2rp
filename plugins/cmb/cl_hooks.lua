@@ -243,6 +243,10 @@ function PLUGIN:HUDPaint()
                 continue
             end
 
+            if ( v:GetNoDraw() or v:GetMoveType() == MOVETYPE_NOCLIP ) then
+                continue
+            end
+
             local vPos = v:GetPos()
             vPos = vPos - v:GetUp() * -50
 
@@ -251,7 +255,6 @@ function PLUGIN:HUDPaint()
             end
 
             local dist = math.Round(vPos:Distance(localPlayer:GetPos()) / 16, 1)
-
             local diff = vPos - localPlayer:GetShootPos()
 
             vPos = vPos:ToScreen()
