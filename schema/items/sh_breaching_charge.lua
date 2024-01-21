@@ -6,6 +6,16 @@ ITEM.functions.Plant = {
     OnRun = function(itemTable)
         local ply = itemTable.player
 
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetCharacter()
+
+        if not ( char ) then
+            return
+        end
+
         local data = {}
             data.start = ply:GetShootPos()
             data.endpos = data.start + ply:GetAimVector() * 96
