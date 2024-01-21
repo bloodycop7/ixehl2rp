@@ -51,7 +51,7 @@ ITEM.functions.Plant = {
             ply.ixDeployedEntities = {}
         end
 
-        ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = grenade:EntIndex()
+        ply.ixDeployedEntities[#ply.ixDeployedEntities + 1] = chargeFake:EntIndex()
 
         char:SetData("deployedEntities", ply.ixDeployedEntities)
         

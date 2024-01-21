@@ -195,16 +195,7 @@ function PLUGIN:HUDPaint()
         surface.SetFont("ixCombineFont08")
         textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
-        self:DrawBox({
-            x = wayPos.x - (textWidth / 2),
-            y = wayPos.y,
-            w = textWidth,
-            h = 30,
-            rectColor = v.rectColor or Color(0, 255, 255),
-            backColor = Color(0, 0, 0, v.drawAlpha)
-        })
-
-        draw.SimpleText(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER)
+        draw.SimpleTextOutlined(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, ColorAlpha(color_black, v.drawAlpha))
         
         // Uncomment this if you want to use sentBy value on the waypoint
         --[[
