@@ -350,14 +350,6 @@ function Schema:LoadData()
 		vendor:SetVendorID(v[4])
 		vendor:Spawn()
 		vendor:Activate()
-
-		local vendorData = ix.vendor.list[vendor:GetVendorID()]
-
-		if ( vendorData ) then
-			if ( vendorData.onInit ) then
-				vendorData:onInit(self)
-			end
-		end
 	end
 end
 
