@@ -199,6 +199,32 @@ function Schema:EntityRemoved(ent)
 	end
 end
 
+function Schema:PlayerSwitchFlashlight(ply, bEnabled)
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+	
+	if ( Schema:IsCombine(ply) ) then
+		return true
+	end
+
+	local inv = char:GetInventory()
+
+	if not ( inv ) then
+		return
+	end
+
+	if ( inv:HasItem("flashlight") ) then
+		return true
+	end
+end
+
 function Schema:SaveData()
 	local data = {}
 
