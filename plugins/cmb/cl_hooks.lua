@@ -839,7 +839,59 @@ glowData["models/combine_super_soldier.mdl"] = {
     getEyeColor = function(self, ply)
         return Color(255, 0, 0)
     end
+}
 
+glowData["models/ez2npc/police.mdl"] = {
+    customCheck = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if ( attachmentData ) then
+            return true
+        end
+
+        return false
+    end,
+    getEyePos = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * -1.7
+        attachment.Pos = attachment.Pos + attachment.Ang:Forward() * 1.6
+
+        return attachment.Pos
+    end,
+    customDraw = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.7
+        attachment.Pos = attachment.Pos + attachment.Ang:Forward() * 1.6
+
+        render.SetMaterial(self.eyeMaterial or glowEyes)
+        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+    end,
+    eyeMaterial = glowEyes,
+    eyeWidth = 5,
+    eyeHeight = 3,
+    getEyeColor = function(self, ply)
+        if ( ply:GetSkin() == 1 ) then
+            return Color(0, 205, 255)
+        elseif ( ply:GetSkin() == 2 ) then
+            return Color(200, 70, 70)
+        end
+    end
 }
 
 function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
@@ -857,36 +909,38 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
         return
     end
 
-    for k, v in player.Iterator() do
-        if not ( IsValid(v) ) then
-            continue
-        end
+    cam.Start3D()
+        for k, v in player.Iterator() do
+            if not ( IsValid(v) ) then
+                continue
+            end
 
-        if ( v == localPlayer ) then
-            continue
-        end
+            if ( v == localPlayer ) then
+                continue
+            end
 
-        local modelData = glowData[v:GetModel()]
+            local modelData = glowData[v:GetModel()]
 
-        if not ( modelData ) then
-            continue
-        end
+            if not ( modelData ) then
+                continue
+            end
 
-        if ( v:Health() <= 0 ) then
-            v = v:GetRagdollEntity()
-        end
+            if ( v:Health() <= 0 ) then
+                v = v:GetRagdollEntity()
+            end
 
-        if ( modelData.customCheck and not modelData:customCheck(v) ) then
-            continue
-        end
+            if ( modelData.customCheck and not modelData:customCheck(v) ) then
+                continue
+            end
 
-        render.SetMaterial(modelData.eyeMaterial or glowEyes)
-        render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
-    
-        if ( modelData.customDraw ) then
-            modelData:customDraw(v)
+            render.SetMaterial(modelData.eyeMaterial or glowEyes)
+            render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
+        
+            if ( modelData.customDraw ) then
+                modelData:customDraw(v)
+            end
         end
-    end
+    cam.End3D()
 end
 
 net.Receive("ix.MakeWaypoint", function()
