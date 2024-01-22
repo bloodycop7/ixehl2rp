@@ -391,6 +391,10 @@ end, {
     category = "Combine Systems",
 })
 
+ix.config.Add("combineGlowEyes", true, "Should combine eyes glow?", nil, {
+    category = "Combine Systems",
+})
+
 ix.char.RegisterVar("bOLStatus", {
     field = "bol_status",
     fieldType = ix.type.bool,

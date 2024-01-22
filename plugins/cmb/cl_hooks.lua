@@ -909,38 +909,40 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
         return
     end
 
-    cam.Start3D()
-        for k, v in player.Iterator() do
-            if not ( IsValid(v) ) then
-                continue
-            end
+    if ( ix.config.Get("combineGlowEyes", true) and ix.option.Get("combineGlowEyes", true) ) then
+        cam.Start3D()
+            for k, v in player.Iterator() do
+                if not ( IsValid(v) ) then
+                    continue
+                end
 
-            if ( v == localPlayer ) then
-                continue
-            end
+                if ( v == localPlayer ) then
+                    continue
+                end
 
-            local modelData = glowData[v:GetModel()]
+                local modelData = glowData[v:GetModel()]
 
-            if not ( modelData ) then
-                continue
-            end
+                if not ( modelData ) then
+                    continue
+                end
 
-            if ( v:Health() <= 0 ) then
-                v = v:GetRagdollEntity()
-            end
+                if ( v:Health() <= 0 ) then
+                    v = v:GetRagdollEntity()
+                end
 
-            if ( modelData.customCheck and not modelData:customCheck(v) ) then
-                continue
-            end
+                if ( modelData.customCheck and not modelData:customCheck(v) ) then
+                    continue
+                end
 
-            render.SetMaterial(modelData.eyeMaterial or glowEyes)
-            render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
-        
-            if ( modelData.customDraw ) then
-                modelData:customDraw(v)
+                render.SetMaterial(modelData.eyeMaterial or glowEyes)
+                render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
+            
+                if ( modelData.customDraw ) then
+                    modelData:customDraw(v)
+                end
             end
-        end
-    cam.End3D()
+        cam.End3D()
+    end
 end
 
 net.Receive("ix.MakeWaypoint", function()
