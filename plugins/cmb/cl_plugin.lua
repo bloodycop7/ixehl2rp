@@ -93,7 +93,6 @@ ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 25
 
 ix.option.Add("combineGlowEyes", ix.type.bool, true, {
     category = "Combine Systems",
-    hidden = OptionVisible,
 })
 
 function ix.cmbSystems:MakeWaypoint(data)
