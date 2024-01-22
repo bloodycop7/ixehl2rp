@@ -872,6 +872,10 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
             continue
         end
 
+        if ( v:Health() <= 0 ) then
+            v = v:GetRagdollEntity()
+        end
+
         if ( modelData.customCheck and not modelData:customCheck(v) ) then
             continue
         end

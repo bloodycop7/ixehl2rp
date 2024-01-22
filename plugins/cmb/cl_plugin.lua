@@ -116,10 +116,6 @@ function ix.cmbSystems:MakeWaypoint(data)
         data.pos = localPlayer:GetPos()
     end
 
-    timer.Simple(data.duration, function()
-        table.RemoveByValue(ix.cmbSystems.waypoints, data)  
-    end)
-
     ix.cmbSystems.waypoints[#ix.cmbSystems.waypoints + 1] = data
 end
 
