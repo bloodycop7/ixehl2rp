@@ -947,6 +947,10 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
                     continue
                 end
 
+                if not ( v:IsNPC() ) then
+                    continue
+                end
+
                 if ( v:Health() <= 0 ) then
                     continue
                 end
