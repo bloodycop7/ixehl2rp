@@ -261,7 +261,7 @@ function Schema:SaveData()
 	data = {}
 
 	for _, v in ipairs(ents.FindByClass("ix_confiscationlocker")) do
-		data[#data + 1] = {v:GetPos(), v:GetAngles(), v.items}
+		data[#data + 1] = {v:GetPos(), v:GetAngles(), v:GetItems()}
 	end
 
 	ix.data.Set("confiscationLockers", data)
@@ -273,6 +273,14 @@ function Schema:SaveData()
 	end
 
 	ix.data.Set("cmbForcefields", data)
+
+	data =  {}
+
+	for _, v in ipairs(ents.FindByClass("ix_custom_vendor_*")) do
+		data[#data + 1] = {v:GetClass(), v:GetPos(), v:GetAngles(), v:GetVendorID()}
+	end
+
+	ix.data.Set("customVendors", data)
 end
 
 function Schema:LoadData()
@@ -332,6 +340,24 @@ function Schema:LoadData()
 		forcefield:SetMode(v[3] or 1)
 		forcefield:Spawn()
 		forcefield:Activate()
+	end
+
+	data = ix.data.Get("customVendors", {})
+	for _, v in ipairs(data) do
+		local vendor = ents.Create(v[1])
+		vendor:SetPos(v[2])
+		vendor:SetAngles(v[3])
+		vendor:SetVendorID(v[4])
+		vendor:Spawn()
+		vendor:Activate()
+
+		local vendorData = ix.vendor.list[vendor:GetVendorID()]
+
+		if ( vendorData ) then
+			if ( vendorData.onInit ) then
+				vendorData:onInit(self)
+			end
+		end
 	end
 end
 
