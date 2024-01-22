@@ -95,6 +95,12 @@ function ix.vendor:Register(vendorData)
 
             self.nextUse = CurTime() + 1
         end
+
+        function ENT:OnRemove()
+            if not ( ix.shuttingDown ) then
+                Schema:SaveData() 
+            end
+        end
     end
 
     scripted_ents.Register(ENT, "ix_custom_vendor_" .. vendorData.uniqueID)
