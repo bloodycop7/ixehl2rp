@@ -83,7 +83,7 @@ if ( SERVER ) then
             ErrorNoHalt("Attempted to update relationships on a non-NPC entity!\n")
         end
 
-        for k, v in pairs(player.GetAll())() do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end

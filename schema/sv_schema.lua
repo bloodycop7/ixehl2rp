@@ -121,7 +121,7 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel, customC
 
 	local recpFilter = RecipientFilter()
 	
-	for k, v in pairs(player.GetAll())() do
+	for k, v in player.Iterator() do
 		if not ( IsValid(v) ) then
 			continue
 		end

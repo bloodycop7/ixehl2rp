@@ -207,7 +207,7 @@ function PLUGIN:HUDPaint()
     end
 
     if ( ix.option.Get("combineOverlayAssets", true) ) then
-        for k, v in pairs(player.GetAll())() do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -483,7 +483,7 @@ function PLUGIN:SetupOutlines()
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then
-        for k, v in pairs(player.GetAll())() do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -911,7 +911,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
 
     if ( ix.config.Get("combineGlowEyes", true) and ix.option.Get("combineGlowEyes", true) ) then
         cam.Start3D()
-            for k, v in pairs(player.GetAll())() do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end

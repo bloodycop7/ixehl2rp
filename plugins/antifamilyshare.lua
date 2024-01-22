@@ -36,7 +36,7 @@ function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
         ply:Kick("Family share accounts are not allowed on this server.")
 
         if ( ix.config.Get("notifyAdmins", true) ) then
-            for k, v in pairs(player.GetAll())() do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
