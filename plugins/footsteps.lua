@@ -49,7 +49,7 @@ end
 
 if CLIENT then
 	function PLUGIN:Think()
-   	 	for _, client in player.Iterator() do
+   	 	for _, client in pairs(player.GetAll()) do
 			if not client.NextStepTime then
 				client.NextStepTime = 0
 				client.NextStepSide = false

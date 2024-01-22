@@ -325,7 +325,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
     dispatchData.lastUsed = true
 
-    for k, v in player.Iterator() do
+    for k, v in pairs(player.GetAll()) do
         if ( Schema:IsOutside(v) ) then
             Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.8)
         else

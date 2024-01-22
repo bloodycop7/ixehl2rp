@@ -114,7 +114,7 @@ function ix.crafting:RegisterStation(stationTable)
         end
 
         function STATION:OnRemove()
-            for k, v in player.Iterator() do
+            for k, v in pairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
                 end

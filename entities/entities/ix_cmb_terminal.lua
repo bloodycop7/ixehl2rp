@@ -114,7 +114,7 @@ if ( SERVER ) then
 		self:SetHealth(self:Health() - dmgInfo:GetDamage())
 
 		if ( self:Health() <= 0 ) then
-			for k, v in player.Iterator() do
+			for k, v in pairs(player.GetAll()) do
 				if not ( IsValid(v) ) then
 					continue
 				end
@@ -166,7 +166,7 @@ if ( SERVER ) then
 
 			local electricianCount = 0
 
-            for k, v in player.Iterator() do
+            for k, v in pairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -398,7 +398,7 @@ else
 		self.citizenIndexButton.DoClick = function(this)
 			self.rightPanel:Clear()
 
-			for k, v in player.Iterator() do
+			for k, v in pairs(player.GetAll()) do
 				if not ( IsValid(v) ) then
 					continue
 				end
