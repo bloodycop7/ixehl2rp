@@ -707,6 +707,184 @@ function PLUGIN:ShouldOutlineEntity(ent, type)
     end
 end
 
+local glowEyes = Material("effects/blueflare1", "smooth nomips clamp")
+local glowData = {}
+
+glowData["models/combine_soldier.mdl"] = {
+    customCheck = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if ( attachmentData ) then
+            return true
+        end
+
+        return false
+    end,
+    getEyePos = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        return attachment.Pos + attachment.Ang:Right() * -1.5
+    end,
+    customDraw = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
+
+        render.SetMaterial(self.eyeMaterial or glowEyes)
+        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+    end,
+    eyeMaterial = glowEyes,
+    eyeWidth = 4,
+    eyeHeight = 3,
+    getEyeColor = function(self, ply)
+        if ( ply:GetSkin() == 0 ) then
+            return Color(0, 120, 255)
+        elseif ( ply:GetSkin() == 1 ) then
+            return Color(145, 60, 0)
+        end
+    end
+}
+
+glowData["models/combine_soldier_prisonguard.mdl"] = {
+    customCheck = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if ( attachmentData ) then
+            return true
+        end
+
+        return false
+    end,
+    getEyePos = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        return attachment.Pos + attachment.Ang:Right() * -1.5
+    end,
+    customDraw = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
+
+        render.SetMaterial(self.eyeMaterial or glowEyes)
+        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+    end,
+    eyeMaterial = glowEyes,
+    eyeWidth = 4,
+    eyeHeight = 3,
+    getEyeColor = function(self, ply)
+        if ( ply:GetSkin() == 0 ) then
+            return Color(255, 210, 0)
+        elseif ( ply:GetSkin() == 1 ) then
+            return Color(255, 65, 0)
+        end
+    end
+}
+
+glowData["models/combine_super_soldier.mdl"] = {
+    customCheck = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if ( attachmentData ) then
+            return true
+        end
+
+        return false
+    end,
+    getEyePos = function(self, ply)
+        local eyesAttachment = ply:LookupAttachment("eyes")
+        local attachmentData = ply:GetAttachment(eyesAttachment)
+
+        if not ( attachmentData ) then
+            return
+        end
+
+        local attachment = ply:GetAttachment(eyesAttachment)
+
+        return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.3
+    end,
+    eyeMaterial = glowEyes,
+    eyeWidth = 6,
+    eyeHeight = 6,
+    getEyeColor = function(self, ply)
+        return Color(255, 0, 0)
+    end
+
+}
+
+function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
+    if ( bDrawDepth or bDrawSkybox or bis3DSkybox ) then
+        return
+    end
+
+    if not ( IsValid(localPlayer) ) then
+        return
+    end
+
+    local char = localPlayer:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    for k, v in player.Iterator() do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        if ( v == localPlayer ) then
+            continue
+        end
+
+        local modelData = glowData[v:GetModel()]
+
+        if not ( modelData ) then
+            continue
+        end
+
+        if ( modelData.customCheck and not modelData:customCheck(v) ) then
+            continue
+        end
+
+        render.SetMaterial(modelData.eyeMaterial or glowEyes)
+        render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
+    
+        if ( modelData.customDraw ) then
+            modelData:customDraw(v)
+        end
+    end
+end
+
 net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 
