@@ -91,6 +91,11 @@ ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 25
     hidden = OptionVisible,
 })
 
+ix.option.Add("combineGlowEyes", ix.type.bool, true, {
+    category = "Combine Systems",
+    hidden = OptionVisible,
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")

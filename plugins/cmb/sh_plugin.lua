@@ -293,6 +293,7 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
     optDispatchAnnouncementType = "Dispatch Announcement Type",
     optCombineOptionsVisibility = "Combine Options Visibility",
+    optCombineGlowEyes = "Combine Glow Eyes",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -309,6 +310,7 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
     optdDispatchAnnouncementType = "What type of announcement should dispatch make.",
     optdCombineOptionsVisibility = "Should combine options be visible to non-combine players.",
+    optdCombineGlowEyes = "Should combine eyes glow.",
 })
 
 local function OptionVisible()
