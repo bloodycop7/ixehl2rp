@@ -109,7 +109,7 @@ if ( SERVER ) then
 
 			local electricianCount = 0
 
-            for k, v in player.Iterator() do
+            for k, v in pairs(player.GetAll())() do
                 if not ( IsValid(v) ) then
                     continue
                 end
