@@ -783,7 +783,7 @@ glowData["models/combine_soldier.mdl"] = {
         return 6
     end,
     eyeHeight = function(self, ply)
-        return 3
+        return 4
     end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 0 ) then
@@ -867,7 +867,7 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
         return 6
     end,
     eyeHeight = function(self, ply)
-        return 3
+        return 4
     end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 0 ) then
