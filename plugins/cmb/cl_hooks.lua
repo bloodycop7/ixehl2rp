@@ -712,10 +712,16 @@ local glowData = {}
 
 glowData["models/combine_soldier.mdl"] = {
     customCheck = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if ( actualBone ) then
             return true
         end
 
@@ -790,10 +796,16 @@ glowData["models/combine_soldier.mdl"] = {
 
 glowData["models/combine_soldier_prisonguard.mdl"] = {
     customCheck = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if ( actualBone ) then
             return true
         end
 
@@ -868,10 +880,16 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
 
 glowData["models/combine_super_soldier.mdl"] = {
     customCheck = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if ( actualBone ) then
             return true
         end
 
@@ -917,10 +935,20 @@ glowData["models/combine_super_soldier.mdl"] = {
 
 glowData["models/ez2npc/police.mdl"] = {
     customCheck = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if ( ply:GetSkin() == 0 ) then
+            return false
+        end
+
+        if ( actualBone ) then
             return true
         end
 
