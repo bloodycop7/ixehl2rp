@@ -950,7 +950,11 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
             if ( v:GetPos():Distance(localPlayer:GetPos()) > ix.option.Get("glowEyesRenderDistance", 1000) ) then
                 continue
             end
-
+            
+            if ( ( v:IsPlayer() and not v:Alive() ) or ( v:IsNPC() and v:Health() <= 0 ) ) then
+                continue
+            end
+        
             local modelData = glowData[string.lower(v:GetModel())]
 
             if not ( modelData ) then
