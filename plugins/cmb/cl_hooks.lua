@@ -963,7 +963,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
 
             cam.Start3D()
                 render.SetMaterial( ( isfunction(modelData.eyeMaterial) and modelData:eyeMaterial(v) ) or glowEyes)
-                render.DrawSprite( ( isfunction(modelData.getEyePos) and modelData:getEyePos(v) ) or v:EyePos(), ( isfunction(modelData.sizeWidth) and modelData:sizeWidth(v) ) or 5, ( isfunction(modelData.sizeHeight) and modelData:sizeHeight(v) ) or 5, ( isfunction(modelData.getEyeColor) and modelData:getEyeColor(v) ) or color_white)
+                render.DrawSprite( ( isfunction(modelData.getEyePos) and modelData:getEyePos(v) ) or v:EyePos(), ( isfunction(modelData.eyeWidth) and modelData:eyeWidth(v) ) or 5, ( isfunction(modelData.eyeHeight) and modelData:eyeHeight(v) ) or 5, ( isfunction(modelData.getEyeColor) and modelData:getEyeColor(v) ) or color_white)
             
                 if ( modelData.customDraw ) then
                     modelData:customDraw(v)
