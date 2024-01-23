@@ -44,6 +44,16 @@ ix.option.Add("backgroundImages", ix.type.bool, true, {
 	category = "appearance"
 })
 
+ix.option.Add("glowEyes", ix.type.bool, true, {
+    category = "Combine Systems",
+})
+
+ix.option.Add("glowEyesRenderDistance", ix.type.number, 1000, {
+    category = "Combine Systems",
+    min = 0,
+    max = 10000,
+})
+
 ix.gui.gradients = {
 	["left"] = Material("vgui/gradient-l", "smooth noclamp"),
 	["right"] = Material("vgui/gradient-r", "smooth noclamp"),
