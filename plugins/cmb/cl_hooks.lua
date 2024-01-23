@@ -745,10 +745,12 @@ glowData["models/combine_soldier.mdl"] = {
 
         attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
 
-        render.SetMaterial(self.eyeMaterial or glowEyes)
-        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+        render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
+        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
-    eyeMaterial = glowEyes,
+    eyeMaterial = function()
+        return glowEyes
+    end,
     eyeWidth = function(self, ply)
         return 4
     end,
@@ -757,9 +759,9 @@ glowData["models/combine_soldier.mdl"] = {
     end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 0 ) then
-            return Color(0, 120, 255)
+            return Color(0, 205, 255)
         elseif ( ply:GetSkin() == 1 ) then
-            return Color(145, 60, 0)
+            return Color(200, 100, 70)
         end
     end
 }
@@ -799,10 +801,12 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
 
         attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
 
-        render.SetMaterial(self.eyeMaterial or glowEyes)
-        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+        render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
+        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
-    eyeMaterial = glowEyes,
+    eyeMaterial = function(self, ply)
+        return glowEyes
+    end,
     eyeWidth = function(self, ply)
         return 4
     end,
@@ -841,7 +845,9 @@ glowData["models/combine_super_soldier.mdl"] = {
 
         return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.3
     end,
-    eyeMaterial = glowEyes,
+    eyeMaterial = function(self, ply)
+        return glowEyes
+    end,
     eyeWidth = function(self, ply)
         return 6
     end,
@@ -891,10 +897,12 @@ glowData["models/ez2npc/police.mdl"] = {
         attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.7
         attachment.Pos = attachment.Pos + attachment.Ang:Forward() * 1.6
 
-        render.SetMaterial(self.eyeMaterial or glowEyes)
-        render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
+        render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
+        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
-    eyeMaterial = glowEyes,
+    eyeMaterial = function(self, ply)
+        return glowEyes
+    end,
     eyeWidth = function(self, ply)
         return 5
     end,
