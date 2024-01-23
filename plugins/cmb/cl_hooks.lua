@@ -929,7 +929,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
         return
     end
 
-    if ( ix.config.Get("combineGlowEyes", true) and ix.option.Get("combineGlowEyes", true) ) then
+    if ( ix.config.Get("glowEyes", true) and ix.option.Get("glowEyes", true) ) then
         for k, v in pairs(ents.GetAll()) do
             if not ( IsValid(v) ) then
                 continue
@@ -947,7 +947,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
                 continue
             end
 
-            if ( v:GetPos():Distance(localPlayer:GetPos()) > ix.option.Get("combineGlowEyesRenderDistance", 1000) ) then
+            if ( v:GetPos():Distance(localPlayer:GetPos()) > ix.option.Get("glowEyesRenderDistance", 1000) ) then
                 continue
             end
 

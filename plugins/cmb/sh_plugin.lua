@@ -293,8 +293,8 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
     optDispatchAnnouncementType = "Dispatch Announcement Type",
     optCombineOptionsVisibility = "Combine Options Visibility",
-    optCombineGlowEyes = "Combine Glow Eyes",
-    optCombineGlowEyesRenderDistance = "Combine Glow Eyes Render Distance",
+    optCombineGlowEyes = "Glow Eyes",
+    optCombineGlowEyesRenderDistance = "Glow Eyes Render Distance",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -390,10 +390,6 @@ ix.config.Add("combineFont", "BudgetLabel", "Combine Font", function(oldV, newV)
         end
     end
 end, {
-    category = "Combine Systems",
-})
-
-ix.config.Add("combineGlowEyes", true, "Should combine eyes glow?", nil, {
     category = "Combine Systems",
 })
 
