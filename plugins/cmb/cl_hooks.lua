@@ -913,8 +913,8 @@ glowData["models/combine_super_soldier.mdl"] = {
         local pos = matrix:GetTranslation()
         local ang = matrix:GetAngles()
 
-        pos = pos + ang:Right() * 4
-        pos = pos + ang:Forward() * 4.7
+        pos = pos + ang:Right() * 4.8
+        pos = pos + ang:Forward() * 4.8
         pos = pos + ang:Up() * 0.10
 
         return pos
