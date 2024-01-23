@@ -749,8 +749,12 @@ glowData["models/combine_soldier.mdl"] = {
         render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
     end,
     eyeMaterial = glowEyes,
-    eyeWidth = 4,
-    eyeHeight = 3,
+    eyeWidth = function(self, ply)
+        return 4
+    end,
+    eyeHeight = function(self, ply)
+        return 3
+    end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 0 ) then
             return Color(0, 120, 255)
@@ -799,8 +803,12 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
         render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
     end,
     eyeMaterial = glowEyes,
-    eyeWidth = 4,
-    eyeHeight = 3,
+    eyeWidth = function(self, ply)
+        return 4
+    end,
+    eyeHeight = function(self, ply)
+        return 3
+    end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 0 ) then
             return Color(255, 210, 0)
@@ -834,8 +842,12 @@ glowData["models/combine_super_soldier.mdl"] = {
         return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.3
     end,
     eyeMaterial = glowEyes,
-    eyeWidth = 6,
-    eyeHeight = 6,
+    eyeWidth = function(self, ply)
+        return 6
+    end,
+    eyeHeight = function(self, ply)
+        return 6
+    end,
     getEyeColor = function(self, ply)
         return Color(255, 0, 0)
     end
@@ -883,8 +895,12 @@ glowData["models/ez2npc/police.mdl"] = {
         render.DrawSprite(attachment.Pos, self.eyeWidth or 5, self.eyeHeight or 5, self:getEyeColor(ply) or color_white)
     end,
     eyeMaterial = glowEyes,
-    eyeWidth = 5,
-    eyeHeight = 3,
+    eyeWidth = function(self, ply)
+        return 5
+    end,
+    eyeHeight = function(self, ply)
+        return 3
+    end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 1 ) then
             return Color(0, 205, 255)
@@ -895,10 +911,6 @@ glowData["models/ez2npc/police.mdl"] = {
 }
 
 function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
-    if ( bDrawDepth or bDrawSkybox or bis3DSkybox ) then
-        return
-    end
-
     if not ( IsValid(localPlayer) ) then
         return
     end
@@ -910,69 +922,46 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
     end
 
     if ( ix.config.Get("combineGlowEyes", true) and ix.option.Get("combineGlowEyes", true) ) then
-        cam.Start3D()
-            for k, v in pairs(player.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
+        for k, v in pairs(ents.GetAll()) do
+            if not ( IsValid(v) ) then
+                continue
+            end
 
-                if ( v == localPlayer ) then
-                    continue
-                end
+            if ( v == localPlayer ) then
+                continue
+            end
 
-                local modelData = glowData[string.lower(v:GetModel())]
+            if not ( v:IsPlayer() or v:IsNPC() or v:IsRagdoll() ) then
+                continue
+            end
 
-                if not ( modelData ) then
-                    continue
-                end
+            if ( v:GetNoDraw() or v:GetMoveType() == MOVETYPE_NOCLIP ) then
+                continue
+            end
 
-                if ( v:Health() <= 0 ) then
-                    v = v:GetRagdollEntity()
-                end
+            if ( v:GetPos():Distance(localPlayer:GetPos()) > 1000 ) then
+                continue
+            end
 
-                if ( modelData.customCheck and not modelData:customCheck(v) ) then
-                    continue
-                end
+            local modelData = glowData[string.lower(v:GetModel())]
 
-                render.SetMaterial(modelData.eyeMaterial or glowEyes)
-                render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
+            if not ( modelData ) then
+                continue
+            end
+
+            if ( modelData.customCheck and not modelData:customCheck(v) ) then
+                continue
+            end
+
+            cam.Start3D()
+                render.SetMaterial( ( modelData.eyeMaterial and modelData:eyeMaterial(v) ) or glowEyes)
+                render.DrawSprite( ( modelData.getEyePos and modelData:getEyePos(v) ) or v:EyePos(), ( modelData.sizeWidth and modelData:sizeWidth(v) ) or 5, ( modelData.sizeHeight and modelData:sizeHeight(v) ) or 5, ( modelData.getEyeColor and modelData:getEyeColor(v) ) or color_white)
             
                 if ( modelData.customDraw ) then
                     modelData:customDraw(v)
                 end
-            end
-
-            for k, v in pairs(ents.GetAll()) do
-                if not ( IsValid(v) ) then
-                    continue
-                end
-
-                if not ( v:IsNPC() ) then
-                    continue
-                end
-
-                if ( v:Health() <= 0 ) then
-                    continue
-                end
-
-                local modelData = glowData[string.lower(v:GetModel())]
-
-                if not ( modelData ) then
-                    continue
-                end
-
-                if ( modelData.customCheck and not modelData:customCheck(v) ) then
-                    continue
-                end
-
-                render.SetMaterial(modelData.eyeMaterial or glowEyes)
-                render.DrawSprite(modelData:getEyePos(v) or v:EyePos(), modelData.eyeWidth or 5, modelData.eyeHeight or 5, modelData:getEyeColor(v) or color_white)
-            
-                if ( modelData.customDraw ) then
-                    modelData:customDraw(v)
-                end
-            end
-        cam.End3D()
+            cam.End3D()
+        end
     end
 end
 

@@ -12,7 +12,7 @@ ix.char.RegisterVar("rank", {
 local charMeta = ix.meta.character
 
 function ix.rank.LoadFromDir(directory)
-	for _, v in ipairs(file.Find(directory.."/*.lua", "LUA")) do
+	for _, v in pairs(file.Find(directory.."/*.lua", "LUA")) do
 		local niceName = v:sub(4, -5)
 		local index = #ix.rank.list + 1
 		local halt
