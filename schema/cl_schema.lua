@@ -45,11 +45,11 @@ ix.option.Add("backgroundImages", ix.type.bool, true, {
 })
 
 ix.option.Add("glowEyes", ix.type.bool, true, {
-    category = "Combine Systems",
+    category = "appearance",
 })
 
 ix.option.Add("glowEyesRenderDistance", ix.type.number, 1000, {
-    category = "Combine Systems",
+    category = "appearance",
     min = 0,
     max = 10000,
 })
