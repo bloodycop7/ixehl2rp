@@ -14,22 +14,8 @@ function Schema:PlaySound(sound, level, pitch, volume, channel, customCheck)
 	EmitSound(sound, localPlayer:GetPos(), -2, channel or CHAN_AUTO, volume or 1, level or 75, 0, pitch or 100)
 end
 
-function Schema:SendCaption(duration, ...)
-	local args = {...}
-
-	local compiledString = ""
-
-	for k, v in pairs(args) do
-		if ( type(v) == "table" ) then
-			compiledString = compiledString .. "<clr:" .. v.r .. "," .. v.g .. "," .. v.b .. ">"
-		elseif ( type(v) == "string" ) then
-			compiledString = compiledString .. v
-		end
-	end
-
-	compiledString = compiledString .. "<clr>"
-
-	gui.AddCaption(compiledString, duration or 5)
+function Schema:SendCaption(text, duration)
+	gui.AddCaption(text, duration or string.len(text) * 0.1)
 end
 
 ix.option.Add("itemOutlineColor", ix.type.color, Color(255, 255, 255), {
