@@ -707,7 +707,7 @@ function PLUGIN:ShouldOutlineEntity(ent, type)
     end
 end
 
-local glowEyes = Material("effects/blueflare1", "smooth nomips clamp")
+local glowEyes = Material("sprites/light_glow02_add", "smooth nomips clamp")
 local glowData = {}
 
 glowData["models/combine_soldier.mdl"] = {
