@@ -731,7 +731,7 @@ glowData["models/combine_soldier.mdl"] = {
 
         local attachment = ply:GetAttachment(eyesAttachment)
 
-        return attachment.Pos + attachment.Ang:Right() * -1.5
+        return attachment.Pos + attachment.Ang:Right() * -1.5 + attachment.Ang:Forward() * -0.4
     end,
     customDraw = function(self, ply)
         local eyesAttachment = ply:LookupAttachment("eyes")
@@ -743,7 +743,7 @@ glowData["models/combine_soldier.mdl"] = {
 
         local attachment = ply:GetAttachment(eyesAttachment)
 
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5 + attachment.Ang:Forward() * -0.4
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
         render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
@@ -787,7 +787,7 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
 
         local attachment = ply:GetAttachment(eyesAttachment)
 
-        return attachment.Pos + attachment.Ang:Right() * -1.5
+        return attachment.Pos + attachment.Ang:Right() * -1.5 + attachment.Ang:Forward() * -0.4
     end,
     customDraw = function(self, ply)
         local eyesAttachment = ply:LookupAttachment("eyes")
@@ -799,7 +799,7 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
 
         local attachment = ply:GetAttachment(eyesAttachment)
 
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5
+        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5 + attachment.Ang:Forward() * -0.4
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
         render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
@@ -843,7 +843,7 @@ glowData["models/combine_super_soldier.mdl"] = {
 
         local attachment = ply:GetAttachment(eyesAttachment)
 
-        return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.3
+        return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.6
     end,
     eyeMaterial = function(self, ply)
         return glowEyes
