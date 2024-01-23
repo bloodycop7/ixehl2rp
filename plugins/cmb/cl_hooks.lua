@@ -722,37 +722,59 @@ glowData["models/combine_soldier.mdl"] = {
         return false
     end,
     getEyePos = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        return attachment.Pos + attachment.Ang:Right() * -1.5 + attachment.Ang:Forward() * -0.4
+        pos = pos + ang:Right() * 5
+        pos = pos + ang:Forward() * 4.5
+        pos = pos + ang:Up() * 1.5
+
+        return pos
     end,
     customDraw = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5 + attachment.Ang:Forward() * -0.4
+        pos = pos + ang:Right() * 5
+        pos = pos + ang:Forward() * 4.5
+        pos = pos + ang:Up() * -1.5
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
-        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
+        render.DrawSprite(pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
     eyeMaterial = function()
         return glowEyes
     end,
     eyeWidth = function(self, ply)
-        return 4
+        return 6
     end,
     eyeHeight = function(self, ply)
         return 3
@@ -778,37 +800,59 @@ glowData["models/combine_soldier_prisonguard.mdl"] = {
         return false
     end,
     getEyePos = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        return attachment.Pos + attachment.Ang:Right() * -1.5 + attachment.Ang:Forward() * -0.4
+        pos = pos + ang:Right() * 5
+        pos = pos + ang:Forward() * 4.5
+        pos = pos + ang:Up() * 1.5
+
+        return pos
     end,
     customDraw = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.5 + attachment.Ang:Forward() * -0.4
+        pos = pos + ang:Right() * 5
+        pos = pos + ang:Forward() * 4.5
+        pos = pos + ang:Up() * -1.5
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
-        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
+        render.DrawSprite(pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
     eyeMaterial = function(self, ply)
         return glowEyes
     end,
     eyeWidth = function(self, ply)
-        return 4
+        return 6
     end,
     eyeHeight = function(self, ply)
         return 3
@@ -834,16 +878,28 @@ glowData["models/combine_super_soldier.mdl"] = {
         return false
     end,
     getEyePos = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        return attachment.Pos + attachment.Ang:Up() * 0.5 + attachment.Ang:Forward() * -0.6
+        pos = pos + ang:Right() * 4
+        pos = pos + ang:Forward() * 4.7
+        pos = pos + ang:Up() * 0.10
+
+        return pos
     end,
     eyeMaterial = function(self, ply)
         return glowEyes
@@ -871,34 +927,53 @@ glowData["models/ez2npc/police.mdl"] = {
         return false
     end,
     getEyePos = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * -1.7
-        attachment.Pos = attachment.Pos + attachment.Ang:Forward() * 1.6
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        return attachment.Pos
+        pos = pos + ang:Right() * 6.5
+        pos = pos + ang:Forward() * 3.30
+        pos = pos + ang:Up() * -1.5
+
+        return pos
     end,
     customDraw = function(self, ply)
-        local eyesAttachment = ply:LookupAttachment("eyes")
-        local attachmentData = ply:GetAttachment(eyesAttachment)
+        local actualBone
 
-        if not ( attachmentData ) then
+        for i = 1, ply:GetBoneCount() do
+            if ( string.find(string.lower(ply:GetBoneName(i)), "head") ) then
+                actualBone = i
+                break
+            end
+        end
+
+        if not ( actualBone ) then
             return
         end
 
-        local attachment = ply:GetAttachment(eyesAttachment)
+        local matrix = ply:GetBoneMatrix(actualBone)
+        local pos = matrix:GetTranslation()
+        local ang = matrix:GetAngles()
 
-        attachment.Pos = attachment.Pos + attachment.Ang:Right() * 1.7
-        attachment.Pos = attachment.Pos + attachment.Ang:Forward() * 1.6
+        pos = pos + ang:Right() * 6.5
+        pos = pos + ang:Forward() * 3.30
+        pos = pos + ang:Up() * 1.5
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
-        render.DrawSprite(attachment.Pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
+        render.DrawSprite(pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
     end,
     eyeMaterial = function(self, ply)
         return glowEyes
@@ -935,7 +1010,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
                 continue
             end
 
-            if ( v == localPlayer ) then
+            if ( v == localPlayer and ( isfunction(localPlayer.CanOverrideView) and not localPlayer:CanOverrideView() ) ) then
                 continue
             end
 
