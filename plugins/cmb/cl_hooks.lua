@@ -947,7 +947,7 @@ function PLUGIN:PostDrawOpaqueRenderables(bDrawDepth, bDrawSkybox, bis3DSkybox)
                 continue
             end
 
-            if ( v:GetPos():Distance(localPlayer:GetPos()) > 1000 ) then
+            if ( v:GetPos():Distance(localPlayer:GetPos()) > ix.option.Get("combineGlowEyesRenderDistance", 1000) ) then
                 continue
             end
 

@@ -294,6 +294,7 @@ ix.lang.AddTable("english", {
     optDispatchAnnouncementType = "Dispatch Announcement Type",
     optCombineOptionsVisibility = "Combine Options Visibility",
     optCombineGlowEyes = "Combine Glow Eyes",
+    optCombineGlowEyesRenderDistance = "Combine Glow Eyes Render Distance",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -311,6 +312,7 @@ ix.lang.AddTable("english", {
     optdDispatchAnnouncementType = "What type of announcement should dispatch make.",
     optdCombineOptionsVisibility = "Should combine options be visible to non-combine players.",
     optdCombineGlowEyes = "Should combine eyes glow.",
+    optdCombineGlowEyesRenderDistance = "At what distance should the combine eyes stop glowing.",
 })
 
 local function OptionVisible()

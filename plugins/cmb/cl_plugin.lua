@@ -95,6 +95,12 @@ ix.option.Add("combineGlowEyes", ix.type.bool, true, {
     category = "Combine Systems",
 })
 
+ix.option.Add("combineGlowEyesRenderDistance", ix.type.number, 1000, {
+    category = "Combine Systems",
+    min = 0,
+    max = 10000,
+})
+
 function ix.cmbSystems:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
