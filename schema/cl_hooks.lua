@@ -1,3 +1,18 @@
+function Schema:RenderScreenspaceEffects()
+local colorModify = {}
+colorModify["$pp_colour_contrast"] = 0.77    
+colorModify["$pp_colour_brightness"] = 0 
+colorModify["$pp_colour_colour"] = 1     
+colorModify["$pp_colour_mulr"] = 0.05
+colorModify["$pp_colour_mulg"] = 0
+colorModify["$pp_colour_mulb"] = 0  
+colorModify["$pp_colour_addr"] = 0
+colorModify["$pp_colour_addg"] = 0     
+colorModify["$pp_colour_addb"] = 0
+
+DrawColorModify(colorModify)
+end
+
 function Schema:ShouldHideBars()
 	return true
 end
