@@ -928,7 +928,8 @@ function PLUGIN:InitializedChatClasses()
             return true
         end,
         OnChatAdd = function(self, speaker, text)
-            chat.AddText(Color(0, 100, 170), "[CMB] " .. speaker:GetChar():GetName() .. ": " .. text)
+            Schema:SendCaption("<clr:0,100,170>[CMB] " .. speaker:GetChar():GetName() .. ": " .. text .. "<clr>")
+            // chat.AddText(Color(0, 100, 170), "[CMB] " .. speaker:GetChar():GetName() .. ": " .. text)
         end,
         prefix = {"/cmbradio", "/cmbr"},
         font = "ixMonoMediumFont",
@@ -982,7 +983,8 @@ function PLUGIN:InitializedChatClasses()
             return true
         end,
         OnChatAdd = function(self, speaker, text)
-            chat.AddText(Color(170, 0, 0), "*[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
+            Schema:SendCaption("<clr:170,0,0>[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "<clr>")
+            // chat.AddText(Color(170, 0, 0), "*[CMB-OTA] " .. speaker:GetChar():GetName() .. ": " .. text .. "*")
         end,
         prefix = {"/owr", "/owradio"},
         font = "ixMonoMediumFont",
@@ -1012,7 +1014,7 @@ function PLUGIN:InitializedChatClasses()
             return false
         end,
         OnChatAdd = function(self, speaker, text)
-            chat.AddText(Color(185, 40, 0), "*Dispatch: " .. text .. "*")
+            Schema:SendCaption("<clr:185,40,0><I>Dispatch: " .. text .. "<I><clr>")
         end,
         font = "ixGenericFont",
     })

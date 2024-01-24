@@ -52,7 +52,6 @@ ix.lang.AddTable("english", {
 
 	optGlowEyesRenderDistance = "Glow Eyes Render Distance",
 	optdGlowEyesRenderDistance = "The distance at which the glow around combine players and NPCs eyes will be rendered.",
-
 })
 
 function Schema:SetupOutlines()
@@ -281,10 +280,6 @@ end
 function Schema:FinishChat()
 	net.Start("ix.PlayerFinishChat")
 	net.SendToServer()
-end
-
-function Schema:MessageReceived(ply, info)
-	PrintTable(info)
 end
 
 net.Receive("ix.Schema.OpenUI", function()

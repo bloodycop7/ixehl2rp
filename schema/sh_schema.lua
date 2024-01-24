@@ -85,6 +85,14 @@ for k, v in pairs(ix.rank.list) do
     end
 end
 
+function Schema:ColorToText(color)
+    if not ( IsColor(color) ) then
+        return
+    end
+
+    return ( color.r or 255 ) .. "," .. ( color.g or 255 ) .. "," .. ( color.b or 255 ) .. "," .. ( color.a or 255 )
+end
+
 function Schema:IsCombine(ply)
     if not ( IsValid(ply) ) then
         return false
@@ -247,3 +255,241 @@ ix.command.Add("CharSetRank", {
 		end
 	end
 })
+
+function Schema:InitializedChatClasses()
+    ix.chat.Register("ic", {
+        format = "%s says \"%s\"",
+        indicator = "chatTalking",
+        GetColor = function(self, speaker, text)
+            -- If you are looking at the speaker, make it greener to easier identify who is talking.
+            if (LocalPlayer():GetEyeTrace().Entity == speaker) then
+                return ix.config.Get("chatListenColor")
+            end
+
+            -- Otherwise, use the normal chat color.
+            return ix.config.Get("chatColor")
+        end,
+        OnChatAdd = function(self, speaker, text, anonymous, info)
+            local color = self.color
+			local name = anonymous and
+				L"someone" or hook.Run("GetCharacterName", speaker, "ic") or
+				(IsValid(speaker) and speaker:Name() or "Console")
+
+			if (self.GetColor) then
+				color = self:GetColor(speaker, text, info)
+			end
+
+			local translated = L2("ic" .. "Format", name, text)
+
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(color) .. ">" .. string.format(self.format, name, text))
+			chat.AddText(color, translated or string.format(self.format, name, text))
+        end,
+        CanHear = ix.config.Get("chatRange", 280)
+    })
+
+    -- Actions and such.
+    ix.chat.Register("me", {
+        format = "** %s %s",
+        GetColor = ix.chat.classes.ic.GetColor,
+        CanHear = ix.config.Get("chatRange", 280) * 2,
+        prefix = {"/Me", "/Action"},
+        description = "@cmdMe",
+        indicator = "chatPerforming",
+        OnChatAdd = function(self, speaker, text, anonymous, info)
+            local color = ix.chat.classes["ic"]:GetColor(speaker, text, anonymous, info)
+
+            local name = anonymous and
+				L"someone" or hook.Run("GetCharacterName", speaker, "ic") or
+				(IsValid(speaker) and speaker:Name() or "Console")
+
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(color) .. ">" .. string.format(self.format, name, text))
+            chat.AddText(color, string.format(self.format, name, text))
+        end,
+        deadCanChat = true
+    })
+
+    -- Actions and such.
+    ix.chat.Register("it", {
+        OnChatAdd = function(self, speaker, text, anonymous, info)
+            local colorToText = Schema:ColorToText(ix.config.Get("chatColor"))
+
+            Schema:SendCaption("<clr:" .. colorToText .. ">** " .. text)
+            chat.AddText(ix.config.Get("chatColor"), "** "..text)
+        end,
+        CanHear = ix.config.Get("chatRange", 280) * 2,
+        prefix = {"/It"},
+        description = "@cmdIt",
+        indicator = "chatPerforming",
+        deadCanChat = true
+    })
+
+    -- Whisper chat.
+    ix.chat.Register("w", {
+        format = "%s whispers \"%s\"",
+        GetColor = function(self, speaker, text)
+            local color = ix.chat.classes.ic:GetColor(speaker, text)
+
+            -- Make the whisper chat slightly darker than IC chat.
+            return Color(color.r - 35, color.g - 35, color.b - 35)
+        end,
+        OnChatAdd = function(self, speaker, text, anonymous, info)
+            local colToGet = ix.chat.classes.ic:GetColor(speaker, text, anonymous, info)
+            colToGet = Color(colToGet.r - 35, colToGet.g - 35, colToGet.b - 35)
+
+            local colorToText = Schema:ColorToText(colToGet)
+
+            local name = anonymous and
+				L"someone" or hook.Run("GetCharacterName", speaker, "ic") or
+				(IsValid(speaker) and speaker:Name() or "Console")
+
+            Schema:SendCaption("<clr:" .. colorToText .. ">" .. string.format(self.format, name, text))
+            chat.AddText(colToGet, string.format(self.format, name, text))
+        end,
+        CanHear = ix.config.Get("chatRange", 280) * 0.25,
+        prefix = {"/W", "/Whisper"},
+        description = "@cmdW",
+        indicator = "chatWhispering"
+    })
+
+    -- Yelling out loud.
+    ix.chat.Register("y", {
+        format = "%s yells \"%s\"",
+        GetColor = function(self, speaker, text)
+            local color = ix.chat.classes.ic:GetColor(speaker, text)
+
+            -- Make the yell chat slightly brighter than IC chat.
+            return Color(color.r + 35, color.g + 35, color.b + 35)
+        end,
+        OnChatAdd = function(self, speaker, text, anonymous, info)
+            local colToGet = ix.chat.classes.ic:GetColor(speaker, text, anonymous, info)
+            colToGet = Color(colToGet.r + 35, colToGet.g + 35, colToGet.b + 35)
+
+            local colorToText = Schema:ColorToText(colToGet)
+
+            local name = anonymous and
+				L"someone" or hook.Run("GetCharacterName", speaker, "ic") or
+				(IsValid(speaker) and speaker:Name() or "Console")
+
+            Schema:SendCaption("<clr:" .. colorToText .. ">" .. string.format(self.format, name, text))
+            chat.AddText(colToGet, string.format(self.format, name, text))
+        end,
+        CanHear = ix.config.Get("chatRange", 280) * 2,
+        prefix = {"/Y", "/Yell"},
+        description = "@cmdY",
+        indicator = "chatYelling"
+    })
+
+    -- Out of character.
+    ix.chat.Register("ooc", {
+        CanSay = function(self, speaker, text)
+            if (!ix.config.Get("allowGlobalOOC")) then
+                speaker:NotifyLocalized("Global OOC is disabled on this server.")
+                return false
+            else
+                local delay = ix.config.Get("oocDelay", 10)
+
+                -- Only need to check the time if they have spoken in OOC chat before.
+                if (delay > 0 and speaker.ixLastOOC) then
+                    local lastOOC = CurTime() - speaker.ixLastOOC
+
+                    -- Use this method of checking time in case the oocDelay config changes.
+                    if (lastOOC <= delay and !CAMI.PlayerHasAccess(speaker, "Helix - Bypass OOC Timer", nil)) then
+                        speaker:NotifyLocalized("oocDelay", delay - math.ceil(lastOOC))
+
+                        return false
+                    end
+                end
+
+                -- Save the last time they spoke in OOC.
+                speaker.ixLastOOC = CurTime()
+            end
+        end,
+        OnChatAdd = function(self, speaker, text)
+            -- @todo remove and fix actual cause of speaker being nil
+            if (!IsValid(speaker)) then
+                return
+            end
+
+            local icon = "icon16/user.png"
+
+            if (speaker:IsSuperAdmin()) then
+                icon = "icon16/shield.png"
+            elseif (speaker:IsAdmin()) then
+                icon = "icon16/star.png"
+            elseif (speaker:IsUserGroup("moderator") or speaker:IsUserGroup("operator")) then
+                icon = "icon16/wrench.png"
+            elseif (speaker:IsUserGroup("vip") or speaker:IsUserGroup("donator") or speaker:IsUserGroup("donor")) then
+                icon = "icon16/heart.png"
+            end
+
+            icon = Material(hook.Run("GetPlayerIcon", speaker) or icon)
+
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(Color(255, 50, 50)) .. ">" .. "[OOC] <clr:" .. Schema:ColorToText(ix.faction.Get(speaker:GetChar():GetFaction()).color) .. "<clr>" .. speaker:Name() .. "<clr:" .. Schema:ColorToText(color_white) .. "<clr>: " .. text)
+            chat.AddText(icon, Color(255, 50, 50), "[OOC] ", speaker, color_white, ": "..text)
+        end,
+        prefix = {"//", "/OOC"},
+        description = "@cmdOOC",
+        noSpaceAfter = true
+    })
+
+    -- Local out of character.
+    ix.chat.Register("looc", {
+        CanSay = function(self, speaker, text)
+            local delay = ix.config.Get("loocDelay", 0)
+
+            -- Only need to check the time if they have spoken in OOC chat before.
+            if (delay > 0 and speaker.ixLastLOOC) then
+                local lastLOOC = CurTime() - speaker.ixLastLOOC
+
+                -- Use this method of checking time in case the oocDelay config changes.
+                if (lastLOOC <= delay and !CAMI.PlayerHasAccess(speaker, "Helix - Bypass OOC Timer", nil)) then
+                    speaker:NotifyLocalized("loocDelay", delay - math.ceil(lastLOOC))
+
+                    return false
+                end
+            end
+
+            -- Save the last time they spoke in OOC.
+            speaker.ixLastLOOC = CurTime()
+        end,
+        OnChatAdd = function(self, speaker, text)
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(Color(255, 50, 50)) .. ">" .. "[LOOC] <clr:" .. Schema:ColorToText(ix.config.Get("chatColor")) .. "<clr>" .. speaker:Name() .. ": " .. text)
+            chat.AddText(Color(255, 50, 50), "[LOOC] ", ix.config.Get("chatColor"), speaker:Name()..": "..text)
+        end,
+        CanHear = ix.config.Get("chatRange", 280),
+        prefix = {".//", "[[", "/LOOC"},
+        description = "@cmdLOOC",
+        noSpaceAfter = true
+    })
+
+    -- Roll information in chat.
+    ix.chat.Register("roll", {
+        format = "** %s has rolled %s out of %s.",
+        color = Color(155, 111, 176),
+        CanHear = ix.config.Get("chatRange", 280),
+        deadCanChat = true,
+        OnChatAdd = function(self, speaker, text, bAnonymous, data)
+            local max = data.max or 100
+            local translated = L2(self.uniqueID.."Format", speaker:Name(), text, max)
+
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(self.color) .. ">" .. string.format(self.format, speaker:Name(), text, max))
+
+            chat.AddText(self.color, translated and "** "..translated or string.format(self.format,
+                speaker:Name(), text, max
+            ))
+        end
+    })
+
+    ix.chat.Register("event", {
+        CanHear = 1000000,
+        OnChatAdd = function(self, speaker, text)
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(Color(255, 150, 0)) .. ">" .. text)
+            chat.AddText(Color(255, 150, 0), text)
+        end,
+        indicator = "chatPerforming"
+    })
+end
+
+function Schema:OnReloaded()
+    self:InitializedChatClasses()
+end
