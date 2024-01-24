@@ -150,7 +150,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
 
                     local _ = !isGlobal and ix.util.EmitQueuedSounds(speaker, sounds, nil, nil, volume) or netstream.Start(nil, "PlayQueuedSound", nil, sounds, nil, nil, volume)
 
-                    if chatType == "radio" then
+                    if ( radioChatType[chatType] ) then
                         volume = ix.config.Get("radioVCVolume", 60)
                         if ix.config.Get("radioVCClientOnly", false) == true then
                             netstream.Start(receivers, "PlayQueuedSound", nil, sounds, nil, nil, volume)
