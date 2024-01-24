@@ -173,11 +173,6 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
 
         PLUGIN.TempStored[CurTime()] = text
 
-        if Schema:IsCombine(speaker) then
-            if chatType != "radio" then
-                return string.format("<:: %s ::>", text)
-            end
-        end
         return text
     end
 
