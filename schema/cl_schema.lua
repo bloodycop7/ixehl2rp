@@ -15,6 +15,7 @@ function Schema:PlaySound(sound, level, pitch, volume, channel, customCheck)
 end
 
 function Schema:SendCaption(text, duration)
+	RunConsoleCommand("closecaption", "1")
 	gui.AddCaption(text, duration or string.len(text) * 0.1)
 end
 
