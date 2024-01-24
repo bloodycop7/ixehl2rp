@@ -120,7 +120,7 @@ function PLUGIN:LoadFonts(font, genericFont)
         local value = Schema:ZeroNumber(i, 2)
 
         surface.CreateFont("ixCombineFont" .. value, {
-            font = "Frak",
+            font = ix.config.Get("combineFont", "Frak"),
             size = ScreenScale(i),
             weight = 100,
             antialias = true,

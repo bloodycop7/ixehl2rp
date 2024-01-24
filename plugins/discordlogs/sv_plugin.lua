@@ -5,7 +5,7 @@
 local PLUGIN = PLUGIN
 
 ix.DiscordLogs = ix.DiscordLogs or {}
-ix.DiscordLogs.SteamAPI = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+ix.DiscordLogs.SteamAPI = "AB04D7C0E9FAC87E6814E8BA753B1EA8"
 ix.DiscordLogs.StoredAvatars = {}
 
 function ix.DiscordLogs:Format(ent)
@@ -21,16 +21,16 @@ function ix.DiscordLogs:Format(ent)
 end
 
 function PLUGIN:PlayerAuthed(ply, steamid, uniqueID)
-    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. ply:SteamID64(), pcall(function(body, len, headers, code)
+    http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. ply:SteamID64(), function(body, len, headers, code)
         ix.DiscordLogs.StoredAvatars[ply:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
-    end))
+    end)
 end
 
 function PLUGIN:OnReloaded()
-    for k, v in pairs(player.GetAll()) do
-        http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. v:SteamID64(), pcall(function(body, len, headers, code)
+    for k, v in player.Iterator() do
+        http.Fetch("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=" .. ix.DiscordLogs.SteamAPI .. "&steamids=" .. v:SteamID64(), function(body, len, headers, code)
             ix.DiscordLogs.StoredAvatars[v:SteamID64()] = util.JSONToTable(body).response.players[1].avatarfull
-        end))
+        end)
     end
 end
 
@@ -49,7 +49,11 @@ function ix.DiscordLogs:SendWebhook(webhook, bodyData)
     
     bodyData.username = bodyData.userName or "Helix: Enhanced Half-Life 2 Roleplay"
     bodyData.avatar_url = bodyData.avatarURL or "https://cdn.discordapp.com/icons/1069473418195501086/4f6c7bfbccad06c24be5fb8aba497950.webp?size=96"
-    bodyData.content = "<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T> " .. bodyData.content or "`TestMessage`"
+    bodyData.content = bodyData.content or "`TestMessage`"
+
+    if ( bodyData.useTime ) then
+        bodyData.content = bodyData.content .. " (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T> " .. ")"
+    end
 
     reqwest({
         method = "POST",
@@ -63,28 +67,56 @@ function ix.DiscordLogs:SendWebhook(webhook, bodyData)
     })
 end
 
-function PLUGIN:PlayerInitialSpawn(ply, transition)
+gameevent.Listen("player_connect")
+hook.Add("player_connect", "ix.DiscordLogs.PlayerConnect", function(data)
     ix.DiscordLogs:SendWebhook("joinleave", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " has joined the server.`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Connect (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = data.name .. " is connecting to the server!",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[util.SteamIDTo64(data.networkid)]
+                }
+            }
+        }
     })
-end
+end)
 
 gameevent.Listen("player_disconnect")
 hook.Add("player_disconnect", "ix.DiscordLogs.PlayerLeave", function(data)
     ix.DiscordLogs:SendWebhook("joinleave", {
-        userName = data.name,
-        avatarURL = ix.DiscordLogs.StoredAvatars[util.SteamIDTo64(data.networkid)],
-        content = "`" .. data.name .. " (" .. util.SteamIDTo64(data.networkid) .. ") has left the server: " .. data.reason .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Disconnect (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = data.name .. " has disconnected from the server!" .. "(" .. data.reason .. ")",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[util.SteamIDTo64(data.networkid)]
+                }
+            }
+        }
     })
 end)
 
 function PLUGIN:PlayerSay(ply, text, teamChat)
-    ix.DiscordLogs:SendWebhook("chat", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " said in chat: " .. text .. "`",
+    ix.DiscordLogs:SendWebhook("admin", {
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Chat (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") said: " .. text,
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -94,9 +126,18 @@ function PLUGIN:PlayerSpawnedProp(ply, model, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned prop " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Prop (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -106,9 +147,18 @@ function PLUGIN:PlayerSpawnedRagdoll(ply, model, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned ragdoll " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Ragdoll (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -118,9 +168,18 @@ function PLUGIN:PlayerSpawnedEffect(ply, model, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned effect " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Effect (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. model .. " (" .. ix.DiscordLogs:Format(ent) .. ")",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -130,9 +189,18 @@ function PLUGIN:PlayerSpawnedVehicle(ply, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned vehicle " .. ix.DiscordLogs:Format(ent) .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Vehicle (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. ix.DiscordLogs:Format(ent),
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -142,9 +210,18 @@ function PLUGIN:PlayerSpawnedSENT(ply, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned scripted entity " .. ix.DiscordLogs:Format(ent) .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Entity (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. ix.DiscordLogs:Format(ent),
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -154,9 +231,18 @@ function PLUGIN:PlayerSpawnedNPC(ply, ent)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned " .. ix.DiscordLogs:Format(ent) .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned NPC (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned "  .. ix.DiscordLogs:Format(ent),
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -166,9 +252,18 @@ function PLUGIN:PlayerSpawnedSWEP(ply, ent)
     end
     
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned SWEP " .. ix.DiscordLogs:Format(ent) .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Weapon (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. ix.DiscordLogs:Format(ent),
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -178,9 +273,18 @@ function PLUGIN:PlayerGiveSWEP(ply, class, swep)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ply:SteamName(),
-        avatarURL = ix.DiscordLogs.StoredAvatars[ply:SteamID64()],
-        content = "`" .. ix.DiscordLogs:Format(ply) .. " spawned SWEP " .. class .. "`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Weapon (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = ply:SteamName() .. " (" .. ply:SteamID64() .. ") " .. "(" .. ply:GetChar():GetName() .. ") spawned " .. class,
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[ply:SteamID64()]
+                }
+            }
+        }
     })
 end
 
@@ -196,8 +300,17 @@ function PLUGIN:PlayerHurt(victim, attacker, healthRemaining, damageTaken)
     end
 
     ix.DiscordLogs:SendWebhook("admin", {
-        userName = ix.DiscordLogs:Format(victim),
-        avatarURL = ix.DiscordLogs.StoredAvatars[victim:SteamID64()],
-        content = "`" .. msg .. " hurt " .. ix.DiscordLogs:Format(victim) .. " for " .. damageTaken .. " damage. (" .. healthRemaining .. " health remaining)`",
+        content = "",
+        avatarURL = "",
+        embeds = {
+            {
+                title = "Player Spawned Prop (<t:" .. math.floor(os.time()) .. ":D> " .. "<t:" .. math.floor(os.time()) .. ":T>)",
+                color = 3066993,
+                description = msg .. " hurt " .. ix.DiscordLogs:Format(victim) .. " for " .. damageTaken .. " damage. (" .. healthRemaining .. " health remaining)",
+                thumbnail = {
+                    url = ix.DiscordLogs.StoredAvatars[victim:SteamID64()]
+                }
+            }
+        }
     })
 end

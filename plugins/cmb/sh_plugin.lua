@@ -373,7 +373,7 @@ ix.config.Add("squadLimit", 4, "How many units can be in a squad?", nil, {
     data = {min = 1, max = 40},
 })
 
-ix.config.Add("combineFont", "BudgetLabel", "Combine Font", function(oldV, newV)
+ix.config.Add("combineFont", "Frak", "Combine Font", function(oldV, newV)
     if ( CLIENT ) then
         for i = 6, 40, 2 do
             local value = Schema:ZeroNumber(i, 2)
