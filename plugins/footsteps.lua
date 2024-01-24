@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/TankNut/helix-plugins/blob/master/footsteps.lua
+// Credits: https://github.com/TankNut/helix-plugins/blob/master/footsteps.lua
 
 PLUGIN.name = "Footsteps"
 PLUGIN.description = "Rewrites and improves on Source's handling of footsteps."
@@ -49,7 +49,7 @@ end
 
 if CLIENT then
 	function PLUGIN:Think()
-		for _, client in pairs(player.GetAll()) do
+   	 	for _, client in pairs(player.GetAll()) do
 			if not client.NextStepTime then
 				client.NextStepTime = 0
 				client.NextStepSide = false
@@ -72,7 +72,7 @@ if CLIENT then
 				continue
 			end
 
-			if ix.config.Get("silentWalking") and client:KeyDown(IN_WALK) then
+			if ix.config.Get("silentWalking") and client:IsWalking() then
 				continue
 			end
 
@@ -112,6 +112,16 @@ if CLIENT then
 	end
 
 	function GAMEMODE:GetNextStepTime(client, vel)
+		if not ( IsValid(client) ) then
+			return
+		end
+
+		local char = client:GetCharacter()
+
+		if not ( char ) then
+			return
+		end
+
 		if client:GetMoveType() == MOVETYPE_LADDER then
 			return 0.45
 		end
@@ -163,17 +173,23 @@ if CLIENT then
 		local character = client:GetCharacter()
 
 		if character then
-			local faction = ix.faction.Get(character:GetFaction())
-
-			if faction.ModifyPlayerStep and faction:ModifyPlayerStep(client, data) == true then
-				return true
-			end
-
 			local class = ix.class.Get(character:GetClass())
 
 			if class and class.ModifyPlayerStep and class:ModifyPlayerStep(client, data) == true then
 				return true
 			end
+
+			local rank = ix.rank.Get(character:GetRank())
+
+			if ( rank and rank.ModifyPlayerStep and rank:ModifyPlayerStep(client, data) == true ) then
+				return true
+			end
+
+			local faction = ix.faction.Get(character:GetFaction())
+
+			if faction.ModifyPlayerStep and faction:ModifyPlayerStep(client, data) == true then
+				return true
+			end			
 		end
 
 		if client:Crouching() then

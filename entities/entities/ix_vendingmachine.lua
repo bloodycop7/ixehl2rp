@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 ENT.Type = "anim"
@@ -13,8 +12,6 @@ ENT.MaxRenderDistance = math.pow(256, 2)
 ENT.MaxStock = 4
 ENT.Items = {
 	{"REGULAR", "water", 15},
-	{"SPARKLING", "water_sparkling", 25},
-	{"SPECIAL", "water_special", 35}
 }
 
 function ENT:GetStock(id)
@@ -25,7 +22,7 @@ function ENT:GetAllStock()
 	return self:GetNetVar("stock", {})
 end
 
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/props_interiors/vendingmachinesoda01a.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
@@ -117,7 +114,7 @@ if (SERVER) then
 
 		local character = client:GetCharacter()
 
-		if (!character:IsCombine()) then
+		if not ( Schema:IsCombine(client) ) then
 			local itemInfo = self.Items[buttonID]
 			local price = itemInfo[3]
 

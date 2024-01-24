@@ -1,13 +1,13 @@
 local PLUGIN = PLUGIN
 
-// Credit: https://github.com/riggs9162/RiggsHelixPlugins/blob/main/shove.lua
+// Credits: https://github.com/riggs9162/RiggsHelixPlugins/blob/main/shove.lua
 
 PLUGIN.name = "Overwatch Shove"
 PLUGIN.description = "A Command which gives the Overwatch the ability to knock players out with the /shove command."
-PLUGIN.author = "Riggs Mackay"
+PLUGIN.author = "Riggs"
 PLUGIN.schema = "HL2 RP"
 PLUGIN.license = [[
-Copyright 2023 Riggs Mackay
+Copyright 2024 Riggs Mackay
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -23,7 +23,7 @@ ix.config.Add("shoveTime", 20, "How long should a character be unconscious after
 ix.command.Add("shove", {
     description = "Knock someone out.",
     OnRun = function(self, ply)
-        if not ( Schema:IsOTA(ply) ) then
+        if not ( Schema:IsOW(ply) ) then
             return false, "You need to be a Overwatch Soldier to run this command."
         end
 

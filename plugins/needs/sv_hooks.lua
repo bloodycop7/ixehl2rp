@@ -9,48 +9,74 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
 
     timer.Adjust("ix.Characters.Needs.Hunger." .. char:GetID(), ix.config.Get("hungerRate", 60))
     timer.Adjust("ix.Characters.Needs.Thirst." .. char:GetID(), ix.config.Get("thirstRate", 60))
+    timer.Adjust("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. char:GetID(), 1, 0)
 
     char:SetData("isConsuming", false)
 end
 
 function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
-    if ( ply:GetCharacter() ) then
-        ply:GetCharacter():SetData("isConsuming", false)
+    if ( newChar ) then
+        newChar:SetData("isConsuming", false)
 
         if not ( timer.Exists("ix.Characters.Needs.Hunger." .. newChar:GetID()) ) then
             timer.Create("ix.Characters.Needs.Hunger." .. newChar:GetID(), ix.config.Get("hungerRate", 60), 0, function()
-                if ( ply:GetCharacter() ) then
-                    local char = ply:GetCharacter()
-                    local hunger = char:GetHunger()
-
-                    if ( hunger > 10 ) then
-                        char:SetHunger(hunger - 1)
+                if ( newChar ) then
+                    if not ( ix.config.Get("needsEnabled", true) ) then
+                        return
                     end
+
+                    local hunger = newChar:GetHunger()
+
+                    newChar:SetHunger(math.Clamp(hunger - 1, 0, 100))
                 end
             end)
         end
 
-        if not ( timer.Exists("ix.Characters.Needs.Thirst." .. newChar:GetID()) ) then
-            timer.Create("ix.Characters.Needs.Thirst." .. newChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
-                if ( ply:GetCharacter() ) then
-                    local char = ply:GetCharacter()
-                    local thirst = char:GetThirst()
+        if not ( timer.Exists("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. newChar:GetID()) ) then
+            timer.Create("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), ix.config.Get("thirstRate", 60), 0, function()
+                if ( newChar ) then
+                    if not ( ix.config.Get("needsEnabled", true) ) then
+                        return
+                    end
+
+                    local thirst = newChar:GetThirst()
                     
-                    if ( thirst > 10 ) then
-                        char:SetThirst(thirst - 1)
-                    end
+                    newChar:SetThirst(math.Clamp(thirst - 1, 0, 100))
                 end
             end)
         end
 
-        if ( oldChar ) then        
-            if ( timer.Exists("ix.Characters.Needs.Hunger" .. oldChar:GetID()) ) then
-                timer.Remove("ix.Characters.Needs.Hunger" .. oldChar:GetID())
-            end
+        if not ( timer.Exists("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID()) ) then
+            timer.Create("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. newChar:GetID(), 1, 0, function()
+                if ( newChar ) then
+                    if not ( ix.config.Get("needsEnabled", true) ) then
+                        return
+                    end
 
-            if ( timer.Exists("ix.Characters.Needs.Thirst" .. oldChar:GetID()) ) then
-                timer.Remove("ix.Characters.Needs.Thirst" .. oldChar:GetID())
-            end
+                    local hunger = newChar:GetHunger()
+                    local thirst = newChar:GetThirst()
+
+                    if ( thirst <= 0 or hunger <= 0 ) then
+                        if ( ply:Health() > 10 ) then
+                            newChar:GetPlayer():TakeDamage(1)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+
+    if ( oldChar ) then        
+        if ( timer.Exists("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID()) ) then
+            timer.Remove("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID())
+        end
+
+        if ( timer.Exists("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID()) ) then
+            timer.Remove("ix.Characters.Needs.Thirst." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID())
+        end
+
+        if ( timer.Exists("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID()) ) then
+            timer.Remove("ix.Characters.Needs.Damage." .. "." .. ply:SteamID64() .. "." .. oldChar:GetID())
         end
     end
 end

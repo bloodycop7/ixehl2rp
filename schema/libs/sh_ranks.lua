@@ -12,7 +12,7 @@ ix.char.RegisterVar("rank", {
 local charMeta = ix.meta.character
 
 function ix.rank.LoadFromDir(directory)
-	for _, v in ipairs(file.Find(directory.."/*.lua", "LUA")) do
+	for _, v in pairs(file.Find(directory.."/*.lua", "LUA")) do
 		local niceName = v:sub(4, -5)
 		local index = #ix.rank.list + 1
 		local halt
@@ -91,7 +91,7 @@ end
 function ix.rank.GetPlayers(rank)
 	local players = {}
 
-	for _, v in ipairs(player.GetAll()) do
+	for _, v in pairs(player.GetAll()) do
 		local char = v:GetCharacter()
 
 		if (char and char:GetRank() == rank) then
@@ -154,7 +154,7 @@ if (SERVER) then
 		end
 
 		net.Start("ixRankUpdate")
-			net.WriteEntity(client)
+			net.WritePlayer(client)
 		net.Broadcast()
 	end
 end

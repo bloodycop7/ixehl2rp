@@ -56,8 +56,10 @@ ITEM.functions.DoRepair = {
 
             ply:Notify("You have repaired this entity.")
         end, 5, function()
-            ply:SetAction()
-            ply:Notify("You have stopped repairing the entity.")
+            if ( IsValid(ply) ) then
+                ply:SetAction()
+                ply:Notify("You have stopped repairing the entity.")
+            end
         end, 96)
 
         return false

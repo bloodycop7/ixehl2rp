@@ -1,10 +1,181 @@
 local PLUGIN = PLUGIN
+
 util.AddNetworkString("ix.Combine.SetCityCode")
 util.AddNetworkString("ix.Combine.ToggleBOL")
+util.AddNetworkString("ix.Combine.GiveLP")
+util.AddNetworkString("ix.Combine.TakeLP")
+util.AddNetworkString("ix.Combine.RemoveObjective")
+
+net.Receive("ix.Combine.RemoveObjective", function(len, ply)
+    if ( ( ix.cmbSystems.nextRemoveObjectiveCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextRemoveObjectiveCountdown = CurTime() + 0.5
+    
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
+        return
+    end
+
+    local id = net.ReadUInt(8)
+
+    if not ( id ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+        return
+    end
+
+    ix.cmbSystems.Objectives:RemoveObjective(id)
+end)
+
+net.Receive("ix.Combine.GiveLP", function(len, ply)
+    if ( ( ix.cmbSystems.giveLPCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.giveLPCountdown = CurTime() + 0.5
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    local target = net.ReadPlayer()
+
+    if not ( IsValid(target) ) then
+        return
+    end
+
+    local char = target:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local amount = net.ReadString()
+
+    if not ( amount ) then
+        ply:Notify("Invalid amount!")
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    amount = tonumber(amount)
+
+    if not ( isnumber(amount) ) then
+        return
+    end
+
+    if ( amount < 1 ) then
+        return
+    end
+
+    if not ( Schema:IsCitizen(target) ) then
+        return
+    end
+
+    char:SetLoyaltyPoints(char:GetLoyaltyPoints() + amount)
+end)
+
+net.Receive("ix.Combine.TakeLP", function(len, ply)
+    if ( ( ix.cmbSystems.nextTakeLPCountdown or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextTakeLPCountdown = CurTime() + 0.5
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    local target = net.ReadPlayer()
+
+    if not ( IsValid(target) ) then
+        return
+    end
+
+    local char = target:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local amount = net.ReadString()
+
+    if not ( amount ) then
+        return
+    end
+
+    if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    amount = tonumber(amount)
+
+    if not ( isnumber(amount) ) then
+        return
+    end
+
+    if ( amount < 1 ) then
+        return
+    end
+
+    if not ( Schema:IsCitizen(target) ) then
+        return
+    end
+
+    char:SetLoyaltyPoints(char:GetLoyaltyPoints() - amount)
+end)
 
 net.Receive("ix.Combine.SetCityCode", function(len, ply)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if ( ( ix.nextCityCodeChange or 0 ) > CurTime() ) then
+        ply:Notify("You must wait " .. math.Round(ix.nextCityCodeChange - CurTime()) .. " more second(s) before changing the city code again.")
+
+        return
+    end
+
     local id = net.ReadUInt(8)
-    local codeData = ix.cmbSystems.cityCodes[id]
+    local codeData = ix.cmbSystems.CityCodes.Stored[id]    
 
     if not ( codeData ) then
         return
@@ -14,17 +185,50 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
         return
     end
 
-    ix.cmbSystems:SetCityCode(id)
+    if not ( Schema:IsCPRankLeader(ply) or Schema:IsOWElite(ply) or ply:IsAdmin() ) then
+        return
+    end
+
+    ix.cmbSystems.CityCodes:Set(id)
+    ix.nextCityCodeChange = CurTime() + (ply:IsAdmin() and 2 or 10)
 end)
 
 net.Receive("ix.Combine.ToggleBOL", function(len, ply)
-    local target = net.ReadEntity()
+    if ( ( ix.cmbSystems.nextBOLSet or 0 ) > CurTime() ) then
+        return
+    end
+
+    ix.cmbSystems.nextBOLSet = CurTime() + 0.5
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetCharacter()
+
+    if not ( plyChar ) then
+        return
+    end
+
+    local target = net.ReadPlayer()
 
     if not ( IsValid(target) ) then
         return
     end
 
+    local char = target:GetChar()
+
+    if not ( char ) then
+        return
+    end
+
     if not ( Schema:IsCombine(ply) ) then
+        return
+    end
+
+    local plyChar = ply:GetChar()
+
+    if not ( plyChar ) then
         return
     end
 
@@ -49,8 +253,8 @@ function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
     end
 end
 
-function ix.cmbSystems:SetCityCode(id)
-    local codeData = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
+function ix.cmbSystems.CityCodes:Set(id)
+    local codeData = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
 
     if ( codeData.onEnd ) then
         codeData:onEnd()
@@ -58,7 +262,7 @@ function ix.cmbSystems:SetCityCode(id)
 
     SetGlobalInt("ixCityCode", id)
 
-    codeData = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
+    codeData = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
 
     timer.Simple(0.1, function()
         if ( codeData.onStart ) then
@@ -84,14 +288,14 @@ ix.cmbSystems.dispatchPassive = {
         soundDir = baseRadioVoiceDir .. "fprison_missionfailurereminder.wav",
         text = "Attention ground units. Mission failure will result in permanent offworld assignment. Code reminder: sacrifice, coagulate, clamp.",
         customCheck = function()
-            return ( ix.cmbSystems:GetCityCode() >= 2 )
+            return ( ix.cmbSystems.CityCodes:Get() >= 2 )
         end
     }
 }
 
 timer.Remove("ix.DispatchPassive")
 timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
-    local cityCode = ix.cmbSystems.cityCodes[ix.cmbSystems:GetCityCode()]
+    local cityCode = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
 
     if ( cityCode ) then
         if ( cityCode.dispatchPassive ) then
@@ -121,7 +325,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     ix.chat.Send(nil, "cmb_dispatch", dispatchData.text)
     dispatchData.lastUsed = true
 
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in pairs(player.GetAll()) do
         if ( Schema:IsOutside(v) ) then
             Schema:PlaySound(v, dispatchData.soundDir, 75, 100, 0.8)
         else
@@ -145,7 +349,7 @@ ix.cmbSystems.passiveChatterLines = {
         "npc/overwatch/radiovoice/remindermemoryreplacement.wav",
         "npc/overwatch/radiovoice/rewardnotice.wav"
     },
-    [FACTION_OTA] = {
+    [FACTION_OW] = {
         "npc/combine_soldier/vo/prison_soldier_activatecentral.wav",
         "npc/combine_soldier/vo/prison_soldier_boomersinbound.wav",
         "npc/combine_soldier/vo/prison_soldier_bunker1.wav",
@@ -192,7 +396,7 @@ function ix.cmbSystems:PassiveChatter(ply)
 
     if ( Schema:IsCP(ply) ) then
         sounds = {"npc/metropolice/vo/on" .. math.random(1, 2) .. ".wav"}
-    elseif ( Schema:IsOTA(ply) ) then
+    elseif ( Schema:IsOW(ply) ) then
         sounds = {"ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"}
     end
 
@@ -200,7 +404,7 @@ function ix.cmbSystems:PassiveChatter(ply)
 
     if ( Schema:IsCP(ply) ) then
         sounds[#sounds + 1] = "npc/metropolice/vo/off" .. math.random(1, 4) .. ".wav"
-    elseif ( Schema:IsOTA(ply) ) then
+    elseif ( Schema:IsOW(ply) ) then
         sounds[#sounds + 1] = "ambient/levels/prison/radio_random" .. math.random(1, 15) .. ".wav"
     end
 
@@ -208,15 +412,17 @@ function ix.cmbSystems:PassiveChatter(ply)
         sounds = hook.Run("GetPlayerChatterSounds", ply, sounds) or sounds
     end
 
-    if ( hook.Run("GetPlayerChatterSounds", ply, sounds) != false ) then
+    if ( hook.Run("CanPlayerEmitChatter", ply, sounds) != false ) then
         local length = ix.util.EmitQueuedSounds(ply, sounds, 0, 0.1, 35, math.random(90, 105))
         ply.isReadyForChatter = false
 
-        timer.Simple(length, function()
-            if ( IsValid(ply) ) then
-                ply.isReadyForChatter = true
-            end
-        end)
+        if not ( timer.Exists("ix.ChatterCooldown" .. ply:SteamID64()) ) then
+            timer.Create("ix.CmbChatterCooldown" .. ply:SteamID64(), length, 1, function()
+                if ( IsValid(ply) ) then
+                    ply.isReadyForChatter = true
+                end
+            end)
+        end
     end
 end
 
@@ -250,4 +456,330 @@ function ix.cmbSystems:MakeWaypoint(data)
     net.Start("ix.MakeWaypoint")
         net.WriteTable(data or {})
     net.Broadcast()
+end
+
+util.AddNetworkString("ix.cmbSystems.SyncSquads")
+function ix.cmbSystems.Squads:CreateSquad(ply, squadData)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( istable(squadData) ) then
+        ErrorNoHalt("Attempted to create a squad with invalid data!")
+        
+        return
+    end
+
+    if not ( squadData.name ) then
+        squadData.name = "PT-" .. #ix.cmbSystems.Squads.Stored
+        
+        return
+    end
+
+    squadData.leader = ply
+    squadData.members = squadData.members or {ply}
+    squadData.limit = squadData.limit or ix.config.Get("squadLimit", 4)
+
+    table.insert(ix.cmbSystems.Squads.Stored, squadData)
+
+    local filter = RecipientFilter()
+    filter:AddAllPlayers()
+
+    char:SetData("squadID", #ix.cmbSystems.Squads.Stored, false, filter)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Squads:InsertMember(ply, id)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Squads.Stored[id].members ) then
+        return
+    end
+
+    if ( table.HasValue(ix.cmbSystems.Squads.Stored[id].members, ply) ) then
+        return
+    end
+
+    if ( #ix.cmbSystems.Squads.Stored[id].members >= ix.cmbSystems.Squads.Stored[id].limit ) then
+        return
+    end
+
+    table.insert(ix.cmbSystems.Squads.Stored[id].members, ply)
+
+
+    local filter = RecipientFilter()
+    filter:AddAllPlayers()
+
+    char:SetData("squadID", id, false, filter)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Squads:RemoveMember(ply, id)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Squads.Stored[id].members ) then
+        return
+    end
+
+    if ( table.HasValue(ix.cmbSystems.Squads.Stored[id].members, ply) ) then
+        if ( ply == ix.cmbSystems.Squads.Stored[id].leader ) then
+            local sortedTable = ix.cmbSystems.Squads.Stored[id].members
+
+            table.RemoveByValue(sortedTable, ply)
+
+            table.sort(sortedTable, function(a, b)
+                return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
+            end)
+
+            ix.cmbSystems.Squads.Stored[id].leader = sortedTable[1]
+        end
+
+        table.RemoveByValue(ix.cmbSystems.Squads.Stored[id].members, ply)
+
+        local filter = RecipientFilter()
+        filter:AddAllPlayers()
+
+        char:SetData("squadID", -1, false, filter)
+
+        if ( #ix.cmbSystems.Squads.Stored[id].members <= 0 ) then
+            ix.cmbSystems.Squads:RemoveSquad(id)
+        end
+
+        net.Start("ix.cmbSystems.SyncSquads")
+            net.WriteTable(ix.cmbSystems.Squads.Stored)
+        net.Broadcast()
+    end
+end
+
+function ix.cmbSystems.Squads:RemoveSquad(id)
+    if not ( id ) then
+        return
+    end
+
+    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+        return
+    end
+
+    for k, v in ipairs(ix.cmbSystems.Squads.Stored[id].members) do
+        if not ( IsValid(v) ) then
+            continue
+        end
+
+        local char = v:GetCharacter()
+
+        if not ( char ) then
+            continue
+        end
+
+        local filter = RecipientFilter()
+        filter:AddAllPlayers()
+
+        char:SetData("squadID", -1, false, filter)
+    end
+
+    table.remove(ix.cmbSystems.Squads.Stored, id)
+
+    net.Start("ix.cmbSystems.SyncSquads")
+        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Broadcast()
+end
+
+util.AddNetworkString("ix.cmbSystems.SyncObjectives")
+function ix.cmbSystems.Objectives:NewObjective(objectiveData)
+    if not ( istable(objectiveData) ) then
+        ErrorNoHalt("Attempted to create an objective with invalid data!")
+        
+        return
+    end
+
+    if not ( objectiveData.text ) then
+        ErrorNoHalt("Attempted to create an objective without text!")
+        return
+    end
+
+    objectiveData.sentBy = objectiveData.sentBy or "Dispatch"
+
+    ix.cmbSystems.Objectives.Stored[#ix.cmbSystems.Objectives.Stored + 1] = objectiveData
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Objectives:SetPriorityObjective(id, bPriority)
+    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+        return
+    end
+
+    bPriority = bPriority or false
+
+    ix.cmbSystems.Objectives.Stored[id].priority = bPriority
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Objectives:RemoveObjective(id)
+    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+        return
+    end
+
+    ix.cmbSystems.Objectives.Stored[id] = nil
+
+    net.Start("ix.cmbSystems.SyncObjectives")
+        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Broadcast()
+end
+
+util.AddNetworkString("ix.cmbSystems.SyncDeployments")
+function ix.cmbSystems.Deployments:InsertMember(ply, uID)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    if not ( ply:IsPlayer() ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+
+    if not ( deploymentData ) then
+        return
+    end
+
+    if not ( deploymentData.units ) then
+        deploymentData.units = {}
+    end
+
+    if ( deploymentData.map and not deploymentData.map == game.GetMap() ) then
+        return
+    end
+
+    if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
+        return
+    end
+
+    if ( deploymentData.limit and #deploymentData.units >= deploymentData.limit ) then
+        return
+    end
+
+    table.insert(deploymentData.units, ply:GetChar():GetID())
+    
+    net.Start("ix.cmbSystems.SyncDeployments")
+        net.WriteTable(ix.cmbSystems.Deployments.Stored)
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
+    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+
+    if not ( deploymentData ) then
+        return
+    end
+
+    if ( deploymentData.map and not deploymentData.map == game.GetMap() ) then
+        return
+    end
+
+    if not ( deploymentData.units ) then
+        deploymentData.units = {}
+    end
+
+    if ( table.HasValue(deploymentData.units, ply:GetChar():GetID()) ) then
+        table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
+    end
+
+    net.Start("ix.cmbSystems.SyncDeployments")
+        net.WriteTable(ix.cmbSystems.Deployments.Stored or {})
+    net.Broadcast()
+end
+
+function ix.cmbSystems.Deployments:Start(uID)
+    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+
+    if not ( deploymentData ) then
+        return
+    end
+
+    if ( deploymentData.map and not deploymentData.map == game.GetMap() ) then
+        return
+    end
+
+    if not ( deploymentData.units or not table.IsEmpty(self.units) ) then
+        return
+    end
+
+    for k, v in ipairs(deploymentData.units) do
+        v = ix.char.loaded[v]
+
+        if not ( v ) then
+            table.RemoveByValue(deploymentData.units, v:GetID())
+        end
+
+        local charPly = v:GetPlayer()
+
+        if not ( IsValid(charPly) ) then
+            table.RemoveByValue(deploymentData.units, v:GetID())
+        end
+    end
+
+    deploymentData.id = uID
+        local runID = deploymentData.funcID or uID
+        if ( ix.cmbSystems.Deployments.Functions[runID] ) then
+            ix.cmbSystems.Deployments.Functions[runID](deploymentData)
+        end
+    deploymentData.id = nil
 end

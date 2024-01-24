@@ -18,6 +18,23 @@ ix.relationships.CombineNPCs = {
     ["npc_sniper"] = true,
     ["npc_hunter"] = true,
     ["npc_breen"] = true,
+    ["npc_combine_camera"] = true,
+
+    // ZBase Combine NPCs
+
+    ["zb_metropolice"] = true,
+    ["zb_metropolice_elite"] = true,
+    ["zb_crab_synth"] = true,
+    ["zb_hunter"] = true,
+    ["zb_mortar_synth"] = true,
+    ["zb_combine_nova_prospekt"] = true,
+    ["zb_combine_elite"] = true,
+    ["zb_combine_soldier"] = true,
+    ["zb_stalker"] = true,
+
+    // No Idea where these are from
+
+    ["mbn_apc_manager"] = true,
 }
 
 ix.relationships.RebelNPCs = {
@@ -39,15 +56,34 @@ ix.relationships.RebelNPCs = {
     ["npc_magnusson"] = true,
     ["npc_monk"] = true,
     ["npc_vortigaunt"] = true,
+
+    // ZBase Rebel NPCs
+
+    ["zb_kleiner"] = true,
+    ["zb_human_civilian_f"] = true,
+    ["zb_human_medic_f"] = true,
+    ["zb_human_rebel_f"] = true,
+    ["zb_human_refugee_f"] = true,
+    ["zb_human_civilian"] = true,
+    ["zb_human_medic"] = true,
+    ["zb_human_rebel"] = true,
+    ["zb_human_refugee"] = true,
+    ["zb_odessa"] = true,
+    ["zb_friendly_hunter"] = true,
+    ["zb_vortigaunt"] = true
 }
 
 if ( SERVER ) then
     function ix.relationships.Update(ent)
+        if not ( IsValid(ent) ) then
+            return
+        end
+        
         if not ( ent:IsNPC() ) then
             ErrorNoHalt("Attempted to update relationships on a non-NPC entity!\n")
         end
 
-        for k, v in ipairs(player.GetAll()) do
+        for k, v in pairs(player.GetAll()) do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -62,12 +98,60 @@ if ( SERVER ) then
 
             local relationshipStatus = D_HT
 
-            if ( ix.relationships.CombineNPCs[ent:GetClass()] ) then
+            local checkName = ent:GetClass()
+
+            if ( string.find(checkName, "zbase*") ) then
+                checkName = ent:GetNWString("NPCName", ent.NPCName)
+            end
+
+            local isRebelNPC = false
+
+            if ( checkName:find("turret") and ( ent:HasSpawnFlags(SF_FLOOR_TURRET_CITIZEN) or false ) ) then
+                isRebelNPC = true
+            end
+
+            if ( ix.relationships.CombineNPCs[checkName] and not isRebelNPC) then
+                local oldTable = ent.VJ_NPC_Class or {}
+
+                if not ( table.HasValue(oldTable, "CLASS_COMBINE") ) then
+                    oldTable[#oldTable + 1] = "CLASS_COMBINE"
+                end
+
+                ent.VJ_NPC_Class = oldTable
+
+                if ( ent:GetClass():find("zbase*") ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(ent, "combine")
+                    end
+                end
+
                 if ( Schema:IsCombine(v) ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(v, "combine")
+                    end
+
                     relationshipStatus = D_LI
                 end
-            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] ) then
+            elseif ( ix.relationships.RebelNPCs[ent:GetClass()] or isRebelNPC ) then
+                local oldTable = ent.VJ_NPC_Class or {}
+
+                if not ( table.HasValue(oldTable, "CLASS_REBEL") ) then
+                    oldTable[#oldTable + 1] = "CLASS_REBEL"
+                end
+
+                ent.VJ_NPC_Class = oldTable
+                
+                if ( ent:GetClass():find("zbase*") ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(ent, "ally")
+                    end
+                end
+
                 if not ( Schema:IsCombine(v) ) then
+                    if ( ZBaseSetFaction ) then
+                        ZBaseSetFaction(v, "ally")
+                    end
+
                     relationshipStatus = D_LI
                 end
             end
@@ -93,7 +177,11 @@ if ( SERVER ) then
             return
         end
 
-        timer.Simple(0.25, function()
+        timer.Simple(0.1, function()
+            if not ( IsValid(ent) ) then
+                return
+            end
+
             ix.relationships.Update(ent)
 
             local timerID = "ix.NPCRelationships.Update." .. ent:EntIndex()
@@ -142,6 +230,12 @@ if ( SERVER ) then
 
     hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
         timer.Simple(0.1, function()
+            if ( Schema:IsCombine(ply) ) then
+                ply.ZBaseFaction = "combine"
+            else
+                ply.ZBaseFaction = "ally"
+            end
+
             for k, v in ipairs(ents.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
@@ -151,7 +245,7 @@ if ( SERVER ) then
                     continue
                 end
 
-                if not ( v:Alive() or v:Health() > 0 ) then
+                if not ( v:Health() > 0 ) then
                     continue
                 end
 

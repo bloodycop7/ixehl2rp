@@ -1,4 +1,3 @@
-
 AddCSLuaFile()
 
 ENT.Type = "anim"
@@ -13,7 +12,7 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Broken")
 end
 
-if (SERVER) then
+if ( SERVER ) then
 	function ENT:Initialize()
 		self:SetModel("models/props_combine/breenconsole.mdl")
 		self:PhysicsInit(SOLID_VPHYSICS)
@@ -110,7 +109,7 @@ if (SERVER) then
 
 			local electricianCount = 0
 
-            for k, v in ipairs(player.GetAll()) do
+            for k, v in pairs(player.GetAll()) do
                 if not ( IsValid(v) ) then
                     continue
                 end
