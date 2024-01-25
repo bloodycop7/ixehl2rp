@@ -136,28 +136,10 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 		local inventory = char:GetInventory()
 
 		if ( inventory ) then
-			local items = {}
+			for i = 1, math.random(1, maxDeathItems) do
+				local random = table.Random(inventory:GetItems())
 
-			for k, v in pairs(inventory:GetItems()) do
-				if ( hook.Run("CanPlayerDropItemOnDeath", ply, v) == false ) then
-					continue
-				end
-
-				if ( #items > maxDeathItems ) then
-					break
-				end
-
-				table.insert(items, v)
-			end
-
-			if ( #items > 0 ) then
-				for i = 1, math.random(1, #items) do
-					local item = items[math.random(1, #items)]
-
-					if ( item ) then
-						item:Transfer(nil, nil, nil, ply:GetPos() + Vector(0, 0, 16))
-					end
-				end
+				random:Remove()
 			end
 		end
 	end
