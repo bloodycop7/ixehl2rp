@@ -151,30 +151,6 @@ function SWEP:PrimaryAttack()
 		return
 	end
 
-	if (self.Owner:KeyDown(IN_SPEED)) then
-		if (SERVER) then
-			self:SetActivated(!self:GetActivated())
-
-			local state = self:GetActivated()
-
-			if (state) then
-				self.Owner:EmitSound("Weapon_StunStick.Activate")
-			else
-				self.Owner:EmitSound("Weapon_StunStick.Deactivate")
-			end
-
-			local model = string.lower(self.Owner:GetModel())
-
-			if (ix.anim.GetModelClass(model) == "metrocop") then
-                if not ( self.Owner:IsRunning() ) then
-				    self.Owner:ForceSequence(state and "activatebaton" or "deactivatebaton", nil, nil, true)
-                end
-			end
-		end
-
-		return
-	end
-
 	self:EmitSound("Weapon_StunStick.Swing")
 	self:SendWeaponAnim(ACT_VM_HITCENTER)
 
@@ -252,6 +228,30 @@ function SWEP:SecondaryAttack()
 		local trace = util.TraceHull(data)
 		local entity = trace.Entity
 	self.Owner:LagCompensation(false)
+
+	if (self.Owner:KeyDown(IN_SPEED)) then
+		if (SERVER) then
+			self:SetActivated(!self:GetActivated())
+
+			local state = self:GetActivated()
+
+			if (state) then
+				self.Owner:EmitSound("Weapon_StunStick.Activate")
+			else
+				self.Owner:EmitSound("Weapon_StunStick.Deactivate")
+			end
+
+			local model = string.lower(self.Owner:GetModel())
+
+			if (ix.anim.GetModelClass(model) == "metrocop") then
+                if not ( self.Owner:IsRunning() ) then
+				    self.Owner:ForceSequence(state and "activatebaton" or "deactivatebaton", nil, nil, true)
+                end
+			end
+		end
+
+		return
+	end
 
 	if (SERVER and IsValid(entity)) then
 		local bPushed = false

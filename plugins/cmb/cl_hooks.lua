@@ -976,9 +976,9 @@ glowData["models/ez2npc/police.mdl"] = {
         local pos = matrix:GetTranslation()
         local ang = matrix:GetAngles()
 
-        pos = pos + ang:Right() * 6.5
-        pos = pos + ang:Forward() * 3.30
-        pos = pos + ang:Up() * -1.5
+        pos = pos + ang:Right() * 6.9
+        pos = pos + ang:Forward() * 3.5
+        pos = pos + ang:Up() * -1.7
 
         return pos
     end,
@@ -1000,9 +1000,9 @@ glowData["models/ez2npc/police.mdl"] = {
         local pos = matrix:GetTranslation()
         local ang = matrix:GetAngles()
 
-        pos = pos + ang:Right() * 6.5
-        pos = pos + ang:Forward() * 3.30
-        pos = pos + ang:Up() * 1.5
+        pos = pos + ang:Right() * 6.9
+        pos = pos + ang:Forward() * 3.5
+        pos = pos + ang:Up() * 1.7
 
         render.SetMaterial( ( isfunction(self.eyeMaterial) and self:eyeMaterial(ply) ) or glowEyes)
         render.DrawSprite(pos, ( isfunction(self.eyeWidth) and self:eyeWidth(ply) ) or 5, ( isfunction(self.eyeHeight) and self:eyeHeight(ply) ) or 5, ( isfunction(self.getEyeColor) and self:getEyeColor(ply) ) or color_white)
@@ -1011,10 +1011,10 @@ glowData["models/ez2npc/police.mdl"] = {
         return glowEyes
     end,
     eyeWidth = function(self, ply)
-        return 5
+        return 6
     end,
     eyeHeight = function(self, ply)
-        return 3
+        return 5
     end,
     getEyeColor = function(self, ply)
         if ( ply:GetSkin() == 1 ) then
