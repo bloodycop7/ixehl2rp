@@ -139,7 +139,9 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 			for i = 1, math.random(1, maxDeathItems) do
 				local random = table.Random(inventory:GetItems())
 
-				random:Remove()
+				if ( random and random.Remove ) then
+					random:Remove()
+				end
 			end
 		end
 	end
