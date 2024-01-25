@@ -1,4 +1,4 @@
-ITEM.name = "Health Vial"
+ITEM.name = "Health Kit"
 ITEM.model = "models/items/healthkit.mdl"
 ITEM.category = "Medical"
 ITEM.width = 1
