@@ -97,6 +97,10 @@ function PLUGIN:HUDPaint()
         return
     end
 
+    if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
+        return
+    end
+
     if ( code ) then
         surface.SetFont("ixCombineFont10")
         local textWidth, textHeight = surface.GetTextSize("<:: City Code : " .. code.name)
