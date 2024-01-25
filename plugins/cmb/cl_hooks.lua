@@ -25,6 +25,10 @@ function PLUGIN:ShouldDrawCombineHUD()
         end
     end
 
+    if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
+        return
+    end
+
     return true
 end
 
@@ -94,10 +98,6 @@ function PLUGIN:HUDPaint()
     local char = localPlayer:GetCharacter()
 
     if not ( char ) then
-        return
-    end
-
-    if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
         return
     end
 
