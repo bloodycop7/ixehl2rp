@@ -34,7 +34,7 @@ ix.relationships.CombineNPCs = {
 
     // No Idea where these are from
 
-    ["mbn_apc_manager"] = true,
+    ["npc_apcdriver"] = true,
 }
 
 ix.relationships.RebelNPCs = {

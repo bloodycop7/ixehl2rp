@@ -196,13 +196,17 @@ function Schema:PopulateHelpMenu(tabs)
 end
 
 function Schema:ShouldDrawCrosshair()
+	if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
+        return false
+    end
+
 	if ( IsValid(localPlayer:GetActiveWeapon()) ) then
 		if ( localPlayer:GetActiveWeapon():GetClass():find("tfa*") ) then
 			return
 		end
 	end
 
-	return false
+	return true
 end
 
 function Schema:CreateCharacterInfo(panel)

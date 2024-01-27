@@ -27,7 +27,7 @@ ix.cmbSystems.Deployments.Functions = {
         end
 
         self.dropship = ents.Create("npc_combinedropship")
-        self.dropship:SetPos(Vector(-4584.637207, 5433.729980, 3293.612793))
+        self.dropship:SetPos(Vector(5138.606934, 9771.155273, 1644.488525))
         self.dropship:SetAngles(Angle(0, 0, 0))
         self.dropship:SetKeyValue("gunrange", "2500")
         self.dropship:SetKeyValue("cratetype", "1")
@@ -135,7 +135,7 @@ ix.cmbSystems.Deployments.Functions = {
         self.dropship.inputDetector:Activate()
 
         self.dropship.pathTrack1 = ents.Create("path_track")
-        self.dropship.pathTrack1:SetPos(Vector(1618.565063, 4444.400391, 486.162445))
+        self.dropship.pathTrack1:SetPos(Vector(7164.632812, -3264.229736, 686.019836))
         self.dropship.pathTrack1:SetName(self.dropship:GetName() .. "_path_track_1")
         self.dropship.pathTrack1:Spawn()
         self.dropship.pathTrack1:Activate()
@@ -143,18 +143,11 @@ ix.cmbSystems.Deployments.Functions = {
         self.dropship.pathTrack2 = ents.Create("path_track")
         self.dropship.pathTrack2:SetPos(Vector(1561.090698, -1098.755493, 1613.055664))
         self.dropship.pathTrack2:SetName(self.dropship:GetName() .. "_path_track_2")
-        self.dropship.pathTrack2:SetKeyValue("target", self.dropship:GetName() .. "_path_track_3")
         self.dropship.pathTrack2:Spawn()
         self.dropship.pathTrack2:Activate()
 
-        self.dropship.pathTrack3 = ents.Create("path_track")
-        self.dropship.pathTrack3:SetPos(Vector(-2624.462891, -1078.657349, 837.081116))
-        self.dropship.pathTrack3:SetName(self.dropship:GetName() .. "_path_track_3")
-        self.dropship.pathTrack3:Spawn()
-        self.dropship.pathTrack3:Activate()
-
         self.dropship.landTarget = ents.Create("info_target")
-        self.dropship.landTarget:SetPos(Vector(502.990662, 4306.221191, -31.968750))
+        self.dropship.landTarget:SetPos(Vector(6978.561523, -3221.162109, 253.776428))
         self.dropship.landTarget:SetName(self.dropship:GetName() .. "_land_target")
         self.dropship.landTarget:Spawn()
 

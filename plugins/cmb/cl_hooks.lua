@@ -26,7 +26,7 @@ function PLUGIN:ShouldDrawCombineHUD()
     end
 
     if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
-        return
+        return false
     end
 
     return true
