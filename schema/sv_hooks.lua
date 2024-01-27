@@ -390,6 +390,14 @@ function Schema:PlayerJoinedRank(ply, rank, oldRank)
 	hook.Run("PlayerSetHandsModel", ply, ply:GetHands())
 end
 
+function Schema:EntityEmitSound(data)
+	if ( data.SoundName == "weapons/airboat/airboat_gun_lastshot1.wav" or data.SoundName == "weapons/airboat/airboat_gun_lastshot2.wav" ) then
+		if ( data.Entity:IsPlayer() and data.Entity:IsAdmin() and data.Entity:GetMoveType() == MOVETYPE_NOCLIP ) then
+			return false
+		end
+	end
+end
+
 function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 	if not ( newChar ) then
 		return
