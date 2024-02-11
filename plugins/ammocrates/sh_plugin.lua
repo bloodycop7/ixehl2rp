@@ -86,7 +86,7 @@ function PLUGIN:CreateCrates()
                         end
 
                         self:SetRemainingAmmo(v[2])
-                        Schema:SaveData() // To update remaining ammo
+                        PLUGIN:SaveData() // To update remaining ammo
                     end)
                 end
 
