@@ -118,6 +118,8 @@ function PLUGIN:CreateCrates()
                         if ( v[4] and ix.item.Get(v[4]) ) then
                             if not ( char:GetInventory():Add(v[4], 1, {["rounds"] = v[3]}) ) then
                                 ply:Notify("You don't have enough space in your inventory!")
+                            else
+                                self:EmitSound("items/ammo_pickup.wav")
                             end                            
                         else
                             self:EmitSound("items/ammo_pickup.wav")
@@ -135,6 +137,9 @@ function PLUGIN:CreateCrates()
                                 ply:Notify("You don't have enough space in your inventory!")
 
                                 return
+                            else
+                                self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
+                                self:EmitSound("items/ammo_pickup.wav")
                             end
                         else
                             self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
