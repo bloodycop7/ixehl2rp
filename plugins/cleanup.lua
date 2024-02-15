@@ -30,17 +30,13 @@ end, {
 
 timer.Create("ix.Cleanup", 60, 0, function()
     if ( ix.config.Get("shouldCleanupRagdolls", true) ) then
-        for _, v in ipairs(ents.FindByClass("prop_ragdoll")) do
-            if ( SERVER ) then
+        if ( SERVER ) then
+            for _, v in ipairs(ents.FindByClass("prop_ragdoll")) do
                 v:Remove()
             end
         end
 
-        for _, v in ipairs(ents.FindByClass("class C_ClientRagdoll")) do
-            if ( CLIENT ) then
-                v:Remove()
-            end
-        end
+        game.RemoveRagdolls()
     end
 
     if ( ix.config.Get("shouldCleanupItems", true) ) then
