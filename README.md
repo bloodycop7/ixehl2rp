@@ -14,9 +14,9 @@ The code is also open-source with a license, therefore you are allowed to modify
 [Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)\
 [Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)\
 [LVS: Framework](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
-[LVS: Helicopters](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
+[LVS: Helicopters](https://steamcommunity.com/sharedfiles/filedetails/?id=2922255746)\
 [LVS: Planes](https://steamcommunity.com/sharedfiles/filedetails/?id=2912826012)\
-[LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409&searchtext=)\
+[LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409)\
 [LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)\
 [Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)\
