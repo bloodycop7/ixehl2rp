@@ -20,7 +20,8 @@ The code is also open-source with a license, therefore you are allowed to modify
 [LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)\
 [Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
 [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)\
-[Extended AI Navigation](https://steamcommunity.com/sharedfiles/filedetails/?id=3048721100)
+[Extended AI Navigation](https://steamcommunity.com/sharedfiles/filedetails/?id=3048721100)\
+[Glow Eyes: Half-Life 2 Combine](https://steamcommunity.com/sharedfiles/filedetails/?id=3145405585)
 
 **Fonts:**\
 [Raju Regular](https://www.onlinewebfonts.com/download/ab87eec92788f9572b9c13028bf2edb6) - Main Schema Font\
