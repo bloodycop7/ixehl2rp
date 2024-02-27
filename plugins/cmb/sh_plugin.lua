@@ -2026,6 +2026,35 @@ if ( glowEyes ) then
                     v:SetKeyValue("rendercolor", self:color(ent).r .. " " .. self:color(ent).g .. " " .. self:color(ent).b)
                 end
             end
+
+            local attachment = ent:GetAttachment(ent:LookupAttachment("eyes"))
+        
+            if not ( attachment ) then
+                return
+            end
+            
+            local pos = attachment.Pos
+            pos = pos + attachment.Ang:Forward() * 1.7
+            
+            local leftEyePos = attachment.Pos
+            leftEyePos = leftEyePos + attachment.Ang:Right() * -1.7
+            leftEyePos = leftEyePos + attachment.Ang:Forward() * 1.6
+            
+            local rightEyePos = attachment.Pos
+            rightEyePos = rightEyePos + attachment.Ang:Right() * 1.7
+            rightEyePos = rightEyePos + attachment.Ang:Forward() * 1.6
+
+            if ( IsValid(ent.leftEyeGlow) ) then
+                ent.leftEyeGlow:SetPos(leftEyePos)
+            end
+
+            if ( IsValid(ent.rightEyeGlow) ) then
+                ent.rightEyeGlow:SetPos(rightEyePos)
+            end
+
+            if ( IsValid(ent.worldGlowSprite) ) then
+                ent.worldGlowSprite:SetPos(pos)
+            end
         end,
         shouldDraw = function(self, ent)
             if ( ent:GetSkin() == 1 or ent:GetSkin() == 2 ) then
