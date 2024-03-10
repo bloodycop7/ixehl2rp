@@ -8,7 +8,7 @@ The code is also open-source with a license, therefore you are allowed to modify
 [TFA: Project HL2 MMod Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404)\
 [True Combine Hands](https://steamcommunity.com/sharedfiles/filedetails/?id=2860571852)\
 [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)\
-[Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)\
+[Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)
 # Recommended Addons for Usage
 [TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)\
 [Hunter-Chopper Carpet Bombing](https://steamcommunity.com/sharedfiles/filedetails/?id=466842084)\
