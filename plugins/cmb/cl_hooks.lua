@@ -1,10 +1,11 @@
 local PLUGIN = PLUGIN
 
 function PLUGIN:ShouldDrawCombineHUD()
-    if not ( IsValid(localPlayer) ) then
+    if not ( IsValid(LocalPlayer()) ) then -- this might cause chaos
         return false
     end
 
+    local localPlayer = LocalPlayer() -- localize global variable but keep the name
     local char = localPlayer:GetCharacter()
 
     if not ( char ) then
@@ -32,6 +33,13 @@ function PLUGIN:ShouldDrawCombineHUD()
     return true
 end
 
+local colWhite = Color(255,255,255)
+local colWhite2 = Color(200,200,200,200)
+local colBlack = Color(0,0,0)
+local colRed = Color(255,0,0)
+local Color = Color -- this function is quite expensive and gets called A LOT in this script
+local surface_DrawRect = surface.DrawRect -- this function gets called a lot so why not to localize it a bit
+
 function PLUGIN:DrawBox(drawData)
     drawData.x = drawData.x or 0
     drawData.y = drawData.y or 0
@@ -40,36 +48,37 @@ function PLUGIN:DrawBox(drawData)
     drawData.rectWidth = drawData.rectWidth or 7
     drawData.rectHeight = drawData.rectHeight or 2
 
-    drawData.rectColor = drawData.rectColor or Color(255, 255, 255)
-    drawData.backColor = drawData.backColor or Color(0, 0, 0)
+    drawData.rectColor = drawData.rectColor or colWhite
+    drawData.backColor = drawData.backColor or colBlack
     drawData.rectBackAlpha = drawData.rectBackAlpha or 50
     drawData.rectBackThickness = drawData.rectBackThickness or 1
 
     surface.SetDrawColor(drawData.backColor)
-    surface.DrawRect(drawData.x, drawData.y, drawData.w, drawData.h)
+    surface_DrawRect(drawData.x, drawData.y, drawData.w, drawData.h)
 
     surface.SetDrawColor(drawData.rectColor)
-    surface.DrawRect(drawData.x, drawData.y, drawData.rectWidth, drawData.rectHeight)
-    surface.DrawRect((drawData.x + drawData.w) - drawData.rectWidth, drawData.y, drawData.rectWidth, drawData.rectHeight)
-    surface.DrawRect((drawData.x + drawData.w) - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectHeight)
-    surface.DrawRect(drawData.x + drawData.w - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectWidth)
+    surface_DrawRect(drawData.x, drawData.y, drawData.rectWidth, drawData.rectHeight)
+    surface_DrawRect((drawData.x + drawData.w) - drawData.rectWidth, drawData.y, drawData.rectWidth, drawData.rectHeight)
+    surface_DrawRect((drawData.x + drawData.w) - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectHeight)
+    surface_DrawRect(drawData.x + drawData.w - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectWidth)
     
-    surface.DrawRect(drawData.x, drawData.y, drawData.rectHeight, drawData.rectWidth)
-    surface.DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
-    surface.DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
+    surface_DrawRect(drawData.x, drawData.y, drawData.rectHeight, drawData.rectWidth)
+    surface_DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
+    surface_DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
 
-    surface.DrawRect(drawData.x + drawData.w - drawData.rectWidth, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
-    surface.DrawRect(drawData.x + drawData.w - drawData.rectHeight, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
+    surface_DrawRect(drawData.x + drawData.w - drawData.rectWidth, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
+    surface_DrawRect(drawData.x + drawData.w - drawData.rectHeight, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
 
     surface.SetDrawColor(ColorAlpha(drawData.rectColor, drawData.rectBackAlpha))
     surface.DrawOutlinedRect(drawData.x, drawData.y, drawData.w, drawData.h, drawData.rectBackThickness)
 end
 
 function PLUGIN:Think()
-    if not ( IsValid(localPlayer) ) then
+    if not ( IsValid(LocalPlayer()) ) then
         return
     end
 
+    local localPlayer = LocalPlayer()
     local char = localPlayer:GetCharacter()
 
     if not ( char ) then
@@ -80,7 +89,7 @@ function PLUGIN:Think()
         return
     end
 
-    for k, v in pairs(ix.cmbSystems.waypoints) do
+    for k, v in ipairs(ix.cmbSystems.waypoints) do
         if ( v.duration and v.duration < CurTime() ) then
             ix.cmbSystems.waypoints[k] = nil
         end
@@ -111,7 +120,7 @@ function PLUGIN:HUDPaint()
             w = textWidth * 1.05,
             h = textHeight * 1.05,
             rectColor = code.color or color_white,
-            backColor = Color(0, 0, 0),
+            backColor = colBlack,
         })
 
         draw.SimpleTextOutlined("<:: City Code : " .. code.name, "ixCombineFont10", padding, padding, color_white, TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, 1, color_black)
@@ -131,13 +140,13 @@ function PLUGIN:HUDPaint()
                     w = textWidth * 1.05,
                     h = textHeight * 1.05,
                     rectColor = color_white,
-                    backColor = Color(0, 0, 0)
+                    backColor = colBlack
                 })
 
                 draw.SimpleText("<:: " .. squad.name, "ixCombineFont10", padding, padding * 2.5, color_white, TEXT_ALIGN_LEFT)
 
                 local paddingOffset = 0
-                for k, v in pairs(squad.members) do
+                for k, v in ipairs(squad.members) do
                     if not ( IsValid(v) ) then
                         continue
                     end
@@ -166,8 +175,8 @@ function PLUGIN:HUDPaint()
                         y = padding * 4 + paddingOffset,
                         w = playerWidth + padding * 0.6,
                         h = textHeight * 1.05,
-                        rectColor = Color(255, 255, 255),
-                        backColor = Color(0, 0, 0)
+                        rectColor = colWhite,
+                        backColor = colBlack
                     })
 
                     draw.SimpleText("<:: " .. playerText, "ixCombineFont08", padding * 1.8, padding * 4.1 + paddingOffset, ix.option.Get("combineOverlaySquadColor", color_white), TEXT_ALIGN_LEFT)
@@ -178,7 +187,7 @@ function PLUGIN:HUDPaint()
         end
     end
 
-    for k, v in pairs(ix.cmbSystems.waypoints) do
+    for k, v in ipairs(ix.cmbSystems.waypoints) do
         local wayPos = v.pos:ToScreen()
         local dist = math.Round(v.pos:Distance(localPlayer:GetPos()) / 16, 1)
 
@@ -211,7 +220,7 @@ function PLUGIN:HUDPaint()
     end
 
     if ( ix.option.Get("combineOverlayAssets", true) ) then
-        for k, v in pairs(player.GetAll()) do
+        for k, v in ipairs(player.GetAll()) do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -326,8 +335,8 @@ function PLUGIN:HUDPaint()
                 y = scrH - textHeight - padding * 0.5,
                 w = textWidth * 1.1,
                 h = textHeight * 1.05,
-                rectColor = Color(255, 255, 255),
-                backColor = Color(0, 0, 0)
+                rectColor = colWhite,
+                backColor = colBlack
             })
 
             if ( wep:Clip1() <= wep:GetMaxClip1() / 4 ) then
@@ -339,11 +348,11 @@ function PLUGIN:HUDPaint()
                     y = scrH - textHeight - padding * 1.9,
                     w = padding * 5,
                     h = padding * 1.3,
-                    rectColor = Color(255, 0, 0),
-                    backColor = Color(0, 0, 0)
+                    rectColor = colRed,
+                    backColor = colBlack
                 })
 
-                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 5.7 / 1.75, scrH - ( textHeight + textHeight2 ) - padding * 0.7, Color(255, 0, 0), TEXT_ALIGN_CENTER)
+                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 5.7 / 1.75, scrH - ( textHeight + textHeight2 ) - padding * 0.7, colRed, TEXT_ALIGN_CENTER)
             end
 
             draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
@@ -487,7 +496,7 @@ function PLUGIN:SetupOutlines()
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then
-        for k, v in pairs(player.GetAll()) do
+        for k, v in ipairs(player.GetAll()) do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -540,7 +549,7 @@ function PLUGIN:SetupOutlines()
 
     if ( ix.option.Get("combineOutlineDeployables", true) ) then
         if ( #char:GetData("deployedEntities", {}) > 0 ) then
-            for k, v in pairs(char:GetData("deployedEntities", {})) do
+            for k, v in ipairs(char:GetData("deployedEntities", {})) do
                 local ent = Entity(v)
 
                 if not ( IsValid(ent) ) then
@@ -562,11 +571,11 @@ function PLUGIN:SetupOutlines()
                 local outlineColor = hook.Run("GetEntityOutlineColor", ent)
 
                 if ( outlineColor == nil ) then
-                    outlineColor = ix.faction.Get(localPlayer:Team()).color or Color(200, 200, 200, 200)
+                    outlineColor = ix.faction.Get(localPlayer:Team()).color or colWhite2
                 end
 
                 if ( ent:GetClass() == "npc_grenade_frag" ) then
-                    outlineColor = Color(255, 0, 0)
+                    outlineColor = colRed
                 end
 
                 if ( hook.Run("ShouldOutlineEntity", ent, "deployable") == false ) then
@@ -662,20 +671,20 @@ function PLUGIN:GetFriendlyOutlineColor(ent)
         elseif ( model == "models/combine_soldier.mdl" and ent:GetSkin() == 1 ) then
             return Color(145, 60, 0)
         elseif ( model == "models/combine_super_soldier.mdl" ) then
-            return Color(255, 255, 255)
+            return colWhite
         end
     end
 
     if ( ent:GetClass() == "npc_combinegunship" ) then
-        return Color(255, 255, 255)
+        return colWhite
     end
 
     if ( ent:GetClass() == "npc_helicopter" ) then
-        return Color(255, 255, 255)
+        return colWhite
     end
 
     if ( ent:GetClass() == "npc_strider" ) then
-        return Color(255, 255, 255)
+        return colWhite
     end
 
     if ( ent:GetClass() == "npc_turret_ceiling" ) then
