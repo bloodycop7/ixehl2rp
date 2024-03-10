@@ -17,6 +17,7 @@ if not ( CLIENT ) then
 end
 
 local enabled = enabled or false
+local colWhite = Color(165,165,165)
 
 concommand.Add("ix_dev_hud", function()
     if not ( IsValid(localPlayer) ) then
@@ -53,19 +54,19 @@ function PLUGIN:HUDPaint()
     local trace = localPlayer:GetEyeTrace().Entity
     local padding = scrH * 0.09
 
-    draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", Color(165, 165, 165)))
+    draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", colWhite))
 
     surface.SetFont("ixGenericFont")
     local w, h = surface.GetTextSize("Helix: Enhanced Half-Life 2 Roleplay")
     padding = padding - (h - ScreenScale(0.3))
 
-    draw.SimpleText(plyInfo, "ixSmallFont", 10, scrH - padding, Color(165, 165, 165))
+    draw.SimpleText(plyInfo, "ixSmallFont", 10, scrH - padding, colWhite)
 
     surface.SetFont("ixSmallFont")
     local w, h = surface.GetTextSize(plyInfo)
     padding = padding - (h - ScreenScale(0.3))
 
-    draw.SimpleText(gameInfo, "ixSmallFont", 10, scrH - padding, Color(165, 165, 165))
+    draw.SimpleText(gameInfo, "ixSmallFont", 10, scrH - padding, colWhite)
 
     if ( IsValid(trace) ) then
         local traceInfo = tostring(trace) .. " | " .. trace:GetModel() .. " | " .. tostring(trace:GetPos()) .. " | " .. tostring(trace:GetAngles())
@@ -74,7 +75,7 @@ function PLUGIN:HUDPaint()
         local w, h = surface.GetTextSize(traceInfo)
         padding = padding - (h - ScreenScale(0.3))
 
-        draw.SimpleText(traceInfo, "ixSmallFont", 10, scrH - padding, Color(165, 165, 165))
+        draw.SimpleText(traceInfo, "ixSmallFont", 10, scrH - padding, colWhite)
     end
 
     if ( IsValid(localPlayer:GetActiveWeapon()) ) then
@@ -85,6 +86,6 @@ function PLUGIN:HUDPaint()
         local w, h = surface.GetTextSize(weaponInfo)
         padding = padding - (h - ScreenScale(0.3))
 
-        draw.SimpleText(weaponInfo, "ixSmallFont", 10, scrH - padding, Color(165, 165, 165))
+        draw.SimpleText(weaponInfo, "ixSmallFont", 10, scrH - padding, colWhite)
     end
 end
