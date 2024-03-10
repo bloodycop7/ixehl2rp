@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 function PLUGIN:Think()
-    for k, v in pairs(player.GetAll()) do
+    for k, v in ipairs(player.GetAll()) do
         if not ( IsValid(v) ) then
             continue
         end
@@ -33,7 +33,7 @@ function PLUGIN:Think()
             continue
         end
 
-        for _, item in pairs(char:GetInventory():GetItemsByBase("base_clothing", false)) do
+        for _, item in ipairs(char:GetInventory():GetItemsByBase("base_clothing", false)) do
             if ( item:GetData("equip", false) ) then
                 if ( item.Think ) then
                     item:Think(v)
