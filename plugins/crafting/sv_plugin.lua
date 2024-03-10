@@ -100,7 +100,7 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
         if ( recipeData.craftTime > 0 ) then
             ply:SetAction("Crafting...", recipeData.craftTime)
             ply:DoStaredAction(ply:GetNetVar("ixCraftingStation", nil), function()
-                 for k, v in pairs(recipeData.result) do
+                 for k, v in ipairs(recipeData.result) do
                     if not ( ply:GetCharacter():GetInventory():Add(k) ) then
                         ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
                     end
@@ -110,7 +110,7 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
                     end
                 end
 
-                for k, v in pairs(recipeData.requirements) do
+                for k, v in ipairs(recipeData.requirements) do
                     for i = 1, v do
                         local item = char:GetInventory():HasItem(k)
 
@@ -129,7 +129,7 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
                 end
             end)
         else
-            for k, v in pairs(recipeData.result) do
+            for k, v in ipairs(recipeData.result) do
                 if not ( ply:GetCharacter():GetInventory():Add(k) ) then
                     ix.item.Spawn(k, ply:GetPos() + ply:GetForward() * 20 + ply:GetUp() * 30)
                 end
@@ -139,7 +139,7 @@ function PLUGIN:CraftRecipe(ply, uniqueID)
                 end
             end
 
-            for k, v in pairs(recipeData.requirements) do
+            for k, v in ipairs(recipeData.requirements) do
                 for i = 1, v do
                     local item = char:GetInventory():HasItem(k)
 
