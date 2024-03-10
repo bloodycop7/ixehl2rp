@@ -19,7 +19,7 @@ ix.config.SetDefault("font", "Raju Regular")
 ix.config.SetDefault("genericFont", "Raju Regular")
 ix.config.SetDefault("combineFont", "Frak")
 
-for k, v in pairs(ix.faction.indices) do
+for k, v in ipairs(ix.faction.indices) do
     Schema["Is" .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
@@ -35,7 +35,7 @@ for k, v in pairs(ix.faction.indices) do
     end
 end
 
-for k, v in pairs(ix.class.list) do
+for k, v in ipairs(ix.class.list) do
     Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
@@ -61,7 +61,7 @@ end
 
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 
-for k, v in pairs(ix.rank.list) do
+for k, v in ipairs(ix.rank.list) do
     Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
