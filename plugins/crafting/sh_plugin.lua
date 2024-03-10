@@ -134,6 +134,90 @@ function ix.crafting:RegisterStation(stationTable)
     ix.crafting.stations[stationTable.uniqueID] = stationTable
 end
 
+function PLUGIN:CanCraftRecipe(ply, uniqueID)
+    if not ( IsValid(ply) ) then
+        return false
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return false
+    end
+
+    if not ( ply:Alive() ) then
+        return false
+    end
+
+    if not ( IsValid(ply:GetNetVar("ixCraftingStation", nil)) ) then
+        return false
+    end
+
+    if not ( uniqueID ) then
+        return false
+    end
+
+    local recipeData = ix.crafting.recipes[uniqueID]
+
+    if not ( recipeData ) then
+        return false
+    end
+
+    if ( recipeData.stations ) then
+        if not ( recipeData.stations[ply:GetNetVar("ixCraftingStation", nil):GetStationID()] ) then
+            return false
+        end
+    end
+
+    if ( recipeData.overrideRequirements ) then
+        if ( recipeData:overrideRequirements(ply) ) then
+            return true
+        end
+    end
+
+    local canCraft = true
+    local notMissingItems = true
+    local failMessage = "You successfully crafted this item!"
+
+    if not ( Schema:IsCitizen(ply) ) then
+        canCraft = false
+        failMessage = "You must be on the Citizen faction to craft items!"
+    end
+
+    if ( recipeData.canCraft ) then
+        if not ( recipeData:canCraft(ply) ) then
+            canCraft = false
+            failMessage = "You don't have the required items or correct amount of items to craft this!"
+        end
+    end
+
+    if ( ply:GetPos():Distance(ply:GetNetVar("ixCraftingStation", nil):GetPos()) > 200 ) then
+        canCraft = false
+        failMessage = "You must be closer to the crafting station!"
+    end
+
+    for k, v in pairs(char:GetInventory():GetItems()) do
+        for k2, v2 in pairs(recipeData.requirements) do
+            local itemCount = char:GetInventory():GetItemCount(k2)
+            
+            if ( itemCount < v2 ) then
+                notMissingItems = false
+            end
+        end
+    end
+
+    if not ( notMissingItems ) then
+        canCraft = false
+        failMessage = "You don't have the required items or correct amount of items to craft this!"
+    end
+    
+    if ( hook.Run("OverrideCraftFailMessage", ply, uniqueID) != nil ) then
+        failMessage = hook.Run("OverrideCraftFailMessage", ply, uniqueID)
+    end
+
+    return canCraft, failMessage
+end
+
 ix.util.Include("sv_plugin.lua")
 ix.util.Include("cl_hooks.lua")
 
