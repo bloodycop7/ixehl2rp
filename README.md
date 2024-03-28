@@ -11,19 +11,20 @@ The code is also open-source with a license, therefore you are allowed to modify
 > [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)\
 > [Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)
 # Recommended Addons for Usage
-[TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)\
-[Hunter-Chopper Carpet Bombing](https://steamcommunity.com/sharedfiles/filedetails/?id=466842084)\
-[Strider & Gunship Cannon](https://steamcommunity.com/sharedfiles/filedetails/?id=464423406)\
-[Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)\
-[LVS: Framework](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
-[LVS: Helicopters](https://steamcommunity.com/sharedfiles/filedetails/?id=2922255746)\
-[LVS: Planes](https://steamcommunity.com/sharedfiles/filedetails/?id=2912826012)\
-[LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409)\
-[LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)\
-[Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
-[Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)\
-[Extended AI Navigation](https://steamcommunity.com/sharedfiles/filedetails/?id=3048721100)\
-[Glow Eyes: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3145405585)
+> [!TIP]
+> [TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)\
+> [Hunter-Chopper Carpet Bombing](https://steamcommunity.com/sharedfiles/filedetails/?id=466842084)\
+> [Strider & Gunship Cannon](https://steamcommunity.com/sharedfiles/filedetails/?id=464423406)\
+> [Gunship Crash Point](https://steamcommunity.com/sharedfiles/filedetails/?id=463144341)\
+> [LVS: Framework](https://steamcommunity.com/workshop/filedetails/?id=2912816023)\
+> [LVS: Helicopters](https://steamcommunity.com/sharedfiles/filedetails/?id=2922255746)\
+> [LVS: Planes](https://steamcommunity.com/sharedfiles/filedetails/?id=2912826012)\
+> [LVS: Combine Dropship](https://steamcommunity.com/sharedfiles/filedetails/?id=2989323409)\
+> [LVS: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3028357706)\
+> [Extended Properties](https://steamcommunity.com/sharedfiles/filedetails/?id=104607712)\
+> [Extended Spawnmenu](https://steamcommunity.com/sharedfiles/filedetails/?id=104603291)\
+> [Extended AI Navigation](https://steamcommunity.com/sharedfiles/filedetails/?id=3048721100)\
+> [Glow Eyes: Half-Life 2](https://steamcommunity.com/sharedfiles/filedetails/?id=3145405585)
 
 **Fonts:**\
 [Raju Regular](https://www.onlinewebfonts.com/download/ab87eec92788f9572b9c13028bf2edb6) - Main Schema Font\
