@@ -137,7 +137,7 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 
 		if ( inventory ) then
 			for i = 1, math.random(1, maxDeathItems) do
-				local random = table.Random(inventory:GetItems())
+				local random = inventory:GetItems()[math.random(1, #inventory:GetItems())]
 
 				if ( random and random.Remove ) then
 					random:Remove()
@@ -442,9 +442,9 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 
 		local inv = newChar:GetInventory()
 
-		for k, v in pairs(inv:GetItems()) do
-			if ( v.OnLoadout ) then
-				v:Call("OnLoadout", ply)
+		for k, v in inv:Iter() do
+			if ( k.OnLoadout ) then
+				k:Call("OnLoadout", ply)
 			end
 		end
 		

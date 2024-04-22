@@ -196,13 +196,13 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         failMessage = "You must be closer to the crafting station!"
     end
 
-    for k, v in pairs(char:GetInventory():GetItems()) do
-        for k2, v2 in pairs(recipeData.requirements) do
-            local itemCount = char:GetInventory():GetItemCount(k2)
-            
-            if ( itemCount < v2 ) then
-                notMissingItems = false
-            end
+    local inv = char:GetInventory()
+
+    for k2, v2 in pairs(recipeData.requirements) do
+        local itemCount = inv:GetItemCount(k2)
+        
+        if ( itemCount < v2 ) then
+            notMissingItems = false
         end
     end
 

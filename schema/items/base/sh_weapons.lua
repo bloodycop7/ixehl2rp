@@ -208,13 +208,13 @@ function ITEM:RemovePAC(client)
 end
 
 function ITEM:Equip(client, bNoSelect, bNoSound)
-	local items = client:GetCharacter():GetInventory():GetItems()
+	local items = client:GetCharacter():GetInventory():Iter()
 
 	client.carryWeapons = client.carryWeapons or {}
 
-	for _, v in pairs(items) do
-		if (v.id != self.id) then
-			local itemTable = ix.item.instances[v.id]
+	for k, v in items do
+		if (k.id != self.id) then
+			local itemTable = ix.item.instances[k.id]
 
 			if (!itemTable) then
 				client:NotifyLocalized("tellAdmin", "wid!xt")
@@ -377,13 +377,13 @@ end
 hook.Add("PlayerDeath", "ixStripClip", function(client)
 	client.carryWeapons = {}
 
-	for _, v in pairs(client:GetCharacter():GetInventory():GetItems()) do
-		if (v.isWeapon and v:GetData("equip")) then
-			v:SetData("ammo", nil)
-			v:SetData("equip", nil)
+	for k, v in client:GetCharacter():GetInventory():Iter() do
+		if (k.isWeapon and k:GetData("equip")) then
+			k:SetData("ammo", nil)
+			k:SetData("equip", nil)
 
-			if (v.pacData) then
-				v:RemovePAC(client)
+			if (k.pacData) then
+				k:RemovePAC(client)
 			end
 		end
 	end
