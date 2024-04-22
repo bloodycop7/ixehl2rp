@@ -286,8 +286,6 @@ ix.lang.AddTable("english", {
     optCombineOverlaySquadOutlineColor = "Combine Overlay - Squad Outline Color",
     optDispatchAnnouncementType = "Dispatch Announcement Type",
     optCombineOptionsVisibility = "Combine Options Visibility",
-    optCombineGlowEyes = "Glow Eyes",
-    optCombineGlowEyesRenderDistance = "Glow Eyes Render Distance",
 
     optdCombineOverlay = "Should the combine overlay be enabled",
     optdCombineOverlayAssets = "Should there be an overlay on close assets",
@@ -304,8 +302,6 @@ ix.lang.AddTable("english", {
     optdCombineOverlaySquadOutlineColor = "What color should the combine overlay display squad member(s) outline as.",
     optdDispatchAnnouncementType = "What type of announcement should dispatch make.",
     optdCombineOptionsVisibility = "Should combine options be visible to non-combine players.",
-    optdCombineGlowEyes = "Should combine eyes glow.",
-    optdCombineGlowEyesRenderDistance = "At what distance should the combine eyes stop glowing.",
 })
 
 if ( CLIENT ) then
@@ -1915,159 +1911,3 @@ ix.cmbSystems.Deployments.Stored = {
         units = {},
     }
 }
-
-if ( glowEyes ) then
-    glowEyes:Register("models/ez2npc/police.mdl", {
-        serverInit = function(self, ent)
-            if not ( IsValid(ent) ) then
-                return
-            end
-            
-            if ( IsValid(ent.worldGlowSprite) ) then
-                ent.worldGlowSprite:Remove()
-            end
-            
-            if ( IsValid(ent.leftEyeGlow) ) then
-                ent.leftEyeGlow:Remove()
-            end
-            
-            if ( IsValid(ent.rightEyeGlow) ) then
-                ent.rightEyeGlow:Remove()
-            end
-            
-            local attachment = ent:GetAttachment(ent:LookupAttachment("eyes"))
-            
-            if not ( attachment ) then
-                return
-            end
-            
-            local pos = attachment.Pos
-            pos = pos + attachment.Ang:Forward() * 1.7
-            
-            local leftEyePos = attachment.Pos
-            leftEyePos = leftEyePos + attachment.Ang:Right() * -1.7
-            leftEyePos = leftEyePos + attachment.Ang:Forward() * 1.6
-            
-            local rightEyePos = attachment.Pos
-            rightEyePos = rightEyePos + attachment.Ang:Right() * 1.7
-            rightEyePos = rightEyePos + attachment.Ang:Forward() * 1.6
-            
-            local lColor, rColor, gColor = Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255)
-    
-            if ( self.color and isfunction(self.color) ) then
-                lColor, rColor, gColor = self:color(ent)
-            end
-    
-            ent.leftEyeGlow = ents.Create("env_sprite")
-            ent.leftEyeGlow:SetPos(leftEyePos)
-            ent.leftEyeGlow:SetParent(ent, ent:LookupAttachment("eyes"))
-            ent.leftEyeGlow:SetKeyValue("rendermode", "9")
-            ent.leftEyeGlow:SetKeyValue("renderamt", "255")
-            ent.leftEyeGlow:SetKeyValue("rendercolor", lColor.r .. " " .. lColor.g .. " " .. lColor.b)
-            ent.leftEyeGlow:SetKeyValue("renderfx", "0")
-            ent.leftEyeGlow:SetKeyValue("HDRColorScale", "0.5")
-            ent.leftEyeGlow:SetKeyValue("model", "sprites/light_glow02_add_noz.vmt")
-            ent.leftEyeGlow:SetKeyValue("scale", "0.05")
-            ent.leftEyeGlow:Spawn()
-            
-            ent.rightEyeGlow = ents.Create("env_sprite")
-            ent.rightEyeGlow:SetPos(rightEyePos)
-            ent.rightEyeGlow:SetParent(ent, ent:LookupAttachment("eyes"))
-            ent.rightEyeGlow:SetKeyValue("rendermode", "9")
-            ent.rightEyeGlow:SetKeyValue("renderamt", "255")
-            ent.rightEyeGlow:SetKeyValue("rendercolor", rColor.r .. " " .. rColor.g .. " " .. rColor.b)
-            ent.rightEyeGlow:SetKeyValue("renderfx", "0")
-            ent.rightEyeGlow:SetKeyValue("HDRColorScale", "0.5")
-            ent.rightEyeGlow:SetKeyValue("model", "sprites/light_glow02_add_noz.vmt")
-            ent.rightEyeGlow:SetKeyValue("scale", "0.05")
-            ent.rightEyeGlow:Spawn()
-            
-            ent.worldGlowSprite = ents.Create("env_sprite")
-            ent.worldGlowSprite:SetPos(pos)
-            ent.worldGlowSprite:SetParent(ent, ent:LookupAttachment("eyes"))
-            ent.worldGlowSprite:SetKeyValue("rendermode", "9")
-            ent.worldGlowSprite:SetKeyValue("renderamt", "60")
-            ent.worldGlowSprite:SetKeyValue("rendercolor", gColor.r .. " " .. gColor.g .. " " .. gColor.b)
-            ent.worldGlowSprite:SetKeyValue("renderfx", "0")
-            ent.worldGlowSprite:SetKeyValue("HDRColorScale", "1")
-            ent.worldGlowSprite:SetKeyValue("model", "sun/overlay.vmt")
-            ent.worldGlowSprite:SetKeyValue("scale", "0.2")
-            ent.worldGlowSprite:Spawn()
-    
-            timer.Simple(0.1, function()
-                local glowTable = {}
-    
-                if ( IsValid(ent.leftEyeGlow) ) then
-                    glowTable[#glowTable + 1] = ent.leftEyeGlow
-                end
-    
-                if ( IsValid(ent.rightEyeGlow) ) then
-                    glowTable[#glowTable + 1] = ent.rightEyeGlow
-                end
-    
-                if ( IsValid(ent.worldGlowSprite) ) then
-                    glowTable[#glowTable + 1] = ent.worldGlowSprite
-                end
-    
-                net.Start("glowEyes.NetworkLightsToClientside")
-                    net.WriteEntity(ent)
-                    net.WriteTable(glowTable)
-                net.Broadcast()
-    
-                ent.glowEyesTable = glowTable
-            end)
-        end,
-        color = function(self, ent)
-            if ( ent:GetSkin() == 2 ) then
-                return Color(255, 0, 0), Color(255, 0, 0), Color(255, 0, 0)
-            end
-    
-            return Color(0, 255, 255), Color(0, 255, 255), Color(0, 255, 255)
-        end,
-        serverThink = function(self, ent)
-            if ( ent.glowEyesTable ) then
-                for k, v in ipairs(ent.glowEyesTable) do
-                    if not ( IsValid(v) ) then
-                        continue
-                    end
-    
-                    v:SetKeyValue("rendercolor", self:color(ent).r .. " " .. self:color(ent).g .. " " .. self:color(ent).b)
-                end
-            end
-
-            local attachment = ent:GetAttachment(ent:LookupAttachment("eyes"))
-        
-            if not ( attachment ) then
-                return
-            end
-            
-            local pos = attachment.Pos
-            pos = pos + attachment.Ang:Forward() * 1.7
-            
-            local leftEyePos = attachment.Pos
-            leftEyePos = leftEyePos + attachment.Ang:Right() * -1.7
-            leftEyePos = leftEyePos + attachment.Ang:Forward() * 1.6
-            
-            local rightEyePos = attachment.Pos
-            rightEyePos = rightEyePos + attachment.Ang:Right() * 1.7
-            rightEyePos = rightEyePos + attachment.Ang:Forward() * 1.6
-
-            if ( IsValid(ent.leftEyeGlow) ) then
-                ent.leftEyeGlow:SetPos(leftEyePos)
-            end
-
-            if ( IsValid(ent.rightEyeGlow) ) then
-                ent.rightEyeGlow:SetPos(rightEyePos)
-            end
-
-            if ( IsValid(ent.worldGlowSprite) ) then
-                ent.worldGlowSprite:SetPos(pos)
-            end
-        end,
-        shouldDraw = function(self, ent)
-            if ( ent:GetSkin() == 1 or ent:GetSkin() == 2 ) then
-                return true
-            end
-        end
-    })
-end

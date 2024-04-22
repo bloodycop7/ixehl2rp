@@ -48,12 +48,6 @@ ix.lang.AddTable("english", {
 
 	optBackgroundImages = "Main Menu Images",
 	optdBackgroundImages = "Whether or not to display images in the main menu.",
-
-	optGlowEyes = "Glow Eyes",
-	optdGlowEyes = "Whether or not to draw a glow around combine players and NPCs eyes.",
-
-	optGlowEyesRenderDistance = "Glow Eyes Render Distance",
-	optdGlowEyesRenderDistance = "The distance at which the glow around combine players and NPCs eyes will be rendered.",
 })
 
 function Schema:SetupOutlines()

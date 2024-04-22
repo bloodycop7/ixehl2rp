@@ -218,10 +218,6 @@ ix.config.Add("itemOutline", true, "Whether or not items should be outlined when
     category = "misc"
 })
 
-ix.config.Add("glowEyes", true, "Should combine players's and NPCs's eyes glow?", nil, {
-    category = "misc",
-})
-
 ix.command.Add("CharSetRank", {
 	description = "Sets the rank of a character.",
 	adminOnly = true,
