@@ -94,10 +94,10 @@ function ix.lootable:Register(lootableData)
                 return
             end
 
-            lootableData.lootTime = ( lootableData["lootTime"] and lootableData["lootTime"](ply) or math.random(2, 5) )
-            lootableData.lootDelay = ( lootableData["lootDelay"] and lootableData["lootDelay"](ply) or math.random(60, 120) )
-            lootableData.maxItems = ( lootableData["maxItems"] and lootableData["maxItems"](ply) or math.random(1, 3) )
-            lootableData.rarity = ( lootableData["rarity"] and lootableData["rarity"](ply) or math.random(1, 100) )
+            lootableData.lootTime = ( isfunction(lootableData["lootTime"]) and lootableData["lootTime"](ply) or math.random(2, 5) )
+            lootableData.lootDelay = ( isfunction(lootableData["lootDelay"]) and lootableData["lootDelay"](ply) or math.random(60, 120) )
+            lootableData.maxItems = ( isfunction(lootableData["maxItems"]) and lootableData["maxItems"](ply) or math.random(1, 3) )
+            lootableData.rarity = ( isfunction(lootableData["rarity"]) and lootableData["rarity"](ply) or math.random(1, 100) )
 
             if ( lootableData.lootTime > 0 ) then
                 ply:SetAction("Looting...", lootableData.lootTime)
