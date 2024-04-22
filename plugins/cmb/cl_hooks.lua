@@ -5,28 +5,33 @@ function PLUGIN:ShouldDrawCombineHUD()
         return false
     end
 
-    local localPlayer = LocalPlayer() -- localize global variable but keep the name
-    local char = localPlayer:GetCharacter()
+    local ply = LocalPlayer() -- localize global variable but keep the name
+
+    if not ( IsValid(ply) ) then
+        return false
+    end
+    
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return false
     end
 
-    if not ( localPlayer:Alive() ) then
+    if not ( ply:Alive() ) then
         return false
     end
 
-    if not ( Schema:IsCombine(localPlayer) ) then
+    if not ( Schema:IsCombine(ply) ) then
         return false
     end
 
-    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
-        if ( localPlayer:CanOverrideView() ) then
+    if ( ply.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( ply:CanOverrideView() ) then
             return false
         end
     end
 
-    if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
+    if ( IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon():GetClass() == "gmod_camera" ) then
         return false
     end
 
@@ -78,14 +83,19 @@ function PLUGIN:Think()
         return
     end
 
-    local localPlayer = LocalPlayer()
-    local char = localPlayer:GetCharacter()
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
     end
 
-    if not ( Schema:IsCombine(localPlayer) ) then
+    if not ( Schema:IsCombine(ply) ) then
         return
     end
 
@@ -104,7 +114,7 @@ function PLUGIN:HUDPaint()
     local padding = ScreenScale(8)
     local code = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
 
-    local char = localPlayer:GetCharacter()
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
@@ -189,15 +199,15 @@ function PLUGIN:HUDPaint()
 
     for k, v in ipairs(ix.cmbSystems.waypoints) do
         local wayPos = v.pos:ToScreen()
-        local dist = math.Round(v.pos:Distance(localPlayer:GetPos()) / 16, 1)
+        local dist = math.Round(v.pos:Distance(ply:GetPos()) / 16, 1)
 
-        local diff = v.pos - localPlayer:GetShootPos()
+        local diff = v.pos - ply:GetShootPos()
         
         if not ( v.drawAlpha ) then
             v.drawAlpha = 255
         end
 
-        if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.995 ) then
+        if ( ply:GetAimVector():Dot(diff) / diff:Length() >= 0.995 ) then
             v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 25)
         elseif ( dist <= 40 ) then
             v.drawAlpha = Lerp(FrameTime() * 2, v.drawAlpha, 100)
@@ -220,7 +230,7 @@ function PLUGIN:HUDPaint()
     end
 
     if ( ix.option.Get("combineOverlayAssets", true) ) then
-        for k, v in ipairs(player.GetAll()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -239,11 +249,11 @@ function PLUGIN:HUDPaint()
                 continue
             end
 
-            if ( v:GetPos():Distance(localPlayer:GetPos()) > 400 ) then
+            if ( v:GetPos():Distance(ply:GetPos()) > 400 ) then
                 continue
             end
 
-            if ( v == localPlayer ) then
+            if ( v == ply ) then
                 continue
             end
 
@@ -258,12 +268,12 @@ function PLUGIN:HUDPaint()
                 v.displayAlpha = 255
             end
 
-            local dist = math.Round(vPos:Distance(localPlayer:GetPos()) / 16, 1)
-            local diff = vPos - localPlayer:GetShootPos()
+            local dist = math.Round(vPos:Distance(ply:GetPos()) / 16, 1)
+            local diff = vPos - ply:GetShootPos()
 
             vPos = vPos:ToScreen()
 
-            if ( localPlayer:GetAimVector():Dot(diff) / diff:Length() >= 0.985 ) then
+            if ( ply:GetAimVector():Dot(diff) / diff:Length() >= 0.985 ) then
                 v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 125)
             else
                 v.displayAlpha = Lerp(FrameTime() * 2, v.displayAlpha, 255)
@@ -323,12 +333,12 @@ function PLUGIN:HUDPaint()
         end
     end
 
-    local wep = localPlayer:GetActiveWeapon()
+    local wep = ply:GetActiveWeapon()
 
     if ( IsValid(wep) ) then
         if ( wep:Clip1() != -1 ) then
             surface.SetFont("ixCombineFont10")
-            local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()))
+            local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. ply:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
                 x = scrW - textWidth - padding * 1.3,
@@ -355,7 +365,7 @@ function PLUGIN:HUDPaint()
                 draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 5.7 / 1.75, scrH - ( textHeight + textHeight2 ) - padding * 0.7, colRed, TEXT_ALIGN_CENTER)
             end
 
-            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. localPlayer:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. ply:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
         end
     end
 end
@@ -363,17 +373,19 @@ end
 local combineOverlayMat = ix.util.GetMaterial("effects/combine_binocoverlay")
 
 function PLUGIN:RenderScreenspaceEffects()
-    if not ( IsValid(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         return
     end
 
-    local char = localPlayer:GetCharacter()
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
     end
 
-    if not ( Schema:IsCombine(localPlayer) ) then
+    if not ( Schema:IsCombine(ply) ) then
         return
     end
 
@@ -381,8 +393,8 @@ function PLUGIN:RenderScreenspaceEffects()
         return
     end
 
-    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
-        if ( localPlayer:CanOverrideView() ) then
+    if ( ply.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( ply:CanOverrideView() ) then
             return
         end
     end
@@ -397,32 +409,34 @@ function PLUGIN:RenderScreenspaceEffects()
 end
 
 function PLUGIN:SetupOutlines()
-    if not ( IsValid(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         return
     end
     
-    local char = localPlayer:GetCharacter()
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
     end
 
-    if not ( Schema:IsCombine(localPlayer) ) then
+    if not ( Schema:IsCombine(ply) ) then
         return
     end
 
-    if not ( localPlayer:Alive() ) then
+    if not ( ply:Alive() ) then
         return
     end
 
-    if ( localPlayer.CanOverrideView ) then // Helix Thirdperson Plugin Function
-        if ( localPlayer:CanOverrideView() ) then
+    if ( ply.CanOverrideView ) then // Helix Thirdperson Plugin Function
+        if ( ply:CanOverrideView() ) then
             return
         end
     end
 
     if ( ix.option.Get("combineOutlineNPCs", true) ) then
-        for k, v in ipairs(ents.GetAll()) do
+        for k, v in ents.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -460,7 +474,7 @@ function PLUGIN:SetupOutlines()
             ix.outline.Add(v, outlineColor)
         end
 
-        for k, v in ipairs(ents.GetAll()) do
+        for k, v in ents.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -496,7 +510,7 @@ function PLUGIN:SetupOutlines()
     end
 
     if ( ix.option.Get("combineOutlineAssets", true) ) then
-        for k, v in ipairs(player.GetAll()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -521,7 +535,7 @@ function PLUGIN:SetupOutlines()
                 end
             end
 
-            if ( v == localPlayer ) then
+            if ( v == ply ) then
                 continue
             end
 
@@ -571,7 +585,7 @@ function PLUGIN:SetupOutlines()
                 local outlineColor = hook.Run("GetEntityOutlineColor", ent)
 
                 if ( outlineColor == nil ) then
-                    outlineColor = ix.faction.Get(localPlayer:Team()).color or colWhite2
+                    outlineColor = ix.faction.Get(ply:Team()).color or colWhite2
                 end
 
                 if ( ent:GetClass() == "npc_grenade_frag" ) then
@@ -606,17 +620,19 @@ function PLUGIN:GetPlayerOutlineColor(target)
 end
 
 function PLUGIN:CombineOverlayCanDisplayAssetOnly(ply)
-    if not ( IsValid(localPlayer) ) then
+    local client = LocalPlayer()
+
+    if not ( IsValid(client) ) then
         return
     end
 
-    local char = localPlayer:GetCharacter()
+    local char = client:GetCharacter()
 
     if not ( char ) then
         return
     end
 
-    if not ( Schema:IsCombine(localPlayer) ) then
+    if not ( Schema:IsCombine(client) ) then
         return
     end
 
@@ -640,7 +656,7 @@ function PLUGIN:CombineOverlayCanDisplayAssetOnly(ply)
         end
     end
 
-    if not ( ply:Team() == localPlayer:Team() ) then
+    if not ( ply:Team() == client:Team() ) then
         return false
     end
 

@@ -103,6 +103,18 @@ function ix.outline.IsDoubleThickness()
 end
 
 local function Render()
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return
+    end
+
 	local scene = render.GetRenderTarget()
 	render.CopyRenderTargetToTexture(StoreTexture)
 	
@@ -134,7 +146,7 @@ local function Render()
             
             if ( mode == 0 or mode == 2 ) then
                 if ( customCheck ) then
-                    if not ( customCheck(localPlayer) ) then
+                    if not ( customCheck(ply) ) then
                         continue
                     end
                 end
@@ -152,7 +164,7 @@ local function Render()
                 end
             elseif ( mode == 1 ) then
                 if ( customCheck ) then
-                    if not ( customCheck(localPlayer) ) then
+                    if not ( customCheck(ply) ) then
                         continue
                     end
                 end

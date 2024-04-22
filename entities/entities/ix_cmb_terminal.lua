@@ -114,7 +114,7 @@ if ( SERVER ) then
 		self:SetHealth(self:Health() - dmgInfo:GetDamage())
 
 		if ( self:Health() <= 0 ) then
-			for k, v in pairs(player.GetAll()) do
+			for k, v in player.Iterator() do
 				if not ( IsValid(v) ) then
 					continue
 				end
@@ -166,7 +166,7 @@ if ( SERVER ) then
 
 			local electricianCount = 0
 
-            for k, v in pairs(player.GetAll()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -236,7 +236,7 @@ else
 
 		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
 
-		local ply = localPlayer
+		local ply = LocalPlayer()
 
 		if not ( IsValid(ply) ) then
 			self:Remove()
@@ -321,7 +321,7 @@ else
 			self.cityCodesButton.DoClick = function(this)
 				self.rightPanel:Clear()
 
-				for k, v in pairs(ix.cmbSystems.CityCodes.Stored) do
+				for k, v in ipairs(ix.cmbSystems.CityCodes.Stored) do
 					local button = self.rightPanel:Add("ixMenuButton")
 					button:Dock(TOP)
 					button:SetText(v.name)
@@ -398,7 +398,7 @@ else
 		self.citizenIndexButton.DoClick = function(this)
 			self.rightPanel:Clear()
 
-			for k, v in pairs(player.GetAll()) do
+			for k, v in player.Iterator() do
 				if not ( IsValid(v) ) then
 					continue
 				end
@@ -413,7 +413,7 @@ else
 					continue
 				end
 
-				if ( v == localPlayer ) then
+				if ( v == ply ) then
 					continue
 				end
 

@@ -109,7 +109,7 @@ if ( SERVER ) then
 
 			local electricianCount = 0
 
-            for k, v in pairs(player.GetAll()) do
+            for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
@@ -172,6 +172,7 @@ else
 		end
 
 		ix.gui.citizenTerminal = self
+        local ply = LocalPlayer()
 
 		self:SetPos(0, scrH * 0.25)
 		self:SetSize(scrW * 0.50, scrH * 0.50)
@@ -188,7 +189,7 @@ else
             this:SetFraction(this:GetFraction() + FrameTime() * 550)
 
             if ( this:GetFraction() >= 1000 ) then
-                for k, v in pairs(self:GetChildren()) do
+                for k, v in ipairs(self:GetChildren()) do
                     v:Remove()
                 end
 
@@ -248,7 +249,7 @@ else
 
         local label = self:Add("DLabel")
         label:Dock(TOP)
-        label:SetText("<:: Civillian DataBase: " .. localPlayer:SteamID64() .. " ::>")
+        label:SetText("<:: Civillian DataBase: " .. ply:SteamID64() .. " ::>")
         label:SetFont("ixSubTitleFont")
         label:SetContentAlignment(5)
         label:DockMargin(0, 0, 0, ScreenScale(10))
@@ -256,14 +257,14 @@ else
 
         label = self:Add("DLabel")
         label:Dock(TOP)
-        label:SetText("Name: " .. localPlayer:Name())
+        label:SetText("Name: " .. ply:Name())
         label:SetFont("ixMediumFont")
         label:SetContentAlignment(4)
         label:SizeToContents()
 
         label = self:Add("DLabel")
         label:Dock(TOP)
-        label:SetText("Loyalty Points: " .. localPlayer:GetCharacter():GetLoyaltyPoints())
+        label:SetText("Loyalty Points: " .. ply:GetCharacter():GetLoyaltyPoints())
         label:SetFont("ixMediumFont")
         label:SetContentAlignment(4)
         label:SizeToContents()
@@ -277,7 +278,7 @@ else
 
         local modelPanel = self.rightPanel:Add("ixModelPanel")
         modelPanel:Dock(FILL)
-        modelPanel:SetModel(localPlayer:GetModel())
+        modelPanel:SetModel(ply:GetModel())
         modelPanel:SetFOV(30)
         modelPanel:SetLookAt(Vector(0, 0, 60))
         modelPanel.LayoutEntity = function(this, ent)

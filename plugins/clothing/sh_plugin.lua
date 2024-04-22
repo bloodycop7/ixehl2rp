@@ -14,7 +14,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ]]
 
 function PLUGIN:Think()
-    for k, v in ipairs(player.GetAll()) do
+    for k, v in player.Iterator() do
         if not ( IsValid(v) ) then
             continue
         end
@@ -25,7 +25,9 @@ function PLUGIN:Think()
             return
         end
         
-        if not ( char:GetInventory() ) then // bots :d
+        local inv = char:GetInventory()
+
+        if not ( inv ) then // bots :d
             continue
         end
 
@@ -33,10 +35,14 @@ function PLUGIN:Think()
             continue
         end
 
-        for _, item in ipairs(char:GetInventory():GetItemsByBase("base_clothing", false)) do
-            if ( item:GetData("equip", false) ) then
-                if ( item.Think ) then
-                    item:Think(v)
+        for k2, v2 in inv:Iter() do
+            if not ( k2.base == "base_clothing" ) then
+                continue
+            end
+
+            if ( k2:GetData("equip", false) ) then
+                if ( k2.Think ) then
+                    k2:Think(v)
                 end
             end
         end

@@ -1,11 +1,13 @@
 local PLUGIN = PLUGIN
 
 function PLUGIN:CalcView(ply, origin, angles, fov)
-    if not ( IsValid(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         return
     end
 
-    local stationEnt = localPlayer:GetNetVar("ixCraftingStation")
+    local stationEnt = ply:GetNetVar("ixCraftingStation", nil)
 
     if not ( IsValid(stationEnt) ) then
         if ( IsValid(ix.gui.craftingMenu) ) then

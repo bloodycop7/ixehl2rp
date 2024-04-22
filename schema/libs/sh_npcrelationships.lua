@@ -83,7 +83,7 @@ if ( SERVER ) then
             ErrorNoHalt("Attempted to update relationships on a non-NPC entity!\n")
         end
 
-        for k, v in pairs(player.GetAll()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -110,7 +110,7 @@ if ( SERVER ) then
                 isRebelNPC = true
             end
 
-            if ( ix.relationships.CombineNPCs[checkName] and not isRebelNPC) then
+            if ( ix.relationships.CombineNPCs[checkName] and not isRebelNPC ) then
                 local oldTable = ent.VJ_NPC_Class or {}
 
                 if not ( table.HasValue(oldTable, "CLASS_COMBINE") ) then
@@ -177,7 +177,7 @@ if ( SERVER ) then
             return
         end
 
-        timer.Simple(0.1, function()
+        timer.Simple(1 / 3, function()
             if not ( IsValid(ent) ) then
                 return
             end
@@ -229,14 +229,14 @@ if ( SERVER ) then
     end)
 
     hook.Add("PlayerLoadedCharacter", "ix.NPCRelationships.PlayerLoadedCharacter", function(ply, newChar, oldChar)
-        timer.Simple(0.1, function()
+        timer.Simple(1 / 3, function()
             if ( Schema:IsCombine(ply) ) then
                 ply.ZBaseFaction = "combine"
             else
                 ply.ZBaseFaction = "ally"
             end
 
-            for k, v in ipairs(ents.GetAll()) do
+            for k, v in ents.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end

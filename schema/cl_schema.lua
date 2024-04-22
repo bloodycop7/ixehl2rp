@@ -3,15 +3,19 @@ function Schema:OpenUI(panel)
 end
 
 function Schema:PlaySound(sound, level, pitch, volume, channel, customCheck)
-	if not ( IsValid(localPlayer) ) then
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
 		return
 	end
 
-	if ( customCheck and not customCheck(localPlayer) ) then
+	local char = ply:GetCharacter()
+
+	if ( customCheck and not customCheck(ply) ) then
 		return
 	end
 
-	EmitSound(sound, localPlayer:GetPos(), -2, channel or CHAN_AUTO, volume or 1, level or 75, 0, pitch or 100)
+	EmitSound(sound, ply:GetPos(), -2, channel or CHAN_AUTO, volume or 1, level or 75, 0, pitch or 100)
 end
 
 function Schema:SendCaption(text, duration)

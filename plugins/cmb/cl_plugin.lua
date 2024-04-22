@@ -4,22 +4,30 @@ ix.cmbSystems.waypoints = {}
 ix.option.Add("combineOptionsVisibility", ix.type.bool, true, {
     category = "Combine Systems",
     hidden = function()
-        if not ( IsValid(localPlayer) ) then
+        local ply = LocalPlayer()
+
+        if not ( IsValid(ply) ) then
             return true
         end
 
-        local char = localPlayer:GetCharacter()
+        local char = ply:GetCharacter()
 
         if not ( char ) then
             return true
         end
 
-        return Schema:IsCombine(localPlayer)
+        return Schema:IsCombine(ply)
     end,
 })
 
 local function OptionVisible()
-    if ( Schema:IsCombine(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return false
+    end
+
+    if ( Schema:IsCombine(ply) ) then
         return false
     end
 
@@ -92,6 +100,12 @@ ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 25
 })
 
 function ix.cmbSystems:MakeWaypoint(data)
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return
+    end
+
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
         return
@@ -109,7 +123,7 @@ function ix.cmbSystems:MakeWaypoint(data)
     end
 
     if not ( data.pos ) then
-        data.pos = localPlayer:GetPos()
+        data.pos = LocalPlayer():GetPos() or vector_origin
     end
 
     ix.cmbSystems.waypoints[#ix.cmbSystems.waypoints + 1] = data

@@ -75,26 +75,26 @@ if ( SERVER ) then
         local sterCreditsNew = 0
 
         if ( Schema:IsCombine(ply) ) then
-            for k, v in pairs(inv:GetItems()) do
-                if ( hook.Run("CanPlayerConfiscateItem", ply, v) == false ) then
+            for k, v in inv:Iter() do
+                if ( hook.Run("CanPlayerConfiscateItem", ply, k) == false ) then
                     continue
                 end
 
-                if not ( v.illegal ) then
+                if not ( k.illegal ) then
                     continue
                 end
 
-                if ( v:GetData("equip") ) then
-                    v:SetData("equip", nil)
+                if ( k:GetData("equip") ) then
+                    k:SetData("equip", nil)
                 end
 
                 local items = self:GetItems()
-                table.insert(items, v.uniqueID)
+                table.insert(items, k.uniqueID)
 
                 self:SetItems(items)
-                v:Remove()
+                k:Remove()
 
-                local sterToAdd = hook.Run("GetPlayerSterilizationCreditAward", ply, v) or ( v.sterCreditsReward or 5 )
+                local sterToAdd = hook.Run("GetPlayerSterilizationCreditAward", ply, k) or ( k.sterCreditsReward or 5 )
 
                 totalConfiscatedCount = totalConfiscatedCount + 1
                 sterCreditsNew = sterCreditsNew + sterToAdd
@@ -125,7 +125,7 @@ if ( SERVER ) then
                 end
             end
 
-            for k, v in pairs(itemsToRemoveFromLocker) do
+            for k, v in ipairs(itemsToRemoveFromLocker) do
                 if ( table.HasValue(items, v) ) then
                     table.RemoveByValue(items, v)
                 end
@@ -160,5 +160,8 @@ else
         time:SetText("Expires in: " .. string.NiceTime(math.Round(self:GetWipeTime() or 0, 0)))
         time:SetBackgroundColor(ix.config.Get("color"))
         time:SizeToContents()
+        time.Think = function(this)
+            this:SetText("Expires in: " .. string.NiceTime(math.Round(self:GetWipeTime() or 0, 0)))
+        end
     end
 end

@@ -20,11 +20,13 @@ local enabled = enabled or false
 local colWhite = Color(165,165,165)
 
 concommand.Add("ix_dev_hud", function()
-    if not ( IsValid(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         return
     end
 
-    local char = localPlayer:GetCharacter()
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
@@ -34,11 +36,13 @@ concommand.Add("ix_dev_hud", function()
 end)
 
 function PLUGIN:HUDPaint()
-    if not ( IsValid(localPlayer) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         return
     end
 
-    local char = localPlayer:GetCharacter()
+    local char = ply:GetCharacter()
 
     if not ( char ) then
         return
@@ -48,10 +52,10 @@ function PLUGIN:HUDPaint()
         return
     end
 
-    local plyInfo = tostring(localPlayer) .. " | " .. localPlayer:SteamID64() .. " | " .. char:GetName() .. " (ID: " .. char:GetID() .. ")"
-    local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. localPlayer:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
+    local plyInfo = tostring(ply) .. " | " .. ply:SteamID64() .. " | " .. char:GetName() .. " (ID: " .. char:GetID() .. ")"
+    local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. ply:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
 
-    local trace = localPlayer:GetEyeTrace().Entity
+    local trace = ply:GetEyeTrace().Entity
     local padding = scrH * 0.09
 
     draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", colWhite))
@@ -78,9 +82,9 @@ function PLUGIN:HUDPaint()
         draw.SimpleText(traceInfo, "ixSmallFont", 10, scrH - padding, colWhite)
     end
 
-    if ( IsValid(localPlayer:GetActiveWeapon()) ) then
-        local weapon = localPlayer:GetActiveWeapon()
-        local weaponInfo = "Weapon: " .. weapon:GetClass() .. " | Clip: " .. weapon:Clip1() .. " | Ammo: " .. localPlayer:GetAmmoCount(weapon:GetPrimaryAmmoType())
+    if ( IsValid(ply:GetActiveWeapon()) ) then
+        local weapon = ply:GetActiveWeapon()
+        local weaponInfo = "Weapon: " .. weapon:GetClass() .. " | Clip: " .. weapon:Clip1() .. " | Ammo: " .. ply:GetAmmoCount(weapon:GetPrimaryAmmoType())
 
         surface.SetFont("ixSmallFont")
         local w, h = surface.GetTextSize(weaponInfo)

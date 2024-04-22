@@ -18,7 +18,7 @@ ix.config.Add("ammoCrateInfinite", false, "Whether or not ammo crates should be 
 })
 
 ix.config.Add("ammoCrateCooldown", (60 * 10), "On how much time should the ammo crates be refilled.", function(oldV, newV)
-    for k, v in pairs(ents.FindByClass("ix_ammo_crate_*")) do
+    for k, v in ipairs(ents.FindByClass("ix_ammo_crate_*")) do
         local uID = "ix_ammo_crate_" .. string.lower(v:GetAmmoType()) .. "_" .. v:EntIndex() .. "_refill_timer"
 
         if ( timer.Exists(uID) ) then

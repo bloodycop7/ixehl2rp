@@ -35,7 +35,7 @@ ix.config.Add("needsEnabled", true, "Whether or not the needs system is enabled.
 
 ix.config.Add("hungerRate", 120, "How fast the player gets hungry.", function(newVal)
     if ( SERVER ) then
-        for k, v in pairs(player.GetAll()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end
@@ -54,7 +54,7 @@ end, {
 
 ix.config.Add("thirstRate", 120, "How fast the player gets thirsty.", function(newVal)
     if ( SERVER ) then
-        for k, v in pairs(player.GetAll()) do
+        for k, v in player.Iterator() do
             if not ( IsValid(v) ) then
                 continue
             end

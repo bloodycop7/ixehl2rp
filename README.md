@@ -40,9 +40,6 @@ You may find various Credits everywhere through out the code, make sure to check
 
 **Thanks to all contributors who have submitted pull requests to improve this project!**
 **IMPORTANT**
-- localPlayer is cached Clientside, do not use LocalPlayer()!
-- scrW is cached Clientside, do not use ScrW()!
-- scrH is cached Clientside, do not use ScrH()!
 - The schema does not use ply:IsCombine(), use Schema:IsCombine(ply) instead! (Look at sh_schema to look at more code.)
 
 # Plugins

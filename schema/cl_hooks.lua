@@ -10,7 +10,9 @@ colorModify["$pp_colour_addg"] = 0.02
 colorModify["$pp_colour_addb"] = 0.02
 
 function Schema:RenderScreenspaceEffects()
-	if not ( IsValid(localPlayer) ) then
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
 		return
 	end
 	
@@ -55,20 +57,22 @@ ix.lang.AddTable("english", {
 })
 
 function Schema:SetupOutlines()
-	if not ( IsValid(localPlayer) ) then
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
 		return
 	end
 
-	local char = localPlayer:GetCharacter()
+	local char = ply:GetCharacter()
 
 	if not ( char ) then
 		return
 	end
 
 	local trace = {}
-	trace.start = localPlayer:GetShootPos()
-	trace.endpos = trace.start + localPlayer:GetAimVector() * 160
-	trace.filter = localPlayer
+	trace.start = ply:GetShootPos()
+	trace.endpos = trace.start + ply:GetAimVector() * 160
+	trace.filter = ply
 	trace.mask = MASK_SHOT_HULL
 
 	local entity = util.TraceHull(trace).Entity
@@ -85,11 +89,17 @@ end
 // Credits: https://github.com/Lite-Network/lnhl2rpsemiserious/blob/main/schema/cl_schema.lua
 
 function Schema:PopulateHelpMenu(tabs)
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
 	tabs["voices"] = function(container)
 		local classes = {}
 
 		for k, v in pairs(Schema.voices.classes) do
-			if (v.condition(localPlayer)) then
+			if (v.condition(ply)) then
 				classes[#classes + 1] = k
 			end
 		end
@@ -196,16 +206,26 @@ function Schema:PopulateHelpMenu(tabs)
 end
 
 function Schema:ShouldDrawCrosshair()
-	if ( IsValid(localPlayer:GetActiveWeapon()) and localPlayer:GetActiveWeapon():GetClass() == "gmod_camera" ) then
-        return false
-    end
+	local ply = LocalPlayer()
 
-	if ( IsValid(localPlayer:GetActiveWeapon()) ) then
-		if ( localPlayer:GetActiveWeapon():GetClass():find("tfa*") ) then
-			return
-		end
+	if not ( IsValid(ply) ) then
+		return
 	end
 
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	local wep = ply:GetActiveWeapon()
+
+	if ( IsValid(wep) ) then
+		if ( wep:GetClass() == "gmod_camera" or wep:GetClass():find("tfa*") ) then
+			return false
+		end
+	end
+		
 	return true
 end
 
@@ -217,8 +237,20 @@ end
 
 -- populates labels in the status screen
 function Schema:UpdateCharacterInfo(panel)
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
 	panel.health:SetLabelText("Health")
-	panel.health:SetText(localPlayer:Health())
+	panel.health:SetText(ply:Health())
 	panel.health:SizeToContents()
 end
 
@@ -255,7 +287,19 @@ end
 local COMMAND_PREFIX = "/"
 
 function Schema:ChatTextChanged(text)
-	if ( self:IsCombine(localPlayer) ) then
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
+		return
+	end
+
+	if ( self:IsCombine(ply) ) then
 		local key = nil
 
 		if ( text == COMMAND_PREFIX .. "radio " ) then
@@ -293,17 +337,31 @@ net.Receive("ix.Schema.OpenUI", function()
 end)
 
 net.Receive("ix.PlaySound", function()
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
 	local sound = net.ReadString()
 	local level = net.ReadFloat()
 	local pitch = net.ReadFloat()
 	local volume = net.ReadFloat()
 	local channel = net.ReadFloat()
 
-	EmitSound(sound, localPlayer:GetPos(), -2, channel, volume, level, 0, pitch)
+	EmitSound(sound, ply:GetPos(), -2, channel, volume, level, 0, pitch)
 end)
 
 net.Receive("ix.PlayGesture", function(len)
-	if not ( IsValid(localPlayer) ) then
+	local ply = LocalPlayer()
+
+	if not ( IsValid(ply) ) then
+		return
+	end
+
+	local char = ply:GetCharacter()
+
+	if not ( char ) then
 		return
 	end
 

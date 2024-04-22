@@ -6,7 +6,7 @@ function PANEL:Init()
         self:Remove()
     end
 
-    local ply = localPlayer
+    local ply = LocalPlayer()
 
     if not ( IsValid(ply) ) then
         self:Remove()
@@ -203,7 +203,7 @@ function PANEL:Init()
 end
 
 function PANEL:PopulateCategory(category)
-    local ply = localPlayer
+    local ply = LocalPlayer()
 
     if not ( IsValid(ply) ) then
         self:Remove()

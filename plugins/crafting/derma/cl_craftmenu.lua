@@ -9,11 +9,19 @@ function PANEL:Init()
         self:Remove()
     end
 
-    if not ( IsValid(localPlayer:GetNetVar("ixCraftingStation", nil)) ) then
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
         self:Remove()
     end
 
-    if not ( localPlayer:GetCharacter() ) then
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        self:Remove()
+    end
+
+    if not ( IsValid(ply:GetNetVar("ixCraftingStation", nil)) ) then
         self:Remove()
     end
 
@@ -25,7 +33,7 @@ function PANEL:Init()
 
     local craftLabel = self:Add("DLabel")
     craftLabel:Dock(TOP)
-    craftLabel:SetText(ix.crafting.stations[localPlayer:GetNetVar("ixCraftingStation", nil):GetStationID()].name .. " Station")
+    craftLabel:SetText(ix.crafting.stations[ply:GetNetVar("ixCraftingStation", nil):GetStationID()].name .. " Station")
     craftLabel:SetFont("ixIntroSubtitleFont")
     craftLabel:SetTextColor(color_white)
     craftLabel:SetContentAlignment(5)
@@ -91,6 +99,18 @@ function PANEL:Init()
 end
 
 function PANEL:PopulateRecipes(category)
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        self:Remove()
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        self:Remove()
+    end
+
     self.middlePanel:Clear()
 
     for k, v in pairs(ix.crafting.recipes) do
@@ -98,7 +118,7 @@ function PANEL:PopulateRecipes(category)
             continue
         end
 
-        if ( v.stations and not v.stations[localPlayer:GetNetVar("ixCraftingStation", nil):GetStationID()] ) then
+        if ( v.stations and not v.stations[ply:GetNetVar("ixCraftingStation", nil):GetStationID()] ) then
             continue
         end
 
@@ -129,8 +149,8 @@ function PANEL:PopulateRecipe(recipe)
     end
 
     self.recipeModelTable = ClientsideModel(recipe.model)
-    self.recipeModelTable:SetPos(recipe.overview and recipe.overview["pos"](localPlayer, localPlayer:GetNetVar("ixCraftingStation", nil)) or localPlayer:GetNetVar("ixCraftingStation", nil):GetPos() + localPlayer:GetNetVar("ixCraftingStation", nil):GetUp() * 20)
-    self.recipeModelTable:SetAngles(recipe.overview and recipe.overview["ang"](localPlayer, localPlayer:GetNetVar("ixCraftingStation", nil)) or localPlayer:GetNetVar("ixCraftingStation", nil):GetRight():Angle() + Angle(0, 0, 90))
+    self.recipeModelTable:SetPos(recipe.overview and recipe.overview["pos"](ply, ply:GetNetVar("ixCraftingStation", nil)) or ply:GetNetVar("ixCraftingStation", nil):GetPos() + ply:GetNetVar("ixCraftingStation", nil):GetUp() * 20)
+    self.recipeModelTable:SetAngles(recipe.overview and recipe.overview["ang"](ply, ply:GetNetVar("ixCraftingStation", nil)) or ply:GetNetVar("ixCraftingStation", nil):GetRight():Angle() + Angle(0, 0, 90))
     self.recipeModelTable:Spawn()
     self.recipeModelTable.isFromStation = true
 
@@ -169,7 +189,7 @@ function PANEL:PopulateRecipe(recipe)
         ingredient:SizeToContents()
 
         local colorText = Color(0, 255, 0)
-        local itemCount = localPlayer:GetCharacter():GetInventory():GetItemCount(k)
+        local itemCount = char:GetInventory():GetItemCount(k)
 
         if ( itemCount < v ) then
             colorText = Color(255, 0, 0)
@@ -202,7 +222,7 @@ function PANEL:Think()
 end
 
 function PANEL:OnRemove()
-    for k, v in pairs(ents.FindByClass("class C_BaseFlex")) do
+    for k, v in ipairs(ents.FindByClass("class C_BaseFlex")) do
         if not ( v.isFromStation ) then
             continue
         end

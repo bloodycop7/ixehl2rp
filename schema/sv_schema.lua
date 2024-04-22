@@ -109,9 +109,15 @@ function Schema:OpenUI(ply, panel)
 end
 
 util.AddNetworkString("ix.PlaySound")
-function Schema:PlaySound(players, sound, level, pitch, volume, channel, customCheck)
-	if ( isentity(players) ) then
-		players = {players}
+function Schema:PlaySound(players, sound, level, pitch, volume, channel)
+	local actualPlayerTable = {}
+
+	if ( type(players) == "Player" ) then
+		actualPlayerTable = {players}
+	elseif ( type(players) == "table" ) then
+		actualPlayerTable = players
+	else
+		actualPlayerTable = player.Iterator()
 	end
 
 	level = level or 75
@@ -119,27 +125,13 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel, customC
 	volume = volume or 1
 	channel = channel or CHAN_AUTO
 
-	local recpFilter = RecipientFilter()
-	
-	for k, v in pairs(player.GetAll()) do
-		if not ( IsValid(v) ) then
-			continue
-		end
-
-		if ( customCheck and not customCheck(v) ) then
-			continue
-		end
-
-		recpFilter:AddPlayer(v)
-	end
-
 	net.Start("ix.PlaySound")
 		net.WriteString(sound)
 		net.WriteFloat(level)
 		net.WriteFloat(pitch)
 		net.WriteFloat(volume)
 		net.WriteFloat(channel)
-	net.Send(recpFilter)
+	net.Send(actualPlayerTable)
 end
 
 util.AddNetworkString("ix.PlayGesture")
