@@ -100,7 +100,7 @@ if ( SERVER ) then
 
             local checkName = ent:GetClass()
 
-            if ( string.find(checkName, "zbase*") ) then
+            if ( checkName:find("zbase*") ) then
                 checkName = ent:GetNWString("NPCName", ent.NPCName)
             end
 
