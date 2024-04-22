@@ -7,11 +7,11 @@ util.AddNetworkString("ix.Combine.TakeLP")
 util.AddNetworkString("ix.Combine.RemoveObjective")
 
 net.Receive("ix.Combine.RemoveObjective", function(len, ply)
-    if ( ( ix.cmbSystems.nextRemoveObjectiveCountdown or 0 ) > CurTime() ) then
+    if ( ( PLUGIN.nextRemoveObjectiveCountdown or 0 ) > CurTime() ) then
         return
     end
 
-    ix.cmbSystems.nextRemoveObjectiveCountdown = CurTime() + 0.5
+    PLUGIN.nextRemoveObjectiveCountdown = CurTime() + 0.5
     
     if not ( IsValid(ply) ) then
         return
@@ -37,19 +37,19 @@ net.Receive("ix.Combine.RemoveObjective", function(len, ply)
         return
     end
 
-    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+    if not ( PLUGIN.Objectives.Stored[id] ) then
         return
     end
 
-    ix.cmbSystems.Objectives:RemoveObjective(id)
+    PLUGIN.Objectives:RemoveObjective(id)
 end)
 
 net.Receive("ix.Combine.GiveLP", function(len, ply)
-    if ( ( ix.cmbSystems.giveLPCountdown or 0 ) > CurTime() ) then
+    if ( ( PLUGIN.giveLPCountdown or 0 ) > CurTime() ) then
         return
     end
 
-    ix.cmbSystems.giveLPCountdown = CurTime() + 0.5
+    PLUGIN.giveLPCountdown = CurTime() + 0.5
 
     if not ( IsValid(ply) ) then
         return
@@ -102,11 +102,11 @@ net.Receive("ix.Combine.GiveLP", function(len, ply)
 end)
 
 net.Receive("ix.Combine.TakeLP", function(len, ply)
-    if ( ( ix.cmbSystems.nextTakeLPCountdown or 0 ) > CurTime() ) then
+    if ( ( PLUGIN.nextTakeLPCountdown or 0 ) > CurTime() ) then
         return
     end
 
-    ix.cmbSystems.nextTakeLPCountdown = CurTime() + 0.5
+    PLUGIN.nextTakeLPCountdown = CurTime() + 0.5
 
     if not ( IsValid(ply) ) then
         return
@@ -175,7 +175,7 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
     end
 
     local id = net.ReadUInt(8)
-    local codeData = ix.cmbSystems.CityCodes.Stored[id]    
+    local codeData = PLUGIN.CityCodes.Stored[id]    
 
     if not ( codeData ) then
         return
@@ -189,16 +189,16 @@ net.Receive("ix.Combine.SetCityCode", function(len, ply)
         return
     end
 
-    ix.cmbSystems.CityCodes:Set(id)
+    PLUGIN.CityCodes:Set(id)
     ix.nextCityCodeChange = CurTime() + (ply:IsAdmin() and 2 or 10)
 end)
 
 net.Receive("ix.Combine.ToggleBOL", function(len, ply)
-    if ( ( ix.cmbSystems.nextBOLSet or 0 ) > CurTime() ) then
+    if ( ( PLUGIN.nextBOLSet or 0 ) > CurTime() ) then
         return
     end
 
-    ix.cmbSystems.nextBOLSet = CurTime() + 0.5
+    PLUGIN.nextBOLSet = CurTime() + 0.5
 
     if not ( IsValid(ply) ) then
         return
@@ -253,8 +253,8 @@ function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
     end
 end
 
-function ix.cmbSystems.CityCodes:Set(id)
-    local codeData = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
+function PLUGIN.CityCodes:Set(id)
+    local codeData = PLUGIN.CityCodes.Stored[PLUGIN.CityCodes:Get()]
 
     if ( codeData.onEnd ) then
         codeData:onEnd()
@@ -262,7 +262,7 @@ function ix.cmbSystems.CityCodes:Set(id)
 
     SetGlobalInt("ixCityCode", id)
 
-    codeData = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
+    codeData = PLUGIN.CityCodes.Stored[PLUGIN.CityCodes:Get()]
 
     timer.Simple(0.1, function()
         if ( codeData.onStart ) then
@@ -275,7 +275,7 @@ end
 
 local baseRadioVoiceDir = "npc/overwatch/cityvoice/"
 
-ix.cmbSystems.dispatchPassive = {
+PLUGIN.dispatchPassive = {
     {
         soundDir = baseRadioVoiceDir .. "f_innactionisconspiracy_spkr.wav",
         text = "Citizen reminder: inaction is conspiracy. Report counter-behavior to a Civil Protection team immediately.",
@@ -288,14 +288,14 @@ ix.cmbSystems.dispatchPassive = {
         soundDir = baseRadioVoiceDir .. "fprison_missionfailurereminder.wav",
         text = "Attention ground units. Mission failure will result in permanent offworld assignment. Code reminder: sacrifice, coagulate, clamp.",
         customCheck = function()
-            return ( ix.cmbSystems.CityCodes:Get() >= 2 )
+            return ( PLUGIN.CityCodes:Get() >= 2 )
         end
     }
 }
 
 timer.Remove("ix.DispatchPassive")
 timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
-    local cityCode = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
+    local cityCode = PLUGIN.CityCodes.Stored[PLUGIN.CityCodes:Get()]
 
     if ( cityCode ) then
         if ( cityCode.dispatchPassive ) then
@@ -307,7 +307,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
 
     local tableExtra = {}
 
-    for k, v in pairs(ix.cmbSystems.dispatchPassive) do
+    for k, v in pairs(PLUGIN.dispatchPassive) do
         if ( v.customCheck and not v:customCheck() ) then
             continue
         end
@@ -334,7 +334,7 @@ timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120)
     end
 end)
 
-ix.cmbSystems.passiveChatterLines = {
+PLUGIN.passiveChatterLines = {
     [FACTION_CP] = {
         "npc/metropolice/vo/blockisholdingcohesive.wav",
         "npc/metropolice/vo/citizensummoned.wav",
@@ -380,7 +380,7 @@ function ix.cmbSystems:PassiveChatter(ply)
         return
     end
 
-    local chatterLines = ix.cmbSystems.passiveChatterLines[char:GetFaction()]
+    local chatterLines = PLUGIN.passiveChatterLines[char:GetFaction()]
 
     if not ( chatterLines ) then
         return
@@ -458,8 +458,8 @@ function ix.cmbSystems:MakeWaypoint(data)
     net.Broadcast()
 end
 
-util.AddNetworkString("ix.cmbSystems.SyncSquads")
-function ix.cmbSystems.Squads:CreateSquad(ply, squadData)
+util.AddNetworkString("PLUGIN.SyncSquads")
+function PLUGIN.Squads:CreateSquad(ply, squadData)
     if not ( IsValid(ply) ) then
         return
     end
@@ -477,7 +477,7 @@ function ix.cmbSystems.Squads:CreateSquad(ply, squadData)
     end
 
     if not ( squadData.name ) then
-        squadData.name = "PT-" .. #ix.cmbSystems.Squads.Stored
+        squadData.name = "PT-" .. #PLUGIN.Squads.Stored
         
         return
     end
@@ -486,19 +486,19 @@ function ix.cmbSystems.Squads:CreateSquad(ply, squadData)
     squadData.members = squadData.members or {ply}
     squadData.limit = squadData.limit or ix.config.Get("squadLimit", 4)
 
-    table.insert(ix.cmbSystems.Squads.Stored, squadData)
+    table.insert(PLUGIN.Squads.Stored, squadData)
 
     local filter = RecipientFilter()
     filter:AddAllPlayers()
 
-    char:SetData("squadID", #ix.cmbSystems.Squads.Stored, false, filter)
+    char:SetData("squadID", #PLUGIN.Squads.Stored, false, filter)
 
-    net.Start("ix.cmbSystems.SyncSquads")
-        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Start("PLUGIN.SyncSquads")
+        net.WriteTable(PLUGIN.Squads.Stored)
     net.Broadcast()
 end
 
-function ix.cmbSystems.Squads:InsertMember(ply, id)
+function PLUGIN.Squads:InsertMember(ply, id)
     if not ( IsValid(ply) ) then
         return
     end
@@ -509,23 +509,23 @@ function ix.cmbSystems.Squads:InsertMember(ply, id)
         return
     end
 
-    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+    if not ( PLUGIN.Squads.Stored[id] ) then
         return
     end
 
-    if not ( ix.cmbSystems.Squads.Stored[id].members ) then
+    if not ( PLUGIN.Squads.Stored[id].members ) then
         return
     end
 
-    if ( table.HasValue(ix.cmbSystems.Squads.Stored[id].members, ply) ) then
+    if ( table.HasValue(PLUGIN.Squads.Stored[id].members, ply) ) then
         return
     end
 
-    if ( #ix.cmbSystems.Squads.Stored[id].members >= ix.cmbSystems.Squads.Stored[id].limit ) then
+    if ( #PLUGIN.Squads.Stored[id].members >= PLUGIN.Squads.Stored[id].limit ) then
         return
     end
 
-    table.insert(ix.cmbSystems.Squads.Stored[id].members, ply)
+    table.insert(PLUGIN.Squads.Stored[id].members, ply)
 
 
     local filter = RecipientFilter()
@@ -533,12 +533,12 @@ function ix.cmbSystems.Squads:InsertMember(ply, id)
 
     char:SetData("squadID", id, false, filter)
 
-    net.Start("ix.cmbSystems.SyncSquads")
-        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Start("PLUGIN.SyncSquads")
+        net.WriteTable(PLUGIN.Squads.Stored)
     net.Broadcast()
 end
 
-function ix.cmbSystems.Squads:RemoveMember(ply, id)
+function PLUGIN.Squads:RemoveMember(ply, id)
     if not ( IsValid(ply) ) then
         return
     end
@@ -549,17 +549,17 @@ function ix.cmbSystems.Squads:RemoveMember(ply, id)
         return
     end
 
-    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+    if not ( PLUGIN.Squads.Stored[id] ) then
         return
     end
 
-    if not ( ix.cmbSystems.Squads.Stored[id].members ) then
+    if not ( PLUGIN.Squads.Stored[id].members ) then
         return
     end
 
-    if ( table.HasValue(ix.cmbSystems.Squads.Stored[id].members, ply) ) then
-        if ( ply == ix.cmbSystems.Squads.Stored[id].leader ) then
-            local sortedTable = ix.cmbSystems.Squads.Stored[id].members
+    if ( table.HasValue(PLUGIN.Squads.Stored[id].members, ply) ) then
+        if ( ply == PLUGIN.Squads.Stored[id].leader ) then
+            local sortedTable = PLUGIN.Squads.Stored[id].members
 
             table.RemoveByValue(sortedTable, ply)
 
@@ -567,36 +567,36 @@ function ix.cmbSystems.Squads:RemoveMember(ply, id)
                 return ( a:GetCharacter():GetRank() or 0 ) > ( b:GetCharacter():GetRank() or 0 )
             end)
 
-            ix.cmbSystems.Squads.Stored[id].leader = sortedTable[1]
+            PLUGIN.Squads.Stored[id].leader = sortedTable[1]
         end
 
-        table.RemoveByValue(ix.cmbSystems.Squads.Stored[id].members, ply)
+        table.RemoveByValue(PLUGIN.Squads.Stored[id].members, ply)
 
         local filter = RecipientFilter()
         filter:AddAllPlayers()
 
         char:SetData("squadID", -1, false, filter)
 
-        if ( #ix.cmbSystems.Squads.Stored[id].members <= 0 ) then
-            ix.cmbSystems.Squads:RemoveSquad(id)
+        if ( #PLUGIN.Squads.Stored[id].members <= 0 ) then
+            PLUGIN.Squads:RemoveSquad(id)
         end
 
-        net.Start("ix.cmbSystems.SyncSquads")
-            net.WriteTable(ix.cmbSystems.Squads.Stored)
+        net.Start("PLUGIN.SyncSquads")
+            net.WriteTable(PLUGIN.Squads.Stored)
         net.Broadcast()
     end
 end
 
-function ix.cmbSystems.Squads:RemoveSquad(id)
+function PLUGIN.Squads:RemoveSquad(id)
     if not ( id ) then
         return
     end
 
-    if not ( ix.cmbSystems.Squads.Stored[id] ) then
+    if not ( PLUGIN.Squads.Stored[id] ) then
         return
     end
 
-    for k, v in ipairs(ix.cmbSystems.Squads.Stored[id].members) do
+    for k, v in ipairs(PLUGIN.Squads.Stored[id].members) do
         if not ( IsValid(v) ) then
             continue
         end
@@ -613,15 +613,15 @@ function ix.cmbSystems.Squads:RemoveSquad(id)
         char:SetData("squadID", -1, false, filter)
     end
 
-    table.remove(ix.cmbSystems.Squads.Stored, id)
+    table.remove(PLUGIN.Squads.Stored, id)
 
-    net.Start("ix.cmbSystems.SyncSquads")
-        net.WriteTable(ix.cmbSystems.Squads.Stored)
+    net.Start("PLUGIN.SyncSquads")
+        net.WriteTable(PLUGIN.Squads.Stored)
     net.Broadcast()
 end
 
-util.AddNetworkString("ix.cmbSystems.SyncObjectives")
-function ix.cmbSystems.Objectives:NewObjective(objectiveData)
+util.AddNetworkString("PLUGIN.SyncObjectives")
+function PLUGIN.Objectives:NewObjective(objectiveData)
     if not ( istable(objectiveData) ) then
         ErrorNoHalt("Attempted to create an objective with invalid data!")
         
@@ -635,41 +635,41 @@ function ix.cmbSystems.Objectives:NewObjective(objectiveData)
 
     objectiveData.sentBy = objectiveData.sentBy or "Dispatch"
 
-    ix.cmbSystems.Objectives.Stored[#ix.cmbSystems.Objectives.Stored + 1] = objectiveData
+    PLUGIN.Objectives.Stored[#PLUGIN.Objectives.Stored + 1] = objectiveData
 
-    net.Start("ix.cmbSystems.SyncObjectives")
-        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Start("PLUGIN.SyncObjectives")
+        net.WriteTable(PLUGIN.Objectives.Stored)
     net.Broadcast()
 end
 
-function ix.cmbSystems.Objectives:SetPriorityObjective(id, bPriority)
-    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+function PLUGIN.Objectives:SetPriorityObjective(id, bPriority)
+    if not ( PLUGIN.Objectives.Stored[id] ) then
         return
     end
 
     bPriority = bPriority or false
 
-    ix.cmbSystems.Objectives.Stored[id].priority = bPriority
+    PLUGIN.Objectives.Stored[id].priority = bPriority
 
-    net.Start("ix.cmbSystems.SyncObjectives")
-        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Start("PLUGIN.SyncObjectives")
+        net.WriteTable(PLUGIN.Objectives.Stored)
     net.Broadcast()
 end
 
-function ix.cmbSystems.Objectives:RemoveObjective(id)
-    if not ( ix.cmbSystems.Objectives.Stored[id] ) then
+function PLUGIN.Objectives:RemoveObjective(id)
+    if not ( PLUGIN.Objectives.Stored[id] ) then
         return
     end
 
-    ix.cmbSystems.Objectives.Stored[id] = nil
+    PLUGIN.Objectives.Stored[id] = nil
 
-    net.Start("ix.cmbSystems.SyncObjectives")
-        net.WriteTable(ix.cmbSystems.Objectives.Stored)
+    net.Start("PLUGIN.SyncObjectives")
+        net.WriteTable(PLUGIN.Objectives.Stored)
     net.Broadcast()
 end
 
-util.AddNetworkString("ix.cmbSystems.SyncDeployments")
-function ix.cmbSystems.Deployments:InsertMember(ply, uID)
+util.AddNetworkString("PLUGIN.SyncDeployments")
+function PLUGIN.Deployments:InsertMember(ply, uID)
     if not ( IsValid(ply) ) then
         return
     end
@@ -684,7 +684,7 @@ function ix.cmbSystems.Deployments:InsertMember(ply, uID)
         return
     end
 
-    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+    local deploymentData = PLUGIN.Deployments.Stored[uID]
 
     if not ( deploymentData ) then
         return
@@ -708,12 +708,12 @@ function ix.cmbSystems.Deployments:InsertMember(ply, uID)
 
     table.insert(deploymentData.units, ply:GetChar():GetID())
     
-    net.Start("ix.cmbSystems.SyncDeployments")
-        net.WriteTable(ix.cmbSystems.Deployments.Stored)
+    net.Start("PLUGIN.SyncDeployments")
+        net.WriteTable(PLUGIN.Deployments.Stored)
     net.Broadcast()
 end
 
-function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
+function PLUGIN.Deployments:RemoveMember(ply, uID)
     if not ( IsValid(ply) ) then
         return
     end
@@ -724,7 +724,7 @@ function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
         return
     end
 
-    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+    local deploymentData = PLUGIN.Deployments.Stored[uID]
 
     if not ( deploymentData ) then
         return
@@ -742,13 +742,13 @@ function ix.cmbSystems.Deployments:RemoveMember(ply, uID)
         table.RemoveByValue(deploymentData.units, ply:GetChar():GetID())
     end
 
-    net.Start("ix.cmbSystems.SyncDeployments")
-        net.WriteTable(ix.cmbSystems.Deployments.Stored or {})
+    net.Start("PLUGIN.SyncDeployments")
+        net.WriteTable(PLUGIN.Deployments.Stored or {})
     net.Broadcast()
 end
 
-function ix.cmbSystems.Deployments:Start(uID)
-    local deploymentData = ix.cmbSystems.Deployments.Stored[uID]
+function PLUGIN.Deployments:Start(uID)
+    local deploymentData = PLUGIN.Deployments.Stored[uID]
 
     if not ( deploymentData ) then
         return
@@ -778,8 +778,8 @@ function ix.cmbSystems.Deployments:Start(uID)
 
     deploymentData.id = uID
         local runID = deploymentData.funcID or uID
-        if ( ix.cmbSystems.Deployments.Functions[runID] ) then
-            ix.cmbSystems.Deployments.Functions[runID](deploymentData)
+        if ( PLUGIN.Deployments.Functions[runID] ) then
+            PLUGIN.Deployments.Functions[runID](deploymentData)
         end
     deploymentData.id = nil
 end

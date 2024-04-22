@@ -1,5 +1,5 @@
 local PLUGIN = PLUGIN
-ix.cmbSystems.waypoints = {}
+PLUGIN.waypoints = {}
 
 ix.option.Add("combineOptionsVisibility", ix.type.bool, true, {
     category = "Combine Systems",
@@ -126,7 +126,7 @@ function ix.cmbSystems:MakeWaypoint(data)
         data.pos = LocalPlayer():GetPos() or vector_origin
     end
 
-    ix.cmbSystems.waypoints[#ix.cmbSystems.waypoints + 1] = data
+    PLUGIN.waypoints[#PLUGIN.waypoints + 1] = data
 end
 
 function PLUGIN:LoadFonts(font, genericFont)

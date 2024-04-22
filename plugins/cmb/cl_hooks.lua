@@ -99,9 +99,9 @@ function PLUGIN:Think()
         return
     end
 
-    for k, v in ipairs(ix.cmbSystems.waypoints) do
+    for k, v in ipairs(PLUGIN.waypoints) do
         if ( v.duration and v.duration < CurTime() ) then
-            ix.cmbSystems.waypoints[k] = nil
+            PLUGIN.waypoints[k] = nil
         end
     end
 end
@@ -111,14 +111,20 @@ function PLUGIN:HUDPaint()
         return
     end
 
-    local padding = ScreenScale(8)
-    local code = ix.cmbSystems.CityCodes.Stored[ix.cmbSystems.CityCodes:Get()]
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return
+    end
 
     local char = ply:GetCharacter()
 
     if not ( char ) then
         return
     end
+
+    local padding = ScreenScale(8)
+    local code = PLUGIN.CityCodes.Stored[PLUGIN.CityCodes:Get()]
 
     if ( code ) then
         surface.SetFont("ixCombineFont10")
@@ -138,7 +144,7 @@ function PLUGIN:HUDPaint()
 
     if ( ix.option.Get("combineOverlaySquad", true) ) then
         if ( char:GetData("squadID", -1) != -1 ) then
-            local squad = ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)]
+            local squad = PLUGIN.Squads.Stored[char:GetData("squadID", -1)]
 
             if ( squad ) then
                 surface.SetFont("ixCombineFont10")
@@ -197,7 +203,7 @@ function PLUGIN:HUDPaint()
         end
     end
 
-    for k, v in ipairs(ix.cmbSystems.waypoints) do
+    for k, v in ipairs(PLUGIN.waypoints) do
         local wayPos = v.pos:ToScreen()
         local dist = math.Round(v.pos:Distance(ply:GetPos()) / 16, 1)
 
@@ -746,20 +752,20 @@ net.Receive("ix.MakeWaypoint", function()
     ix.cmbSystems:MakeWaypoint(data)
 end)
 
-net.Receive("ix.cmbSystems.SyncSquads", function()
+net.Receive("PLUGIN.SyncSquads", function()
     local data = net.ReadTable() or {}
 
-    ix.cmbSystems.Squads.Stored = data
+    PLUGIN.Squads.Stored = data
 end)
 
-net.Receive("ix.cmbSystems.SyncObjectives", function()
+net.Receive("PLUGIN.SyncObjectives", function()
     local data = net.ReadTable() or {}
 
-    ix.cmbSystems.Objectives.Stored = data
+    PLUGIN.Objectives.Stored = data
 end)
 
-net.Receive("ix.cmbSystems.SyncDeployments", function()
+net.Receive("PLUGIN.SyncDeployments", function()
     local data = net.ReadTable() or {}
 
-    ix.cmbSystems.Deployments.Stored = data
+    PLUGIN.Deployments.Stored = data
 end)

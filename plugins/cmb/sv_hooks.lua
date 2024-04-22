@@ -11,7 +11,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         return
     end
 
-    ix.cmbSystems.Squads:RemoveMember(ply, char:GetData("squadID", -1))
+    PLUGIN.Squads:RemoveMember(ply, char:GetData("squadID", -1))
 
     if ( Schema:IsCombine(ply) ) then
         local numbers = {}
@@ -21,14 +21,14 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
                 continue
             end
 
-            if ( ix.cmbSystems.dispatchNumbers[tonumber(v)] ) then
-                numbers[#numbers + 1] = ix.cmbSystems.dispatchNumbers[tonumber(v)]
+            if ( PLUGIN.dispatchNumbers[tonumber(v)] ) then
+                numbers[#numbers + 1] = PLUGIN.dispatchNumbers[tonumber(v)]
             end
         end
 
         local tagline = "union"
 
-        for k, v in pairs(ix.cmbSystems.dispatchTaglines) do
+        for k, v in pairs(PLUGIN.dispatchTaglines) do
             if ( string.find(string.lower(char:GetName()), k) ) then
                 tagline = k
             end

@@ -34,11 +34,21 @@ end
 
 if (CLIENT) then
 	net.Receive("ixSafeboxOpen", function()
-		if ( ( ix.cmbSystems.nextSafeBoxOpen or 0 ) > CurTime() ) then
+		local ply = LocalPlayer()
+
+		if not ( IsValid(ply) ) then
+			return
+		end
+
+		local char = ply:GetCharacter()
+
+		if not ( char ) then
+			return
+		end
+
+		if ( ( ply.nextSafeBoxOpen or 0 ) > CurTime() ) then
         	return
     	end
-
-    	ix.cmbSystems.nextVendorPurchase = CurTime() + ix.config.Get("safeboxOpenTime", 0.5)
 
 		if (IsValid(ix.gui.menu)) then
 			return

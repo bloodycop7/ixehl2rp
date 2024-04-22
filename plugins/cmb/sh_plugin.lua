@@ -13,8 +13,12 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
-ix.cmbSystems = ix.cmbSystems or { Objectives = { Stored ={} }, Squads = { Stored = {} }, CityCodes = {}, Deployments = {} }
-ix.cmbSystems.Deployments.Functions = {
+PLUGIN.Objectives = { Stored ={} }
+PLUGIN.Squads = { Stored = {} }
+PLUGIN.CityCodes = {}
+PLUGIN.Deployments = {}
+
+PLUGIN.Deployments.Functions = {
     ["test_deployment"] = function(self) // self is the Deployments Table defined in Deployments.Stored
         if not ( self.units and not table.IsEmpty(self.units) ) then
             return
@@ -232,7 +236,7 @@ ix.cmbSystems.Deployments.Functions = {
     end
 }
 
-ix.cmbSystems.dispatchNumbers = {
+PLUGIN.dispatchNumbers = {
     [0] = "npc/overwatch/radiovoice/zero.wav",
     [1] = "npc/overwatch/radiovoice/one.wav",
     [2] = "npc/overwatch/radiovoice/two.wav",
@@ -246,7 +250,7 @@ ix.cmbSystems.dispatchNumbers = {
     [10] = "npc/overwatch/radiovoice/ten.wav",
 }
 
-ix.cmbSystems.dispatchTaglines = {
+PLUGIN.dispatchTaglines = {
     ["union"] = "npc/overwatch/radiovoice/union.wav",
     ["defender"] = "npc/overwatch/radiovoice/defender.wav",
     ["hero"] = "npc/overwatch/radiovoice/hero.wav",
@@ -433,11 +437,11 @@ local extraExplosions = {
 
 function PLUGIN:InitPostEntity()
     if ( SERVER ) then
-        ix.cmbSystems.CityCodes:Set(1)
+        PLUGIN.CityCodes:Set(1)
     end
 end
 
-ix.cmbSystems.CityCodes.Stored = {
+PLUGIN.CityCodes.Stored = {
     {
         name = "Preserved",
         color = Color(0, 255, 0),
@@ -468,7 +472,7 @@ ix.cmbSystems.CityCodes.Stored = {
             timer.Remove("ixPreserved.HeliFlyBy")
         end,
         dispatchPassive = function()
-            local dispatchData = ix.cmbSystems.dispatchPassive[math.random(1, #ix.cmbSystems.dispatchPassive)]
+            local dispatchData = PLUGIN.dispatchPassive[math.random(1, #PLUGIN.dispatchPassive)]
 
             if not ( dispatchData ) then
                 return
@@ -872,7 +876,7 @@ ix.cmbSystems.CityCodes.Stored = {
     }
 }
 
-function ix.cmbSystems.CityCodes:Get()
+function PLUGIN.CityCodes:Get()
     return GetGlobalInt("ixCityCode", 1)
 end
 
@@ -1077,7 +1081,7 @@ ix.command.Add("CreateSquad", {
             return
         end
 
-        for k, v in pairs(ix.cmbSystems.Squads.Stored) do
+        for k, v in pairs(PLUGIN.Squads.Stored) do
             if ( v.name == name ) then
                 ply:Notify("A squad with that name already exists.")
 
@@ -1085,7 +1089,7 @@ ix.command.Add("CreateSquad", {
             end
         end
 
-        ix.cmbSystems.Squads:CreateSquad(ply, {
+        PLUGIN.Squads:CreateSquad(ply, {
             name = name,
             limit = limit
         })
@@ -1126,7 +1130,7 @@ ix.command.Add("JoinSquad", {
 
         local squadData
 
-        for k, v in pairs(ix.cmbSystems.Squads.Stored) do
+        for k, v in pairs(PLUGIN.Squads.Stored) do
             if ( ix.util.StringMatches(v.name, name) ) then
                 squadData = v
 
@@ -1146,7 +1150,7 @@ ix.command.Add("JoinSquad", {
             return
         end
 
-        ix.cmbSystems.Squads:InsertMember(ply, #squadData + 1)
+        PLUGIN.Squads:InsertMember(ply, #squadData + 1)
     end
 
 })
@@ -1211,7 +1215,7 @@ ix.command.Add("KickSquadMember", {
             return
         end
 
-        local squadData = ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)]
+        local squadData = PLUGIN.Squads.Stored[char:GetData("squadID", -1)]
 
         if not ( squadData ) then
             ply:Notify("Your squad is invalid, your squad id has been reset.")
@@ -1226,7 +1230,7 @@ ix.command.Add("KickSquadMember", {
             return
         end
 
-        ix.cmbSystems.Squads:RemoveMember(targetPly, char:GetData("squadID", -1))
+        PLUGIN.Squads:RemoveMember(targetPly, char:GetData("squadID", -1))
     end
 
 })
@@ -1260,14 +1264,14 @@ ix.command.Add("LeaveSquad", {
             return
         end
 
-        if not ( ix.cmbSystems.Squads.Stored[char:GetData("squadID", -1)] ) then
+        if not ( PLUGIN.Squads.Stored[char:GetData("squadID", -1)] ) then
             char:SetData("squadID", -1)
             ply:Notify("Squad invalid, your squad id has been reset.")
 
             return
         end
 
-        ix.cmbSystems.Squads:RemoveMember(ply, char:GetData("squadID", -1))
+        PLUGIN.Squads:RemoveMember(ply, char:GetData("squadID", -1))
     end
 })
 
@@ -1322,7 +1326,7 @@ ix.command.Add("NewObjective", {
             return
         end
 
-        ix.cmbSystems.Objectives:NewObjective({
+        PLUGIN.Objectives:NewObjective({
             sentBy = ply:Nick(),
             text = text
         })
@@ -1411,7 +1415,7 @@ ix.command.Add("SetPriorityObjective", {
 
         local objectiveID
 
-        for k, v in pairs(ix.cmbSystems.objectives) do
+        for k, v in pairs(PLUGIN.objectives) do
             if not ( ix.util.StringMatches(v.text, text) ) then
                 continue
             end
@@ -1426,7 +1430,7 @@ ix.command.Add("SetPriorityObjective", {
             return
         end
 
-        ix.cmbSystems.Objectives:SetPriorityObjective(objectiveID, true)
+        PLUGIN.Objectives:SetPriorityObjective(objectiveID, true)
     end
 })
 
@@ -1454,7 +1458,7 @@ ix.command.Add("RemovePriorityObjective", {
 
         local objectiveID
 
-        for k, v in pairs(ix.cmbSystems.objectives) do
+        for k, v in pairs(PLUGIN.objectives) do
             if not ( ix.util.StringMatches(v.text, text) ) then
                 continue
             end
@@ -1469,7 +1473,7 @@ ix.command.Add("RemovePriorityObjective", {
             return
         end
 
-        ix.cmbSystems.Objectives:SetPriorityObjective(objectiveID, false)
+        PLUGIN.Objectives:SetPriorityObjective(objectiveID, false)
     end
 })
 
@@ -1843,7 +1847,7 @@ function PLUGIN:AdjustStaminaOffset(ply)
     end
 end
 
-ix.cmbSystems.otaWepWhitelist = {
+PLUGIN.otaWepWhitelist = {
     ["ix_hands"] = true,
     ["ix_keys"] = true,
     ["ix_rappel_gear"] = true,
@@ -1889,7 +1893,7 @@ function PLUGIN:CalcMainActivity(ply, vel)
     end
 
     if ( IsValid(ply:GetActiveWeapon()) ) then
-        if not ( ix.cmbSystems.otaWepWhitelist[ply:GetActiveWeapon():GetClass()] ) then
+        if not ( PLUGIN.otaWepWhitelist[ply:GetActiveWeapon():GetClass()] ) then
             return
         end
     end
@@ -1905,9 +1909,11 @@ function PLUGIN:CalcMainActivity(ply, vel)
 	end
 end
 
-ix.cmbSystems.Deployments.Stored = {
+PLUGIN.Deployments.Stored = {
     ["test_deployment"] = {
         name = "Rooftop / Residental Block 1",
         units = {},
     }
 }
+
+CMB = PLUGIN
