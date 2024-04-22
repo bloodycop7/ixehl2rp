@@ -32,7 +32,7 @@ function PANEL:Init()
 
     ix.gui.customVendor = self
 
-    self:SetSize(scrW, scrH)
+    self:SetSize(ScrW(), ScrH())
     self:MakePopup()
     self:DockPadding(padding * 0.7, padding * 0.5, padding * 0.7, padding * 0.5)
 
@@ -40,7 +40,7 @@ function PANEL:Init()
 
     self.topPanel = self:Add("Panel")
     self.topPanel:Dock(TOP)
-    self.topPanel:SetTall(scrH * 0.045)
+    self.topPanel:SetTall(ScrH() * 0.045)
 
     self.closeButton = self.topPanel:Add("ixMenuButton")
     self.closeButton:Dock(RIGHT)
@@ -91,13 +91,13 @@ function PANEL:Init()
 
     self.categoryList = self:Add("DHorizontalScroller")
     self.categoryList:Dock(TOP)
-    self.categoryList:SetTall(scrH * 0.045)
+    self.categoryList:SetTall(ScrH() * 0.045)
     self.categoryList:SetOverlap(-padding * 0.5)
     self.categoryList:DockMargin(0, 2, 0, 0)
 
     for k, v in SortedPairs(self.categories) do
         local category = self.categoryList:Add("DButton")
-        category:SetWide(scrW * 0.1)
+        category:SetWide(ScrW() * 0.1)
         category:SetText(k)
         category:SetFont("ixMenuButtonFont")
         category:SetTextColor(Color(255, 255, 255))
@@ -125,7 +125,7 @@ function PANEL:Init()
 
     self.leftPanel = self:Add("DScrollPanel")
     self.leftPanel:Dock(LEFT)
-    self.leftPanel:SetWide(scrW * 0.3)
+    self.leftPanel:SetWide(ScrW() * 0.3)
     self.leftPanel:DockMargin(0, 5, 0, 0)
     self.leftPanel.Paint = function(s, w, h)
         surface.SetMaterial(ix.gui.gradients["left"])
@@ -136,7 +136,7 @@ function PANEL:Init()
     if ( self.vendorData.sell ) then
         self.rightPanel = self:Add("DScrollPanel")
         self.rightPanel:Dock(RIGHT)
-        self.rightPanel:SetWide(scrW * 0.3)
+        self.rightPanel:SetWide(ScrW() * 0.3)
         self.rightPanel:DockMargin(0, 5, 0, 0)
         self.rightPanel.Paint = function(s, w, h)
             surface.SetMaterial(ix.gui.gradients["right"])

@@ -341,8 +341,8 @@ function PLUGIN:HUDPaint()
             local textWidth, textHeight = surface.GetTextSize("Verdicts: " .. wep:Clip1() .. " / " .. ply:GetAmmoCount(wep:GetPrimaryAmmoType()))
 
             self:DrawBox({
-                x = scrW - textWidth - padding * 1.3,
-                y = scrH - textHeight - padding * 0.5,
+                x = ScrW() - textWidth - padding * 1.3,
+                y = ScrH() - textHeight - padding * 0.5,
                 w = textWidth * 1.1,
                 h = textHeight * 1.05,
                 rectColor = colWhite,
@@ -354,18 +354,18 @@ function PLUGIN:HUDPaint()
                 local textWidth2, textHeight2 = surface.GetTextSize("RELOAD")
 
                 self:DrawBox({
-                    x = scrW - padding * 5.7,
-                    y = scrH - textHeight - padding * 1.9,
+                    x = ScrW() - padding * 5.7,
+                    y = ScrH() - textHeight - padding * 1.9,
                     w = padding * 5,
                     h = padding * 1.3,
                     rectColor = colRed,
                     backColor = colBlack
                 })
 
-                draw.DrawText("RELOAD", "ixCombineFont10", scrW - padding * 5.7 / 1.75, scrH - ( textHeight + textHeight2 ) - padding * 0.7, colRed, TEXT_ALIGN_CENTER)
+                draw.DrawText("RELOAD", "ixCombineFont10", ScrW() - padding * 5.7 / 1.75, ScrH() - ( textHeight + textHeight2 ) - padding * 0.7, colRed, TEXT_ALIGN_CENTER)
             end
 
-            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. ply:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", scrW - padding, scrH - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
+            draw.DrawText("Verdicts: " .. wep:Clip1() .. " / " .. ply:GetAmmoCount(wep:GetPrimaryAmmoType()), "ixCombineFont10", ScrW() - padding, ScrH() - textHeight - padding * 0.5, color_white, TEXT_ALIGN_RIGHT)
         end
     end
 end

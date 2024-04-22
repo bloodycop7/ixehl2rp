@@ -207,7 +207,7 @@ hook.Add("CreateMenuButtons", "ixConfig", function(tabs)
 	tabs["config"] = {
 		Create = function(info, container)
 			container.panel = container:Add("ixConfigManager")
-			container.panel:DockPadding(scrW / 4,0,0,0)
+			container.panel:DockPadding(ScrW() / 4,0,0,0)
 		end,
 
 		OnSelected = function(info, container)

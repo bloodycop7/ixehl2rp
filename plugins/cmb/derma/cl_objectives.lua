@@ -10,7 +10,7 @@ function PANEL:Init()
 
     ix.gui.cmbObjective = self
 
-    self:SetSize(scrW * 0.5, scrH * 0.5)
+    self:SetSize(ScrW() * 0.5, ScrH() * 0.5)
     self:Center()
     self:MakePopup()
 

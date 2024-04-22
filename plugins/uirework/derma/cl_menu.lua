@@ -29,7 +29,7 @@ function PANEL:Init()
 
 	-- setup
 	self:SetPadding(ScreenScale(8), true)
-	self:SetSize(scrW, scrH)
+	self:SetSize(ScrW(), ScrH())
 	self:SetPos(0, 0)
 	self:SetLeftOffset(self:GetWide() * 0.25 + self:GetPadding())
 

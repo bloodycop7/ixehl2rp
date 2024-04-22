@@ -705,7 +705,7 @@ hook.Add("CreateMenuButtons", "ixSettings", function(tabs)
 		Create = function(info, container)
 			local panel = container:Add("ixSettings")
 			panel:SetSearchEnabled(true)
-			panel:DockPadding(scrW / 4,0,0,0)
+			panel:DockPadding(ScrW() / 4,0,0,0)
 
 			for category, options in SortedPairs(ix.option.GetAllByCategories(true)) do
 				category = L(category)

@@ -174,12 +174,12 @@ else
 		ix.gui.citizenTerminal = self
         local ply = LocalPlayer()
 
-		self:SetPos(0, scrH * 0.25)
-		self:SetSize(scrW * 0.50, scrH * 0.50)
+		self:SetPos(0, ScrH() * 0.25)
+		self:SetSize(ScrW() * 0.50, ScrH() * 0.50)
 
 		self:MakePopup()
 
-		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
+		self:MoveTo(ScrW() / 2 - ScrW() * 0.25, ScrH() / 2 - ScrH() * 0.25, 0.2, 0, 0.2)
 
         local progressBar = self:Add("DProgress")
         progressBar:Dock(FILL)

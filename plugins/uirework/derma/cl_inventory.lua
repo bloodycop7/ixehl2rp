@@ -280,7 +280,7 @@ AccessorFunc(PANEL, "iconSize", "IconSize", FORCE_NUMBER)
 AccessorFunc(PANEL, "bHighlighted", "Highlighted", FORCE_BOOL)
 
 function PANEL:Init()
-	self:SetIconSize(scrW / 20)
+	self:SetIconSize(ScrW() / 20)
 	self:ShowCloseButton(false)
 	self:SetDraggable(true)
 	self:SetSizable(true)
@@ -755,7 +755,7 @@ hook.Add("CreateMenuButtons", "ixInventory", function(tabs)
 			canvas:SetSpaceX(2)
 			canvas:SetSpaceY(2)
 			canvas:Dock(FILL)
-			canvas:DockMargin(scrW / 3,scrH / 4,0,0)
+			canvas:DockMargin(ScrW() / 3,ScrH() / 4,0,0)
 
 			ix.gui.menuInventoryContainer = canvas
 

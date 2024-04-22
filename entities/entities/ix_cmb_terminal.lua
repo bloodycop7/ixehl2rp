@@ -229,12 +229,12 @@ else
 
 		ix.gui.combineTerminal = self
 
-		self:SetPos(0, scrH * 0.25)
-		self:SetSize(scrW * 0.50, scrH * 0.50)
+		self:SetPos(0, ScrH() * 0.25)
+		self:SetSize(ScrW() * 0.50, ScrH() * 0.50)
 
 		self:MakePopup()
 
-		self:MoveTo(scrW / 2 - scrW * 0.25, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2)
+		self:MoveTo(ScrW() / 2 - ScrW() * 0.25, ScrH() / 2 - ScrH() * 0.25, 0.2, 0, 0.2)
 
 		local ply = LocalPlayer()
 
@@ -255,7 +255,7 @@ else
 		closeButton:SetTextColor(Color(0, 255, 255))
 		closeButton:SetFont("ixCombineFont10")
 		closeButton.DoClick = function(this)
-			self:MoveTo(0 - scrW * 0.50, scrH / 2 - scrH * 0.25, 0.2, 0, 0.2, function()
+			self:MoveTo(0 - ScrW() * 0.50, ScrH() / 2 - ScrH() * 0.25, 0.2, 0, 0.2, function()
 				self:Remove()
 			end)
 		end

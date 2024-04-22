@@ -175,7 +175,7 @@ hook.Add("CreateMenuButtons", "ixHelpMenu", function(tabs)
 	tabs["help"] = {
 		Create = function(info, container)
 			container.infoPanel = container:Add("ixHelpMenu")
-			container.infoPanel:DockPadding(scrW / 4,0,0,0)
+			container.infoPanel:DockPadding(ScrW() / 4,0,0,0)
 			container.OnMouseReleased = function(this, key)
 				if (key == MOUSE_RIGHT) then
 					this.infoPanel:OnSubpanelRightClick()

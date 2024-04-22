@@ -27,7 +27,7 @@ function PANEL:Init()
 
     ix.gui.craftingMenu = self
 
-    self:SetSize(scrW, scrH)
+    self:SetSize(ScrW(), ScrH())
     self:Center()
     self:MakePopup()
 

@@ -311,7 +311,7 @@ function PANEL:Init()
 	end
 
 	self:Dock(FILL)
-	self:DockMargin(scrW / 4, 0, 0, 0)
+	self:DockMargin(ScrW() / 4, 0, 0, 0)
 	
 	self.factions = {}
 	self.nextThink = 0

@@ -56,21 +56,21 @@ function PLUGIN:HUDPaint()
     local gameInfo = game.GetMap() .. " | " .. os.date("%X") .. " | " .. os.date("%x") .. " | " .. ply:Ping() .. " | " .. player.GetCount() .. " / " .. game.MaxPlayers()
 
     local trace = ply:GetEyeTrace().Entity
-    local padding = scrH * 0.09
+    local padding = ScrH() * 0.09
 
-    draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, scrH - padding, ix.config.Get("color", colWhite))
+    draw.SimpleText("Helix: Enhanced Half-Life 2 Roleplay", "ixGenericFont", 10, ScrH() - padding, ix.config.Get("color", colWhite))
 
     surface.SetFont("ixGenericFont")
     local w, h = surface.GetTextSize("Helix: Enhanced Half-Life 2 Roleplay")
     padding = padding - (h - ScreenScale(0.3))
 
-    draw.SimpleText(plyInfo, "ixSmallFont", 10, scrH - padding, colWhite)
+    draw.SimpleText(plyInfo, "ixSmallFont", 10, ScrH() - padding, colWhite)
 
     surface.SetFont("ixSmallFont")
     local w, h = surface.GetTextSize(plyInfo)
     padding = padding - (h - ScreenScale(0.3))
 
-    draw.SimpleText(gameInfo, "ixSmallFont", 10, scrH - padding, colWhite)
+    draw.SimpleText(gameInfo, "ixSmallFont", 10, ScrH() - padding, colWhite)
 
     if ( IsValid(trace) ) then
         local traceInfo = tostring(trace) .. " | " .. trace:GetModel() .. " | " .. tostring(trace:GetPos()) .. " | " .. tostring(trace:GetAngles())
@@ -79,7 +79,7 @@ function PLUGIN:HUDPaint()
         local w, h = surface.GetTextSize(traceInfo)
         padding = padding - (h - ScreenScale(0.3))
 
-        draw.SimpleText(traceInfo, "ixSmallFont", 10, scrH - padding, colWhite)
+        draw.SimpleText(traceInfo, "ixSmallFont", 10, ScrH() - padding, colWhite)
     end
 
     if ( IsValid(ply:GetActiveWeapon()) ) then
@@ -90,6 +90,6 @@ function PLUGIN:HUDPaint()
         local w, h = surface.GetTextSize(weaponInfo)
         padding = padding - (h - ScreenScale(0.3))
 
-        draw.SimpleText(weaponInfo, "ixSmallFont", 10, scrH - padding, colWhite)
+        draw.SimpleText(weaponInfo, "ixSmallFont", 10, ScrH() - padding, colWhite)
     end
 end
