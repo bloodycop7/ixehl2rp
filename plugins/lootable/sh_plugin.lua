@@ -13,10 +13,9 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
-ix.lootable = ix.lootable or {}
-ix.lootable.stored = ix.lootable.stored or {}
+PLUGIN.stored = PLUGIN.stored or {}
 
-ix.lootable.defaultConfig = {
+PLUGIN.defaultConfig = {
     ["items"] = {
         "gunpowder",
         "gear",
@@ -28,7 +27,7 @@ ix.lootable.defaultConfig = {
     }
 }
 
-function ix.lootable:Register(lootableData)
+function PLUGIN:Register(lootableData)
     if not ( lootableData.name ) then
         error("Attempt to register lootable without a name!") 
     end

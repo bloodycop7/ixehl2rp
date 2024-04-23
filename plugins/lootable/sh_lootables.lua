@@ -16,7 +16,7 @@ function lootable:lootTime()
     return math.random(1, 3) 
 end
 
-ix.lootable:Register(lootable)
+PLUGIN:Register(lootable)
 
 lootable = {}
 
@@ -27,7 +27,7 @@ function lootable:lootTime()
     return math.random(1, 3) 
 end
 
-ix.lootable:Register(lootable)
+PLUGIN:Register(lootable)
 
 lootable = {}
 
@@ -38,7 +38,7 @@ function lootable:lootTime()
     return 4
 end
 
-ix.lootable:Register(lootable)
+PLUGIN:Register(lootable)
 
 lootable = {}
 
@@ -49,7 +49,7 @@ function lootable:lootTime()
     return 4
 end
 
-ix.lootable:Register(lootable)
+PLUGIN:Register(lootable)
 
 lootable = {}
 
@@ -60,4 +60,4 @@ function lootable:lootTime()
     return 4
 end
 
-ix.lootable:Register(lootable)
+PLUGIN:Register(lootable)

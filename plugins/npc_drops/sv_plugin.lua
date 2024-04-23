@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-ix.npcDrops:Define("npc_metropolice", {
+PLUGIN:Define("npc_metropolice", {
     items = {
         "wep_mp7"
     },
@@ -23,18 +23,18 @@ function PLUGIN:OnNPCKilled(npc, attacker, wep)
         return
     end
 
-    if not ( ix.npcDrops.stored[npc:GetClass()] ) then
+    if not ( self.stored[npc:GetClass()] ) then
         return
     end
 
-    local dropData = ix.npcDrops.stored[npc:GetClass()]
+    local dropData = self.stored[npc:GetClass()]
 
     if not ( dropData ) then
         return
     end
 
     if ( npc.GetWeapons ) then
-        for k, v in pairs(npc:GetWeapons()) do
+        for k, v in ipairs(npc:GetWeapons()) do
             if not ( IsValid(v) ) then
                 continue
             end

@@ -37,11 +37,11 @@ net.Receive("ix.CustomVendor.Sell", function(len, ply)
         return
     end
 
-    if ( ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
+    if ( PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
         return
     end
 
-    local vendorItemData = ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].sell[itemID]
+    local vendorItemData = PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].sell[itemID]
 
     if not ( vendorItemData ) then
         return
@@ -127,11 +127,11 @@ net.Receive("ix.CustomVendor.Purchase", function(len, ply)
         return
     end
     
-    if ( ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
+    if ( PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].canUse and not PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()]["canUse"](ply) ) then
         return
     end
 
-    local vendorItemData = ix.vendor.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].items[itemID]
+    local vendorItemData = PLUGIN.list[ply:GetNetVar("ixVendorUse", nil):GetVendorID()].items[itemID]
 
     if not ( vendorItemData ) then
         return

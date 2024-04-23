@@ -24,7 +24,7 @@ function PANEL:Init()
         self:Remove()
     end
 
-    self.vendorData = ix.vendor.list[self.vendorUse:GetVendorID()]
+    self.vendorData = PLUGIN.list[self.vendorUse:GetVendorID()]
 
     if not ( self.vendorData ) then
         self:Remove()
