@@ -232,10 +232,10 @@ net.Receive("ix.Combine.ToggleBOL", function(len, ply)
         return
     end
 
-    ix.cmbSystems:SetBOLStatus(target, !target:GetCharacter():GetBOLStatus())
+    self:SetBOLStatus(target, !target:GetCharacter():GetBOLStatus())
 end)
 
-function ix.cmbSystems:SetBOLStatus(ply, bolStatus, callback)
+function PLUGIN:SetBOLStatus(ply, bolStatus, callback)
     if not ( IsValid(ply) ) then
         return
     end
@@ -365,7 +365,7 @@ PLUGIN.passiveChatterLines = {
     }
 }
 
-function ix.cmbSystems:PassiveChatter(ply)
+function PLUGIN:PassiveChatter(ply)
     if not ( IsValid(ply) ) then
         return
     end
@@ -427,7 +427,7 @@ function ix.cmbSystems:PassiveChatter(ply)
 end
 
 util.AddNetworkString("ix.MakeWaypoint")
-function ix.cmbSystems:MakeWaypoint(data)
+function PLUGIN:MakeWaypoint(data)
     if not ( istable(data) ) then
         ErrorNoHalt("Attempted to create a waypoint with invalid data!")
         

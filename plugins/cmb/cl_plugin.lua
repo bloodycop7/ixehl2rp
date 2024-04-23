@@ -99,7 +99,7 @@ ix.option.Add("combineOverlaySquadOutlineColor", ix.type.color, Color(0, 140, 25
     hidden = OptionVisible,
 })
 
-function ix.cmbSystems:MakeWaypoint(data)
+function PLUGIN:MakeWaypoint(data)
     local ply = LocalPlayer()
 
     if not ( IsValid(ply) ) then

@@ -11,7 +11,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
         return
     end
 
-    PLUGIN.Squads:RemoveMember(ply, char:GetData("squadID", -1))
+    self.Squads:RemoveMember(ply, char:GetData("squadID", -1))
 
     if ( Schema:IsCombine(ply) ) then
         local numbers = {}
@@ -21,14 +21,14 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
                 continue
             end
 
-            if ( PLUGIN.dispatchNumbers[tonumber(v)] ) then
+            if ( self.dispatchNumbers[tonumber(v)] ) then
                 numbers[#numbers + 1] = PLUGIN.dispatchNumbers[tonumber(v)]
             end
         end
 
         local tagline = "union"
 
-        for k, v in pairs(PLUGIN.dispatchTaglines) do
+        for k, v in pairs(self.dispatchTaglines) do
             if ( string.find(string.lower(char:GetName()), k) ) then
                 tagline = k
             end
@@ -69,7 +69,7 @@ function PLUGIN:DoPlayerDeath(ply, attacker, dmgInfo)
             end
         end
 
-        ix.cmbSystems:MakeWaypoint({
+        self:MakeWaypoint({
             pos = ply:GetPos(),
             text = "BSL " .. char:GetName() .. ".",
             color = Color(255, 0, 0),
@@ -172,7 +172,7 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
                 return
             end
 
-            ix.cmbSystems:PassiveChatter(ply)
+            self:PassiveChatter(ply)
         end)
     end
 end
@@ -413,7 +413,7 @@ function PLUGIN:OnEntityCreated(ent)
                     end)
                 end
 
-                ix.cmbSystems:MakeWaypoint({
+                self:MakeWaypoint({
                     pos = ply:GetPos(),
                     text = "CAMERA /// " .. camera:EntIndex(),
                     color = Color(255, 0, 0),
@@ -436,13 +436,12 @@ function PLUGIN:OnEntityCreated(ent)
         ent.scannerOutputDetector = ents.Create("base_entity")
         ent.scannerOutputDetector:SetName("ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector")
         ent.scannerOutputDetector.AcceptInput = function(s, name, ply, scanner, data)
-            print(name, ply, scanner, data)
             if not ( ply:IsPlayer() or ply:IsNPC() ) then
                 return false
             end
 
             if ( data == "OnPhotographPlayer" or data == "OnPhotographNPC" ) then
-                ix.cmbSystems:MakeWaypoint({
+                self:MakeWaypoint({
                     pos = ply:GetPos(),
                     text = "AIRWATCH /// " .. ent:EntIndex(),
                     color = Color(255, 0, 0),

@@ -749,7 +749,7 @@ net.Receive("ix.MakeWaypoint", function()
         Schema:PlaySound(data.sound) 
     end
 
-    ix.cmbSystems:MakeWaypoint(data)
+    PLUGIN:MakeWaypoint(data)
 end)
 
 net.Receive("PLUGIN.SyncSquads", function()
