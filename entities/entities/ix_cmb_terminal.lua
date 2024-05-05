@@ -321,7 +321,7 @@ else
 			self.cityCodesButton.DoClick = function(this)
 				self.rightPanel:Clear()
 
-				for k, v in ipairs(PLUGIN.CityCodes.Stored) do
+				for k, v in ipairs(CMB.CityCodes.Stored) do
 					local button = self.rightPanel:Add("ixMenuButton")
 					button:Dock(TOP)
 					button:SetText(v.name)
