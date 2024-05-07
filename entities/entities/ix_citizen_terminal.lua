@@ -176,9 +176,7 @@ else
 
 		self:SetPos(0, ScrH() * 0.25)
 		self:SetSize(ScrW() * 0.50, ScrH() * 0.50)
-
 		self:MakePopup()
-
 		self:MoveTo(ScrW() / 2 - ScrW() * 0.25, ScrH() / 2 - ScrH() * 0.25, 0.2, 0, 0.2)
 
         local progressBar = self:Add("DProgress")
@@ -222,6 +220,16 @@ else
 	end
 
     function UI:Populate()
+        local ply = LocalPlayer()
+        if not ( IsValid(ply) ) then
+            return self:Remove()
+        end
+
+        local char = ply:GetCharacter()
+        if not ( char ) then
+            return self:Remove()
+        end
+
         self.close = self:Add("ixMenuButton")
         self.close:Dock(BOTTOM)
         self.close:SetText("<:: Exit ::>")
@@ -264,7 +272,7 @@ else
 
         label = self:Add("DLabel")
         label:Dock(TOP)
-        label:SetText("Loyalty Points: " .. ply:GetCharacter():GetLoyaltyPoints())
+        label:SetText("Loyalty Points: " .. char:GetLoyaltyPoints())
         label:SetFont("ixMediumFont")
         label:SetContentAlignment(4)
         label:SizeToContents()
@@ -274,7 +282,6 @@ else
         self.rightPanel:SetWide(self:GetWide() * 0.5)
         self.rightPanel.Paint = function(this, w, h)
         end
-
 
         local modelPanel = self.rightPanel:Add("ixModelPanel")
         modelPanel:Dock(FILL)
