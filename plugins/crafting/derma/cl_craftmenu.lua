@@ -142,6 +142,18 @@ function PANEL:PopulateRecipes(category)
 end
 
 function PANEL:PopulateRecipe(recipe)
+    local ply = LocalPlayer()
+
+    if not ( IsValid(ply) ) then
+        return self:Remove()
+    end
+
+    local char = ply:GetCharacter()
+
+    if not ( char ) then
+        return self:Remove()
+    end
+
     self.rightPanel:Clear()
 
     if ( self.recipeModelTable ) then
