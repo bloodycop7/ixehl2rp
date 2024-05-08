@@ -149,7 +149,7 @@ if (SERVER) then
 			return
 		end
 
-		if (!Schema:IsCombine(client) and !client:GetMoveType() == MOVETYPE_NOCLIP) then
+		if (!Schema:IsCombine(client) or !client:GetMoveType() == MOVETYPE_NOCLIP) then
 			self:DisplayError()
 			self.nextUseTime = CurTime() + 2
 
