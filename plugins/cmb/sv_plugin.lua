@@ -295,6 +295,10 @@ PLUGIN.dispatchPassive = {
 
 timer.Remove("ix.DispatchPassive")
 timer.Create("ix.DispatchPassive", ix.config.Get("passiveDispatchCooldown", 120), 0, function()
+    if not ( ix.config.Get("passiveDispatchEnabled", true) ) then
+        return
+    end
+    
     local cityCode = PLUGIN.CityCodes.Stored[PLUGIN.CityCodes:Get()]
 
     if ( cityCode ) then

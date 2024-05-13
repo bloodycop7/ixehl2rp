@@ -265,6 +265,10 @@ PLUGIN.dispatchTaglines = {
     ["xray"] = "npc/overwatch/radiovoice/xray.wav"
 }
 
+ix.config.Add("passiveDispatchEnabled", true, "Should passive dispatch be enabled?", nil, {
+    category = "Combine Systems",
+})
+
 ix.config.Add("passiveDispatchCooldown", 120, "How long should the passive dispatch cooldown be?", function(oldV, newV)
     if ( SERVER ) then
         timer.Adjust("ix.DispatchPassive", newV)
