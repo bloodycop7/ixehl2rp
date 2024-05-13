@@ -1,5 +1,5 @@
 # ix: Enhanced Half-Life 2 Roleplay
-ix: Enhanced Half-Life 2 Roleplay is a project started by [eon](https://github.com/bloodycop7) on the [Helix Framework](https://github.com/NebulousCloud/helix), it was made to provide more core functions that you see in Half-Life 2.
+ix: Enhanced Half-Life 2 Roleplay is a project started by [eon (bloodycop)](https://github.com/bloodycop7) on the [Helix Framework](https://github.com/NebulousCloud/helix), it was made to provide more core functions that you see in Half-Life 2.
 
 The code is also open-source with a license, therefore you are allowed to modify it. Keep appropriate credit!\
 **Keep in mind you do require a bit of programming experience to understand what you're reading/modifying!**
@@ -9,7 +9,8 @@ The code is also open-source with a license, therefore you are allowed to modify
 > [TFA: Project HL2 MMod Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2665902404)\
 > [True Combine Hands](https://steamcommunity.com/sharedfiles/filedetails/?id=2860571852)\
 > [Entropy: Zero 2 - Metropolice Pack](https://steamcommunity.com/sharedfiles/filedetails/?id=2854473898)\
-> [Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)
+> [Mapbase Animations](https://steamcommunity.com/sharedfiles/filedetails/?id=3063666429)\
+> [Longsword](https://github.com/bitfielddev/longsword/tree/master) - When installed, insert in garrysmod/addons and rename from "longsword-master" to "longsword"
 # Recommended Addons for Usage
 > [!TIP]
 > [TFA: Aim FX](https://steamcommunity.com/sharedfiles/filedetails/?id=2834386148)\
