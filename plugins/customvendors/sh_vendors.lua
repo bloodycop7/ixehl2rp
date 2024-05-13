@@ -95,4 +95,4 @@ function vendor:onInit(ent)
     ent:SetSkin(2)
 end
 
-ix.vendor:Register(vendor)
+PLUGIN:Register(vendor)
