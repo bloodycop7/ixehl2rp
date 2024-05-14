@@ -1,5 +1,6 @@
+local PLUGIN = PLUGIN
+
 local PANEL = {}
-local padding = ScreenScale(8)
 
 function PANEL:Init()
     if ( IsValid(ix.gui.customVendor) ) then
@@ -31,6 +32,8 @@ function PANEL:Init()
     end
 
     ix.gui.customVendor = self
+
+    local padding = ScreenScale(8)
 
     self:SetSize(ScrW(), ScrH())
     self:MakePopup()
@@ -228,6 +231,8 @@ function PANEL:PopulateCategory(category)
     end
 
     self.leftPanel:Clear()
+
+    local padding = ScreenScale(8)
 
     timer.Simple(0.1, function()
         for k, v in SortedPairs(self.categories[category]) do
