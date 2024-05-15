@@ -10,8 +10,8 @@ function ix.util.IsEmpty(vector, ignore)
         and point ~= CONTENTS_PLAYERCLIP
         and point ~= CONTENTS_MONSTERCLIP
 
-    if not ( a ) then 
-		return false 
+    if not ( a ) then
+		return false
 	end
 
     local b = true
@@ -91,8 +91,15 @@ function Schema:SetCharBodygroup(ply, index, value)
 		return
 	end
 
-	index = index or 1
+	if ( isstring(index) ) then
+		index = ply:FindBodygroupByName(index)
+	end
+
 	value = value or 1
+
+	if not ( isnumber(index) and isnumber(value) ) then
+		return
+	end
 
 	local groupsData = char:GetData("groups", {})
 	groupsData[index] = value
