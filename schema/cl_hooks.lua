@@ -15,7 +15,7 @@ function Schema:RenderScreenspaceEffects()
 	if not ( IsValid(ply) ) then
 		return
 	end
-	
+
 	DrawColorModify(colorModify)
 end
 
@@ -76,7 +76,7 @@ function Schema:SetupOutlines()
 			return
 		end
 
-		ix.outline.Add(entity, ix.option.Get("itemOutlineColor", color_white), 2)
+		halo.Add({entity}, ix.option.Get("itemOutlineColor", color_white), 2, 2, 1, true, true)
 	end
 end
 
@@ -219,7 +219,7 @@ function Schema:ShouldDrawCrosshair()
 			return false
 		end
 	end
-		
+
 	return true
 end
 

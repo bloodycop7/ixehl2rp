@@ -10,7 +10,7 @@ function PLUGIN:ShouldDrawCombineHUD()
     if not ( IsValid(ply) ) then
         return false
     end
-    
+
     local char = ply:GetCharacter()
 
     if not ( char ) then
@@ -66,7 +66,7 @@ function PLUGIN:DrawBox(drawData)
     surface_DrawRect((drawData.x + drawData.w) - drawData.rectWidth, drawData.y, drawData.rectWidth, drawData.rectHeight)
     surface_DrawRect((drawData.x + drawData.w) - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectHeight)
     surface_DrawRect(drawData.x + drawData.w - drawData.rectHeight, drawData.y, drawData.rectHeight, drawData.rectWidth)
-    
+
     surface_DrawRect(drawData.x, drawData.y, drawData.rectHeight, drawData.rectWidth)
     surface_DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectWidth, drawData.rectHeight, drawData.rectWidth)
     surface_DrawRect(drawData.x, (drawData.y + drawData.h) - drawData.rectHeight, drawData.rectWidth, drawData.rectHeight)
@@ -166,7 +166,7 @@ function PLUGIN:HUDPaint()
                     if not ( IsValid(v) ) then
                         continue
                     end
-                    
+
                     local vChar = v:GetCharacter()
 
                     if not ( vChar ) then
@@ -208,7 +208,7 @@ function PLUGIN:HUDPaint()
         local dist = math.Round(v.pos:Distance(ply:GetPos()) / 16, 1)
 
         local diff = v.pos - ply:GetShootPos()
-        
+
         if not ( v.drawAlpha ) then
             v.drawAlpha = 255
         end
@@ -225,7 +225,7 @@ function PLUGIN:HUDPaint()
         textWidth, textHeight = surface.GetTextSize(v.text .. " (" .. dist .. "m)")
 
         draw.SimpleTextOutlined(v.text .. " (" .. dist .. ")", "ixCombineFont08", wayPos.x, wayPos.y, ColorAlpha(v.textColor or color_white, v.drawAlpha), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, ColorAlpha(color_black, v.drawAlpha))
-        
+
         // Uncomment this if you want to use sentBy value on the waypoint
         --[[
         surface.SetFont("ixCombineHUDWaypointText")
@@ -414,13 +414,13 @@ function PLUGIN:RenderScreenspaceEffects()
     render.DrawScreenQuad()
 end
 
-function PLUGIN:SetupOutlines()
+function PLUGIN:PreDrawHalos()
     local ply = LocalPlayer()
 
     if not ( IsValid(ply) ) then
         return
     end
-    
+
     local char = ply:GetCharacter()
 
     if not ( char ) then
@@ -477,7 +477,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor)
+            halo.Add({v}, outlineColor, 2, 2, 1, true, true)
         end
 
         for k, v in ents.Iterator() do
@@ -511,7 +511,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor, 2)
+            halo.Add({v}, outlineColor, 2, 2, 1, true, true)
         end
     end
 
@@ -563,7 +563,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor)
+            halo.Add({v}, outlineColor, 2, 2, 1, true, true)
         end
     end
 
@@ -602,7 +602,7 @@ function PLUGIN:SetupOutlines()
                     continue
                 end
 
-                ix.outline.Add(ent, outlineColor)
+                halo.Add({ent}, outlineColor, 2, 2, 1, true, true)
             end
         end
     end
@@ -746,7 +746,7 @@ net.Receive("ix.MakeWaypoint", function()
     local data = net.ReadTable() or {}
 
     if ( data.sound and string.len(data.sound) > 0 ) then
-        Schema:PlaySound(data.sound) 
+        Schema:PlaySound(data.sound)
     end
 
     PLUGIN:MakeWaypoint(data)
