@@ -578,11 +578,11 @@ end)
 
 util.AddNetworkString("ix.PlayerFinishChat")
 net.Receive("ix.PlayerFinishChat", function(len, ply)
-	if ( ( ix.nextPlayerFinishChat or 0 ) > CurTime() ) then
+	if ( ( ply.nextPlayerFinishChat or 0 ) > CurTime() ) then
 		return
 	end
 
-	ix.nextPlayerFinishChat = CurTime() + 0.5
+	ply.nextPlayerFinishChat = CurTime() + 0.5
 
 	if not ( IsValid(ply) ) then
 		return
