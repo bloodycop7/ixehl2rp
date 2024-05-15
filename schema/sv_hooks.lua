@@ -500,11 +500,11 @@ local keys = {
 
 util.AddNetworkString("ix.PlayerChatTextChanged")
 net.Receive("ix.PlayerChatTextChanged", function(len, ply)
-	if ( ( ix.nextPlayerTextChanged or 0 ) > CurTime() ) then
+	if ( ( ply.nextPlayerTextChanged or 0 ) > CurTime() ) then
 		return
 	end
 
-	ix.nextPlayerTextChanged = CurTime() + 0.5
+	ply.nextPlayerTextChanged = CurTime() + 0.5
 
 	if not ( IsValid(ply) ) then
 		return
@@ -539,11 +539,11 @@ end)
 
 util.AddNetworkString("ix.PlayerStartChat")
 net.Receive("ix.PlayerStartChat", function(len, ply)
-	if ( ( ix.nextPlayerStartChat or 0 ) > CurTime() ) then
+	if ( ( ply.nextPlayerStartChat or 0 ) > CurTime() ) then
 		return
 	end
 
-	ix.nextPlayerStartChat = CurTime() + 0.5
+	ply.nextPlayerStartChat = CurTime() + 0.5
 
 	if not ( IsValid(ply) ) then
 		return
