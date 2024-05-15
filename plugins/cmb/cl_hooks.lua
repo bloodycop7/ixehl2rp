@@ -477,7 +477,7 @@ function PLUGIN:PreDrawHalos()
                 continue
             end
 
-            halo.Add({v}, outlineColor, 1, 1, 1, true, true)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, true)
         end
 
         for k, v in ents.Iterator() do
@@ -511,7 +511,7 @@ function PLUGIN:PreDrawHalos()
                 continue
             end
 
-            halo.Add({v}, outlineColor, 1, 1, 1, true, false)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, false)
         end
     end
 
@@ -563,7 +563,7 @@ function PLUGIN:PreDrawHalos()
                 continue
             end
 
-            halo.Add({v}, outlineColor, 1, 1, 1, true, true)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, true)
         end
     end
 
@@ -602,7 +602,7 @@ function PLUGIN:PreDrawHalos()
                     continue
                 end
 
-                halo.Add({ent}, outlineColor, 1, 1, 1, true, true)
+                halo.Add({ent}, outlineColor, 0, 0, 0, true, true)
             end
         end
     end
