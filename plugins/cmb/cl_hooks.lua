@@ -414,7 +414,7 @@ function PLUGIN:RenderScreenspaceEffects()
     render.DrawScreenQuad()
 end
 
-function PLUGIN:SetupOutlines()
+function PLUGIN:PreDrawHalos()
     local ply = LocalPlayer()
 
     if not ( IsValid(ply) ) then
@@ -477,7 +477,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, true)
         end
 
         for k, v in ents.Iterator() do
@@ -511,7 +511,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor, 2)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, false)
         end
     end
 
@@ -563,7 +563,7 @@ function PLUGIN:SetupOutlines()
                 continue
             end
 
-            ix.outline.Add(v, outlineColor)
+            halo.Add({v}, outlineColor, 0, 0, 0, true, true)
         end
     end
 
@@ -602,7 +602,7 @@ function PLUGIN:SetupOutlines()
                     continue
                 end
 
-                ix.outline.Add(ent, outlineColor)
+                halo.Add({ent}, outlineColor, 0, 0, 0, true, true)
             end
         end
     end

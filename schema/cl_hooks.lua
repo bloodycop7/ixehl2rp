@@ -76,7 +76,7 @@ function Schema:SetupOutlines()
 			return
 		end
 
-		ix.outline.Add(entity, ix.option.Get("itemOutlineColor", color_white), 2)
+		halo.Add({entity}, ix.option.Get("itemOutlineColor", color_white), 1, 1, 1, true, true)
 	end
 end
 
