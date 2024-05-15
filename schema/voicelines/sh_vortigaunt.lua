@@ -280,6 +280,10 @@ local vortVCs = {
     {"YETMANYREMAIN", "Yetmanymoreremain", "vo/outland_02/junction/vort_junc_killedmanyyet02.wav"},
 }
 
+for k, v in ipairs(Schema.voices) do
+    Schema.voices.Add("Vortigaunt", v[1], v[2], v[3])
+end
+
 Schema.voices.AddClass("Vortigaunt", function(ply)
 	return Schema:IsVortigaunt(ply)
 end)
