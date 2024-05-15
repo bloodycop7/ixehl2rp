@@ -280,6 +280,6 @@ localvortVCs={
     {"YETMANYREMAIN","Yetmanymoreremain","vo/outland_02/junction/vort_junc_killedmanyyet02.wav"},
 }
 
-Schema.voices.AddClass("Vortigaunt",function(ply)
-	returnSchema:IsVortigaunt(ply)
+Schema.voices.AddClass("Vortigaunt", function(ply)
+	return Schema:IsVortigaunt(ply)
 end)
