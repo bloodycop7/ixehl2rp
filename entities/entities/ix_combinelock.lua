@@ -3,8 +3,8 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.PrintName = "Combine Lock"
-ENT.Category = "HL2 RP"
-ENT.Spawnable = true
+ENT.Category = "ix: HL2RP"
+ENT.Spawnable = false
 ENT.AdminOnly = true
 ENT.PhysgunDisable = true
 ENT.bNoPersist = true
