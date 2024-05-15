@@ -511,7 +511,7 @@ function PLUGIN:PreDrawHalos()
                 continue
             end
 
-            halo.Add({v}, outlineColor, 1, 1, 1, true, true)
+            halo.Add({v}, outlineColor, 1, 1, 1, true, false)
         end
     end
 
