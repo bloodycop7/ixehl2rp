@@ -1,6 +1,6 @@
 //Voicelines,thankssQubany![https://steamcommunity.com/id/460325/]
 
-localvortVCs={
+local vortVCs = {
     {"ACCOMPANY","Gladlyweaccompany","vo/npc/vortigaunt/accompany.wav"},
     {"ACIDLIONS","Bewaretheacid-lions.Theircorrosivespraypermitsquickcarvingofrockpassages,butalsoservesasastrongdeterrenttohiverobberslikeourselves.","vo/outland_03_04/tunnels/vort_extract_acidinfo05.wav"},
     {"AFFIRMED","Affirmed","vo/npc/vortigaunt/affirmed.wav"},
