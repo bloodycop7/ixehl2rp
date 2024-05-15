@@ -1,4 +1,4 @@
-//Voicelines,thankssQubany![https://steamcommunity.com/id/460325/]
+// https://github.com/JohnyReaper/johny-helix-plugins/blob/master/vortigaunt_stuff/sh_voices.lua
 
 local vortVCs = {
     {"ACCOMPANY","Gladlyweaccompany","vo/npc/vortigaunt/accompany.wav"},
