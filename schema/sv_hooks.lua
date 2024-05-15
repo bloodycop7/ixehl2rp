@@ -67,9 +67,9 @@ function Schema:GetPlayerDeathSound(client)
 
 		return class:GetDeathSound(client)
 	end
-	
+
 	local faction = ix.faction.Get(char:GetFaction())
-	
+
 	if ( faction and faction.GetDeathSound ) then
 		return faction:GetDeathSound(client)
 	end
@@ -103,7 +103,7 @@ function Schema:GetPlayerPainSound(client)
 	end
 
 	local faction = ix.faction.Get(char:GetFaction())
-	
+
 	if ( faction and faction.GetPainSound ) then
 		return faction:GetPainSound(client)
 	end
@@ -129,7 +129,7 @@ function Schema:DoPlayerDeath(ply, attacker, damageInfo)
 	end
 
     // CMB:SetBOLStatus(ply, false) -- It works, enable if you want.
-	
+
 	local maxDeathItems = ix.config.Get("maxItemDrops", 3)
 
 	if ( maxDeathItems > 0 ) then
@@ -193,7 +193,7 @@ function Schema:PlayerSwitchFlashlight(ply, bEnabled)
 	if not ( char ) then
 		return
 	end
-	
+
 	if ( Schema:IsCombine(ply) ) then
 		return true
 	end
@@ -413,14 +413,14 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 		if ( permaClass and permaClassData ) then
 			local oldClass = newChar:GetClass()
 			newChar:SetClass(permaClass)
-			
+
 			hook.Run("PlayerJoinedClass", ply, permaClass, oldClass)
 		end
 
 		if ( permaRank and permaRankData ) then
 			local oldRank = newChar:GetRank()
 			newChar:SetRank(permaRank)
-			
+
 			hook.Run("PlayerJoinedRank", ply, permaRank, oldRank)
 		end
 
@@ -447,7 +447,7 @@ function Schema:PlayerLoadedCharacter(ply, newChar, oldChar)
 				k:Call("OnLoadout", ply)
 			end
 		end
-		
+
 		local filter = RecipientFilter()
         filter:AddAllPlayers()
 
@@ -464,12 +464,12 @@ function Schema:PlayerSetHandsModel(ply, ent)
 		if ( self:IsOW(ply) ) then
 			if ( self:IsOWElite(ply) ) then
 				ply:SetPlayerColor(Vector(1, 0, 0))
-				
+
 				ent:SetModel("models/weapons/c_arms_combine_elite/c_arms_combine_elite_color.mdl")
 				ent:SetSkin(0)
 				ent:SetBodyGroups("000000")
 			end
-			
+
 			if ( self:IsOWSoldier(ply) or self:IsOWShotgunner(ply) ) then
 				local skin = 0
 
@@ -493,6 +493,9 @@ local keys = {
 	["y"] = true,
 	["w"] = true,
 	["t"] = true,
+	["cmb_global"] = true,
+	["cmb_dispatch"] = true,
+	["cmb_ow"] = true,
 }
 
 util.AddNetworkString("ix.PlayerChatTextChanged")
