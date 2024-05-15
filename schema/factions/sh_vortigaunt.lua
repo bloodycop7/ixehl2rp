@@ -1,11 +1,8 @@
-
 FACTION.name = "Vortigaunt"
 FACTION.description = "A xenian species, enslaved by the Combine. They are known for their healing abilities."
 FACTION.color = Color(0, 150, 0)
 FACTION.models = {"models/vortigaunt.mdl"}
 FACTION.weapons = {"swep_vortigaunt_beam_edit", "swep_vortigaunt_heal"}
-FACTION.isDefault = false
-FACTION.isGloballyRecognized = false
 
 function FACTION:OnTransfered(client)
 	local character = client:GetCharacter()
@@ -34,7 +31,6 @@ function FACTION:GetDeathSound(ply)
 
 	return self.painSounds[math.random(1, #self.painSounds)]
 end
-
 
 function FACTION:ModifyPlayerStep(ply, data)
 	if ( data.ladder or data.submerged ) then
