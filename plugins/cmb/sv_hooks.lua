@@ -114,6 +114,12 @@ function PLUGIN:PlayerUseDoor(ply, door)
         return false
     end
 
+    if ( ( Schema:IsCombine(ply) ) and door:IsDoor() and IsValid(door.ixLock) and door:KeyDown(IN_SPEED) ) then
+		entity.ixLock:Toggle(client)
+
+		return false
+	end
+
     if ( Schema:IsCombine(ply) ) then
         if ( door:GetClass("func_door") or door:GetClass() == "prop_dynamic" ) then
             if ( door.ixIsCombineDoor ) then
@@ -138,7 +144,7 @@ function PLUGIN:InitializedPlugins()
             if not ( IsValid(v2) ) then
                 continue
             end
-            
+
             if not ( v2:GetClass() == "func_door" or v2:GetClass() == "prop_dynamic" ) then
                 continue
             end
@@ -158,13 +164,13 @@ function PLUGIN:PlayerLoadedCharacter(ply, newChar, oldChar)
         timer.Create("ix.PassiveChatter." .. newChar:GetID(), ix.config.Get("passiveChatterCooldown", 120), 0, function()
             if not ( IsValid(ply) ) then
                 timer.Remove(uID)
-            
+
                 return
             end
 
             if not ( ply:GetCharacter() ) then
                 timer.Remove(uID)
-            
+
                 return
             end
 
@@ -335,7 +341,7 @@ function PLUGIN:PlayerEndVoice(ply)
             end
         end
     end
-end 
+end
 
 function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
     if not ( IsValid(listener) or IsValid(talker) ) then
@@ -349,7 +355,7 @@ function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
     end
 
     local charTalker = talker:GetCharacter()
-    
+
     if not ( charTalker ) then
         return
     end
@@ -377,7 +383,7 @@ function PLUGIN:OnEntityCreated(ent)
     if not ( IsValid(ent) ) then
         return
     end
-    
+
     if ( ent:GetClass() == "npc_combine_camera" ) then
         if ( IsValid(ent.ixCamDetector) ) then
             ent.ixCamDetector:Remove()
@@ -455,7 +461,7 @@ function PLUGIN:OnEntityCreated(ent)
         ent:Fire("addoutput", "OnPhotographPlayer ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographPlayer:0:-1")
         ent:Fire("addoutput", "OnPhotographNPC ix." .. ent:GetClass() .. "." .. ent:EntIndex() .. ".scannerOutputDetector:scannerOutputDetect." .. ent:EntIndex() .. ":OnPhotographNPC:0:-1")
         ent:DeleteOnRemove(ent.scannerOutputDetector)
-    end    
+    end
 end
 
 local whitelistEnts = {
