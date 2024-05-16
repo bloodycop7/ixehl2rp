@@ -127,10 +127,10 @@ PLUGIN.Deployments.Functions = {
         if ( IsValid(self.dropship.landTarget) ) then
             self.dropship.landTarget:Remove()
         end
-        
+
         self.dropship.inputDetector = ents.Create("base_entity")
         self.dropship.inputDetector:SetName("ix_deployment_" .. ( self.id or numbID ) .. "_input_detector")
-        
+
         self.dropship.inputDetector.AcceptInput = function(s, name, activator, caller, data)
             activator:Fire(name, tostring(data))
         end
@@ -172,7 +172,7 @@ PLUGIN.Deployments.Functions = {
 
                 return
             end
-        
+
             if ( self.dropship:OnGround() ) then
                 hook.Run("OnDropshipLanded", self.dropship)
 
@@ -346,7 +346,7 @@ ix.option.Add("dispatchAnnouncementType", ix.type.array, "chat_sound", {
 ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatter cooldown be?", function(oldV, newV)
     if ( SERVER ) then
         for k, v in player.Iterator() do
-            if not ( IsValid(v) ) then 
+            if not ( IsValid(v) ) then
                 continue
             end
 
@@ -359,7 +359,7 @@ ix.config.Add("passiveChatterCooldown", 120, "How long should the passive chatte
             if not ( Schema:IsCombine(v) ) then
                 continue
             end
-            
+
             timer.Adjust("ix.PassiveChatter." .. char:GetID(), newV)
         end
     end
@@ -513,7 +513,7 @@ PLUGIN.CityCodes.Stored = {
         color = Color(255, 255, 0),
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention community: unrest procedure code is now in effect. Inoculate, shield, pacify. Code: pressure, sword, sterilize.")
-            
+
             for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
@@ -542,7 +542,7 @@ PLUGIN.CityCodes.Stored = {
                 else
                     Schema:PlaySound(v, "npc/overwatch/cityvoice/f_unrestprocedure1_spkr.wav", 75, 100, 0.5)
                 end
-            
+
                 if not ( timer.Exists("ixMarginal.HeliFlyBy") ) then
                     timer.Create("ixMarginal.HeliFlyBy", math.random(40, 80), 0, function()
                         if ( Schema:IsOutside(v) ) then
@@ -563,12 +563,12 @@ PLUGIN.CityCodes.Stored = {
         color = Color(255, 0, 0),
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection Teams: Autonomous judgment is now in effect. Sentencing is now discretionary. Code: amputate, zero, confirm.")
-            
+
             for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
-                
+
                 if ( Schema:IsOutside(v) ) then
                     Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
                 else
@@ -618,7 +618,7 @@ PLUGIN.CityCodes.Stored = {
                 timer.Create("ix.AutonomousJudgment.GunshipDistant", math.random(10, 30), 0, function()
                     Schema:PlaySound(player.Iterator(), "ambient/levels/streetwar/gunship_distant" .. math.random(1, 2) .. ".wav", 75, 100, 0.7)
                 end)
-                
+
                 timer.Create("ix.AutonomousJudgment.BuildingRubble", math.random(10, 20), 0, function()
                     Schema:PlaySound(player.Iterator(), "ambient/levels/streetwar/building_rubble" .. math.random(1, 5) .. ".wav", 75, 100, 0.7)
                 end)
@@ -689,12 +689,12 @@ PLUGIN.CityCodes.Stored = {
                 end
             end
         end,
-        dispatchPassive = function()    
+        dispatchPassive = function()
             for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
-                
+
                 if ( ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "sound" ) then
                     if ( Schema:IsOutside(v) ) then
                         Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_4_spkr.wav", 75, 100, 0.8)
@@ -713,12 +713,12 @@ PLUGIN.CityCodes.Stored = {
         color = Color(255, 0, 0),
         onStart = function()
             ix.chat.Send(nil, "cmb_dispatch", "Attention all Ground Protection teams: Judgement waiver now in effect. Capital prosecution is discretionary.")
-            
+
             for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
-                
+
                 if ( Schema:IsOutside(v) ) then
                     Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
                 else
@@ -729,7 +729,7 @@ PLUGIN.CityCodes.Stored = {
             Schema:PlaySound(player.Iterator(), "ambient/alarms/citadel_alert_loop2.wav", 75, 100, 0.7)
             Schema:PlaySound(player.Iterator(), "ambient/alarms/manhack_alert_pass1.wav", 75, 100, 0.6)
             Schema:PlaySound(player.Iterator(), "ambient/alarms/apc_alarm_pass1.wav", 75, 100, 0.6)
-            Schema:PlaySound(player.Iterator(), "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.6)            
+            Schema:PlaySound(player.Iterator(), "ambient/alarms/scanner_alert_pass1.wav", 75, 100, 0.6)
 
             timer.Create("ix.JudgmentWaiver.hit1", SoundDuration("ambient/alarms/citadel_alert_loop2.wav") - 10, 0, function()
                 Schema:PlaySound(player.Iterator(), "ambient/levels/citadel/citadel_hit1_adpcm.wav", 75, 100, 0.6)
@@ -769,7 +769,7 @@ PLUGIN.CityCodes.Stored = {
                 timer.Create("ix.JudgmentWaiver.GunshipDistant", math.random(10, 30), 0, function()
                     Schema:PlaySound(player.Iterator(), "ambient/levels/streetwar/gunship_distant" .. math.random(1, 2) .. ".wav", 75, 100, 0.7)
                 end)
-                
+
                 timer.Create("ix.JudgmentWaiver.BuildingRubble", math.random(10, 20), 0, function()
                     Schema:PlaySound(player.Iterator(), "ambient/levels/streetwar/building_rubble" .. math.random(1, 5) .. ".wav", 75, 100, 0.7)
                 end)
@@ -859,12 +859,12 @@ PLUGIN.CityCodes.Stored = {
                 end
             end
         end,
-        dispatchPassive = function()    
+        dispatchPassive = function()
             for k, v in player.Iterator() do
                 if not ( IsValid(v) ) then
                     continue
                 end
-                
+
                 if ( ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "chat_sound" or ix.option.Get(v, "dispatchAnnouncementType", "chat_sound") == "sound" ) then
                     if ( Schema:IsOutside(v) ) then
                         Schema:PlaySound(v, "npc/overwatch/cityvoice/f_protectionresponse_5_spkr.wav", 75, 100, 0.8)
@@ -908,7 +908,7 @@ function PLUGIN:InitializedChatClasses()
             if ( ix.chat.classes["ic"]:CanHear(speaker, listener) ) then
                 return true
             end
-            
+
             return true
         end,
         CanSay = function(self, speaker, text)
@@ -929,7 +929,7 @@ function PLUGIN:InitializedChatClasses()
             if not ( Schema:IsCombine(speaker) ) then
                 return false
             end
-            
+
             return true
         end,
         OnChatAdd = function(self, speaker, text)
@@ -984,7 +984,7 @@ function PLUGIN:InitializedChatClasses()
             if not ( Schema:IsOW(speaker) ) then
                 return false
             end
-            
+
             return true
         end,
         OnChatAdd = function(self, speaker, text)
@@ -1015,7 +1015,7 @@ function PLUGIN:InitializedChatClasses()
             if not ( IsValid(speaker) ) then
                 return true
             end
-            
+
             return false
         end,
         OnChatAdd = function(self, speaker, text)
@@ -1381,7 +1381,7 @@ ix.command.Add("ToggleVoiceRadio", {
 
         if ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
             ply:Notify("You have a voice radio timeout for " .. string.NiceTime(timer.TimeLeft("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) .. "."))
-            
+
             return
         end
 
@@ -1502,7 +1502,7 @@ ix.command.Add("ToggleTeamVoiceRadio", {
 
         if ( timer.Exists("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) ) then
             ply:Notify("You have a voice radio timeout for " .. string.NiceTime(timer.TimeLeft("ix.Char.VoiceRadioTimeout." .. ply:SteamID64() .. "." .. char:GetID()) .. "."))
-            
+
             return
         end
 
@@ -1586,6 +1586,24 @@ ix.command.Add("TimeoutVoiceRadio", {
         end
 
         ply:Notify("You have timed out " .. targetChar:GetName() .. " from using voice radio for " .. string.NiceTime(time) .. ".")
+    end
+})
+
+ix.command.Add("CharSearch", {
+    OnRun = function(self, ply)
+        local data = {}
+			data.start = ply:GetShootPos()
+			data.endpos = data.start + ply:GetAimVector() * 96
+			data.filter = ply
+		local target = util.TraceLine(data).Entity
+
+        if (IsValid(target) and target:IsPlayer() and target:IsRestricted()) then
+			if (!ply:IsRestricted()) then
+				Schema:SearchPlayer(ply, target)
+			else
+				return "@notNow"
+			end
+		end
     end
 })
 
@@ -1728,7 +1746,7 @@ ix.command.Add("KickDoor", {
                                 tempEnt:Remove()
                                 tempEnt = nil
                             end
-                        
+
                             door:Fire("SetSpeed", oldDoorSpeed)
 
                             if not ( timer.Exists("ix.DoorSetKickedBy." .. door:EntIndex()) ) then
@@ -1908,7 +1926,7 @@ function PLUGIN:CalcMainActivity(ply, vel)
 		if ( vel:Length2D() > 0.1 ) then
 			playAnim = "walkunarmed_all"
 		end
-		
+
 		ply.CalcSeqOverride = ply:LookupSequence(playAnim) or ply.CalcSeqOverride
 	end
 end
