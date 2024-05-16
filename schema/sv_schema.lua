@@ -124,7 +124,13 @@ function Schema:PlaySound(players, sound, level, pitch, volume, channel)
 	elseif ( type(players) == "table" ) then
 		actualPlayerTable = players
 	else
-		actualPlayerTable = player.Iterator()
+		for k, v in player.Iterator() do
+			if not ( IsValid(v) ) then
+				continue
+			end
+
+			actualPlayerTable[#actualPlayerTable + 1] = v
+		end
 	end
 
 	level = level or 75
