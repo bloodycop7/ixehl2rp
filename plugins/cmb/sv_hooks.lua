@@ -90,9 +90,30 @@ function PLUGIN:PlayerUse(ply, ent)
         return
     end
 
-    if ( ent.kickedBy ) then
+    if ( ent:IsDoor() and ent.kickedBy ) then
         return false
     end
+
+    if (!ply:IsRestricted() and ent:IsPlayer() and ent:IsRestricted() and !ent:GetNetVar("untying")) then
+		ent:SetAction("@beingUntied", 5)
+		ent:SetNetVar("untying", true)
+
+		ply:SetAction("@unTying", 5)
+
+		ply:DoStaredAction(ent, function()
+			ent:SetRestricted(false)
+			ent:SetNetVar("untying")
+		end, 5, function()
+			if (IsValid(ent)) then
+				ent:SetNetVar("untying")
+				ent:SetAction()
+			end
+
+			if (IsValid(ply)) then
+				ply:SetAction()
+			end
+		end)
+	end
 end
 
 function PLUGIN:PlayerUseDoor(ply, door)
