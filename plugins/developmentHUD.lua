@@ -17,7 +17,7 @@ if not ( CLIENT ) then
 end
 
 local enabled = enabled or false
-local colWhite = Color(165,165,165)
+local colWhite = Color(165, 165, 165)
 
 concommand.Add("ix_dev_hud", function()
     local ply = LocalPlayer()
