@@ -89,7 +89,7 @@ local function ExperimentalFormatting(stringtabl)
         -- we are a vc so we can also set the carry to us
         if carry then
             if !after then
-                v.text = string.SetChar(v.text, #v.text, carry) 
+                v.text = string.SetChar(v.text, #v.text, carry)
                 carry = nil
                 continue
             end
@@ -155,7 +155,7 @@ function PLUGIN:PlayerMessageSend(speaker, chatType, text, anonymous, receivers,
                         if ix.config.Get("radioVCClientOnly", false) == true then
                             netstream.Start(receivers, "PlayQueuedSound", nil, sounds, nil, nil, volume)
                         else
-                            for k3, v3 in pairs(receivers) do
+                            for k3, v3 in ipairs(receivers) do
                                 if v3 == speaker then continue end
                                 ix.util.EmitQueuedSounds(v3, sounds, nil, nil, volume)
                             end
