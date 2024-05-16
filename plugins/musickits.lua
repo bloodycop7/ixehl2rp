@@ -101,7 +101,7 @@ local function ReadMusicKit(name)
     if not txt then
         return "Failed to read music kit file."
     end
-    
+
     local json = util.JSONToTable(txt)
     local antiCrash = {}
 
@@ -210,7 +210,7 @@ ix.option.Add("musicKit", ix.type.array, "Default", {
         for _, v in SortedPairs(names) do
 
             local name = v
-            
+
             entries[v] = name
         end
 
@@ -277,10 +277,10 @@ concommand.Add("ix_reloadmusickits", function()
         bNetworked = true,
         populate = function()
             local entries = {}
-    
+
             for _, v in SortedPairs(names) do
                 local name = v
-                
+
                 entries[v] = name
             end
 
@@ -326,11 +326,11 @@ concommand.Add("ix_reloadmusickits", function()
             if ( IsMounted("ep2") or hasEP2 ) then
                 entries["EpisodeTwo"] = "Half-Life 2: Episode Two"
             end
-    
+
             return entries
         end
     })
-    
+
 end)
 
 ix.option.Add("musicAmbientVol", ix.type.number, 0.2, {
@@ -395,6 +395,34 @@ if ( SERVER ) then
         end
     end
 
+    function PLUGIN:DoPlayerDeath(ply, attacker, dmg)
+        if not ( IsValid(ply) ) then
+            return
+        end
+
+        local char = ply:GetChar()
+
+        if not ( char ) then
+            return
+        end
+
+        local uID = "ixMusicKit.CombatTimer." .. ply:SteamID64()
+
+        if ( timer.Exists(uID) ) then
+            ply:SetNetVar("ixInCombat", false)
+            timer.Remove(uID)
+        end
+
+        if ( IsValid(attacker) and attacker:IsPlayer() and attacker:GetChar() ) then
+            uID = "ixMusicKit.CombatTimer." .. attacker:SteamID64()
+
+            if ( timer.Exists(uID) ) then
+                attacker:SetNetVar("ixInCombat", false)
+                timer.Remove(uID)
+            end
+        end
+    end
+
     return
 end
 
@@ -452,7 +480,7 @@ local function GetRandomSong(style)
 
         if k > highest then
             highest = k
-        end    
+        end
     end
 
     if table.Count(lastSongs) > 2 then
@@ -472,14 +500,14 @@ local function InCombat() // simple for now
     if forcedCombat then
         return true
     end
-    
+
     if ( LocalPlayer():GetNetVar("ixInCombat", false) ) then
         return true
     end
 
     if ( CMB.GetCityCode ) then
         local current = CMB.CityCodes:Get()
-        
+
         return current > 2
     end
 end
@@ -489,7 +517,7 @@ function PLUGIN:GetPlayerDeathSound()
 
     if kitName and CUSTOM_MUSICKITS[kitName] and CUSTOM_MUSICKITS[kitName].DeathSound then
         return CUSTOM_MUSICKITS[kitName].DeathSound
-    end 
+    end
 end
 
 local nextThink = 0
