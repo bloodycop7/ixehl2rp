@@ -82,8 +82,9 @@ function PLUGIN:HUDPaint()
         draw.SimpleText(traceInfo, "ixSmallFont", 10, ScrH() - padding, colWhite)
     end
 
-    if ( IsValid(ply:GetActiveWeapon()) ) then
-        local weapon = ply:GetActiveWeapon()
+    local weapon = ply:GetActiveWeapon()
+
+    if ( IsValid(weapon) ) then
         local weaponInfo = "Weapon: " .. weapon:GetClass() .. " | Clip: " .. weapon:Clip1() .. " | Ammo: " .. ply:GetAmmoCount(weapon:GetPrimaryAmmoType())
 
         surface.SetFont("ixSmallFont")
