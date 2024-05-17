@@ -79,7 +79,7 @@ if (SERVER) then
 		self:SetCustomCollisionCheck(true)
 		self:EnableCustomCollisions(true)
         self:CollisionRulesChanged()
-        
+
 		self:SetDummy(self.dummy)
 
 		physObj = self.dummy:GetPhysicsObject()
@@ -180,7 +180,7 @@ if (SERVER) then
 			return
 		end
 
-		if ( Schema:IsCombine(activator) ) then
+		if ( Schema:IsCombine(activator) or activator:GetMoveType() == MOVETYPE_NOCLIP or ( hook.Run("CanPlayerAccessForcefield", activator, self) or false ) == true ) then
             local oldMode = self:GetMode()
 
 			self:SetMode(self:GetMode() + 1)
@@ -218,7 +218,7 @@ if (SERVER) then
 			ply = b
 			entity = a
 		end
-        
+
         if ( IsValid(entity) and entity:GetClass() == "ix_cmb_forcefield" ) then
             if ( IsValid(b) ) then
                 if ( hook.Run("CanGoThroughForcefield", b, entity) == false ) then
