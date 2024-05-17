@@ -221,7 +221,7 @@ if (SERVER) then
 
         if ( IsValid(entity) and entity:GetClass() == "ix_cmb_forcefield" ) then
             if ( IsValid(b) ) then
-                if ( hook.Run("CanGoThroughForcefield", b, entity) == false ) then
+                if ( hook.Run("CanPassThroughForcefield", b, entity) == false ) then
                     return true
                 end
             end
