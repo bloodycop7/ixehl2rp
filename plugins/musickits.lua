@@ -13,8 +13,6 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
-// Credits to vin ( original creator )
-
 PLUGIN.passiveMusic = {
     {"music/HL2_song0.mp3", 39},
     {"music/HL2_song1.mp3", 98},
@@ -153,7 +151,7 @@ local function ReadMusicKit(name)
         return "DeathSound must be a string."
     end
 
-    // compile it
+    // comment: compile it
     local comp = {}
 
     comp.Ambient = {}
@@ -201,77 +199,7 @@ ix.option.Add("musicKitEnabled", ix.type.bool, true, {
     category = "Music Kits"
 })
 
-ix.option.Add("musicKit", ix.type.array, "Default", {
-    category = "Music Kits",
-    bNetworked = true,
-    populate = function()
-        local entries = {}
-
-        for _, v in SortedPairs(names) do
-
-            local name = v
-
-            entries[v] = name
-        end
-
-        local hasEP1 = true
-        local hasEP2 = true
-
-        for k, v in pairs(PLUGIN.passiveMusicEpisodic) do
-            if not ( file.Exists("sound/" .. v[1], "GAME") ) then
-                hasEP1 = false
-
-                break
-            end
-        end
-
-        for k, v in pairs(PLUGIN.combatMusicEpisodic) do
-            if not ( file.Exists("sound/" .. v[1], "GAME") ) then
-                hasEP1 = false
-
-                break
-            end
-        end
-
-        for k, v in pairs(PLUGIN.passiveMusicEP2) do
-            if not ( file.Exists("sound/" .. v[1], "GAME") ) then
-                hasEP2 = false
-
-                break
-            end
-        end
-
-        for k, v in pairs(PLUGIN.combatMusicEP2) do
-            if not ( file.Exists("sound/" .. v[1], "GAME") ) then
-                hasEP2 = false
-
-                break
-            end
-        end
-
-        if ( IsMounted("episodic") or hasEP1 ) then
-            entries["EpisodeOne"] = "Half-Life 2 Episode One"
-        end
-
-        if ( IsMounted("ep2") or hasEP2 ) then
-            entries["EpisodeTwo"] = "Half-Life 2 Episode Two"
-        end
-
-        return entries
-    end
-})
-
-concommand.Add("ix_reloadmusickits", function()
-    print("[Helix] Reloading music kits...")
-    CUSTOM_MUSICKITS = {}
-
-    GetMusicKits()
-
-    local names = {"Default"}
-    for v,k in pairs(CUSTOM_MUSICKITS) do
-        table.insert(names, v)
-    end
-
+local function createCommand()
     ix.option.Add("musicKit", ix.type.array, "Default", {
         category = "Music Kits",
         bNetworked = true,
@@ -287,7 +215,7 @@ concommand.Add("ix_reloadmusickits", function()
             local hasEP1 = true
             local hasEP2 = true
 
-            for k, v in pairs(PLUGIN.passiveMusicEpisodic) do
+            for k, v in ipairs(PLUGIN.passiveMusicEpisodic) do
                 if not ( file.Exists("sound/" .. v[1], "GAME") ) then
                     hasEP1 = false
 
@@ -295,7 +223,7 @@ concommand.Add("ix_reloadmusickits", function()
                 end
             end
 
-            for k, v in pairs(PLUGIN.combatMusicEpisodic) do
+            for k, v in ipairs(PLUGIN.combatMusicEpisodic) do
                 if not ( file.Exists("sound/" .. v[1], "GAME") ) then
                     hasEP1 = false
 
@@ -303,7 +231,7 @@ concommand.Add("ix_reloadmusickits", function()
                 end
             end
 
-            for k, v in pairs(PLUGIN.passiveMusicEP2) do
+            for k, v in ipairs(PLUGIN.passiveMusicEP2) do
                 if not ( file.Exists("sound/" .. v[1], "GAME") ) then
                     hasEP2 = false
 
@@ -311,7 +239,7 @@ concommand.Add("ix_reloadmusickits", function()
                 end
             end
 
-            for k, v in pairs(PLUGIN.combatMusicEP2) do
+            for k, v in ipairs(PLUGIN.combatMusicEP2) do
                 if not ( file.Exists("sound/" .. v[1], "GAME") ) then
                     hasEP2 = false
 
@@ -320,24 +248,60 @@ concommand.Add("ix_reloadmusickits", function()
             end
 
             if ( IsMounted("episodic") or hasEP1 ) then
-                entries["EpisodeOne"] = "Half-Life 2: Episode One"
+                entries["EpisodeOne"] = "Half-Life 2 Episode One"
             end
 
             if ( IsMounted("ep2") or hasEP2 ) then
-                entries["EpisodeTwo"] = "Half-Life 2: Episode Two"
+                entries["EpisodeTwo"] = "Half-Life 2 Episode Two"
             end
 
             return entries
         end
     })
+end
 
+createCommand()
+
+concommand.Add("ix_reloadmusickits", function()
+    print("[Helix] Reloading music kits...")
+    CUSTOM_MUSICKITS = {}
+
+    GetMusicKits()
+
+    local names = {"Default"}
+    for v,k in pairs(CUSTOM_MUSICKITS) do
+        table.insert(names, v)
+    end
+
+    createCommand()
 end)
+
+local nextThink = 0
+local currentPassive = currentPassive or nil
+local currentCombat = currentCombat or nil
+local currentPassiveFading = currentPassiveFading or nil
+local currentCombatFading = currentCombatFading or nil
+
+if ( currentPassive ) then
+    timer.Remove("ixMusicPassiveTrackTime")
+    currentPassive:Stop()
+end
+
+if ( currentCombat ) then
+    timer.Remove("ixMusicCombatTrackTime")
+    currentCombat:Stop()
+end
 
 ix.option.Add("musicAmbientVol", ix.type.number, 0.2, {
     category = "Music Kits",
     decimals = 1,
     min = 0,
     max = 1,
+    OnChanged = function(oldVal, newVal)
+        if ( currentPassive ) then
+            currentPassive:ChangeVolume(newVal, 0)
+        end
+    end
 })
 
 ix.option.Add("musicCombatVol", ix.type.number, 0.4, {
@@ -345,6 +309,11 @@ ix.option.Add("musicCombatVol", ix.type.number, 0.4, {
     decimals = 1,
     min = 0,
     max = 1,
+    OnChanged = function(oldVal, newVal)
+        if ( currentCombat ) then
+            currentCombat:ChangeVolume(newVal, 0)
+        end
+    end
 })
 
 if ( SERVER ) then
@@ -353,17 +322,17 @@ if ( SERVER ) then
             local uID = "ixMusicKit.CombatTimer." .. ply:SteamID64()
 
             if not ( timer.Exists(uID) ) then
-                ply:SetNetVar("ixInCombat", true)
+                ply:SetNetVar("bInCombat", true)
 
                 timer.Create(uID, 60, 1, function()
                     if not ( IsValid(ply) or ply:GetChar() ) then
-                        ply:SetNetVar("ixInCombat", false)
+                        ply:SetNetVar("bInCombat", false)
                         timer.Remove(uID)
 
                         return
                     end
 
-                    ply:SetNetVar("ixInCombat", false)
+                    ply:SetNetVar("bInCombat", false)
                 end)
             else
                 if ( timer.TimeLeft(uID) <= 5 ) then
@@ -375,17 +344,17 @@ if ( SERVER ) then
         if ( IsValid(attacker) and attacker:IsPlayer() and attacker:GetChar() ) then
             uID = "ixMusicKit.CombatTimer." .. attacker:SteamID64()
             if not ( timer.Exists(uID) ) then
-                attacker:SetNetVar("ixInCombat", true)
+                attacker:SetNetVar("bInCombat", true)
 
                 timer.Create(uID, 60, 1, function()
                     if not ( IsValid(attacker) or attacker:GetChar() ) then
-                        attacker:SetNetVar("ixInCombat", false)
+                        attacker:SetNetVar("bInCombat", false)
                         timer.Remove(uID)
 
                         return
                     end
 
-                    attacker:SetNetVar("ixInCombat", false)
+                    attacker:SetNetVar("bInCombat", false)
                 end)
             else
                 if ( timer.TimeLeft(uID) <= 5 ) then
@@ -409,7 +378,7 @@ if ( SERVER ) then
         local uID = "ixMusicKit.CombatTimer." .. ply:SteamID64()
 
         if ( timer.Exists(uID) ) then
-            ply:SetNetVar("ixInCombat", false)
+            ply:SetNetVar("bInCombat", false)
             timer.Remove(uID)
         end
 
@@ -417,7 +386,7 @@ if ( SERVER ) then
             uID = "ixMusicKit.CombatTimer." .. attacker:SteamID64()
 
             if ( timer.Exists(uID) ) then
-                attacker:SetNetVar("ixInCombat", false)
+                attacker:SetNetVar("bInCombat", false)
                 timer.Remove(uID)
             end
         end
@@ -429,7 +398,13 @@ end
 local default = {
     ["Default"] = true,
     ["EpisodeOne"] = true,
-    ["EpisodeTwo"] = true
+    ["EpisodeTwo"] = true,
+}
+
+local songLinks = {
+    ["Default"] = {PLUGIN.passiveMusic, PLUGIN.combatMusic},
+    ["EpisodeOne"] = {PLUGIN.passiveMusicEpisodic, PLUGIN.combatMusicEpisodic},
+    ["EpisodeTwo"] = {PLUGIN.passiveMusicEP2, PLUGIN.combatMusicEP2},
 }
 
 local function GetRandomSong(style)
@@ -439,18 +414,13 @@ local function GetRandomSong(style)
     end
 
     local kitName = ix.option.Get("musicKit")
+    local linkData = songLinks[kitName]
 
-    if ( kitName == "EpisodeOne" ) then
-        x = PLUGIN.passiveMusicEpisodic
-
-        if style == "combat" then
-            x = PLUGIN.combatMusicEpisodic
-        end
-    elseif ( kitName == "EpisodeTwo" ) then
-        x = PLUGIN.passiveMusicEP2
+    if ( linkData ) then
+        x = linkData[1]
 
         if style == "combat" then
-            x = PLUGIN.combatMusicEP2
+            x = linkData[2]
         end
     end
 
@@ -494,22 +464,18 @@ local function GetRandomSong(style)
     return r, t[2]
 end
 
-local function InCombat() // simple for now
+local function InCombat() // comment: simple for now
     local forcedCombat = GetConVar("ix_music_forcecombat"):GetBool()
 
     if forcedCombat then
         return true
     end
 
-    if ( LocalPlayer():GetNetVar("ixInCombat", false) ) then
+    if ( LocalPlayer():GetNetVar("bInCombat", false) ) then
         return true
     end
 
-    if ( CMB.GetCityCode ) then
-        local current = CMB.CityCodes:Get()
-
-        return current > 2
-    end
+    hook.Run("IsPlayerInCombat", LocalPlayer())
 end
 
 function PLUGIN:GetPlayerDeathSound()
@@ -520,11 +486,6 @@ function PLUGIN:GetPlayerDeathSound()
     end
 end
 
-local nextThink = 0
-local currentPassive = currentPassive or nil
-local currentCombat = currentCombat or nil
-local currentPassiveFading = currentPassiveFading or nil
-local currentCombatFading = currentCombatFading or nil
 function PLUGIN:Think()
     local ctime = CurTime()
     if nextThink > ctime then
@@ -556,7 +517,7 @@ function PLUGIN:Think()
         return
     end
 
-    if not ix.option.Get("musicKitEnabled", false) --[[or ix.ops.eventManager.GetEventMode()]] or not LocalPlayer():Alive() then
+    if not ix.option.Get("musicKitEnabled", false) or not LocalPlayer():Alive() then
         if currentPassive and currentPassive:IsPlaying() then
             timer.Remove("ixMusicPassiveTrackTime")
             currentPassive:FadeOut(1.5)
