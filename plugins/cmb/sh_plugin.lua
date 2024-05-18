@@ -1795,23 +1795,25 @@ local function FacingWallBack(client)
 	end
 end
 
-ix.act.Register("LeanWallLeft", {"overwatch"}, {
-    sequence = {
-        {"leanwall_left_idle", offset = function(ply)
-            return ply:GetRight() * -2
-        end},
-    },
-    untimed = true,
-    idle = true
-})
+function PLUGIN:InitializedPlugins()
+    ix.act.Register("LeanWallLeft", {"overwatch"}, {
+        sequence = {
+            {"leanwall_left_idle", offset = function(ply)
+                return ply:GetRight() * -2
+            end},
+        },
+        untimed = true,
+        idle = true
+    })
 
-ix.act.Register("LeanWallRight", {"overwatch"}, {
-    sequence = {
-        {"leanwall_right_idle"},
-    },
-    untimed = true,
-    idle = true
-})
+    ix.act.Register("LeanWallRight", {"overwatch"}, {
+        sequence = {
+            {"leanwall_right_idle"},
+        },
+        untimed = true,
+        idle = true
+    })
+end
 
 timer.Create("ix.DeployedEnts.Update", 1, 0, function()
     for k, v in player.Iterator() do
