@@ -76,9 +76,9 @@ if ( SERVER ) then
             sparks:SetNormal(self:GetAngles():Right())
             sparks:SetMagnitude(2)
             sparks:SetEntity(self)
-            
+
             util.Effect("ElectricSpark", sparks, true, true)
-			
+
 			return
 		end
 
@@ -101,7 +101,7 @@ if ( SERVER ) then
 					self:StopSound("ambient/machines/combine_terminal_idle" .. i .. ".wav")
 				end
 			end
-			
+
 			timer.Remove("ixAmbient." .. self:GetClass() .. "." .. self:EntIndex())
 		end
 	end
@@ -159,7 +159,7 @@ if ( SERVER ) then
 					sparks:SetNormal(self:GetAngles():Right())
 					sparks:SetMagnitude(2)
 					sparks:SetEntity(self)
-					
+
 					util.Effect("ElectricSpark", sparks, true, true)
 				end)
 			end
@@ -384,7 +384,7 @@ else
 					rectColor = (s:IsHovered() and Color(0, 255, 255) or Color(0, 100, 100)),
 				})
 			end
-			
+
 			self.cityCodesButton:SizeToContents()
 		end
 
@@ -403,9 +403,9 @@ else
 					continue
 				end
 
-				local char = v:GetCharacter()
+				local otherChar = v:GetCharacter()
 
-				if not ( char ) then
+				if not ( otherChar ) then
 					continue
 				end
 
@@ -417,12 +417,14 @@ else
 					continue
 				end
 
+				local factionData = ix.faction.Get(v:Team())
+
 				local buttonMain = self.rightPanel:Add("DHorizontalScroller")
 				buttonMain:Dock(TOP)
 				buttonMain:SetContentAlignment(5)
 				buttonMain:SetTall(40)
 				buttonMain:DockMargin(0, 10, 0, 0)
-				
+
 				buttonMain.btnLeft.Paint = function()
 					return true
 				end
@@ -455,7 +457,7 @@ else
 						w = w,
 						h = h,
 						backColor = Color(0, 0, 0),
-						rectColor = (pnl:IsHovered() and ColorAlpha(ix.faction.Get(v:Team()).color, 255) or ColorAlpha(ix.faction.Get(v:Team()).color, 100)),
+						rectColor = (pnl:IsHovered() and ColorAlpha(factionData.color, 255) or ColorAlpha(factionData.color, 100)),
 					})
 				end
 
@@ -472,7 +474,7 @@ else
 				button:Dock(LEFT)
 				button:DockMargin(5, 0, 0, 0)
 				button:SetWide(50)
-				button:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
+				button:SetText((otherChar:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
 				button:SetFont("ixCombineFont08")
 				button:SetContentAlignment(5)
 				button.DoClick = function(this)
@@ -480,7 +482,7 @@ else
 						net.WritePlayer(v)
 					net.SendToServer()
 
-					this:SetText((char:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
+					this:SetText((otherChar:GetBOLStatus() and "Enable" or "Disable") .. " BOL")
 				end
 				buttonMain:AddPanel(button)
 				button:SizeToContents()
