@@ -364,7 +364,7 @@ if ( SERVER ) then
         end
     end
 
-    function PLUGIN:DoPlayerDeath(ply, attacker, dmg)
+    function PLUGIN:PlayerDeath(ply, inflictor, attacker)
         if not ( IsValid(ply) ) then
             return
         end
