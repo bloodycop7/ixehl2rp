@@ -50,6 +50,15 @@ end
 if CLIENT then
 	function PLUGIN:Think()
    	 	for _, client in player.Iterator() do
+			if not ( IsValid(client) ) then
+				continue
+			end
+
+			local char = client:GetCharacter()
+			if not ( char ) then
+				continue
+			end
+
 			if not client.NextStepTime then
 				client.NextStepTime = 0
 				client.NextStepSide = false
@@ -189,7 +198,7 @@ if CLIENT then
 
 			if faction.ModifyPlayerStep and faction:ModifyPlayerStep(client, data) == true then
 				return true
-			end			
+			end
 		end
 
 		if client:Crouching() then
