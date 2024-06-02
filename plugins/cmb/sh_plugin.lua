@@ -1024,6 +1024,37 @@ function PLUGIN:InitializedChatClasses()
         end,
         font = "ixGenericFont",
     })
+
+    ix.chat.Register("cmb_dispatch_radio", {
+        CanHear = function(self, speaker, listener)
+            if not ( IsValid(listener) ) then
+                return false
+            end
+
+            if not ( Schema:IsCombine(listener) ) then
+                return false
+            end
+
+            return true
+        end,
+        CanSay = function(self, speaker, text)
+            if not ( IsValid(speaker) and speaker:Alive() ) then
+                return false
+            end
+
+            if ( ( Schema:IsCombine(speaker) and not ( Schema:IsCPRankLeader(speaker) or Schema:IsOWElite(speaker) ) ) or !speaker:IsAdmin() ) then
+                return false
+            end
+
+            return true
+        end,
+        OnChatAdd = function(self, speaker, text)
+            Schema:SendCaption("<clr:" .. Schema:ColorToText(Color(185, 40, 0)) .. ">[Dispatch-Radio] " .. text .. "<clr>")
+            chat.AddText(Color(185, 40, 0), "[Dispatch-Radio] " .. text)
+        end,
+        prefix = {"/dispatch", "/dispatchradio"},
+        font = "ixMonoMediumFont",
+    })
 end
 
 function PLUGIN:OnReloaded()
