@@ -82,10 +82,6 @@ for index, CLASS in ipairs(ix.class.list) do
             return false
         end
 
-        if not ( CLASS.faction ) then
-            return false
-        end
-
         if not ( CLASS.faction == character:GetFaction() ) then
             return false
         end
@@ -109,7 +105,7 @@ ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 ]]
 
 for index, RANK in ipairs(ix.rank.list) do
-    local FACTION = ix.faction.Get(v.faction)
+    local FACTION = ix.faction.Get(RANK.faction)
     if not ( FACTION ) then
         continue
     end
@@ -127,10 +123,6 @@ for index, RANK in ipairs(ix.rank.list) do
 
         local character = ply:GetCharacter()
         if not ( character ) then
-            return false
-        end
-
-        if not ( RANK.faction ) then
             return false
         end
 
