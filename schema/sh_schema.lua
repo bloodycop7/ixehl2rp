@@ -25,7 +25,7 @@ ix.config.SetDefault("combineFont", "Frak")
 
     Schema:IsCF(ply)
 
-    if your class doesn't have an abbreviation, it will use the class name instead.
+    if your faction doesn't have an abbreviation, it will use the SPACELESS faction name instead.
 
     Schema:IsConscriptForces(ply)
 ]]
@@ -55,7 +55,7 @@ end
 
     Schema:IsCPCO(ply)
 
-    if your class doesn't have an abbreviation, it will use the class name instead.
+    if your class doesn't have an abbreviation, it will use the SPACELESS class name instead.
 
     Schema:IsCPCadetOfficer(ply)
 ]]
@@ -99,7 +99,7 @@ ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 
     Schema:IsCPPO(ply)
 
-    if your class doesn't have an abbreviation, it will use the class name instead.
+    if your rank doesn't have an abbreviation, it will use the SPACELESS rank name instead.
 
     Schema:IsCPPatrolOfficer(ply)
 ]]
