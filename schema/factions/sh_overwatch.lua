@@ -60,7 +60,7 @@ function FACTION:ModifyPlayerStep(ply, data)
 	end
 
 	data.snd = "npc/combine_soldier/gear" .. math.random(1, 4) .. ".wav"
-	data.volume = data.volume * (data.running and 0.5 or 0.4)
+	data.volume = data.volume * (data.running and 0.5 or 0.3)
 end
 
 FACTION_OW = FACTION.index

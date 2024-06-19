@@ -94,7 +94,7 @@ function FACTION:ModifyPlayerStep(ply, data)
 	end
 
 	data.snd = "npc/metropolice/gear" .. math.random(1, 4) .. ".wav"
-	data.volume = data.volume * (data.running and 0.5 or 0.4)
+	data.volume = data.volume * (data.running and 0.5 or 0.3)
 end
 
 FACTION_CP = FACTION.index
