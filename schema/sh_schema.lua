@@ -31,8 +31,8 @@ ix.config.SetDefault("combineFont", "Frak")
 ]]
 
 for index, FACTION in ipairs(ix.faction.indices) do
-    local FACTION_NAME_SPACELESS = v.name:Replace(" ", "")
-    local ABBREVIATION = v.abbreviation or FACTION_NAME_SPACELESS
+    local FACTION_NAME_SPACELESS = FACTION.name:Replace(" ", "")
+    local ABBREVIATION = FACTION.abbreviation or FACTION_NAME_SPACELESS
 
     Schema["Is" .. ABBREVIATION] = function(self, ply)
         if not ( IsValid(ply) ) then
