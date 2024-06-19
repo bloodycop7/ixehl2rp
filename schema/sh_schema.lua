@@ -19,69 +19,126 @@ ix.config.SetDefault("font", "Raju Regular")
 ix.config.SetDefault("genericFont", "Raju Regular")
 ix.config.SetDefault("combineFont", "Frak")
 
-for k, v in ipairs(ix.faction.indices) do
-    Schema["Is" .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
+--[[
+    FACTION.name = "Conscript Forces"
+    FACTION.abbreviation = "CF"
+
+    Schema:IsCF(ply)
+
+    if your class doesn't have an abbreviation, it will use the class name instead.
+
+    Schema:IsConscriptForces(ply)
+]]
+
+for index, FACTION in ipairs(ix.faction.indices) do
+    local FACTION_NAME_SPACELESS = v.name:Replace(" ", "")
+    local ABBREVIATION = v.abbreviation or FACTION_NAME_SPACELESS
+
+    Schema["Is" .. ABBREVIATION] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
 
         local character = ply:GetCharacter()
-
         if not ( character ) then
             return false
         end
 
-        return character:GetFaction() == k
+        return character:GetFaction() == index
     end
 end
 
-for k, v in ipairs(ix.class.list) do
-    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
+--[[
+    CLASS for Civil Protection Faction with Abbreviation 'CP'
+    CLASS.name = "Cadet Officer"
+    CLASS.abbreviation = "CO"
+
+    Schema:IsCPCO(ply)
+
+    if your class doesn't have an abbreviation, it will use the class name instead.
+
+    Schema:IsCPCadetOfficer(ply)
+]]
+
+for index, CLASS in ipairs(ix.class.list) do
+    local FACTION = ix.faction.Get(CLASS.faction)
+    if not ( FACTION ) then
+        continue
+    end
+
+    local FACTION_NAME_SPACELESS = FACTION.name:Replace(" ", "")
+    local ABBREVIATION = FACTION.abbreviation or FACTION_NAME_SPACELESS
+
+    local CLASS_NAME_SPACELESS = CLASS.name:Replace(" ", "")
+    local CLASS_ABBREVIATION = CLASS.abbreviation or CLASS_NAME_SPACELESS
+
+    Schema["Is" .. ABBREVIATION .. CLASS_ABBREVIATION] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
 
         local character = ply:GetCharacter()
-
         if not ( character ) then
             return false
         end
 
-        if not ( v.faction ) then
+        if not ( CLASS.faction ) then
             return false
         end
 
-        if not ( v.faction == character:GetFaction() ) then
+        if not ( CLASS.faction == character:GetFaction() ) then
             return false
         end
 
-        return character:GetClass() == k
+        return character:GetClass() == index
     end
 end
 
 ix.rank.LoadFromDir(Schema.folder .. "/schema/ranks")
 
-for k, v in ipairs(ix.rank.list) do
-    Schema["Is" .. (ix.faction.Get(v.faction).abbreviation or string.Replace(ix.faction.Get(v.faction).name, " ", "")) .. (v.abbreviation or string.Replace(v.name, " ", ""))] = function(self, ply)
+--[[
+    RANK for Civil Protection Faction with Abbreviation 'CP'
+    RANK.name = "Patrol Officer"
+    RANK.abbreviation = "PO"
+
+    Schema:IsCPPO(ply)
+
+    if your class doesn't have an abbreviation, it will use the class name instead.
+
+    Schema:IsCPPatrolOfficer(ply)
+]]
+
+for index, RANK in ipairs(ix.rank.list) do
+    local FACTION = ix.faction.Get(v.faction)
+    if not ( FACTION ) then
+        continue
+    end
+
+    local FACTION_NAME_SPACELESS = FACTION.name:Replace(" ", "")
+    local ABBREVIATION = FACTION.abbreviation or FACTION_NAME_SPACELESS
+
+    local RANK_NAME_SPACELESS = RANK.name:Replace(" ", "")
+    local RANK_ABBREVIATION = RANK.abbreviation or RANK_NAME_SPACELESS
+
+    Schema["Is" .. ABBREVIATION .. RANK_ABBREVIATION] = function(self, ply)
         if not ( IsValid(ply) ) then
             return false
         end
 
         local character = ply:GetCharacter()
-
         if not ( character ) then
             return false
         end
 
-        if not ( v.faction ) then
+        if not ( RANK.faction ) then
             return false
         end
 
-        if not ( v.faction == character:GetFaction() ) then
+        if not ( RANK.faction == character:GetFaction() ) then
             return false
         end
 
-        return character:GetRank() == k
+        return character:GetRank() == index
     end
 end
 
@@ -179,7 +236,7 @@ function Schema:LerpColor(time, from, to)
     end
 
     from = Color(from.r, from.g, from.b, from.a)
-    
+
     to.r = Lerp(time, from.r, to.r)
     to.g = Lerp(time, from.g, to.g)
     to.b = Lerp(time, from.b, to.b)
@@ -495,14 +552,14 @@ function Schema:InitializedChatClasses()
         indicator = "chatPerforming"
     })
 
-    local randomVortWords = 
+    local randomVortWords =
     {
         "ahglah", "ahhhr", "alla", "allu", "baah", "beh", "bim", "buu", "chaa", "chackt", "churr", "dan", "darr", "dee", "eeya", "ge", "ga", "gaharra",
         "gaka", "galih", "gallalam", "gerr", "gog", "gram", "gu", "gunn", "gurrah", "ha", "hallam", "harra", "hen", "hi", "jah", "jurr", "kallah", "keh", "kih",
         "kurr", "lalli", "llam", "lih", "ley", "lillmah", "lurh", "mah", "min", "nach", "nahh", "neh", "nohaa", "nuy", "raa", "ruhh", "rum", "saa", "seh", "sennah",
         "shaa", "shuu", "surr", "taa", "tan", "tsah", "turr", "uhn", "ula", "vahh", "vech", "veh", "vin", "voo", "vouch", "vurr", "xkah", "xih", "zurr"
     }
-    
+
     ix.chat.Register("Vortigese", {
         format = "%s says in vortigese \"%s\"",
         GetColor = function(self, speaker, text)
@@ -510,7 +567,7 @@ function Schema:InitializedChatClasses()
             if (LocalPlayer():GetEyeTrace().Entity == speaker) then
                 return ix.config.Get("chatListenColor")
             end
-    
+
             -- Otherwise, use the normal chat color.
             return ix.config.Get("chatColor")
         end,
@@ -528,21 +585,21 @@ function Schema:InitializedChatClasses()
             local name = anonymous and
                     L"someone" or hook.Run("GetCharacterName", speaker, chatType) or
                     (IsValid(speaker) and speaker:Name() or "Console")
-            
+
             if (!Schema:IsVortigaunt(LocalPlayer())) then
                 local splitedText = string.Split(text, " ")
                 local vortigese = {}
-    
+
                 for k, v in pairs(splitedText) do
                     local word = randomVortWords[math.random(1, #randomVortWords)]
                     table.insert( vortigese, word )
-    
+
                 end
                 text = table.concat( vortigese, " " )
             end
-    
+
             chat.AddText(color, string.format(self.format, name, text))
-        end,	
+        end,
         prefix = {"/v", "/vort"},
         description = "Says in vortigaunt language",
         indicator = "Vortigesing",
