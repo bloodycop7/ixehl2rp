@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.PrintName = "Ration Distrubution Machine"
-ENT.Category = "ix: HL2RP"
+ENT.Category = "Helix: HL2RP"
 ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.PhysgunDisable = true
@@ -70,7 +70,7 @@ if ( SERVER ) then
 
 		self.nextUse = CurTime() + 1
 
-		Schema:PlayGesture(ply, "g_scan_id")		
+		Schema:PlayGesture(ply, "g_scan_id")
 
 		self:SetUsing(true)
 
@@ -104,7 +104,7 @@ if ( SERVER ) then
 				self:GetDispenser():EmitSound("ambient/machines/combine_terminal_idle3.wav")
 
 				uID = "ixRationDispenser." .. self:EntIndex() .. ".Dispense." .. ply:SteamID64()
-				
+
 				if not ( timer.Exists(uID) ) then
 					timer.Create(uID, SoundDuration("ambient/machines/combine_terminal_idle3.wav") + 1, 1, function()
 						if not ( IsValid(self) or IsValid(ply) or char ) then

@@ -36,7 +36,7 @@ function PLUGIN:Register(vendorData)
 
     ENT.Type = "anim"
     ENT.PrintName = vendorData.name
-    ENT.Category = "ix: HL2RP - Vendors"
+    ENT.Category = "Helix: HL2RP - Vendors"
     ENT.Spawnable = true
     ENT.AdminOnly = true
     ENT.PhysgunDisable = true
@@ -87,7 +87,7 @@ function PLUGIN:Register(vendorData)
             end
 
             ply:SetNetVar("ixVendorUse", self)
-            
+
             timer.Simple(0.1, function()
                 Schema:OpenUI(ply, "ixCustomVendor")
             end)
@@ -97,7 +97,7 @@ function PLUGIN:Register(vendorData)
 
         function ENT:OnRemove()
             if not ( ix.shuttingDown ) then
-                Schema:SaveData() 
+                Schema:SaveData()
             end
         end
     end

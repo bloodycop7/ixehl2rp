@@ -29,11 +29,11 @@ PLUGIN.defaultConfig = {
 
 function PLUGIN:Register(lootableData)
     if not ( lootableData.name ) then
-        error("Attempt to register lootable without a name!") 
+        error("Attempt to register lootable without a name!")
     end
 
     if not ( lootableData.model ) then
-        error("Attempt to register lootable without a model!") 
+        error("Attempt to register lootable without a model!")
     end
 
     if not ( lootableData.items ) then
@@ -51,7 +51,7 @@ function PLUGIN:Register(lootableData)
 
     ENT.Type = "anim"
     ENT.PrintName = lootableData.name
-    ENT.Category = "ix: HL2RP - Lootables"
+    ENT.Category = "Helix: HL2RP - Lootables"
     ENT.Spawnable = true
     ENT.AdminOnly = true
     ENT.PhysgunDisable = true
@@ -89,7 +89,7 @@ function PLUGIN:Register(lootableData)
 
             if ( timer.Exists("ixLootableTimer_" .. self:GetClass() .. "_" .. self:EntIndex()) ) then
                 ply:Notify("You can loot this again in " .. math.Round(timer.TimeLeft("ixLootableTimer_" .. self:GetClass() .. "_" .. self:EntIndex())) .. " seconds.")
-            
+
                 return
             end
 

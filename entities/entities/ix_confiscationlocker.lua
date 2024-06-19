@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.PrintName = "Confiscation Locker"
-ENT.Category = "ix: HL2RP"
+ENT.Category = "Helix: HL2RP"
 ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.PhysgunDisable = true
@@ -99,7 +99,7 @@ if ( SERVER ) then
                 totalConfiscatedCount = totalConfiscatedCount + 1
                 sterCreditsNew = sterCreditsNew + sterToAdd
             end
-            
+
             if ( totalConfiscatedCount > 0 ) then
                 ply:Notify("You have confiscated " .. totalConfiscatedCount .. " item(s) and gained " .. sterCreditsNew .. " Sterilization Credits.")
                 char:SetRankPoints(char:GetRankPoints() + sterCreditsNew)
@@ -121,7 +121,7 @@ if ( SERVER ) then
                 if ( inv:FindEmptySlot(itemData.w, itemData.h, false) ) then
                     inv:Add(randomItem)
 
-                    itemsToRemoveFromLocker[#itemsToRemoveFromLocker + 1] = randomItem 
+                    itemsToRemoveFromLocker[#itemsToRemoveFromLocker + 1] = randomItem
                 end
             end
 

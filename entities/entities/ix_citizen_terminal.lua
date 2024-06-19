@@ -2,7 +2,7 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.PrintName = "Citizen Terminal"
-ENT.Category = "ix: HL2RP"
+ENT.Category = "Helix: HL2RP"
 ENT.Spawnable = true
 ENT.AdminOnly = true
 ENT.PhysgunDisable = true
@@ -56,7 +56,7 @@ if ( SERVER ) then
             sparks:SetNormal(self:GetAngles():Right())
             sparks:SetMagnitude(2)
             sparks:SetEntity(self)
-            
+
             util.Effect("ElectricSpark", sparks, true, true)
             return
         end
@@ -102,7 +102,7 @@ if ( SERVER ) then
 					sparks:SetNormal(self:GetAngles():Right())
 					sparks:SetMagnitude(2)
 					sparks:SetEntity(self)
-					
+
 					util.Effect("ElectricSpark", sparks, true, true)
 				end)
 			end

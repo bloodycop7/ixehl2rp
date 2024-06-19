@@ -48,7 +48,7 @@ function PLUGIN:CreateCrates()
 
         ENT.Type = "anim"
         ENT.PrintName = k .. " Ammo Crate"
-        ENT.Category = "ix: HL2RP - Ammo Crates"
+        ENT.Category = "Helix: HL2RP - Ammo Crates"
         ENT.Spawnable = true
         ENT.AdminOnly = true
         ENT.PhysgunDisable = true
@@ -95,7 +95,7 @@ function PLUGIN:CreateCrates()
 
             function ENT:Use(ply)
                 if not ( ply:GetEyeTrace().Entity == self ) then
-                    return 
+                    return
                 end
 
                 local char = ply:GetCharacter()
@@ -120,7 +120,7 @@ function PLUGIN:CreateCrates()
                                 ply:Notify("You don't have enough space in your inventory!")
                             else
                                 self:EmitSound("items/ammo_pickup.wav")
-                            end                            
+                            end
                         else
                             self:EmitSound("items/ammo_pickup.wav")
                             ply:GiveAmmo(v[3], k, true)
@@ -143,7 +143,7 @@ function PLUGIN:CreateCrates()
                             end
                         else
                             self:SetRemainingAmmo(math.Clamp(self:GetRemainingAmmo() - v[3], 0, 99999))
-                            
+
                             self:EmitSound("items/ammo_pickup.wav")
                             ply:GiveAmmo(v[3], k, true)
                         end
@@ -191,7 +191,7 @@ function PLUGIN:CreateCrates()
 
     ENT.Type = "anim"
     ENT.PrintName = "Infinite Ammo Crate"
-    ENT.Category = "ix: HL2RP - Ammo Crates"
+    ENT.Category = "Helix: HL2RP - Ammo Crates"
     ENT.Spawnable = true
     ENT.AdminOnly = true
     ENT.PhysgunDisable = true
@@ -219,7 +219,7 @@ function PLUGIN:CreateCrates()
 
         function ENT:Use(ply)
             if not ( ply:GetEyeTrace().Entity == self ) then
-                return 
+                return
             end
 
             local char = ply:GetCharacter()
@@ -239,13 +239,13 @@ function PLUGIN:CreateCrates()
             if not ( PLUGIN.ammoTypes[game.GetAmmoName(ammoType)] ) then
                 return
             end
-            
+
             ply:SetAction("Refilling...", 1)
             ply:DoStaredAction(self, function()
                 if ( PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4] and ix.item.Get(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4]) ) then
                     if not ( char:GetInventory():Add(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][4], 1, {["rounds"] = PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][3]}) ) then
                         ply:Notify("You don't have enough space in your inventory!")
-                    end                            
+                    end
                 else
                     self:EmitSound("items/ammo_pickup.wav")
                     ply:GiveAmmo(PLUGIN.ammoTypes[game.GetAmmoName(ammoType)][3], ammoType, true)

@@ -73,7 +73,7 @@ function ix.crafting:RegisterStation(stationTable)
 
     STATION.Type = "anim"
     STATION.PrintName = stationTable.name .. " Station"
-    STATION.Category = "ix: HL2RP - Crating Stations"
+    STATION.Category = "Helix: HL2RP - Crating Stations"
     STATION.Spawnable = true
     STATION.AdminOnly = true
     STATION.PhysgunDisable = true
@@ -200,7 +200,7 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
 
     for k2, v2 in pairs(recipeData.requirements) do
         local itemCount = inv:GetItemCount(k2)
-        
+
         if ( itemCount < v2 ) then
             notMissingItems = false
         end
@@ -210,7 +210,7 @@ function PLUGIN:CanCraftRecipe(ply, uniqueID)
         canCraft = false
         failMessage = "You don't have the required items or correct amount of items to craft this!"
     end
-    
+
     if ( hook.Run("OverrideCraftFailMessage", ply, uniqueID) != nil ) then
         failMessage = hook.Run("OverrideCraftFailMessage", ply, uniqueID)
     end
